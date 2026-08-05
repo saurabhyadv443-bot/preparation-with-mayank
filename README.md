@@ -1,32 +1,130 @@
 # Quiz Portal
 
-A static client-side quiz portal built with HTML, CSS and vanilla JavaScript. Designed for deployment on GitHub Pages.
+>A lightweight, client-side quiz portal for practice tests, previous-year questions and mock exams. Designed to run as a static site and easily deployed to GitHub Pages.
 
-## What this repo contains
-- Static pages: `index.html`, `dashboard.html`, `quiz.html`, `result.html`, `review.html`, `subject.html`, `search.html`, `prev-year.html`, and others.
-- Client-side authentication: implemented in `assets/js/auth.js` using `localStorage` and `sessionStorage` (password stored in browser; this is not secure for production).
-- Data files: JSON datasets in `data/` (used by the app via fetch).
-- Assets: CSS in `assets/css/`, JS in `assets/js/`, images in `assets/images/`.
+---
 
-## Deploy to GitHub Pages
-1. Create a repository on GitHub (e.g. `username/quiz-portal`).
-2. Add the remote and push:
+## Features
+
+- Full-featured quiz engine (study & exam modes)
+- Persistent progress, bookmarks and results stored in browser `localStorage`
+- Per-subject quizzes and previous-year question support
+- Result review, question palette and per-question explanations
+- Responsive UI for desktop, tablet and mobile
+- Static-site friendly — deployable to GitHub Pages
+
+---
+
+## Folder structure
+
+Top-level structure (important files/folders):
+
+- `index.html` — startup splash / landing page
+- `dashboard.html` — main dashboard
+- `quiz.html` — quiz runner view
+- `subject.html` — subject page
+- `result.html`, `result-review.html`, `review.html` — reporting and review pages
+- `assets/`
+  - `css/` — stylesheets
+  - `js/` — client-side logic and quiz engine
+  - `images/` — site images (includes `login-bg.jpeg`)
+- `data/` — quiz JSON payloads (e.g., `modern.json`, `mock.json`, etc.)
+- `quizzes/` — packaged/legacy quiz HTML files
+- `scripts/` — developer scripts to export / repair quiz data
+- `README.md` — this file
+
+---
+
+## How to run locally
+
+This is a static site — run any simple static server and open the site in a browser.
+
+Using Python 3 (recommended):
 
 ```bash
-cd bpsc-quiz-portal
-git remote add origin https://github.com/<your-username>/<your-repo>.git
+# from repository root
+python -m http.server 8000
+# then open http://localhost:8000
+```
+
+Using Node `serve`:
+
+```bash
+npm install -g serve
+serve -s . -l 8000
+```
+
+Using VS Code: open folder and use the Live Server extension.
+
+Notes:
+- The site expects to be served via HTTP(S); some browser APIs behave differently on `file://`.
+- Do not modify `assets/js/` unless you need to change quiz behaviour.
+
+---
+
+## How to deploy to GitHub Pages
+
+Option A — Publish from the `main` branch root (simple):
+
+1. Create a GitHub repository and push your code to `main`.
+2. On GitHub: **Settings > Pages**, select branch `main` and folder `/ (root)`. Save.
+3. GitHub will publish the site at `https://<your-username>.github.io/<repo>/`.
+
+Quick commands:
+
+```bash
+git init
+git add .
+git commit -m "Initial site"
+git remote add origin https://github.com/<your-username>/<repo>.git
 git push -u origin main
 ```
 
-3. On GitHub, enable Pages in repository settings and select branch `main` with folder `/ (root)`.
+Option B — Use a `gh-pages` branch or GitHub Action for automated deployments.
 
-## Notes & Manual Steps
-- The app uses a client-side password stored in `localStorage` (`quizPortalPassword`) and a session flag `quizAuthenticated` in `sessionStorage`. This protects pages in the browser only — it is not server-side authentication.
-- Default password: `Mayank#123` (change via the app UI). Password reset requires verification code `maya8932`.
-- If you want the repo created and pushed automatically from this machine, provide a remote URL and ensure git authentication is configured (SSH key or https token). Otherwise, follow the commands above to push from your machine.
+Notes:
+- Internal links are relative — verify pages after deploying to a subpath.
+- If you prefer no external CDNs, vendor libraries into `assets/vendor/` and update references.
 
-## Troubleshooting
-- If push fails due to authentication, configure a personal access token or SSH key as described in GitHub docs.
+---
+
+## How to update quiz JSON
+
+Quiz datasets are in the `data/` directory (for example `modern.json`, `mock.json`, `polity.json`). Guidelines:
+
+- Keep the existing JSON schema — inspect a sample file before editing.
+- To import or export programmatically, use scripts in the `scripts/` folder (e.g., `export_modern_quiz.js`, `export_modern_quiz.py`).
+- After updating JSON, refresh the site and clear cache if you do not see changes.
+
+---
+
+## Browser support
+
+Tested on modern evergreen browsers:
+
+- Google Chrome (latest)
+- Microsoft Edge (latest)
+- Mozilla Firefox (latest)
+- Safari (macOS / iOS recent versions)
+
+The app uses modern JS features and `localStorage`/`sessionStorage` — use recent browser versions for best results.
+
+---
 
 ## License
-This project contains educational content. Add a license file if needed.
+
+This project is provided under the MIT License. Add a `LICENSE` file to the repository to make this explicit.
+
+---
+
+## Author
+
+Mayank — Designed & Developed
+
+---
+
+If you want, I can:
+
+- Vendor external CDN libraries into `assets/vendor/` and update references for a fully self-contained site.
+- Add a GitHub Actions workflow to deploy automatically to GitHub Pages on `main`.
+- Add a small `deploy.sh` helper.
