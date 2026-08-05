@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Global Question Search</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <script src="assets/js/auth.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="logo-wrap">
+      <div class="logo-badge">Quiz Portal</div>
+      <div>
+        <div class="brand-title">Global Question Search</div>
+        <div class="brand-subtitle">Search across all subjects and years</div>
+      </div>
+    </div>
+    <nav class="top-nav">
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="prevyear.html">PYQ Explorer</a>
+      <a href="search.html">Search</a>
+      <a href="#" id="changePasswordBtn" class="btn-tertiary">Change Password</a>
+      <a href="#" id="logoutBtn" class="btn-tertiary">Logout</a>
+    </nav>
+  </header>
+
+  <main class="dashboard-shell">
+    <section class="section-heading section-heading-compact">
+      <h1>Global Question Search</h1>
+      <p>Search question text, options, explanation, topic, year or source. Click a result to open in Review Mode.</p>
+    </section>
+
+    <section class="panel">
+      <div style="display:flex;gap:12px;align-items:center;">
+        <input id="globalSearchInput" placeholder="Start typing to search questions..." style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--muted);" />
+        <button id="btnClearSearch" class="btn btn-secondary">Clear</button>
+      </div>
+      <div id="searchLoading" style="display:none;margin-top:12px">Indexing questions... <span class="muted">(This runs once)</span></div>
+    </section>
+
+    <section class="panel">
+      <h3>Matches</h3>
+      <div id="searchResults"></div>
+    </section>
+  </main>
+
+  <footer class="footer">© 2026 Quiz Portal — Designed & Developed by Mayank</footer>
+  <script src="assets/js/search.js"></script>
+</body>
+</html>

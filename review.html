@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Review</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+    <header class="header">
+        <div class="logo-wrap">
+            <div class="logo-badge">Quiz Portal</div>
+            <div>
+                <div class="brand-title">Review Center</div>
+                <div class="brand-subtitle">Answer-by-answer explanation and recall</div>
+            </div>
+        </div>
+        <nav class="top-nav">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="result.html">Results</a>
+        </nav>
+    </header>
+
+    <main class="result-container review-container">
+        <section class="panel review-shell">
+            <div class="review-header">
+                <div>
+                    <h1>Review Answers</h1>
+                    <p id="reviewMeta"></p>
+                </div>
+                <div class="review-controls">
+                    <button id="filterMarkedBtn" class="btn btn-secondary btn-small">Only Marked Questions</button>
+                    <button id="prevReviewBtn" class="btn btn-secondary btn-small">Previous</button>
+                    <button id="nextReviewBtn" class="btn btn-primary btn-small">Next</button>
+                </div>
+            </div>
+            <div id="reviewList" class="review-list"></div>
+        </section>
+    </main>
+
+    <script src="assets/js/review.js"></script>
+</body>
+</html>
+

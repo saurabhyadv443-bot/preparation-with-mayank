@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Portal — Login</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script src="assets/js/auth.js"></script>
+    <style>
+        /* Full-screen login background (no blur) */
+        html,body{height:100%;}
+        /* page background color fills empty space around contained image */
+        body.login-landing{margin:0;font-family:inherit;background-color:#111;}
+        /* Keep the background image sharp and fully visible (contain) */
+        .login-bg{
+            position:fixed;inset:0;z-index:0;
+            background-color:#111;
+            background-image: url('assets/images/login-bg.jpeg');
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: contain; /* show full image without cropping */
+        }
+        /* Dark overlay only; no blur so image remains sharp */
+        .login-overlay{position:fixed;inset:0;background:rgba(2,6,23,0.40);z-index:1}
+        .login-card{position:relative;z-index:2;min-width:280px;padding:28px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));box-shadow:0 12px 36px rgba(2,6,23,0.6);width:100%;max-width:420px;margin:auto}
+        /* Layout: place a title block above the card (pure CSS) */
+        .login-center{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:18vh 20px 20px 20px;gap:40px}
+        /* Render the page title + subtitle as a single pseudo block above the card */
+        .login-center::before{
+            content: "Quiz Portal\A Designed \0026 Developed by Mayank";
+            white-space:pre-line;
+            text-align:center;
+            color:#ffffff;
+            font-weight:800;
+            font-size:1.6rem;
+            line-height:1.05;
+            z-index:2;
+            display:block;
+            max-width:760px;
+        }
+        /* Hide the original in-card title/subtitle to avoid visual duplication */
+        .login-card .login-title,
+        .login-card .login-sub{
+            display:none !important;
+        }
+        .recovery-tip{color:#cbd5e1;font-size:0.95rem;text-align:center;max-width:600px;line-height:1.5;margin:0 auto;}
+        .recovery-tip strong{color:#f8fafc;}
+        .input-row{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.03);padding:10px;border-radius:10px}
+        .input-row input{flex:1;background:transparent;border:none;color:white;font-size:1rem;outline:none}
+        .btn-login{margin-top:14px;width:100%;padding:12px;border-radius:10px;border:none;background:linear-gradient(90deg,#2563eb,#1d4ed8);color:white;font-weight:800;cursor:pointer}
+        .error{color:#fecaca;background:rgba(220,38,38,0.08);padding:10px;border-radius:8px;margin-top:10px;display:none}
+        .error.show{display:block;animation:shake 420ms ease}
+        @keyframes shake{0%{transform:translateX(0)}20%{transform:translateX(-8px)}60%{transform:translateX(6px)}100%{transform:translateX(0)}}
+        .show-hide{cursor:pointer;color:#cbd5e1}
+        @media (max-width:1024px){ .login-center{padding-top:14vh;gap:36px} }
+        @media (max-width:640px){ .login-card{padding:18px;max-width:360px} .login-center{padding-top:8vh;gap:32px} .login-center::before{font-size:1.3rem} }
+    </style>
+</head>
+<body class="login-landing">
+    <div class="login-bg" aria-hidden="true"></div>
+    <div class="login-overlay" aria-hidden="true"></div>
+    <div class="login-center">
+        <div class="login-card glass-card" role="main">
+            <div>
+                <div class="login-title">Quiz Portal</div>
+                <div class="login-sub">Designed &amp; Developed by Mayank</div>
+            </div>
+            <div style="margin-top:6px">
+                <label for="pwd" style="color:#cbd5e1;font-weight:700">Enter Password</label>
+                <div style="height:8px"></div>
+                <div class="input-row">
+                    <input id="pwd" type="password" autocomplete="current-password" aria-label="Password" />
+                    <div id="togglePwd" class="show-hide">👁️</div>
+                </div>
+                <div id="err" class="error">Incorrect password</div>
+                <div style="display:flex;gap:8px;align-items:center;margin-top:12px">
+                    <button id="loginBtn" class="btn-login">Login</button>
+                    <button id="changePasswordBtn" class="btn btn-tertiary">Change Password</button>
+                    <button id="forgotBtn" class="btn btn-secondary">Forgot Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function(){
+            // Use the modular auth API exposed by assets/js/auth.js
+            const auth = window.auth;
+            const pwd = document.getElementById('pwd');
+            const btn = document.getElementById('loginBtn');
+            const err = document.getElementById('err');
+            const toggle = document.getElementById('togglePwd');
+            const changeSmall = document.getElementById('changePwdSmall');
+            const forgotBtn = document.getElementById('forgotBtn');
+
+            function showError(el){ el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); }
+
+            toggle.addEventListener('click', ()=>{
+                if(pwd.type==='password'){ pwd.type='text'; toggle.textContent='🙈'; } else { pwd.type='password'; toggle.textContent='👁️'; }
+            });
+
+            // Login uses stored password
+            btn.addEventListener('click', (e)=>{
+                e.preventDefault();
+                err.classList.remove('show');
+                const v = (pwd.value||'').trim();
+                const ok = auth.login(v);
+                if(ok){
+                    window.location.href = 'dashboard.html';
+                    return;
+                }
+                err.textContent = 'Incorrect password';
+                err.classList.add('show');
+            });
+
+            if(forgotBtn){
+                forgotBtn.addEventListener('click', (ev)=>{
+                    ev.preventDefault();
+                    window.location.href = 'change-password.html';
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Previous Year Questions Explorer</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+    <header class="header">
+        <div class="logo-wrap">
+            <div class="logo-badge">Quiz Portal</div>
+            <div>
+                <div class="brand-title">Previous Year Questions</div>
+                <div class="brand-subtitle">Explore and practice PYQs</div>
+            </div>
+        </div>
+        <nav class="top-nav">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="result.html">Results</a>
+            <a href="prevyear.html">PYQ Explorer</a>
+        </nav>
+    </header>
+
+    <main class="dashboard-shell">
+        <section class="section-heading section-heading-compact">
+            <h1>Previous Year Question Explorer</h1>
+            <p>Filter by subject, chapter, year, difficulty and source. Practice directly from results.</p>
+        </section>
+
+        <section class="panel">
+            <div class="filters-grid">
+                <div>
+                    <label>Subject</label>
+                    <select id="filterSubject"><option value="">All</option></select>
+                </div>
+                <div>
+                    <label>Chapter</label>
+                    <select id="filterChapter"><option value="">All</option></select>
+                </div>
+                <div>
+                    <label>Year</label>
+                    <select id="filterYear"><option value="">Any</option></select>
+                </div>
+                <div>
+                    <label>Difficulty</label>
+                    <select id="filterDifficulty"><option value="">Any</option></select>
+                </div>
+                <div>
+                    <label>Source</label>
+                    <select id="filterSource"><option value="">Any</option></select>
+                </div>
+                <div>
+                    <label>Search</label>
+                    <input id="filterSearch" placeholder="Search question text" />
+                </div>
+            </div>
+            <div style="margin-top:12px;">
+                <button id="applyFilters" class="btn btn-primary">Apply Filters</button>
+                <button id="btnClear" class="btn btn-secondary">Clear</button>
+                <button id="randomPractice" class="btn btn-primary">Random Practice</button>
+                <button id="practiceFiltered" class="btn btn-primary">Practice Filtered</button>
+                <button id="reviewMode" class="btn btn-secondary">Review Mode</button>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h3>Results</h3>
+            <div id="matchesList"></div>
+        </section>
+    </main>
+
+    <footer class="footer">© 2026 Quiz Portal — Designed & Developed by Mayank</footer>
+    <script src="assets/js/prevYear.js"></script>
+</body>
+</html>

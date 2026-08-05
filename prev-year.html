@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Previous Year Questions Explorer</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+ </head>
+<body>
+    <header class="header">
+        <div class="logo-wrap">
+            <div class="logo-badge">Quiz Portal</div>
+            <div>
+                <div class="brand-title">Previous Year Questions</div>
+                <div class="brand-subtitle">Explore, filter and practice past questions</div>
+            </div>
+        </div>
+        <nav class="top-nav">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="result.html">Results</a>
+        </nav>
+    </header>
+
+    <main class="dashboard-shell">
+        <section class="section-heading section-heading-compact">
+            <h1>Explore Previous Year Questions</h1>
+            <p>Filter by subject, chapter, year, difficulty and source. Practice the filtered set or review questions.</p>
+        </section>
+
+        <section class="panel" id="pyqControls">
+            <div class="metric-row">
+                <label>Subject</label>
+                <select id="filterSubject"><option value="">All</option></select>
+            </div>
+            <div class="metric-row">
+                <label>Chapter</label>
+                <select id="filterChapter"><option value="">All</option></select>
+            </div>
+            <div class="metric-row">
+                <label>Year</label>
+                <select id="filterYear"><option value="">All</option></select>
+            </div>
+            <div class="metric-row">
+                <label>Difficulty</label>
+                <select id="filterDifficulty"><option value="">All</option><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option></select>
+            </div>
+            <div class="metric-row">
+                <label>Source</label>
+                <select id="filterSource"><option value="">All</option></select>
+            </div>
+            <div class="metric-row">
+                <label>Search</label>
+                <input id="filterSearch" placeholder="Search question text" />
+            </div>
+            <div style="margin-top:12px;">
+                <button id="applyFilters" class="btn btn-primary">Apply Filters</button>
+                <button id="practiceFiltered" class="btn btn-secondary">Practice Filtered</button>
+                <button id="randomPractice" class="btn btn-secondary">Random Practice</button>
+                <button id="reviewMode" class="btn btn-tertiary">Review Mode</button>
+            </div>
+        </section>
+
+        <section class="panel" id="pyqResults">
+            <h3>Matched Questions</h3>
+            <div id="matchesList"></div>
+        </section>
+    </main>
+
+    <script src="assets/js/prevYear.js"></script>
+</body>
+</html>

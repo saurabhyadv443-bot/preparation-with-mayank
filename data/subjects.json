@@ -1,0 +1,46 @@
+{
+  "subjects": [
+    {
+      "id": "ancient",
+      "title": "Ancient History",
+      "file": "ancient.json",
+      "icon": "📚",
+      "description": "Ancient India complete practice questions"
+    },
+    {
+      "id": "medieval",
+      "title": "Medieval History",
+      "file": "medeival.json",
+      "icon": "🏰",
+      "description": "Practice medieval history"
+    },
+    {
+      "id": "modern",
+      "title": "Modern History",
+      "file": "modern.json",
+      "icon": "🏛",
+      "description": "Chapter-wise modern history practice"
+    },
+    {
+      "id": "geography",
+      "title": "Geography",
+      "file": "geography.json",
+      "icon": "🌍",
+      "description": "Geography practice and map-based questions"
+    },
+    {
+      "id": "polity",
+      "title": "Polity",
+      "file": "polity.json",
+      "icon": "🏛",
+      "description": "Constitution, governance and polity practice"
+    },
+    {
+      "id": "mock",
+      "title": "Mock Test",
+      "file": "mock.json",
+      "icon": "📝",
+      "description": "Full length mock test experience"
+    }
+  ]
+}

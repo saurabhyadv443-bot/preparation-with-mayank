@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Result Review</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script src="assets/js/auth.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-wrap">
+            <div class="logo-badge">Quiz Portal</div>
+            <div>
+                <div class="brand-title">Result Review</div>
+                <div class="brand-subtitle">Exam summary, palette and question-by-question review</div>
+            </div>
+        </div>
+        <nav class="top-nav">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="review.html">Review</a>
+            <a href="#" id="changePasswordBtn" class="btn-tertiary">Change Password</a>
+            <a href="#" id="logoutBtn" class="btn-tertiary">Logout</a>
+        </nav>
+    </header>
+
+    <main class="result-container result-review-page">
+        <section class="panel result-hero">
+            <div class="hero-subject">
+                <span class="eyebrow">Submit Complete</span>
+                <h1 id="reviewSubject">Quiz Review</h1>
+            </div>
+            <div class="hero-chapter">
+                <p id="reviewSubtitle"></p>
+            </div>
+            <div class="hero-accuracy">
+                <div class="result-summary-grid" id="summaryGrid"></div>
+            </div>
+        </section>
+
+        <section class="panel filter-panel">
+            <div class="filter-top-row">
+                <div class="search-control">
+                    <input id="searchInput" class="search-input" type="search" placeholder="Search questions, options, explanations, IDs..." aria-label="Search questions" />
+                </div>
+                <div id="resultCount" class="search-count">Showing 0 of 0 questions</div>
+            </div>
+            <div class="review-filter-bar">
+                <button class="btn btn-secondary btn-small filter-btn active" data-filter="all" data-filter-label="All">All</button>
+                <button class="btn btn-secondary btn-small filter-btn" data-filter="correct" data-filter-label="Correct">Correct</button>
+                <button class="btn btn-secondary btn-small filter-btn" data-filter="incorrect" data-filter-label="Incorrect">Incorrect</button>
+                <button class="btn btn-secondary btn-small filter-btn" data-filter="skipped" data-filter-label="Skipped">Skipped</button>
+                <button class="btn btn-secondary btn-small filter-btn" data-filter="bookmarked" data-filter-label="Bookmarked">Bookmarked</button>
+            </div>
+        </section>
+
+        <section class="panel result-review-layout">
+            <aside class="result-palette-panel">
+                <h3>Question Palette</h3>
+                <div id="questionPalette" class="palette-grid"></div>
+                <div class="palette-legend">
+                    <p><span class="legend-dot correct-dot"></span> Correct</p>
+                    <p><span class="legend-dot incorrect-dot"></span> Incorrect</p>
+                    <p><span class="legend-dot skipped-dot"></span> Not Attempted</p>
+                    <p><span class="legend-dot current-dot"></span> Current</p>
+                    <p><span class="legend-dot bookmarked-dot"></span> Bookmarked</p>
+                </div>
+            </aside>
+
+            <div class="review-body">
+                <div id="questionReviewList" class="review-list"></div>
+                <div class="review-actions">
+                    <button id="prevQuestionBtn" class="btn btn-secondary">⬅ Previous</button>
+                    <button id="nextQuestionBtn" class="btn btn-secondary">Next ➜</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="assets/js/resultReview.js"></script>
+</body>
+</html>

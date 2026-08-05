@@ -1,0 +1,536 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+    color: #0f172a;
+}
+
+.topbar {
+    background: linear-gradient(135deg, #0f3a72, #114e9a);
+    color: white;
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 10px 30px rgba(15, 58, 114, 0.25);
+}
+
+.topbar h1 {
+    font-size: clamp(1.35rem, 2vw, 1.9rem);
+}
+
+.top-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#timer {
+    min-width: 120px;
+    text-align: center;
+    background: #ffefef;
+    color: #a31616;
+    padding: 10px 14px;
+    border-radius: 999px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#timer.timer-warning {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+#timer.timer-critical {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+#timer.timer-blink {
+    animation: timerBlink 1s steps(1, end) infinite;
+}
+
+@keyframes timerBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+
+#pauseBtn,
+#prevBtn,
+#nextBtn,
+#bookmarkBtn,
+#markReviewBtn,
+.chapterBtn,
+.palette-btn,
+.material-submit-btn {
+    border: none;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+
+#pauseBtn:hover,
+#prevBtn:hover,
+#nextBtn:hover,
+#bookmarkBtn:hover,
+#markReviewBtn:hover,
+.chapterBtn:hover,
+.palette-btn:hover,
+.material-submit-btn:hover {
+    transform: translateY(-1px);
+}
+
+#pauseBtn {
+    background: #f59e0b;
+    color: #101828;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+/* Desktop layout optimizations: keep quiz content within viewport, palette sticky, question panel scrolls */
+@media (min-width: 980px) {
+    html, body { height: 100%; }
+    .topbar { padding: 10px 20px; }
+    .container { max-width: 100%; width: 100%; min-height: 100vh; padding: 12px 18px; }
+
+    /* quiz grid: palette left (fixed-ish), question area fills remaining width */
+    .quiz-layout {
+        display: grid;
+        grid-template-columns: 300px minmax(760px, 1fr);
+        gap: 12px;
+        align-items: start;
+        height: calc(100vh - 72px); /* subtract topbar */
+    }
+
+    /* Question area should scroll independently */
+    .quiz-main {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 18px;
+    }
+
+    /* Make only the question box scrollable within the quiz-main */
+    #questionBox {
+        flex: 1 1 auto;
+        overflow: auto;
+        padding: 12px;
+    }
+
+    /* Make palette compact and sticky */
+    .palette-panel {
+        position: sticky;
+        top: 20px;
+        align-self: start;
+        height: calc(100vh - 40px);
+        overflow: auto;
+        padding: 14px;
+    }
+
+    /* Reduce spacing inside question box */
+    #questionBox { padding: 14px; }
+    .question-statement { line-height: 1.6; }
+
+    /* Compact navigation and submit */
+    .navigation { gap: 8px; margin-top: 12px; position: sticky; bottom: 8px; background: transparent; z-index: 5; }
+    #prevBtn, #nextBtn, #markReviewBtn { padding: 10px 14px; }
+    .material-submit-btn { padding: 12px 18px; }
+
+    /* Keep palette visible but small */
+    #palette { gap: 8px; }
+    .palette-btn { min-height: 40px; font-size: 0.9rem; }
+
+    /* make chapter list scrollable within left panel if present */
+    #chapterSection { max-height: calc(100vh - 80px); overflow: auto; }
+}
+
+#chapterSection {
+    background: white;
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+#chapterList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.chapterBtn {
+    width: 100%;
+    padding: 16px 18px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #1565c0, #0d47a1);
+    color: white;
+    box-shadow: 0 8px 18px rgba(13, 71, 161, 0.2);
+}
+
+.quiz-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(280px, 1fr);
+    gap: 24px;
+}
+
+.quiz-main {
+    background: white;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+.palette-panel {
+    background: white;
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
+
+#chapterTitle,
+#progressText {
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    background: #dbe7ff;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+#progressFill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+    transition: width 0.25s ease;
+}
+
+#questionBox {
+    background: #f9fbff;
+    border: 1px solid #d9e5ff;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.question-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.question-statement {
+    margin-bottom: 20px;
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+.option-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: white;
+    border: 1px solid #dbe7ff;
+    border-radius: 12px;
+    padding: 14px 15px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.option-wrap:hover {
+    border-color: #2563eb;
+    background: #eff6ff;
+}
+
+.option-wrap input {
+    margin-top: 3px;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 22px;
+}
+
+#prevBtn,
+#nextBtn,
+#markReviewBtn {
+    border-radius: 999px;
+    padding: 12px 20px;
+    font-weight: 700;
+    color: white;
+}
+
+#prevBtn {
+    background: #64748b;
+}
+
+#nextBtn {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+#markReviewBtn {
+    background: linear-gradient(135deg, #f59e0b, #ea580c);
+}
+
+#markReviewBtn.review-active {
+    box-shadow: 0 10px 24px rgba(234, 88, 12, 0.28);
+}
+
+#bookmarkBtn {
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: #fef3c7;
+    color: #92400e;
+    font-weight: 700;
+}
+
+.bookmark-active {
+    background: #f59e0b !important;
+    color: #111827 !important;
+}
+
+.submit-footer {
+    position: sticky;
+    bottom: 16px;
+    margin-top: 24px;
+    z-index: 10;
+}
+
+.material-submit-btn {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 16px 24px;
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    color: white;
+    background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+    box-shadow: 0 16px 30px rgba(22, 163, 74, 0.28);
+}
+
+.material-submit-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+    transform: scale(0);
+    transition: transform 0.35s ease;
+}
+
+.material-submit-btn:active::after {
+    transform: scale(2.4);
+}
+
+#palette {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.palette-btn {
+    min-height: 44px;
+    border-radius: 12px;
+    font-weight: 800;
+}
+
+.palette-btn.current {
+    background: #2563eb;
+    color: white;
+}
+
+.palette-btn.answered {
+    background: #16a34a;
+    color: white;
+}
+
+.palette-btn.notanswered {
+    background: #e5e7eb;
+    color: #111827;
+}
+
+.palette-btn.review {
+    background: #f59e0b;
+    color: white;
+}
+
+.palette-btn.answered-review {
+    background: #8b5cf6;
+    color: white;
+}
+
+.palette-panel p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.answered-box,
+.current-box,
+.notanswered-box,
+.review-box,
+.answered-review-box {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.answered-box {
+    background: #16a34a;
+}
+
+.current-box {
+    background: #2563eb;
+}
+
+.notanswered-box {
+    background: #e5e7eb;
+}
+
+.review-box {
+    background: #f59e0b;
+}
+
+.answered-review-box {
+    background: #8b5cf6;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.modal-card {
+    width: min(100%, 480px);
+    background: white;
+    border-radius: 22px;
+    padding: 26px;
+    box-shadow: 0 22px 46px rgba(15, 23, 42, 0.24);
+    text-align: center;
+}
+
+.modal-icon {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.modal-copy {
+    color: #64748b;
+    margin: 8px 0 16px;
+}
+
+.modal-stats {
+    display: grid;
+    gap: 10px;
+    margin: 18px 0 22px;
+}
+
+.modal-stats div {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: #f8fbff;
+    color: #334155;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.confirm-submit-btn {
+    width: auto;
+}
+
+.btn-secondary {
+    padding: 12px 18px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+@media (max-width: 900px) {
+    .quiz-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .palette-panel {
+        position: static;
+    }
+}
+
+@media (max-width: 640px) {
+    .container {
+        padding: 16px;
+    }
+
+    .topbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .top-right {
+        justify-content: space-between;
+    }
+
+    .question-header,
+    .navigation,
+    .modal-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #palette {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+}

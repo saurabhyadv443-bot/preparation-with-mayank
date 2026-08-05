@@ -1,0 +1,32 @@
+.DS_Store
+Thumbs.db
+.vscode/
+*.log
+*.pyc
+__pycache__/
+.idea/
+node_modules/
+.env
+.env.local
+dist/
+build/
+coverage/
+*.sqlite
+*.db
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Python
+*.pyc
+__pycache__/
+
+# Editor
+.vscode/
+.idea/
+
+# System files
+*.swp

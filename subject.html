@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subject</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script src="assets/js/auth.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-wrap">
+            <div class="logo-badge">Quiz Portal</div>
+            <div>
+                <div class="brand-title" id="subjectTitle">Subject</div>
+                <div class="brand-subtitle">Revision hub and performance tracker</div>
+            </div>
+        </div>
+        <nav class="top-nav">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="result.html">Results</a>
+            <a href="#" id="changePasswordBtn" class="btn-tertiary">Change Password</a>
+            <a href="#" id="logoutBtn" class="btn-tertiary">Logout</a>
+        </nav>
+    </header>
+
+    <main class="subject-shell">
+        <section class="panel subject-panel">
+            <div class="section-heading compact-heading">
+                <h2>Bookmarks</h2>
+                <button id="bookmarkBtn" class="btn btn-primary btn-small">View Bookmarks</button>
+            </div>
+            <div id="bookmarkList" class="review-list"></div>
+        </section>
+
+        <section class="grid-2">
+            <article class="panel">
+                <h2>Performance Dashboard</h2>
+                <p>Monitor recent quiz scores, accuracy and revision momentum.</p>
+                <div id="performanceStats" class="performance-stats"></div>
+            </article>
+            <article class="panel">
+                <h2>Practice Flow</h2>
+                <p>Choose a chapter from the practice screen and start immediately.</p>
+            </article>
+        </section>
+
+        <section class="panel subject-panel">
+            <div class="section-heading compact-heading">
+                <h2>Chapter Wise Practice</h2>
+                <button id="practiceBtn" class="btn btn-primary btn-small">Open Practice</button>
+            </div>
+            <p>Practice directly from the selected subject and continue with resume support.</p>
+        </section>
+    </main>
+
+    <script src="assets/js/subject.js?v=20260803-1"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Result</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+    <header class="header">
+        <div class="logo-wrap">
+            <div class="logo-badge">Quiz Portal</div>
+            <div>
+                <div class="brand-title">Result Dashboard</div>
+                <div class="brand-subtitle">Your strengths and missed opportunities</div>
+            </div>
+        </div>
+        <nav class="top-nav">
+            <a href="index.html">Home</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="review.html">Review</a>
+        </nav>
+    </header>
+
+    <main class="result-shell result-container">
+        <section class="result-hero glass-card">
+            <div>
+                <span class="eyebrow">Quiz Completed</span>
+                <h1 id="subject">Subject</h1>
+                <h2 id="chapter">Chapter</h2>
+            </div>
+            <div class="score-ring">
+                <div id="score">0%</div>
+                <span>Accuracy</span>
+            </div>
+        </section>
+
+        <section class="stats-grid result-stats">
+            <article class="stat-card stat-card-compact"><h2 id="correct">0</h2><p>Correct</p></article>
+            <article class="stat-card stat-card-compact"><h2 id="wrong">0</h2><p>Wrong</p></article>
+            <article class="stat-card stat-card-compact"><h2 id="skipped">0</h2><p>Skipped</p></article>
+            <article class="stat-card stat-card-compact"><h2 id="markedReview">0</h2><p>Marked Review</p></article>
+        </section>
+
+        <section class="result-metrics grid-2">
+            <article class="panel">
+                <h3>Performance Summary</h3>
+                <div class="metric-row"><span>Total Questions</span><strong id="total">0</strong></div>
+                <div class="metric-row"><span>Attempted</span><strong id="attempted">0</strong></div>
+                <div class="metric-row"><span>Correct</span><strong id="correctCount">0</strong></div>
+                <div class="metric-row"><span>Wrong</span><strong id="wrongCount">0</strong></div>
+                <div class="metric-row"><span>Skipped</span><strong id="skippedCount">0</strong></div>
+                <div class="metric-row"><span>Marked for Review</span><strong id="markedReviewCount">0</strong></div>
+                <div class="metric-row"><span>Positive Marks</span><strong id="positiveMarks">0</strong></div>
+                <div class="metric-row"><span>Negative Marks</span><strong id="negativeMarks">0</strong></div>
+                <div class="metric-row"><span>Final Score</span><strong id="finalScore">0</strong></div>
+                <div class="metric-row"><span>Accuracy</span><strong id="accuracyText">0%</strong></div>
+                <div class="metric-row"><span>Percentage</span><strong id="percentageText">0%</strong></div>
+                <div class="metric-row"><span>Time Taken</span><strong id="timeTaken">00:00</strong></div>
+                <div class="metric-row"><span>Rank</span><strong id="rank">—</strong></div>
+                <div class="progress-track"><div id="progressBar" class="progress-fill"></div></div>
+            </article>
+            <article class="panel">
+                <h3>Accuracy Distribution</h3>
+                <div class="pie-wrap">
+                    <div id="pieChart" class="pie-chart"></div>
+                    <div class="pie-legend">
+                        <div><span class="legend-dot correct-dot"></span> Correct</div>
+                        <div><span class="legend-dot wrong-dot"></span> Wrong</div>
+                        <div><span class="legend-dot skipped-dot"></span> Skipped</div>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section class="panel result-topics">
+            <h3>Topic-wise Statistics</h3>
+            <div id="topicStats" class="topic-stats"></div>
+        </section>
+
+        <section class="panel result-explanations">
+            <h3>Question Explanations</h3>
+            <div id="explanationList" class="explanation-list"></div>
+        </section>
+
+        <section id="performanceDashboard" class="panel" style="display:none;">
+            <h3>Performance Dashboard</h3>
+            <div class="stats-grid" id="perfStats">
+                <article class="stat-card"><h2 id="totalTests">0</h2><p>Total Tests Attempted</p></article>
+                <article class="stat-card"><h2 id="totalSolved">0</h2><p>Total Questions Solved</p></article>
+                <article class="stat-card"><h2 id="totalCorrect">0</h2><p>Correct</p></article>
+                <article class="stat-card"><h2 id="totalWrong">0</h2><p>Incorrect</p></article>
+                <article class="stat-card"><h2 id="totalSkipped">0</h2><p>Skipped</p></article>
+                <article class="stat-card"><h2 id="accuracyPercent">0%</h2><p>Accuracy</p></article>
+            </div>
+
+            <div class="grid-2">
+                <article class="panel">
+                    <h4>Accuracy Over Time</h4>
+                    <canvas id="accuracyLine" height="160"></canvas>
+                </article>
+                <article class="panel">
+                    <h4>Subject Accuracy</h4>
+                    <canvas id="subjectBar" height="160"></canvas>
+                </article>
+            </div>
+
+            <div class="grid-2">
+                <article class="panel">
+                    <h4>Overall Distribution</h4>
+                    <canvas id="overallPie" height="160"></canvas>
+                </article>
+                <article class="panel">
+                    <h4>Recent Tests</h4>
+                    <div id="recentTestsList"></div>
+                </article>
+            </div>
+
+            <div class="result-buttons" style="margin-top:18px;">
+                <button id="resetStatsBtn" class="btn btn-secondary">Reset Statistics</button>
+                <button id="exportCsvBtn" class="btn btn-primary">Export CSV</button>
+                <button id="exportPdfBtn" class="btn btn-primary">Export PDF</button>
+                <button id="viewLatestResultBtn" class="btn btn-tertiary">View Latest Result</button>
+            </div>
+        </section>
+
+        <section class="result-buttons">
+            <button id="retryBtn" class="btn btn-primary">Retry Quiz</button>
+            <button id="reviewBtn" class="btn btn-secondary">Review Answers</button>
+            <a href="index.html" class="btn btn-tertiary">Home</a>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="assets/js/result.js"></script>
+</body>
+</html>

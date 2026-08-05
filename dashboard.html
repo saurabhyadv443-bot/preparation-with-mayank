@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Portal Dashboard</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script src="assets/js/auth.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-wrap">
+            <div class="logo-badge">Quiz Portal</div>
+            <div>
+                <div class="brand-title">Dashboard</div>
+                <div class="brand-subtitle">Production-ready preparation cockpit</div>
+            </div>
+        </div>
+        <nav class="top-nav">
+            <a href="index.html">Home</a>
+            <a href="#subjects">Subjects</a>
+            <a href="result.html">Results</a>
+            <a href="subject.html?subject=mock">Mock</a>
+            <a href="#" id="changePasswordBtn" class="btn-tertiary">Change Password</a>
+            <a href="#" id="logoutBtn" class="btn-tertiary">Logout</a>
+        </nav>
+    </header>
+
+    <main class="dashboard-shell">
+        <section class="section-heading section-heading-compact">
+            <h1>Subject Dashboard</h1>
+            <p>Select a practice module and continue from where you left off.</p>
+        </section>
+
+        <section id="subjects" class="dashboard-grid">
+            <article class="dashboard-card dashboard-action-card" id="dashboardActionStart">
+                <div class="card-icon">⭐</div>
+                <h2>Bookmarked Questions</h2>
+                <p>Revise important questions instantly</p>
+                <a href="subject.html?subject=ancient" class="btn btn-secondary btn-small">Review</a>
+            </article>
+            <article class="dashboard-card dashboard-action-card">
+                <div class="card-icon">📊</div>
+                <h2>Performance</h2>
+                <p>Track accuracy, speed and topic mastery</p>
+                <a href="result.html" class="btn btn-secondary btn-small">View Results</a>
+            </article>
+            <article class="dashboard-card dashboard-action-card">
+                <div class="card-icon">📖</div>
+                <h2>Previous Year Questions</h2>
+                <p>Filter by year and topic</p>
+                <a href="subject.html?subject=modern" class="btn btn-secondary btn-small">Explore</a>
+            </article>
+            <article class="dashboard-card dashboard-action-card">
+                <div class="card-icon">📝</div>
+                <h2>Mock Test</h2>
+                <p>Full length mock test experience</p>
+                <a href="subject.html?subject=mock" class="btn btn-secondary btn-small">Open Subject</a>
+            </article>
+        </section>
+
+        <section class="stats-grid">
+            <article class="stat-card"><h2>10,000+</h2><p>Questions</p></article>
+            <article class="stat-card"><h2>100+</h2><p>Mock Tests</p></article>
+            <article class="stat-card"><h2>500+</h2><p>Chapters</p></article>
+            <article class="stat-card"><h2>24×7</h2><p>Access</p></article>
+        </section>
+    </main>
+
+    <footer class="footer">© 2026 Quiz Portal — Designed & Developed by Mayank</footer>
+    <script src="assets/js/dashboard.js"></script>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Portal</title>
+    <link rel="stylesheet" href="assets/css/quiz.css" />
+    <script src="assets/js/auth.js"></script>
+</head>
+<body>
+    <header class="topbar">
+        <div>
+            <div class="topbar-kicker">Exam Mode</div>
+            <h1 id="subjectTitle">Quiz Portal</h1>
+                <div class="logo-badge">Quiz Portal</div>
+            <div class="top-right">
+            <div id="timer" class="timer-pill">00:40</div>
+            <button id="pauseBtn" class="btn-secondary">⏸ Pause</button>
+            <button id="exitBtn" class="btn-danger">✕ Exit</button>
+            <button id="changePasswordBtn" class="btn-tertiary">Change Password</button>
+            <button id="logoutBtn" class="btn-tertiary">Logout</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="chapterSection" class="panel panel-light">
+            <div class="section-heading compact-heading">
+                <h2>Select Chapter</h2>
+                <input id="chapterSearch" type="search" class="search-input" placeholder="Search chapter" />
+            </div>
+            <div id="chapterList" class="chapter-list"></div>
+        </section>
+
+        <section id="quizSection" style="display:none;">
+            <div class="quiz-layout">
+                <div class="quiz-main panel">
+                    <div class="question-topline">
+                        <h2 id="chapterTitle"></h2>
+                        <div id="progressText">Question 1 of 1</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                    <div id="questionBox"></div>
+                    <div class="navigation">
+                        <button id="prevBtn">⬅ Previous</button>
+                        <button id="nextBtn">Next ➜</button>
+                        <button id="markReviewBtn" class="btn-mark-review">🚩 Mark for Review</button>
+                    </div>
+                    <div class="submit-footer">
+                        <button id="submitBtn" class="material-submit-btn">✓ Submit Test</button>
+                    </div>
+                </div>
+
+                <aside class="palette-panel panel">
+                    <h3>Question Palette</h3>
+                    <div id="palette" class="palette-grid"></div>
+                    <hr />
+                    <p><span class="answered-box"></span> Answered</p>
+                    <p><span class="current-box"></span> Current</p>
+                    <p><span class="notanswered-box"></span> Not Answered</p>
+                    <p><span class="review-box"></span> Marked for Review</p>
+                    <p><span class="answered-review-box"></span> Answered + Review</p>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <div id="submitConfirmModal" class="modal-overlay" style="display:none;">
+        <div class="modal-card">
+            <div class="modal-icon">✓</div>
+            <h3>Submit Test?</h3>
+            <p class="modal-copy">Review your attempt before finishing.</p>
+            <div class="modal-stats">
+                <div><span>Answered</span><strong id="confirmAnswered">0</strong></div>
+                <div><span>Not Answered</span><strong id="confirmNotAnswered">0</strong></div>
+                <div><span>Marked for Review</span><strong id="confirmMarkedReview">0</strong></div>
+            </div>
+            <div class="modal-actions">
+                <button id="cancelSubmitBtn" class="btn btn-secondary">Cancel</button>
+                <button id="confirmSubmitBtn" class="material-submit-btn confirm-submit-btn">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/quizEngine.js?v=20260803-1"></script>
+</body>
+</html>
