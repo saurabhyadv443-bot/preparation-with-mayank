@@ -298,7 +298,8 @@ if (!result) {
     window.location.href = "index.html";
 } else {
     reviewSubject.innerText = result.subject || "Quiz Review";
-    reviewSubtitle.innerText = `${result.chapter || "Chapter"} • Accuracy ${result.accuracy}%`;
+    const chapterLabel = result.chapter && result.chapter.trim() ? result.chapter : "Full Length Test";
+    reviewSubtitle.innerText = `${chapterLabel} • Accuracy ${result.accuracy}%`;
     renderSummary();
     renderPalette();
     renderQuestions();

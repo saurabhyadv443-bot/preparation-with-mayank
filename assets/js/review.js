@@ -14,7 +14,8 @@ function escapeHtml(value) {
 if (!result) {
     window.location.href = "index.html";
 } else {
-    reviewMeta.innerHTML = `${escapeHtml(result.subject)} • ${escapeHtml(result.chapter)} • Accuracy: ${result.accuracy}%`;
+    const chapterLabel = result.chapter && result.chapter.trim() ? result.chapter : "Full Length Test";
+    reviewMeta.innerHTML = `${escapeHtml(result.subject)} • ${escapeHtml(chapterLabel)} • Accuracy: ${result.accuracy}%`;
 
     result.questions.forEach((question, index) => {
         const selectedAnswer = result.userAnswers[index];

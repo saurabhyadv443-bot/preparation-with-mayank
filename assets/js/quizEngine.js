@@ -3,6 +3,8 @@ const subject = params.get("subject") || "ancient";
 let selectedMode = params.get("mode") || "";
 
 let SUBJECT_MANIFEST = null;
+let subjects = [];
+let selectedSubject = subject;
 
 async function loadSubjectManifest() {
     if (SUBJECT_MANIFEST) return SUBJECT_MANIFEST;
@@ -11,10 +13,14 @@ async function loadSubjectManifest() {
         if (!resp.ok) throw new Error('manifest missing');
         const j = await resp.json();
         if (!j || !Array.isArray(j.subjects)) throw new Error('invalid manifest');
+        subjects = j.subjects;
+        console.log("Subjects loaded:", subjects);
         SUBJECT_MANIFEST = j.subjects.reduce((acc, s) => { acc[s.id] = s; return acc; }, {});
         return SUBJECT_MANIFEST;
     } catch (e) {
         SUBJECT_MANIFEST = null;
+        subjects = [];
+        console.log("Subjects loaded:", subjects);
         return null;
     }
 }
@@ -172,6 +178,8 @@ function getQuizDuration() {
         }
 
         quizData = data;
+        selectedSubject = subject;
+        console.log("Selected subject:", selectedSubject);
         document.getElementById('subjectTitle').innerText = data.subject;
         loadChapters();
         if (chapterSearch) {
@@ -214,7 +222,25 @@ function loadChapters() {
     }
 
     chapterList.innerHTML = "";
-    Object.keys(quizData.chapters || {}).forEach((chapter) => {
+    const chapterMap = quizData && quizData.chapters ? quizData.chapters : {};
+    let chapters = chapterMap;
+    if (Object.keys(chapterMap).length === 0 && quizData && typeof quizData === 'object' && quizData.subject === 'Mock Test') {
+        const mockGroups = Object.keys(quizData).filter((key) => !['subject', 'quizType', 'totalTimeSeconds', 'secondsPerQuestion', 'duration', 'durationSeconds', 'chapters'].includes(key));
+        chapters = mockGroups.reduce((acc, key) => {
+            const value = quizData[key];
+            if (Array.isArray(value)) {
+                acc[key] = value;
+            } else if (value && typeof value === 'object') {
+                Object.keys(value).forEach((subKey) => {
+                    acc[subKey] = value[subKey];
+                });
+            }
+            return acc;
+        }, {});
+    }
+
+    console.log("Loaded chapters:", Object.keys(chapters));
+    Object.keys(chapters || {}).forEach((chapter) => {
         const btn = document.createElement("button");
         btn.innerText = chapter;
         btn.className = "chapterBtn";
@@ -239,7 +265,26 @@ function filterChapters(term) {
 
 function startQuiz(chapter) {
     currentChapter = chapter;
-    questions = Array.isArray(quizData.chapters[chapter]) ? quizData.chapters[chapter] : [];
+    const chapterMap = quizData && quizData.chapters ? quizData.chapters : {};
+    let chapterQuestions = [];
+    if (Object.keys(chapterMap).length > 0) {
+        chapterQuestions = Array.isArray(chapterMap[chapter]) ? chapterMap[chapter] : [];
+    } else if (quizData && quizData.subject === 'Mock Test') {
+        const mockGroups = Object.keys(quizData).filter((key) => !['subject', 'quizType', 'totalTimeSeconds', 'secondsPerQuestion', 'duration', 'durationSeconds', 'chapters'].includes(key));
+        const flattened = mockGroups.reduce((acc, key) => {
+            const value = quizData[key];
+            if (Array.isArray(value)) {
+                acc[key] = value;
+            } else if (value && typeof value === 'object') {
+                Object.keys(value).forEach((subKey) => {
+                    acc[subKey] = value[subKey];
+                });
+            }
+            return acc;
+        }, {});
+        chapterQuestions = Array.isArray(flattened[chapter]) ? flattened[chapter] : [];
+    }
+    questions = chapterQuestions;
     currentQuestion = 0;
     userAnswers = new Array(questions.length).fill(null);
     markedForReview = new Array(questions.length).fill(false);

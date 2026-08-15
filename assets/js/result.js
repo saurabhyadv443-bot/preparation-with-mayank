@@ -78,7 +78,7 @@ const explanationList = document.getElementById("explanationList");
 function renderSingleResult(result) {
     if (!result) return;
     document.getElementById("subject").innerHTML = result.subject || "Unknown Subject";
-    document.getElementById("chapter").innerHTML = result.chapter || "Unknown Chapter";
+    document.getElementById("chapter").innerHTML = result.chapter && result.chapter.trim() ? result.chapter : "Full Length Test";
     document.getElementById("correct").innerHTML = result.correct || 0;
     document.getElementById("wrong").innerHTML = result.wrong || 0;
     document.getElementById("skipped").innerHTML = result.skipped || 0;
