@@ -123,6 +123,34 @@ img {
     gap: 14px;
 }
 
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 44px;
+    padding: 0 12px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateX(-2px);
+}
+
+.back-button:active {
+    transform: translateX(-1px);
+}
+
 .logo-badge {
     width: 54px;
     height: 54px;
@@ -162,7 +190,7 @@ img {
 }
 
 .hero {
-    padding: 64px 18px;
+    padding: 40px 18px;
     background: radial-gradient(circle at top left, rgba(255,255,255,0.12), transparent 34%), linear-gradient(120deg, #1d4ed8, #0f3a72);
     color: white;
 }
@@ -182,7 +210,7 @@ img {
     max-width: 900px;
     margin: 0 auto;
     text-align: center;
-    padding: 42px;
+    padding: 28px;
     background: rgba(255,255,255,0.14);
     backdrop-filter: blur(14px);
     box-shadow: 0 18px 42px rgba(15,23,42,0.24);
@@ -226,7 +254,7 @@ img {
 .review-container {
     max-width: 1180px;
     margin: 0 auto;
-    padding: 30px 18px;
+    padding: 22px 18px;
 }
 
 .stats-grid,
@@ -234,7 +262,7 @@ img {
 .dashboard-grid,
 .grid-2 {
     display: grid;
-    gap: 20px;
+    gap: 14px;
 }
 
 .stats-grid,
@@ -244,7 +272,7 @@ img {
 }
 
 .stat-card {
-    padding: 26px;
+    padding: 20px;
     text-align: center;
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: white;
@@ -257,7 +285,7 @@ img {
 .card,
 .dashboard-card,
 .panel {
-    padding: 24px;
+    padding: 18px;
 }
 
 .card,
@@ -280,19 +308,20 @@ img {
 }
 
 .card-icon {
-    font-size: 2rem;
-    margin-bottom: 12px;
+    font-size: 1.6rem;
+    margin-bottom: 8px;
 }
 
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 20px;
+    padding: 11px 18px;
     border-radius: 999px;
     border: none;
     cursor: pointer;
-    font-weight: 800;
+    font-weight: 700;
+    font-size: 0.95rem;
     transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
@@ -317,8 +346,8 @@ img {
 }
 
 .btn-small {
-    padding: 9px 16px;
-    font-size: 0.92rem;
+    padding: 8px 14px;
+    font-size: 0.9rem;
 }
 
 .hero-buttons,
@@ -355,8 +384,8 @@ img {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
-    padding: 28px;
+    gap: 18px;
+    padding: 24px;
     background: linear-gradient(135deg, #eff6ff, #ffffff);
 }
 
@@ -1018,4 +1047,106 @@ img {
         justify-content: space-between;
         flex-wrap: wrap;
     }
+}
+
+/* Explanation Editor Styles for Review Section */
+.explanation-editor-section {
+    background: linear-gradient(135deg, #f0f4ff, #f8faff);
+    border: 2px solid #d9e5ff;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 16px;
+}
+
+.explanation-editor-header {
+    margin-bottom: 10px;
+}
+
+.explanation-editor-header h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1d4ed8;
+    margin: 0;
+}
+
+.explanation-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    resize: vertical;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background: white;
+    color: var(--text);
+}
+
+.explanation-input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.explanation-editor-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-save-explanation,
+.btn-cancel-explanation,
+.btn-edit-explanation {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
+}
+
+.btn-save-explanation {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+}
+
+.btn-save-explanation:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(37, 99, 235, 0.25);
+}
+
+.btn-save-explanation:active {
+    transform: translateY(0);
+}
+
+.btn-cancel-explanation {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.btn-cancel-explanation:hover {
+    background: #d1d5db;
+}
+
+.btn-cancel-explanation:active {
+    transform: scale(0.98);
+}
+
+.btn-edit-explanation {
+    background: #f0f4ff;
+    color: #1d4ed8;
+    border: 1px solid #d9e5ff;
+    margin-left: 8px;
+}
+
+.btn-edit-explanation:hover {
+    background: #dbe7ff;
+    border-color: #2563eb;
+}
+
+.btn-edit-explanation:active {
+    transform: scale(0.98);
 }

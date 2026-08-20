@@ -160,7 +160,7 @@ body {
 #chapterSection {
     background: white;
     border-radius: 18px;
-    padding: 28px;
+    padding: 20px;
     box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
 }
 
@@ -173,8 +173,8 @@ body {
 
 .chapterBtn {
     width: 100%;
-    padding: 16px 18px;
-    font-size: 1rem;
+    padding: 12px 16px;
+    font-size: 0.95rem;
     font-weight: 700;
     border-radius: 12px;
     background: linear-gradient(135deg, #1565c0, #0d47a1);
@@ -191,13 +191,19 @@ body {
 .quiz-main {
     background: white;
     border-radius: 18px;
-    padding: 24px;
+    padding: 18px;
     box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
 }
 
 .palette-panel {
     background: white;
     border-radius: 18px;
+    padding: 14px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+}
     padding: 20px;
     box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
     height: fit-content;
@@ -242,9 +248,9 @@ body {
 }
 
 .question-statement {
-    margin-bottom: 20px;
-    font-size: 1.05rem;
-    line-height: 1.8;
+    margin-bottom: 16px;
+    font-size: 1rem;
+    line-height: 1.7;
 }
 
 .option-wrap {
@@ -254,8 +260,8 @@ body {
     background: white;
     border: 1px solid #dbe7ff;
     border-radius: 12px;
-    padding: 14px 15px;
-    margin: 10px 0;
+    padding: 12px 14px;
+    margin: 8px 0;
     cursor: pointer;
 }
 
@@ -271,16 +277,17 @@ body {
 .navigation {
     display: flex;
     justify-content: space-between;
-    gap: 14px;
-    margin-top: 22px;
+    gap: 12px;
+    margin-top: 16px;
 }
 
 #prevBtn,
 #nextBtn,
 #markReviewBtn {
     border-radius: 999px;
-    padding: 12px 20px;
+    padding: 10px 16px;
     font-weight: 700;
+    font-size: 0.95rem;
     color: white;
 }
 
@@ -532,5 +539,104 @@ body {
 
     #palette {
         grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+}
+
+/* Explanation Editor Styles */
+.explanation-editor-section {
+    background: linear-gradient(135deg, #f0f4ff, #f8faff);
+    border: 2px solid #d9e5ff;
+    border-radius: 16px;
+    padding: 18px;
+    margin-top: 20px;
+}
+
+.explanation-editor-header {
+    margin-bottom: 12px;
+}
+
+.explanation-editor-header h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1e40af;
+    margin: 0;
+}
+
+.explanation-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    resize: vertical;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background: white;
+    color: #0f172a;
+}
+
+.explanation-input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.explanation-editor-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.btn-save-explanation {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    font-size: 0.95rem;
+}
+
+.btn-save-explanation:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px rgba(37, 99, 235, 0.28);
+}
+
+.btn-save-explanation:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.btn-save-explanation:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.explanation-status {
+    font-size: 0.9rem;
+    color: #16a34a;
+    font-weight: 600;
+    display: none;
+}
+
+.explanation-status.show {
+    display: inline;
+}
+
+@media (max-width: 640px) {
+    .explanation-editor-section {
+        padding: 14px;
+    }
+
+    .explanation-editor-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-save-explanation {
+        width: 100%;
     }
 }

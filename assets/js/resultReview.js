@@ -18,6 +18,7 @@ const resultCount = document.getElementById("resultCount");
 let activeQuestionIndex = 0;
 let activeFilter = "all";
 let activeSearchQuery = "";
+let editingExplanationIndex = null;
 
 function escapeHtml(value) {
     return String(value)
@@ -32,6 +33,32 @@ function formatTime(seconds) {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+}
+
+function startEditingExplanation(questionIndex) {
+    editingExplanationIndex = questionIndex;
+    renderQuestions();
+}
+
+function cancelEditingExplanation() {
+    editingExplanationIndex = null;
+    renderQuestions();
+}
+
+function saveEditedExplanation(questionIndex) {
+    const explanationInput = document.getElementById(`explanationInput-${questionIndex}`);
+    if (!explanationInput || !result.questions[questionIndex]) {
+        return;
+    }
+    const newExplanation = explanationInput.value.trim();
+    result.questions[questionIndex].explanation = newExplanation;
+    
+    // Persist to localStorage
+    const resultKey = localStorage.getItem("quizResult") ? "quizResult" : "quizResult_study";
+    localStorage.setItem(resultKey, JSON.stringify(result));
+    
+    editingExplanationIndex = null;
+    renderQuestions();
 }
 
 function renderSummary() {
@@ -214,6 +241,32 @@ function renderQuestions() {
             `;
         }).join("");
 
+        // Build explanation section with edit capability
+        let explanationSectionHtml = "";
+        if (editingExplanationIndex === index) {
+            // Show edit mode
+            explanationSectionHtml = `
+                <div class="explanation-editor-section">
+                    <div class="explanation-editor-header">
+                        <h4>📝 Edit Explanation</h4>
+                    </div>
+                    <textarea id="explanationInput-${index}" class="explanation-input" placeholder="Enter or edit the explanation for this question..." rows="5">${escapeHtml(explanationText || "")}</textarea>
+                    <div class="explanation-editor-actions">
+                        <button onclick="saveEditedExplanation(${index})" class="btn-save-explanation">💾 Save Explanation</button>
+                        <button onclick="cancelEditingExplanation()" class="btn-cancel-explanation">✕ Cancel</button>
+                    </div>
+                </div>
+            `;
+        } else {
+            // Show view mode with edit button
+            explanationSectionHtml = `
+                <div class="explanation-box${explanationText ? "" : " missing"}">
+                    <strong>Explanation:</strong> ${explanationText ? highlightText(explanationText, activeSearchQuery) : "Explanation is currently unavailable for this question."}
+                    <button onclick="startEditingExplanation(${index})" class="btn-edit-explanation">✎ Edit Explanation</button>
+                </div>
+            `;
+        }
+
         return `
             <div class="review-item question-card${visible ? "" : " hidden-question"}" data-question-index="${index}">
                 <div class="review-card-header">
@@ -223,9 +276,7 @@ function renderQuestions() {
                 <ul class="review-options">${optionsHtml}</ul>
                 <p><strong>Your Answer:</strong> ${selectedAnswerText}</p>
                 <p><strong>Correct Answer:</strong> ${correctAnswerText}</p>
-                <div class="explanation-box${explanationText ? "" : " missing"}">
-                    <strong>Explanation:</strong> ${explanationText ? highlightText(explanationText, activeSearchQuery) : "Explanation is currently unavailable for this question."}
-                </div>
+                ${explanationSectionHtml}
             </div>
         `;
     }).join("");
