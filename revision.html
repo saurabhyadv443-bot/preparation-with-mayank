@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Revision Center - Quiz Portal</title>
   <link rel="stylesheet" href="assets/css/style.css" />
+  <script src="assets/js/auth.js"></script>
 </head>
 <body>
   <header class="header">
@@ -35,9 +36,21 @@
       <div id="weakTopics">Loading...</div>
     </section>
 
-    <section class="panel">
-      <h2>Bookmarked Questions</h2>
-      <div id="bookmarkedList">Loading...</div>
+    <section class="panel saved-library-panel">
+      <div class="saved-library-header">
+        <div>
+          <h2>Saved for Revision</h2>
+          <p>Organized by subject and chapter for focused review.</p>
+        </div>
+        <button id="savedLibraryBack" class="btn btn-tertiary btn-small" type="button" hidden>← Back</button>
+      </div>
+      <div class="saved-library-tools">
+        <input id="savedLibrarySearch" class="search-input" type="search" placeholder="Search saved questions..." aria-label="Search saved questions" />
+        <select id="savedLibrarySubject" aria-label="Filter saved questions by subject"><option value="">All Subjects</option></select>
+        <select id="savedLibraryChapter" aria-label="Filter saved questions by chapter"><option value="">All Chapters</option></select>
+      </div>
+      <div id="savedLibraryBreadcrumb" class="saved-library-breadcrumb">Saved for Revision</div>
+      <div id="savedLibraryContent">Loading...</div>
     </section>
 
     <section class="panel">

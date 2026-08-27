@@ -113,13 +113,13 @@
                     countdownEl.textContent = `Opening in ${seconds}...`;
                 } else {
                     clearInterval(interval);
-                    window.location.href = 'dashboard.html';
+                    if (window.auth && window.auth.isEntryAuthenticated()) window.location.href = 'dashboard.html';
                 }
             }, 1000);
 
             skipBtn.addEventListener('click', ()=>{
                 clearInterval(interval);
-                window.location.href = 'dashboard.html';
+                if (window.auth && window.auth.isEntryAuthenticated()) window.location.href = 'dashboard.html';
             });
 
             // Accessibility: allow Enter on Skip button

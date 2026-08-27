@@ -2,7 +2,31 @@ const urlParams = new URLSearchParams(window.location.search);
 const reviewMode = urlParams.get("mode") || "";
 const resultKey = reviewMode === "study" ? "quizResult_study" : "quizResult";
 const rawResult = localStorage.getItem(resultKey) || localStorage.getItem("quizResult");
-const result = rawResult ? JSON.parse(rawResult) : null;
+let savedReviewFocus = null;
+try {
+    savedReviewFocus = JSON.parse(sessionStorage.getItem("savedReviewFocus") || "null");
+} catch (error) {
+    savedReviewFocus = null;
+}
+const result = savedReviewFocus
+    ? {
+        subject: savedReviewFocus.subject,
+        subjectKey: savedReviewFocus.subjectKey,
+        chapter: savedReviewFocus.chapter,
+        total: 1,
+        attempted: 0,
+        correct: 0,
+        wrong: 0,
+        skipped: 1,
+        accuracy: 0,
+        questions: [savedReviewFocus.question],
+        userAnswers: [null]
+    }
+    : (rawResult ? JSON.parse(rawResult) : null);
+const savedReviewQuestionIndex = savedReviewFocus ? Number(savedReviewFocus.questionIndex || 0) : null;
+if (savedReviewFocus) {
+    sessionStorage.removeItem("savedReviewFocus");
+}
 
 const reviewSubject = document.getElementById("reviewSubject");
 const reviewSubtitle = document.getElementById("reviewSubtitle");
@@ -14,11 +38,28 @@ const nextQuestionBtn = document.getElementById("nextQuestionBtn");
 const filterButtons = Array.from(document.querySelectorAll(".filter-btn"));
 const searchInput = document.getElementById("searchInput");
 const resultCount = document.getElementById("resultCount");
+const savedQuestionsToggle = document.getElementById("savedQuestionsToggle");
+const savedQuestionsPanel = document.getElementById("savedQuestionsPanel");
+const savedQuestionsList = document.getElementById("savedQuestionsList");
+const paletteToggle = document.getElementById("paletteToggle");
+const paletteOverlay = document.getElementById("questionPaletteOverlay");
+const paletteClose = document.getElementById("paletteClose");
+const quickNavigationLabel = document.getElementById("quickNavigationLabel");
+const quickNavigationList = document.getElementById("quickNavigationList");
 
 let activeQuestionIndex = 0;
 let activeFilter = "all";
 let activeSearchQuery = "";
 let editingExplanationIndex = null;
+let editingAnswerIndex = null;
+
+function closePalette() {
+    if (!paletteOverlay || !paletteToggle) {
+        return;
+    }
+    paletteOverlay.hidden = true;
+    paletteToggle.setAttribute("aria-expanded", "false");
+}
 
 function escapeHtml(value) {
     return String(value)
@@ -61,6 +102,33 @@ function saveEditedExplanation(questionIndex) {
     renderQuestions();
 }
 
+function startEditingAnswer(questionIndex) {
+    editingAnswerIndex = questionIndex;
+    renderQuestions();
+}
+
+function cancelEditingAnswer() {
+    editingAnswerIndex = null;
+    renderQuestions();
+}
+
+function saveEditedAnswer(questionIndex) {
+    const selectedAnswer = document.querySelector(`input[name="correctAnswer-${questionIndex}"]:checked`);
+    if (!selectedAnswer || !result.questions[questionIndex]) {
+        return;
+    }
+
+    result.questions[questionIndex].answer = Number(selectedAnswer.value);
+    localStorage.setItem(resultKey, JSON.stringify(result));
+    editingAnswerIndex = null;
+    renderQuestions();
+    renderPalette();
+    renderQuickNavigation();
+    updateFilterButtons();
+    updateResultCount();
+    updateActiveQuestion();
+}
+
 function renderSummary() {
     const scoreValue = result.finalScore != null ? result.finalScore : result.score;
     const summaryItems = [
@@ -92,7 +160,63 @@ function getBookmarks() {
 
 function isBookmarked(index) {
     const bookmarks = getBookmarks();
-    return bookmarks.some((item) => item.subjectKey === (result.subjectKey || result.subject) && item.chapter === result.chapter && item.questionIndex === index);
+    const questionIndex = savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex;
+    return bookmarks.some((item) => item.subjectKey === (result.subjectKey || result.subject) && item.chapter === result.chapter && item.questionIndex === questionIndex);
+}
+
+function toggleSavedQuestion(index) {
+    const bookmarks = getBookmarks();
+    const subjectKey = result.subjectKey || result.subject;
+    const questionIndex = savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex;
+    const bookmarkIndex = bookmarks.findIndex((item) => item.subjectKey === subjectKey && item.chapter === result.chapter && item.questionIndex === questionIndex);
+
+    if (bookmarkIndex >= 0) {
+        bookmarks.splice(bookmarkIndex, 1);
+    } else {
+        bookmarks.push({
+            subjectKey,
+            subject: result.subject,
+            chapter: result.chapter,
+            questionIndex,
+            question: result.questions[index]
+        });
+    }
+
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+    renderQuestions();
+    renderPalette();
+    renderQuickNavigation();
+    updateFilterButtons();
+    renderSavedQuestions();
+    updateResultCount();
+    updateActiveQuestion();
+}
+
+function renderSavedQuestions() {
+    if (!savedQuestionsToggle || !savedQuestionsList) {
+        return;
+    }
+
+    const savedIndexes = result.questions
+        .map((question, index) => isBookmarked(index) ? index : null)
+        .filter((index) => index !== null);
+
+    savedQuestionsToggle.innerText = `Saved for Revision (${savedIndexes.length})`;
+    savedQuestionsList.innerHTML = savedIndexes.length
+        ? savedIndexes.map((index) => `<button type="button" class="saved-question-link" data-question-index="${index}">Q${index + 1}</button>`).join("")
+        : "<span class=\"saved-questions-empty\">No questions saved yet.</span>";
+
+    savedQuestionsList.querySelectorAll(".saved-question-link").forEach((button) => {
+        button.onclick = () => {
+            activeQuestionIndex = Number(button.dataset.questionIndex);
+            activeFilter = "all";
+            updateFilterButtons();
+            renderQuestions();
+            updateActiveQuestion();
+            scrollToQuestion(activeQuestionIndex);
+            closePalette();
+        };
+    });
 }
 
 function getQuestionStatus(index) {
@@ -125,10 +249,47 @@ function renderPalette() {
                 renderQuestions();
             }
             updateActiveQuestion();
+            renderQuickNavigation();
             scrollToQuestion(index);
         };
         questionPalette.appendChild(btn);
     });
+}
+
+function renderQuickNavigation() {
+    if (!quickNavigationLabel || !quickNavigationList) {
+        return;
+    }
+
+    const labels = {
+        all: "All",
+        correct: "Correct",
+        incorrect: "Incorrect",
+        skipped: "Skipped",
+        bookmarked: "Bookmarked"
+    };
+    const visibleIndexes = getVisibleQuestionIndexes();
+    quickNavigationLabel.innerText = `${labels[activeFilter] || "All"}:`;
+    quickNavigationList.innerHTML = "";
+
+    visibleIndexes.forEach((index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `palette-btn quick-navigation-button ${getQuestionStatus(index)}`;
+        button.innerText = index + 1;
+        button.classList.toggle("current", index === activeQuestionIndex);
+        button.onclick = () => {
+            activeQuestionIndex = index;
+            updateActiveQuestion();
+            renderQuickNavigation();
+            scrollToQuestion(index);
+        };
+        quickNavigationList.appendChild(button);
+    });
+
+    if (!visibleIndexes.length) {
+        quickNavigationList.innerHTML = "<span class=\"quick-navigation-empty\">None</span>";
+    }
 }
 
 function normalizeSearchQuery(value) {
@@ -225,6 +386,19 @@ function renderQuestions() {
         const explanation = question.explanation;
         const explanationText = explanation && String(explanation).trim();
         const questionText = highlightText(question.q, activeSearchQuery);
+        const saved = isBookmarked(index);
+        const answerSectionHtml = editingAnswerIndex === index
+            ? `<div class="answer-editor-section">
+                    <strong>Edit Correct Answer</strong>
+                    <div class="answer-editor-options">${question.options.map((option, optionIndex) => `
+                        <label><input type="radio" name="correctAnswer-${index}" value="${optionIndex}"${optionIndex === question.answer ? " checked" : ""}> ${String.fromCharCode(65 + optionIndex)}. ${escapeHtml(option)}</label>
+                    `).join("")}</div>
+                    <div class="answer-editor-actions">
+                        <button type="button" class="btn btn-primary btn-small" onclick="saveEditedAnswer(${index})">Save</button>
+                        <button type="button" class="btn btn-tertiary btn-small" onclick="cancelEditingAnswer()">Cancel</button>
+                    </div>
+                </div>`
+            : `<p><strong>Correct Answer:</strong> ${correctAnswerText} <button type="button" class="btn-edit-answer" onclick="startEditingAnswer(${index})">Edit Correct Answer</button></p>`;
         const optionsHtml = question.options.map((option, optionIndex) => {
             const isCorrect = optionIndex === question.answer;
             const isSelected = optionIndex === selected;
@@ -271,11 +445,14 @@ function renderQuestions() {
             <div class="review-item question-card${visible ? "" : " hidden-question"}" data-question-index="${index}">
                 <div class="review-card-header">
                     <h3>Q${index + 1}. ${questionText}</h3>
-                    <span class="review-status-pill ${status}">${status === "correct" ? "Correct" : status === "incorrect" ? "Incorrect" : "Not Attempted"}</span>
+                    <div class="review-card-actions">
+                        <button type="button" class="save-question-btn${saved ? " saved" : ""}" onclick="toggleSavedQuestion(${index})">${saved ? "★ Saved" : "☆ Save"}</button>
+                        <span class="review-status-pill ${status}">${status === "correct" ? "Correct" : status === "incorrect" ? "Incorrect" : "Not Attempted"}</span>
+                    </div>
                 </div>
                 <ul class="review-options">${optionsHtml}</ul>
                 <p><strong>Your Answer:</strong> ${selectedAnswerText}</p>
-                <p><strong>Correct Answer:</strong> ${correctAnswerText}</p>
+                ${answerSectionHtml}
                 ${explanationSectionHtml}
             </div>
         `;
@@ -355,8 +532,37 @@ if (!result) {
     renderPalette();
     renderQuestions();
     updateFilterButtons();
+    renderSavedQuestions();
     updateActiveQuestion();
     updateResultCount();
+}
+
+if (savedQuestionsToggle) {
+    savedQuestionsToggle.onclick = () => {
+        const isOpen = savedQuestionsToggle.getAttribute("aria-expanded") === "true";
+        savedQuestionsToggle.setAttribute("aria-expanded", String(!isOpen));
+        savedQuestionsPanel.hidden = isOpen;
+    };
+}
+
+if (paletteToggle && paletteOverlay) {
+    paletteToggle.onclick = () => {
+        const isOpen = !paletteOverlay.hidden;
+        paletteOverlay.hidden = isOpen;
+        paletteToggle.setAttribute("aria-expanded", String(!isOpen));
+    };
+}
+
+if (paletteClose) {
+    paletteClose.onclick = closePalette;
+}
+
+if (paletteOverlay) {
+    paletteOverlay.addEventListener("click", (event) => {
+        if (event.target === paletteOverlay) {
+            closePalette();
+        }
+    });
 }
 
 filterButtons.forEach((btn) => {
@@ -365,6 +571,7 @@ filterButtons.forEach((btn) => {
         renderQuestions();
         updateFilterButtons();
         renderPalette();
+        renderQuickNavigation();
         updateActiveQuestion();
         updateResultCount();
     });
@@ -374,6 +581,7 @@ if (searchInput) {
     searchInput.addEventListener("input", (event) => {
         activeSearchQuery = normalizeSearchQuery(event.target.value);
         renderQuestions();
+        renderQuickNavigation();
         updateResultCount();
         updateActiveQuestion();
     });
@@ -390,6 +598,7 @@ prevQuestionBtn.onclick = function () {
     if (previousIndex !== null) {
         activeQuestionIndex = previousIndex;
         updateActiveQuestion();
+        renderQuickNavigation();
         scrollToQuestion(activeQuestionIndex);
     }
 };
@@ -399,6 +608,7 @@ nextQuestionBtn.onclick = function () {
     if (nextIndex !== null) {
         activeQuestionIndex = nextIndex;
         updateActiveQuestion();
+        renderQuickNavigation();
         scrollToQuestion(activeQuestionIndex);
     }
 };

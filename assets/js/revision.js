@@ -81,8 +81,141 @@
         node.innerHTML = top.map(t=> `<div class="metric-row"><span>${escapeHtml(t.subject)} • ${escapeHtml(t.chapter||'All')}</span><strong>Wrong Rate ${(Math.round(t.ratio*10000)/100).toFixed(2)}%</strong></div>`).join('');
     })();
 
-    // Bookmarked Questions
-    (function bookmarksSection(){ renderQuestionList('bookmarkedList', bookmarks, (q)=>`<div>${escapeHtml(q.chapter||'')} • ${escapeHtml(q.subject||q.subjectKey||'')}</div>`); })();
+    // Saved for Revision library: subject -> chapter -> topic -> questions.
+    const savedLibraryContent = document.getElementById('savedLibraryContent');
+    const savedLibrarySearch = document.getElementById('savedLibrarySearch');
+    const savedLibrarySubject = document.getElementById('savedLibrarySubject');
+    const savedLibraryChapter = document.getElementById('savedLibraryChapter');
+    const savedLibraryBreadcrumb = document.getElementById('savedLibraryBreadcrumb');
+    const savedLibraryBack = document.getElementById('savedLibraryBack');
+    let savedLibraryLevel = 'subjects';
+    let savedLibrarySubjectValue = '';
+    let savedLibraryChapterValue = '';
+    let savedLibraryTopicValue = '';
+
+    function savedQuestionText(item){
+        const question = item.question || {};
+        return question.q || question.question || question.questionText || question.prompt || '';
+    }
+
+    function savedSubject(item){
+        return item.subject || item.subjectKey || item.question?.subject || 'Other / Uncategorized';
+    }
+
+    function savedChapter(item){
+        return item.chapter || item.question?.chapter || item.question?.section || 'Other / Uncategorized';
+    }
+
+    function savedTopic(item){
+        const question = item.question || {};
+        return item.topic || question.topic || question.category || question.section || '';
+    }
+
+    function filteredSavedQuestions(){
+        const query = (savedLibrarySearch?.value || '').trim().toLowerCase();
+        return bookmarks.filter((item) => {
+            if (savedLibrarySubject?.value && savedSubject(item) !== savedLibrarySubject.value) return false;
+            if (savedLibraryChapter?.value && savedChapter(item) !== savedLibraryChapter.value) return false;
+            if (!query) return true;
+            return `${savedQuestionText(item)} ${savedSubject(item)} ${savedChapter(item)} ${savedTopic(item)}`.toLowerCase().includes(query);
+        });
+    }
+
+    function groupSaved(items, keyFn){
+        return items.reduce((groups, item) => {
+            const key = keyFn(item) || 'Other / Uncategorized';
+            (groups[key] ||= []).push(item);
+            return groups;
+        }, {});
+    }
+
+    function updateSavedLibraryFilters(){
+        const subjects = Object.keys(groupSaved(bookmarks, savedSubject)).sort();
+        const chapters = Object.keys(groupSaved(bookmarks, savedChapter)).sort();
+        if (savedLibrarySubject) savedLibrarySubject.innerHTML = '<option value="">All Subjects</option>' + subjects.map((item) => `<option value="${escapeHtml(item)}">${escapeHtml(item)}</option>`).join('');
+        if (savedLibraryChapter) savedLibraryChapter.innerHTML = '<option value="">All Chapters</option>' + chapters.map((item) => `<option value="${escapeHtml(item)}">${escapeHtml(item)}</option>`).join('');
+    }
+
+    function openSavedQuestion(item){
+        sessionStorage.setItem('savedReviewFocus', JSON.stringify({
+            subject: savedSubject(item),
+            subjectKey: item.subjectKey || savedSubject(item),
+            chapter: savedChapter(item),
+            questionIndex: Number(item.questionIndex || 0),
+            question: item.question || {}
+        }));
+        window.location.href = 'result-review.html?from=saved';
+    }
+
+    function renderSavedQuestionItems(items){
+        savedLibraryContent.innerHTML = items.length ? items.map((item) => `
+            <article class="saved-question-item">
+                <div><strong>Q${Number(item.questionIndex || 0) + 1}</strong><p>${escapeHtml(savedQuestionText(item))}</p></div>
+                <button type="button" class="btn btn-primary btn-small saved-open-button" data-saved-index="${bookmarks.indexOf(item)}">Open Review</button>
+            </article>
+        `).join('') : '<p class="saved-library-empty">No saved questions match this view.</p>';
+        savedLibraryContent.querySelectorAll('.saved-open-button').forEach((button) => {
+            button.onclick = () => openSavedQuestion(bookmarks[Number(button.dataset.savedIndex)]);
+        });
+    }
+
+    function renderSavedLibrary(){
+        const items = filteredSavedQuestions();
+        let groups;
+        if (savedLibraryLevel === 'subjects') {
+            groups = groupSaved(items, savedSubject);
+            savedLibraryBreadcrumb.textContent = 'Saved for Revision';
+        } else if (savedLibraryLevel === 'chapters') {
+            groups = groupSaved(items.filter((item) => savedSubject(item) === savedLibrarySubjectValue), savedChapter);
+            savedLibraryBreadcrumb.textContent = `Saved for Revision / ${savedLibrarySubjectValue}`;
+        } else if (savedLibraryLevel === 'topics') {
+            groups = groupSaved(items.filter((item) => savedSubject(item) === savedLibrarySubjectValue && savedChapter(item) === savedLibraryChapterValue), savedTopic);
+            savedLibraryBreadcrumb.textContent = `Saved for Revision / ${savedLibrarySubjectValue} / ${savedLibraryChapterValue}`;
+        } else if (savedLibraryLevel === 'questions') {
+            savedLibraryBreadcrumb.textContent = `Saved for Revision / ${savedLibrarySubjectValue} / ${savedLibraryChapterValue}${savedLibraryTopicValue ? ` / ${savedLibraryTopicValue}` : ''}`;
+        }
+
+        savedLibraryBack.hidden = savedLibraryLevel === 'subjects';
+        if (!items.length) {
+            savedLibraryContent.innerHTML = bookmarks.length ? '<p class="saved-library-empty">No saved questions match this view.</p>' : '<div class="saved-library-empty"><strong>No questions saved yet.</strong><p>Go to Review and use "Save for Revision" to add questions.</p></div>';
+            return;
+        }
+
+        if (savedLibraryLevel === 'questions') {
+            renderSavedQuestionItems(items.filter((item) => savedSubject(item) === savedLibrarySubjectValue && savedChapter(item) === savedLibraryChapterValue && (!savedLibraryTopicValue || savedTopic(item) === savedLibraryTopicValue)));
+            return;
+        }
+
+        savedLibraryContent.innerHTML = Object.entries(groups).sort(([a], [b]) => a.localeCompare(b)).map(([name, group]) => {
+            const hasTopic = group.some((item) => savedTopic(item));
+            const target = savedLibraryLevel === 'subjects' ? 'chapters' : (hasTopic ? 'topics' : 'questions');
+            return `<button type="button" class="saved-library-group" data-group="${escapeHtml(name)}" data-target="${target}"><span>${escapeHtml(name)}</span><strong>${group.length}</strong></button>`;
+        }).join('');
+        savedLibraryContent.querySelectorAll('.saved-library-group').forEach((button) => {
+            button.onclick = () => {
+                const name = button.dataset.group;
+                if (savedLibraryLevel === 'subjects') savedLibrarySubjectValue = name;
+                else if (savedLibraryLevel === 'chapters') savedLibraryChapterValue = name;
+                else savedLibraryTopicValue = name;
+                savedLibraryLevel = button.dataset.target;
+                renderSavedLibrary();
+            };
+        });
+    }
+
+    updateSavedLibraryFilters();
+    renderSavedLibrary();
+    [savedLibrarySearch, savedLibrarySubject, savedLibraryChapter].forEach((node) => node?.addEventListener('input', () => {
+        savedLibraryLevel = 'subjects';
+        savedLibrarySubjectValue = savedLibrarySubject?.value || '';
+        savedLibraryChapterValue = savedLibraryChapter?.value || '';
+        renderSavedLibrary();
+    }));
+    savedLibraryBack?.addEventListener('click', () => {
+        if (savedLibraryLevel === 'questions' || savedLibraryLevel === 'topics') savedLibraryLevel = 'chapters';
+        else if (savedLibraryLevel === 'chapters') savedLibraryLevel = 'subjects';
+        renderSavedLibrary();
+    });
 
     // Incorrect / Skipped from latest result
     (function incorrectSkipped(){
