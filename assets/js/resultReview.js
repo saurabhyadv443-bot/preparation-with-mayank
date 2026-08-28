@@ -1,6 +1,15 @@
 const urlParams = new URLSearchParams(window.location.search);
 const reviewMode = urlParams.get("mode") || "";
 const resultKey = reviewMode === "study" ? "quizResult_study" : "quizResult";
+const historicalAttemptNumber = Number(urlParams.get("attempt"));
+const historicalQuizId = urlParams.get("quizId");
+const isHistoricalReview = Boolean(historicalQuizId && historicalAttemptNumber);
+const attemptHistory = (() => {
+    try { return JSON.parse(localStorage.getItem("quiz_attempt_history") || "{}"); } catch (error) { return {}; }
+})();
+const historicalAttempt = isHistoricalReview
+    ? (attemptHistory[historicalQuizId] || []).find((item) => item.attempt === historicalAttemptNumber)
+    : null;
 const rawResult = localStorage.getItem(resultKey) || localStorage.getItem("quizResult");
 let savedReviewFocus = null;
 try {
@@ -22,7 +31,7 @@ const result = savedReviewFocus
         questions: [savedReviewFocus.question],
         userAnswers: [null]
     }
-    : (rawResult ? JSON.parse(rawResult) : null);
+    : (historicalAttempt || (rawResult ? JSON.parse(rawResult) : null));
 const savedReviewQuestionIndex = savedReviewFocus ? Number(savedReviewFocus.questionIndex || 0) : null;
 if (savedReviewFocus) {
     sessionStorage.removeItem("savedReviewFocus");
@@ -46,12 +55,64 @@ const paletteOverlay = document.getElementById("questionPaletteOverlay");
 const paletteClose = document.getElementById("paletteClose");
 const quickNavigationLabel = document.getElementById("quickNavigationLabel");
 const quickNavigationList = document.getElementById("quickNavigationList");
+const testHistory = document.getElementById("testHistory");
+const historyCount = document.getElementById("historyCount");
+const reattemptTestBtn = document.getElementById("reattemptTestBtn");
 
 let activeQuestionIndex = 0;
 let activeFilter = "all";
 let activeSearchQuery = "";
 let editingExplanationIndex = null;
 let editingAnswerIndex = null;
+window.reviewResultQuestions = result && Array.isArray(result.questions) ? result.questions : [];
+
+function renderTestHistory() {
+    if (!testHistory || !result || !result.quizId) return;
+    const records = Array.isArray(attemptHistory[result.quizId]) ? attemptHistory[result.quizId] : [];
+    if (historyCount) historyCount.innerText = `${records.length} of 5 attempts`;
+    testHistory.innerHTML = records.length ? records.slice().reverse().map((item) => `
+        <article class="test-history-item${isHistoricalReview && item.attempt === historicalAttemptNumber ? " current-history-item" : ""}">
+            <div>
+                <strong>Attempt ${item.attempt}</strong>
+                <span>${escapeHtml(item.date || new Date(item.completedAt).toLocaleDateString())} • ${escapeHtml(item.time || new Date(item.completedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }))}</span>
+                <span>${item.correct || 0} Correct | ${item.wrong || item.incorrect || 0} Incorrect | ${item.skipped || item.unanswered || 0} Unanswered</span>
+            </div>
+            <div class="test-history-score">
+                <strong>Score: ${item.finalScore ?? item.score ?? 0} / ${item.total || 0}</strong>
+                <span>Percentage: ${item.percentage ?? item.accuracy ?? 0}%</span>
+                ${isHistoricalReview && item.attempt === historicalAttemptNumber ? "<span class=\"history-readonly-label\">Read-only review</span>" : `<a class="btn btn-secondary btn-small" href="result-review.html?historical=1&quizId=${encodeURIComponent(result.quizId)}&attempt=${item.attempt}">View Attempt</a>`}
+            </div>
+        </article>
+    `).join("") : "<p class=\"history-empty\">No submitted attempts yet.</p>";
+}
+
+function startReattempt() {
+    if (!result || !Array.isArray(result.questions) || !result.questions.length) {
+        return;
+    }
+
+    const quizType = result.quizType || (reviewMode === "study" ? "study" : "practice");
+    const progressKey = quizType === "study" ? "quizProgress_study" : "quizProgress";
+    const quizUrl = result.quizUrl || `quiz.html?subject=${encodeURIComponent(result.subjectKey || result.subject)}${quizType === "study" ? "&mode=study" : ""}`;
+    const duration = Number(result.duration) || (quizType === "practice" ? 40 : 7200);
+    const progress = {
+        subject: result.subjectKey || result.subject,
+        subjectKey: result.subjectKey || result.subject,
+        chapter: result.chapter || "",
+        currentQuestion: 0,
+        userAnswers: new Array(result.questions.length).fill(null),
+        markedForReview: new Array(result.questions.length).fill(false),
+        questions: result.questions,
+        remainingTime: duration,
+        duration,
+        quizType,
+        quizStartedAt: Date.now(),
+        updatedAt: new Date().toISOString()
+    };
+
+    localStorage.setItem(progressKey, JSON.stringify(progress));
+    window.location.href = quizUrl;
+}
 
 function closePalette() {
     if (!paletteOverlay || !paletteToggle) {
@@ -159,12 +220,16 @@ function getBookmarks() {
 }
 
 function isBookmarked(index) {
+    if (isHistoricalReview && Array.isArray(result.bookmarked)) {
+        return result.bookmarked.includes(index);
+    }
     const bookmarks = getBookmarks();
     const questionIndex = savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex;
     return bookmarks.some((item) => item.subjectKey === (result.subjectKey || result.subject) && item.chapter === result.chapter && item.questionIndex === questionIndex);
 }
 
 function toggleSavedQuestion(index) {
+        if (isHistoricalReview) return;
     const bookmarks = getBookmarks();
     const subjectKey = result.subjectKey || result.subject;
     const questionIndex = savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex;
@@ -387,7 +452,7 @@ function renderQuestions() {
         const explanationText = explanation && String(explanation).trim();
         const questionText = highlightText(question.q, activeSearchQuery);
         const saved = isBookmarked(index);
-        const answerSectionHtml = editingAnswerIndex === index
+        const answerSectionHtml = isHistoricalReview ? `<p><strong>Correct Answer:</strong> ${correctAnswerText}</p>` : editingAnswerIndex === index
             ? `<div class="answer-editor-section">
                     <strong>Edit Correct Answer</strong>
                     <div class="answer-editor-options">${question.options.map((option, optionIndex) => `
@@ -417,7 +482,13 @@ function renderQuestions() {
 
         // Build explanation section with edit capability
         let explanationSectionHtml = "";
-        if (editingExplanationIndex === index) {
+        if (isHistoricalReview) {
+            explanationSectionHtml = `
+                <div class="explanation-box${explanationText ? "" : " missing"}">
+                    <strong>Explanation:</strong> ${explanationText ? highlightText(explanationText, activeSearchQuery) : "Explanation is currently unavailable for this question."}
+                </div>
+            `;
+        } else if (editingExplanationIndex === index) {
             // Show edit mode
             explanationSectionHtml = `
                 <div class="explanation-editor-section">
@@ -446,7 +517,7 @@ function renderQuestions() {
                 <div class="review-card-header">
                     <h3>Q${index + 1}. ${questionText}</h3>
                     <div class="review-card-actions">
-                        <button type="button" class="save-question-btn${saved ? " saved" : ""}" onclick="toggleSavedQuestion(${index})">${saved ? "★ Saved" : "☆ Save"}</button>
+                        <button type="button" class="save-question-btn${saved ? " saved" : ""}" onclick="toggleSavedQuestion(${index})"${isHistoricalReview ? " disabled" : ""}>${saved ? "★ Saved" : "☆ Save"}</button>
                         <span class="review-status-pill ${status}">${status === "correct" ? "Correct" : status === "incorrect" ? "Incorrect" : "Not Attempted"}</span>
                     </div>
                 </div>
@@ -454,9 +525,12 @@ function renderQuestions() {
                 <p><strong>Your Answer:</strong> ${selectedAnswerText}</p>
                 ${answerSectionHtml}
                 ${explanationSectionHtml}
+                ${typeof reviewAiPanelHtml === "function" ? reviewAiPanelHtml(index) : ""}
+                ${typeof externalAiPanelHtml === "function" ? externalAiPanelHtml(index) : ""}
             </div>
         `;
     }).join("");
+    if (typeof bindReviewAiControls === "function") bindReviewAiControls();
 }
 
 function scrollToQuestion(index) {
@@ -528,6 +602,7 @@ if (!result) {
     reviewSubject.innerText = result.subject || "Quiz Review";
     const chapterLabel = result.chapter && result.chapter.trim() ? result.chapter : "Full Length Test";
     reviewSubtitle.innerText = `${chapterLabel} • Accuracy ${result.accuracy}%`;
+    renderTestHistory();
     renderSummary();
     renderPalette();
     renderQuestions();
@@ -543,6 +618,10 @@ if (savedQuestionsToggle) {
         savedQuestionsToggle.setAttribute("aria-expanded", String(!isOpen));
         savedQuestionsPanel.hidden = isOpen;
     };
+}
+
+if (reattemptTestBtn) {
+    reattemptTestBtn.onclick = startReattempt;
 }
 
 if (paletteToggle && paletteOverlay) {

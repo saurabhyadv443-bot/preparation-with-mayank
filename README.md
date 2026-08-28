@@ -39,6 +39,22 @@ Top-level structure (important files/folders):
 
 This is a static site — run any simple static server and open the site in a browser.
 
+## Local Gemini Review
+
+The local backend uses only Python's standard library. Create a `.env` file in the project root and add your own key:
+
+```text
+GEMINI_API_KEY=your_key_here
+```
+
+Start the backend with:
+
+```powershell
+python server.py
+```
+
+Open `http://127.0.0.1:8000`. The Reviewed "Review This Question" button sends only the clicked question, its options, and its official answer to the local `/api/review-question` bridge. The Gemini key stays on the backend and is never written to frontend code or browser storage.
+
 Using Python 3 (recommended):
 
 ```bash
@@ -46,6 +62,7 @@ Using Python 3 (recommended):
 python -m http.server 8000
 # then open http://localhost:8000
 ```
+
 
 Using Node `serve`:
 

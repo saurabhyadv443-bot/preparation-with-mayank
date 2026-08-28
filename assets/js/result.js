@@ -87,10 +87,29 @@ function renderSingleResult(result) {
 
     const retryBtn = document.getElementById("retryBtn");
     if (retryBtn) {
-        retryBtn.href = `quiz.html?subject=${encodeURIComponent(result.subjectKey || result.subject)}`;
+        const quizType = result.quizType || "practice";
+        const progressKey = quizType === "study" ? "quizProgress_study" : "quizProgress";
+        const duration = Number(result.duration) || (quizType === "practice" ? 40 : 7200);
+        const quizUrl = result.quizUrl || `quiz.html?subject=${encodeURIComponent(result.subjectKey || result.subject)}${quizType === "study" ? "&mode=study" : ""}`;
+        retryBtn.innerText = "Reattempt Test";
+        retryBtn.href = quizUrl;
         retryBtn.onclick = function (event) {
             event.preventDefault();
-            window.location.href = `quiz.html?subject=${encodeURIComponent(result.subjectKey || result.subject)}`;
+            localStorage.setItem(progressKey, JSON.stringify({
+                subject: result.subjectKey || result.subject,
+                subjectKey: result.subjectKey || result.subject,
+                chapter: result.chapter || "",
+                currentQuestion: 0,
+                userAnswers: new Array((result.questions || []).length).fill(null),
+                markedForReview: new Array((result.questions || []).length).fill(false),
+                questions: result.questions || [],
+                remainingTime: duration,
+                duration,
+                quizType,
+                quizStartedAt: Date.now(),
+                updatedAt: new Date().toISOString()
+            }));
+            window.location.href = quizUrl;
         };
     }
 

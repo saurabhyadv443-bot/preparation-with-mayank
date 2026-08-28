@@ -38,6 +38,21 @@
                 <div class="result-summary-grid" id="summaryGrid"></div>
             </div>
         </section>
+        <section class="panel test-history-panel">
+            <div class="section-heading compact-heading">
+                <div>
+                    <span class="eyebrow">Saved Results</span>
+                    <h2>Test History</h2>
+                </div>
+                <span id="historyCount" class="history-count"></span>
+            </div>
+            <div id="testHistory" class="test-history-list"></div>
+        </section>
+
+        <div class="review-reattempt-actions">
+            <button id="reattemptTestBtn" class="btn btn-primary" type="button">↻ Reattempt Test</button>
+            <a class="btn btn-secondary" href="#testHistory">Back to Test History</a>
+        </div>
 
         <div class="review-palette-launcher">
             <button id="paletteToggle" class="btn btn-primary btn-small" type="button" aria-expanded="false" aria-controls="questionPaletteOverlay">☷ Question Palette</button>
@@ -99,6 +114,8 @@
         </section>
     </main>
 
+    <script src="assets/js/externalAi.js"></script>
+    <script src="assets/js/reviewAi.js"></script>
     <script src="assets/js/resultReview.js"></script>
 </body>
 </html>

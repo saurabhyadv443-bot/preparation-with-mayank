@@ -109,6 +109,80 @@ function getProgressKey() {
 function getResultKey() {
     return isStudyMode() ? "quizResult_study" : "quizResult";
 }
+function getQuizId() {
+    return [subject, currentChapter || "all", getQuizMode()].join("::");
+}
+function getAttemptHistory() {
+    return safeParseStoredValue("quiz_attempt_history", {});
+}
+function saveAttempt(result) {
+    const history = getAttemptHistory();
+    const completedAt = result.completedAt;
+    const completedDate = new Date(completedAt);
+    const bookmarks = getBookmarks();
+    const isSaved = (index) => bookmarks.some((item) =>
+        item.subjectKey === result.subjectKey && item.chapter === result.chapter && item.questionIndex === index
+    );
+    const questionIds = {};
+    const answers = {};
+    const questionStatus = {};
+    const correctAnswers = {};
+    const bookmarked = [];
+    const saved = [];
+    result.questions.forEach((question, index) => {
+        const questionId = question.id ?? question.qid ?? question.questionId ?? index;
+        const key = String(questionId);
+        const selected = result.userAnswers[index];
+        questionIds[key] = index;
+        answers[key] = selected == null ? null : selected;
+        correctAnswers[key] = question.answer;
+        questionStatus[key] = selected == null ? "unanswered" : selected === question.answer ? "correct" : "incorrect";
+        if (isSaved(index)) {
+            bookmarked.push(index);
+            saved.push(index);
+        }
+    });
+    const attempt = {
+        date: completedDate.toLocaleDateString(),
+        time: completedDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        total: result.total,
+        attempted: result.attempted,
+        correct: result.correct,
+        incorrect: result.wrong,
+        wrong: result.wrong,
+        unanswered: result.skipped,
+        skipped: result.skipped,
+        score: result.finalScore,
+        finalScore: result.finalScore,
+        percentage: result.percentage,
+        accuracy: result.accuracy,
+        time_taken: result.timeTaken,
+        timeTaken: result.timeTaken,
+        answers,
+        question_status: questionStatus,
+        correct_answers: correctAnswers,
+        question_ids: questionIds,
+        bookmarked,
+        saved,
+        subject: result.subject,
+        subjectKey: result.subjectKey,
+        chapter: result.chapter,
+        quizType: result.quizType,
+        quizId: result.quizId,
+        duration: result.duration,
+        quizUrl: result.quizUrl,
+        questions: result.questions,
+        userAnswers: result.userAnswers,
+        markedForReview: result.markedForReview,
+        markedReview: result.markedReview,
+        completedAt,
+        attempt: 0
+    };
+    const retained = Array.isArray(history[result.quizId]) ? history[result.quizId].slice(-4) : [];
+    retained.push(attempt);
+    history[result.quizId] = retained.map((item, index) => ({ ...item, attempt: index + 1 }));
+    localStorage.setItem("quiz_attempt_history", JSON.stringify(history));
+}
 
 function getQuizDuration() {
     return Number(quizData.duration || quizData.totalTimeSeconds || quizData.durationSeconds || 7200);
@@ -642,7 +716,7 @@ function saveProgress() {
         markedForReview,
         questions,
         remainingTime,
-        duration: getQuizDuration(),
+        duration: getQuizMode() === "practice" ? Number(quizData.secondsPerQuestion) || 40 : getQuizDuration(),
         quizType: getQuizMode(),
         quizStartedAt,
         updatedAt: new Date().toISOString()
@@ -690,6 +764,9 @@ function finishQuiz(timeout = false) {
         subject: quizData.subject,
         subjectKey: subject,
         chapter: currentChapter,
+        quizId: getQuizId(),
+        duration: getQuizMode() === "practice" ? Number(quizData.secondsPerQuestion) || 40 : getQuizDuration(),
+        quizUrl: `quiz.html${window.location.search}`,
         total: questions.length,
         correct,
         wrong,
@@ -708,10 +785,12 @@ function finishQuiz(timeout = false) {
         markedForReview,
         markedReview,
         timeTaken,
+        percentage: accuracy,
         completedAt: new Date().toISOString()
     };
 
     localStorage.setItem(getResultKey(), JSON.stringify(result));
+    saveAttempt(result);
     localStorage.removeItem(getProgressKey());
     const resultUrl = isStudyMode() ? "result-review.html?mode=study" : "result-review.html";
     window.location.href = resultUrl;
