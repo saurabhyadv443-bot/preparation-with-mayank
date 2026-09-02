@@ -1,5 +1,6 @@
 const params = new URLSearchParams(window.location.search);
 const subject = params.get("subject") || "ancient";
+const selectedChapterFromQuery = params.get("chapter") || "";
 let selectedMode = params.get("mode") || "";
 
 let SUBJECT_MANIFEST = null;
@@ -255,12 +256,52 @@ function getQuizDuration() {
         selectedSubject = subject;
         console.log("Selected subject:", selectedSubject);
         document.getElementById('subjectTitle').innerText = data.subject;
-        loadChapters();
+        
+        // Check if this is Mock Test mode and if a set is already selected
+        const isMockMode = subject === 'mock' || quizData.subject === 'Mock Test' || quizData.totalTimeSeconds || quizData.duration;
+        const mockSetNames = isMockMode ? Object.keys((quizData['TEST NUMBER'] || {})) : [];
+        const isMockSetSelected = isMockMode && selectedChapterFromQuery && mockSetNames.includes(selectedChapterFromQuery);
+        
+        // Only load chapter selector if no chapter/set is pre-selected
+        if (!isMockSetSelected) {
+            loadChapters();
+        }
         if (chapterSearch) {
             chapterSearch.addEventListener('input', () => filterChapters(chapterSearch.value));
         }
         const savedProgress = safeParseStoredValue(getProgressKey(), null);
-        if (savedProgress && savedProgress.subject === subject && savedProgress.chapter) {
+        const hasSelectedChapter = Boolean(selectedChapterFromQuery && (Object.keys(quizData.chapters || {}).includes(selectedChapterFromQuery) || isMockSetSelected));
+
+        if (hasSelectedChapter) {
+            const selectedChapterMatchesResume = savedProgress && savedProgress.subject === subject && savedProgress.chapter === selectedChapterFromQuery;
+            if (selectedChapterMatchesResume) {
+                selectedMode = savedProgress.quizType === 'study' ? 'study' : selectedMode;
+                currentChapter = savedProgress.chapter;
+                questions = Array.isArray(savedProgress.questions) ? savedProgress.questions : quizData.chapters[currentChapter] || [];
+                currentQuestion = typeof savedProgress.currentQuestion === 'number' ? savedProgress.currentQuestion : 0;
+                userAnswers = Array.isArray(savedProgress.userAnswers) ? savedProgress.userAnswers : new Array(questions.length).fill(null);
+                markedForReview = Array.isArray(savedProgress.markedForReview) ? savedProgress.markedForReview : new Array(questions.length).fill(false);
+                if (savedProgress.quizType === 'mock' || subject === 'mock' || quizData.subject === 'Mock Test' || quizData.totalTimeSeconds || quizData.duration) {
+                    const duration = Number(savedProgress.duration || getQuizDuration());
+                    const savedRemaining = Number(savedProgress.remainingTime) || duration;
+                    const updatedAt = savedProgress.updatedAt ? new Date(savedProgress.updatedAt).getTime() : Date.now();
+                    const elapsedSeconds = Math.max(0, Math.floor((Date.now() - updatedAt) / 1000));
+                    remainingTime = Math.max(0, savedRemaining - elapsedSeconds);
+                    quizStartedAt = savedProgress.quizStartedAt || (Date.now() - Math.max(0, (duration - remainingTime) * 1000));
+                } else {
+                    remainingTime = Number(savedProgress.remainingTime) || Number(quizData.secondsPerQuestion) || 40;
+                    quizStartedAt = savedProgress.quizStartedAt || Date.now();
+                }
+                chapterSection.style.display = 'none';
+                quizSection.style.display = 'block';
+                chapterTitle.innerText = currentChapter;
+                initializeTimer();
+                showQuestion();
+                createPalette();
+            } else {
+                startQuiz(selectedChapterFromQuery);
+            }
+        } else if (savedProgress && savedProgress.subject === subject && savedProgress.chapter) {
             selectedMode = savedProgress.quizType === 'study' ? 'study' : selectedMode;
             currentChapter = savedProgress.chapter;
             questions = Array.isArray(savedProgress.questions) ? savedProgress.questions : quizData.chapters[currentChapter] || [];
@@ -760,6 +801,17 @@ function finishQuiz(timeout = false) {
     const positiveMarks = getQuizMode() === "mock" ? correct - wrong / 3 : correct;
     const negativeMarks = getQuizMode() === "mock" ? wrong / 3 : 0;
     const finalScore = getQuizMode() === "mock" ? correct - wrong / 3 : correct;
+    const normalizedQuestions = questions.map((question) => {
+        const explanationSource = question.explanation || "";
+        const explanationDocument = explanationSource
+            ? (window.ExplanationRenderer ? window.ExplanationRenderer.normalizeExplanationDocument(explanationSource) : { type: "document", blocks: [{ type: "paragraph", content: explanationSource }] })
+            : { type: "document", blocks: [] };
+        return {
+            ...question,
+            explanationDocument,
+            explanation: explanationSource
+        };
+    });
     const result = {
         subject: quizData.subject,
         subjectKey: subject,
@@ -780,7 +832,7 @@ function finishQuiz(timeout = false) {
         negativeMarks,
         quizType: quizData.quizType,
         timeout,
-        questions,
+        questions: normalizedQuestions,
         userAnswers,
         markedForReview,
         markedReview,

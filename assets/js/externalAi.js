@@ -1,64 +1,72 @@
-function externalAiContext(question, index) {
-    return {
-        question: question.q || "Not provided",
-        options: Array.isArray(question.options) ? question.options : []
-    };
+function buildQuestionCopyText(question) {
+    const questionText = question && question.q ? String(question.q) : "";
+    const options = Array.isArray(question && question.options) ? question.options : [];
+
+    const lines = [
+        "Question:",
+        questionText,
+        "",
+        "Options:"
+    ];
+
+    options.forEach((option, optionIndex) => {
+        const label = String.fromCharCode(65 + optionIndex);
+        lines.push(`${label}. ${String(option)}`);
+    });
+
+    return lines.join("\n");
 }
 
-function buildExternalAiPrompt(index, serviceName) {
-    const context = externalAiContext(result.questions[index], index);
-    const options = context.options.length
-        ? context.options.map((option, optionIndex) => `${String.fromCharCode(65 + optionIndex)}. ${option}`).join("\n")
-        : "Not provided";
-    return `Question:
-${context.question}
+async function copyTextToClipboard(text) {
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+        await navigator.clipboard.writeText(text);
+        return;
+    }
 
-Options:
-${options}`;
+    const helper = document.createElement("textarea");
+    helper.value = text;
+    helper.setAttribute("readonly", "");
+    helper.style.position = "fixed";
+    helper.style.opacity = "0";
+    helper.style.pointerEvents = "none";
+    document.body.appendChild(helper);
+    helper.focus();
+    helper.select();
+    document.execCommand("copy");
+    helper.remove();
 }
 
-function showExternalAiNotice(message) {
-    const notice = document.createElement("div");
-    notice.className = "external-ai-notice";
-    notice.textContent = message;
-    document.body.appendChild(notice);
-    window.setTimeout(() => notice.remove(), 3500);
-}
+async function copyQuestionOptionsByIndex(index) {
+    const question = window.reviewResultQuestions && Array.isArray(window.reviewResultQuestions)
+        ? window.reviewResultQuestions[index]
+        : null;
 
-function showExternalAiPrompt(prompt) {
-    const overlay = document.createElement("div");
-    overlay.className = "external-ai-prompt-overlay";
-    overlay.innerHTML = `<div class="external-ai-prompt-modal" role="dialog" aria-modal="true" aria-labelledby="externalAiPromptTitle"><h3 id="externalAiPromptTitle">Copy Prompt Manually</h3><p>Clipboard access was unavailable. Please copy the prompt manually.</p><textarea class="external-ai-prompt-text" rows="14" readonly></textarea><div class="external-ai-prompt-actions"><button type="button" class="btn btn-primary btn-small external-ai-copy-manual">Select Prompt</button><button type="button" class="btn btn-tertiary btn-small external-ai-close-prompt">Close</button></div></div>`;
-    const textarea = overlay.querySelector(".external-ai-prompt-text");
-    textarea.value = prompt;
-    overlay.querySelector(".external-ai-copy-manual").onclick = () => {
-        textarea.focus();
-        textarea.select();
-    };
-    overlay.querySelector(".external-ai-close-prompt").onclick = () => overlay.remove();
-    overlay.onclick = (event) => {
-        if (event.target === overlay) overlay.remove();
-    };
-    document.body.appendChild(overlay);
-    textarea.focus();
-    textarea.select();
-}
+    if (!question) {
+        return;
+    }
 
-async function askExternalAi(index, serviceName, website) {
-    const prompt = buildExternalAiPrompt(index, serviceName);
+    const text = buildQuestionCopyText(question);
     try {
-        if (!navigator.clipboard || typeof navigator.clipboard.writeText !== "function") {
-            throw new Error("Clipboard API unavailable");
+        await copyTextToClipboard(text);
+        const button = document.querySelector(`[data-copy-question-index="${index}"]`);
+        if (button) {
+            const originalText = button.textContent;
+            button.textContent = "Question + options copied";
+            window.setTimeout(() => {
+                button.textContent = "Copy Question + Options";
+            }, 2200);
         }
-        await navigator.clipboard.writeText(prompt);
-        window.open(website, "_blank", "noopener,noreferrer");
-        showExternalAiNotice(`Prompt copied. Paste it into ${serviceName}.`);
     } catch (error) {
-        window.open(website, "_blank", "noopener,noreferrer");
-        showExternalAiPrompt(prompt);
+        const button = document.querySelector(`[data-copy-question-index="${index}"]`);
+        if (button) {
+            button.textContent = "Copy failed";
+            window.setTimeout(() => {
+                button.textContent = "Copy Question + Options";
+            }, 2200);
+        }
     }
 }
 
-function externalAiPanelHtml(index) {
-    return `<details class="ai-research-panel external-ai-panel"><summary>External AI</summary><div class="ai-research-actions"><button type="button" class="btn btn-tertiary btn-small" onclick="askExternalAi(${index}, 'Gemini', 'https://gemini.google.com/')">Ask Gemini</button><button type="button" class="btn btn-tertiary btn-small" onclick="askExternalAi(${index}, 'ChatGPT', 'https://chatgpt.com/')">Ask ChatGPT</button></div></details>`;
+function copyQuestionOptionsButtonHtml(index) {
+    return `<button type="button" class="btn btn-secondary btn-small" data-copy-question-index="${index}" onclick="copyQuestionOptionsByIndex(${index})">Copy Question + Options</button>`;
 }

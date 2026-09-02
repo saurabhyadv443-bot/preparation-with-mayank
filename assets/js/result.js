@@ -118,15 +118,20 @@ function renderSingleResult(result) {
 
     if (explanationList && Array.isArray(result.questions)) {
         explanationList.innerHTML = "";
+        const explanationRenderer = window.ExplanationRenderer || {
+            normalizeExplanationDocument: (value) => ({ type: "document", blocks: [] }),
+            renderExplanationDocument: (value, fallbackText) => `<p>${escapeHtml(fallbackText || "")}</p>`
+        };
         result.questions.forEach((question, index) => {
-            const explanation = question.explanation;
-            const explanationText = explanation && String(explanation).trim();
+            const explanationDocument = explanationRenderer.normalizeExplanationDocument(question.explanationDocument || question.explanation || "");
+            const explanationHtml = explanationRenderer.renderExplanationDocument(explanationDocument, question.explanation || "");
             const card = document.createElement("div");
             card.className = "review-item";
             card.innerHTML = `
                 <h3>Q${index + 1}. ${escapeHtml(question.q)}</h3>
-                <div class="explanation-box${explanationText ? "" : " missing"}">
-                    <strong>Explanation:</strong> ${explanationText ? escapeHtml(explanationText) : "Explanation is currently unavailable for this question."}
+                <div class="explanation-box${explanationHtml ? "" : " missing"}">
+                    <strong>Explanation:</strong>
+                    ${explanationHtml || "Explanation is currently unavailable for this question."}
                 </div>
             `;
             explanationList.appendChild(card);

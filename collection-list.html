@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collection - Quiz Portal</title>
+    <link rel="stylesheet" href="assets/css/quiz.css" />
+    <style>
+        .collection-header {
+            margin-bottom: 24px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 16px;
+        }
+        .collection-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        .collection-header p {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+        .questions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .question-list-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+        .question-card {
+            padding: 16px;
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        .question-card:hover {
+            border-color: #155eef;
+            background: #f3f7ff;
+            box-shadow: 0 2px 8px rgba(21, 94, 239, 0.1);
+        }
+        .question-card-title {
+            font-weight: 600;
+            color: #155eef;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        .question-card-text {
+            color: #1f2937;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .collection-nav {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        .collection-nav button {
+            flex: 1;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: #6b7280;
+        }
+    </style>
+    <script src="assets/js/auth.js"></script>
+</head>
+<body>
+    <header class="topbar">
+        <div>
+            <div class="topbar-kicker">Collection</div>
+            <h1 id="pageTitle">Collection - Quiz Portal</h1>
+            <div class="logo-badge">Quiz Portal</div>
+            <div class="top-right">
+                <button id="logoutBtn" class="btn-tertiary">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="panel panel-light">
+            <div class="collection-header">
+                <h2 id="collectionTitle">Questions</h2>
+                <p id="collectionSubtitle">Select a question to practice</p>
+            </div>
+            <div id="classificationRemovalControls" class="classification-removal-controls" hidden></div>
+
+            <div id="questionsList" class="questions-list"></div>
+
+            <div class="collection-nav">
+                <button id="backBtn" class="btn btn-secondary">⬅ Back</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="assets/js/classificationRemoval.js?v=20260902-1"></script>
+    <script src="assets/js/collectionList.js"></script>
+</body>
+</html>

@@ -5,9 +5,11 @@ import json
 import os
 import re
 import base64
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import xml.etree.ElementTree as ET
 from html import unescape
 from html.parser import HTMLParser
 from http import HTTPStatus
@@ -20,6 +22,9 @@ ROOT = Path(__file__).resolve().parent
 load_dotenv(ROOT / ".env", override=False)
 HOST = "127.0.0.1"
 PORT = 8000
+SEARCH_DIAGNOSTICS = {}
+SEARCH_TIMEOUT_SECONDS = 5
+OPERATION_TIMEOUT_SECONDS = 20
 MAX_DAILY_AI_REVIEWS = 20
 GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
 
@@ -121,40 +126,64 @@ class DuckDuckGoResultParser(HTMLParser):
             self.capture_tag = None
 
 
-class BingResultParser(HTMLParser):
-    def __init__(self):
-        super().__init__()
-        self.results = []
-        self.current = None
-        self.capture = None
+def clean_markup(value):
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", unescape(value or ""))).strip()
 
-    def handle_starttag(self, tag, attrs):
-        attributes = dict(attrs)
-        classes = set((attributes.get("class") or "").split())
-        if tag == "li" and "b_algo" in classes:
-            self.current = {"title": "", "url": "", "snippet": ""}
-        elif self.current and tag == "a" and not self.current["url"] and self.capture is None:
-            self.current["url"] = attributes.get("href") or ""
-            self.capture = "title"
-        elif self.current and tag in {"p", "div"} and self.capture is None:
-            self.capture = "snippet"
 
-    def handle_data(self, data):
-        if self.current and self.capture:
-            self.current[self.capture] += data
+def parse_duckduckgo_lite(raw):
+    results = []
+    pattern = re.compile(r"<a\b[^>]*class=[\"'][^\"']*result-link[^\"']*[\"'][^>]*href=[\"']([^\"']+)[\"'][^>]*>(.*?)</a>(.*?)(?:class=[\"'][^\"']*result-snippet[^\"']*[\"'][^>]*>(.*?)</td>|$)", re.I | re.S)
+    for match in pattern.finditer(raw):
+        title = clean_markup(match.group(2))
+        snippet = clean_markup(match.group(4) or "")
+        if title and (match.group(1) or snippet):
+            results.append({"title": title, "url": unescape(match.group(1)), "snippet": snippet})
+    return results
 
-    def handle_endtag(self, tag):
-        if not self.current:
-            return
-        if tag == "a" and self.capture == "title":
-            self.capture = None
-        elif tag == "p" and self.capture == "snippet":
-            self.current["title"] = " ".join(self.current["title"].split())
-            self.current["snippet"] = " ".join(self.current["snippet"].split())
-            if self.current["title"] and self.current["url"]:
-                self.results.append(self.current)
-            self.current = None
-            self.capture = None
+
+def parse_duckduckgo_html(raw):
+    results = []
+    links = re.findall(r"<a\b[^>]*class=[\"'][^\"']*result__a[^\"']*[\"'][^>]*href=[\"']([^\"']+)[\"'][^>]*>(.*?)</a>", raw, re.I | re.S)
+    snippets = re.findall(r"class=[\"'][^\"']*result__snippet[^\"']*[\"'][^>]*>(.*?)</", raw, re.I | re.S)
+    for index, (url, title) in enumerate(links):
+        results.append({"title": clean_markup(title), "url": unescape(url), "snippet": clean_markup(snippets[index]) if index < len(snippets) else ""})
+    return [item for item in results if item["title"] or item["url"]]
+
+
+def parse_wikipedia_results(raw):
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError:
+        return []
+    return [{"title": item.get("title", ""), "url": f"https://en.wikipedia.org/wiki/{urllib.parse.quote(item.get('title', '').replace(' ', '_'))}", "snippet": re.sub(r"<[^>]+>", "", unescape(item.get("snippet", "")))} for item in data.get("query", {}).get("search", []) if item.get("title")]
+
+
+def parse_bing_results(raw):
+    results = []
+    blocks = re.findall(r"<li\b[^>]*class=[\"'][^\"']*\bb_algo\b[^\"']*[\"'][^>]*>(.*?)(?=<li\b[^>]*class=[\"'][^\"']*\bb_algo\b|</ol>)", raw, re.I | re.S)
+    for block in blocks:
+        title_match = re.search(r"<h2\b[^>]*>.*?<a\b[^>]*href=[\"']([^\"']+)[\"'][^>]*>(.*?)</a>", block, re.I | re.S)
+        if not title_match:
+            title_match = re.search(r"<a\b[^>]*href=[\"']([^\"']+)[\"'][^>]*>(.*?)</a>", block, re.I | re.S)
+        snippet_match = re.search(r"<p\b[^>]*>(.*?)</p>", block, re.I | re.S)
+        if title_match:
+            results.append({"title": clean_markup(title_match.group(2)), "url": unescape(title_match.group(1)), "snippet": clean_markup(snippet_match.group(1) if snippet_match else "")})
+    return results
+
+
+def parse_bing_rss(raw):
+    results = []
+    try:
+        root = ET.fromstring(raw)
+    except ET.ParseError:
+        return results
+    for item in root.findall(".//item"):
+        title = (item.findtext("title") or "").strip()
+        url = (item.findtext("link") or "").strip()
+        snippet = (item.findtext("description") or "").strip()
+        if title or url or snippet:
+            results.append({"title": clean_markup(title), "url": url, "snippet": clean_markup(snippet)})
+    return results
 
 
 class ReadablePageParser(HTMLParser):
@@ -187,18 +216,6 @@ def extract_readable_page(raw):
     return re.sub(r"\s+", " ", text).strip()
 
 
-def parse_bing_results(raw):
-    results = []
-    for block in re.findall(r"<li\b[^>]*class=[\"'][^\"']*\bb_algo\b[^\"']*[\"'][^>]*>(.*?)</li>", raw, re.I | re.S):
-        title_match = re.search(r"<h2\b[^>]*>\s*<a\b[^>]*href=[\"']([^\"']+)[\"'][^>]*>(.*?)</a>", block, re.I | re.S)
-        snippet_match = re.search(r"<p\b[^>]*>(.*?)</p>", block, re.I | re.S)
-        if not title_match:
-            continue
-        clean = lambda value: re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", unescape(value))).strip()
-        results.append({"title": clean(title_match.group(2)), "url": unescape(title_match.group(1)), "snippet": clean(snippet_match.group(1)) if snippet_match else ""})
-    return results
-
-
 def clean_result_url(value):
     link = unescape(value or "")
     parsed = urllib.parse.urlparse(link)
@@ -216,32 +233,61 @@ def clean_result_url(value):
 
 
 def online_search(query):
+    global SEARCH_DIAGNOSTICS
     providers = [
-        ("https://lite.duckduckgo.com/lite/?", DuckDuckGoResultParser),
-        ("https://www.bing.com/search?", None)
+        ("duckduckgo_lite", "https://lite.duckduckgo.com/lite/?", parse_duckduckgo_lite),
+        ("bing_html", "https://www.bing.com/search?", parse_bing_results),
+        ("duckduckgo_html", "https://html.duckduckgo.com/html/?", parse_duckduckgo_html),
+        ("wikipedia_api", "https://en.wikipedia.org/w/api.php?", parse_wikipedia_results)
     ]
     last_error = None
-    for base_url, parser_type in providers:
-        url = base_url + urllib.parse.urlencode({"q": query})
+    combined = []
+    seen_urls = set()
+    deadline = SEARCH_DIAGNOSTICS.get("deadline", time.monotonic() + OPERATION_TIMEOUT_SECONDS)
+    query_terms = [term for term in re.sub(r"[^a-z0-9]+", " ", query.lower()).split() if len(term) >= 5 and term not in {"which", "where", "when", "following", "answer", "question", "india", "first", "discovery"}]
+    for provider_name, base_url, parser_type in providers:
+        SEARCH_DIAGNOSTICS["providers_attempted"] += 1
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            break
+        parameters = {"q": query}
+        if provider_name == "wikipedia_api":
+            parameters = {"action": "query", "list": "search", "srsearch": query, "format": "json", "utf8": "1", "srlimit": "10"}
+        url = base_url + urllib.parse.urlencode(parameters)
         request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (QuizPortal local educational search)"})
         try:
-            with urllib.request.urlopen(request, timeout=20) as response:
+            with urllib.request.urlopen(request, timeout=min(SEARCH_TIMEOUT_SECONDS, remaining)) as response:
                 raw = response.read().decode("utf-8", errors="replace")
-                if parser_type is None:
-                    results = parse_bing_results(raw)
-                else:
-                    parser = parser_type()
-                    parser.feed(raw)
-                    results = parser.results
-                if results:
-                    for item in results:
-                        item["url"] = clean_result_url(item.get("url"))
-                    return results
-        except (urllib.error.URLError, TimeoutError) as error:
+                results = parser_type(raw)
+                SEARCH_DIAGNOSTICS["raw_results"] += len(results)
+                print(f"provider={provider_name} http_status={response.status} parsed_results={len(results)}", flush=True)
+                if provider_name == "bing_html" and results:
+                    rss_url = "https://www.bing.com/search?" + urllib.parse.urlencode({"format": "rss", "q": query})
+                    rss_request = urllib.request.Request(rss_url, headers={"User-Agent": "Mozilla/5.0 (QuizPortal local educational search)"})
+                    try:
+                        with urllib.request.urlopen(rss_request, timeout=min(SEARCH_TIMEOUT_SECONDS, max(0.1, deadline - time.monotonic()))) as rss_response:
+                            rss_results = parse_bing_rss(rss_response.read().decode("utf-8", errors="replace"))
+                            print(f"provider=bing_rss http_status={rss_response.status} parsed_results={len(rss_results)}", flush=True)
+                            if rss_results:
+                                results = rss_results
+                    except (urllib.error.URLError, TimeoutError):
+                        print("provider=bing_rss http_status=error parsed_results=0", flush=True)
+                for item in results:
+                    item["url"] = clean_result_url(item.get("url"))
+                    if item["url"] and item["url"] not in seen_urls:
+                        seen_urls.add(item["url"])
+                        item["site"] = urllib.parse.urlparse(item["url"]).netloc.lower()
+                        combined.append(item)
+                meaningful = any(sum(term in f"{item.get('title', '')} {item.get('snippet', '')}".lower() for term in query_terms) >= 2 for item in results)
+                if meaningful:
+                    return combined[:10]
+        except (urllib.error.URLError, TimeoutError, OSError) as error:
+            print(f"provider={provider_name} http_status=error parsed_results=0", flush=True)
             last_error = error
     if last_error:
-        raise last_error
-    return []
+        if not combined:
+            raise last_error
+    return combined[:10]
 
 
 def fetch_source_page(url):
@@ -249,7 +295,10 @@ def fetch_source_page(url):
     if parsed.scheme not in {"http", "https"} or not parsed.netloc:
         return ""
     request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (QuizPortal local educational reader)"})
-    with urllib.request.urlopen(request, timeout=20) as response:
+    remaining = SEARCH_DIAGNOSTICS.get("deadline", time.monotonic() + OPERATION_TIMEOUT_SECONDS) - time.monotonic()
+    if remaining <= 0:
+        raise TimeoutError("source page fetch deadline exceeded")
+    with urllib.request.urlopen(request, timeout=min(SEARCH_TIMEOUT_SECONDS, remaining)) as response:
         content_type = response.headers.get_content_type()
         if content_type not in {"text/html", "application/xhtml+xml"}:
             return ""
@@ -259,13 +308,24 @@ def fetch_source_page(url):
 def source_based_explanation(question, candidates):
     relevant_terms = [term.lower() for term in tokens_for_search(question) if len(term) >= 5]
     pages = []
+    page_fetch_successes = 0
+    snippet_fallbacks = 0
     for candidate in candidates[:3]:
         evidence = ""
+        used_snippet_fallback = False
         try:
             page_text = fetch_source_page(candidate["url"])
-        except (urllib.error.URLError, TimeoutError, UnicodeError):
+        except (urllib.error.URLError, TimeoutError, UnicodeError, OSError) as error:
             page_text = ""
-        evidence = page_text or " ".join(part for part in (candidate.get("title"), candidate.get("snippet")) if part).strip()
+            if isinstance(error, TimeoutError):
+                SEARCH_DIAGNOSTICS["page_timeout_count"] += 1
+        if page_text:
+            page_fetch_successes += 1
+            evidence = page_text
+        else:
+            snippet_fallbacks += 1
+            used_snippet_fallback = True
+            evidence = " ".join(part for part in (candidate.get("title"), candidate.get("snippet")) if part).strip()
         if not evidence:
             continue
         sentences = [part.strip() for part in re.split(r"(?<=[.!?])\s+", evidence) if len(part.strip()) >= 24]
@@ -275,6 +335,16 @@ def source_based_explanation(question, candidates):
             matches = sum(1 for term in relevant_terms if term in lower)
             if matches >= 2 or (matches >= 1 and any(anchor in lower for anchor in relevant_terms)):
                 scored_sentences.append((matches, sentence))
+        if not scored_sentences and not used_snippet_fallback:
+            snippet_fallbacks += 1
+            used_snippet_fallback = True
+            evidence = " ".join(part for part in (candidate.get("title"), candidate.get("snippet")) if part).strip()
+            sentences = [part.strip() for part in re.split(r"(?<=[.!?])\s+", evidence) if len(part.strip()) >= 24]
+            for sentence in sentences:
+                lower = sentence.lower().replace("paleolithic", "palaeolithic")
+                matches = sum(1 for term in relevant_terms if term in lower)
+                if matches >= 1:
+                    scored_sentences.append((matches, sentence))
         if scored_sentences:
             scored_sentences.sort(key=lambda item: item[0], reverse=True)
             pages.append({"candidate": candidate, "sentences": [sentence for _, sentence in scored_sentences[:5]], "evidence": evidence})
@@ -291,10 +361,20 @@ def source_based_explanation(question, candidates):
         if len(points) >= 8:
             break
     if not points:
-        return {"explanation": [], "sources": []}
+        return {"explanation": [], "sources": [], "page_fetch_successes": page_fetch_successes, "snippet_fallbacks": snippet_fallbacks}
+    explanation_document = {
+        "type": "document",
+        "blocks": [
+            {"type": "heading", "level": 3, "content": "Online explanation"},
+            *[{"type": "paragraph", "content": sentence} for sentence in points[:8]]
+        ]
+    }
     return {
         "explanation": points[:8],
-        "sources": [{"title": page["candidate"]["title"], "site": page["candidate"]["site"], "url": page["candidate"]["url"], "snippet": page["candidate"].get("snippet", "")} for page in pages]
+        "explanationDocument": explanation_document,
+        "sources": [{"title": page["candidate"]["title"], "site": page["candidate"]["site"], "url": page["candidate"]["url"], "snippet": page["candidate"].get("snippet", "")} for page in pages],
+        "page_fetch_successes": page_fetch_successes,
+        "snippet_fallbacks": snippet_fallbacks
     }
 
 
@@ -303,6 +383,8 @@ def normalize_sentence(value):
 
 
 def online_explanation_search(payload):
+    global SEARCH_DIAGNOSTICS
+    started_at = time.monotonic()
     question = str(payload.get("question") or "").strip()
     options = [str(option) for option in payload.get("options") or []]
     if not question:
@@ -326,14 +408,16 @@ def online_explanation_search(payload):
         " ".join(part for part in (entity_query, topic_phrase, "discovery", country) if part)
     ]
     queries = [query for query in queries if query]
+    SEARCH_DIAGNOSTICS = {"queries_attempted": 0, "providers_attempted": 0, "raw_results": 0, "deadline": time.monotonic() + OPERATION_TIMEOUT_SECONDS, "provider_timeout_count": 0, "page_timeout_count": 0}
     results = []
     seen = set()
     for query in queries[:3]:
+        SEARCH_DIAGNOSTICS["queries_attempted"] += 1
         try:
             found = online_search(query)
-        except (urllib.error.URLError, TimeoutError) as error:
-            if not results:
-                raise RuntimeError("Online search is temporarily unavailable.") from error
+        except (urllib.error.URLError, TimeoutError, OSError) as error:
+            if isinstance(error, TimeoutError):
+                SEARCH_DIAGNOSTICS["provider_timeout_count"] += 1
             continue
         for item in found:
             link = clean_result_url(item["url"])
@@ -347,7 +431,7 @@ def online_explanation_search(payload):
             topic_match = "palaeolithic" in searchable if "palaeolithic" in question.lower() or "paleolithic" in question.lower() else False
             if entity and not entity_match and not (entity_anchor and entity_anchor in searchable and topic_match):
                 continue
-            if not entity and len(matched_terms) < 2 and not any(len(term) >= 8 for term in matched_terms):
+            if not entity and not matched_terms:
                 continue
             authority = 0
             if host.endswith(".gov") or ".gov." in host:
@@ -365,7 +449,20 @@ def online_explanation_search(payload):
             item["url"] = link
             results.append(item)
     ranked = sorted(results, key=lambda item: item["score"], reverse=True)[:3]
-    return source_based_explanation(question, ranked)
+    evidence_context = " ".join([question, *options, official_answer]).strip()
+    explanation = source_based_explanation(evidence_context, ranked)
+    explanation["diagnostics"] = {
+        **SEARCH_DIAGNOSTICS,
+        "relevant_results": len(ranked),
+        "page_fetch_successes": explanation.get("page_fetch_successes", 0),
+        "snippet_fallbacks": explanation.get("snippet_fallbacks", 0),
+        "explanation_points": len(explanation.get("explanation", [])),
+        "final_explanation_count": len(explanation.get("explanation", [])),
+        "final_source_count": len(explanation.get("sources", [])),
+        "final_empty_reason": "no relevant evidence after provider, relevance, page, and snippet evaluation" if not explanation.get("explanation") else "",
+        "elapsed_ms": round((time.monotonic() - started_at) * 1000)
+    }
+    return explanation
 
 
 def tokens_for_search(value):
@@ -415,7 +512,7 @@ class Handler(BaseHTTPRequestHandler):
             allowed = {"question", "options", "officialAnswer"}
             payload = {key: payload.get(key) for key in allowed}
             if path == "/api/online-explanation":
-                self.send_json(HTTPStatus.OK, {"results": online_explanation_search(payload)})
+                self.send_json(HTTPStatus.OK, online_explanation_search(payload))
             else:
                 self.send_json(HTTPStatus.OK, {"review": call_gemini(payload)})
         except json.JSONDecodeError:

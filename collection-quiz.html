@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collection Quiz - Quiz Portal</title>
+    <link rel="stylesheet" href="assets/css/quiz.css" />
+    <script src="assets/js/auth.js"></script>
+</head>
+<body>
+    <header class="topbar">
+        <div>
+            <div class="topbar-kicker">Practice Mode</div>
+            <h1 id="subjectTitle">Collection Quiz</h1>
+            <div class="logo-badge">Quiz Portal</div>
+            <div class="top-right">
+                <div id="timer" class="timer-pill">00:40</div>
+                <button id="backBtn" class="btn-secondary">⬅ Back</button>
+                <button id="exitBtn" class="btn-danger">✕ Exit</button>
+                <button id="logoutBtn" class="btn-tertiary">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="quizSection" class="panel panel-light">
+            <div class="quiz-layout collection-quiz-layout">
+                <div class="quiz-main panel">
+                    <div class="question-topline">
+                        <h2 id="chapterTitle"></h2>
+                        <div id="progressText">Question 1 of 1</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                    <div id="questionBox"></div>
+                    <div class="navigation">
+                        <button id="nextBtn" class="btn btn-primary">Next ➜</button>
+                    </div>
+                </div>
+
+                <aside class="palette-panel panel" style="display:none;">
+                    <h3>Question Palette</h3>
+                    <div id="palette" class="palette-grid"></div>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <div id="exitConfirmModal" class="modal-overlay" style="display:none;">
+        <div class="modal-card">
+            <div class="modal-icon">⚠</div>
+            <h3>Exit Practice?</h3>
+            <p class="modal-copy">Your progress will not be saved.</p>
+            <div class="modal-actions">
+                <button id="cancelExitBtn" class="btn btn-secondary">Cancel</button>
+                <button id="confirmExitBtn" class="btn btn-danger">Exit</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/explanationRenderer.js"></script>
+    <script src="assets/js/collectionQuiz.js"></script>
+</body>
+</html>

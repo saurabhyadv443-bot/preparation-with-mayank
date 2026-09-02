@@ -28,33 +28,14 @@
     <main class="subject-shell">
         <section class="panel subject-panel">
             <div class="section-heading compact-heading">
-                <h2>Bookmarks</h2>
-                <button id="bookmarkBtn" class="btn btn-primary btn-small">View Bookmarks</button>
+                <h2 id="sectionHeading">Chapter Wise Practice</h2>
             </div>
-            <div id="bookmarkList" class="review-list"></div>
-        </section>
-
-        <section class="grid-2">
-            <article class="panel">
-                <h2>Performance Dashboard</h2>
-                <p>Monitor recent quiz scores, accuracy and revision momentum.</p>
-                <div id="performanceStats" class="performance-stats"></div>
-            </article>
-            <article class="panel">
-                <h2>Practice Flow</h2>
-                <p>Choose a chapter from the practice screen and start immediately.</p>
-            </article>
-        </section>
-
-        <section class="panel subject-panel">
-            <div class="section-heading compact-heading">
-                <h2>Chapter Wise Practice</h2>
-                <button id="practiceBtn" class="btn btn-primary btn-small">Open Practice</button>
-            </div>
-            <p>Practice directly from the selected subject and continue with resume support.</p>
+            <div id="classificationRemovalControls" class="classification-removal-controls" hidden></div>
+            <div id="chapterList" class="chapter-list subject-chapter-list" aria-live="polite"></div>
         </section>
     </main>
 
+    <script src="assets/js/classificationRemoval.js?v=20260902-1"></script>
     <script src="assets/js/subject.js?v=20260803-1"></script>
 </body>
 </html>

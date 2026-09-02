@@ -36,6 +36,13 @@
       "description": "Constitution, governance and polity practice"
     },
     {
+      "id": "economy",
+      "title": "Economy",
+      "file": "economy.json",
+      "icon": "💰",
+      "description": "Economy and current public affairs practice"
+    },
+    {
       "id": "mock",
       "title": "Mock Test",
       "file": "mock.json",

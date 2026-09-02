@@ -29,6 +29,16 @@ const dashboardSubjects = {
         icon: "🏛",
         title: "Polity",
         description: "Constitution, governance and polity practice"
+    },
+    economy: {
+        icon: "💰",
+        title: "Economy",
+        description: "Economy and public finance practice"
+    },
+    current_affairs: {
+        icon: "📰",
+        title: "Current Affairs",
+        description: "Daily and monthly current affairs questions"
     }
 };
 
@@ -69,7 +79,7 @@ async function fetchSubjectManifest() {
     }
 }
 
-function orderSubjectKeys(keys, preferredOrder = ["ancient", "medieval", "modern", "geography", "polity"]) {
+function orderSubjectKeys(keys, preferredOrder = ["ancient", "medieval", "modern", "geography", "polity", "economy"]) {
     return [...new Set(keys)]
         .filter((key) => key.toLowerCase() !== "mock")
         .sort((a, b) => {
@@ -92,22 +102,58 @@ function displayDashboardSubjects(subjects, subjectMeta) {
     subjectsContainer.innerHTML = "";
     actionCards.forEach((card) => subjectsContainer.appendChild(card));
 
-    subjects.forEach((subjectKey) => {
-        const meta = subjectMeta && subjectMeta[subjectKey];
+    const currentAffairsCard = {
+        id: "current_affairs",
+        title: "Current Affairs",
+        description: "Daily and monthly current affairs questions",
+        icon: "📰"
+    };
+
+    const mergedSubjects = [...new Set([...subjects, "current_affairs"])];
+
+    mergedSubjects.forEach((subjectKey) => {
+        if (subjectKey === "mock") {
+            return;
+        }
+
+        const meta = subjectKey === "current_affairs" ? currentAffairsCard : (subjectMeta && subjectMeta[subjectKey]);
         const title = meta ? meta.title : getSubjectTitle(subjectKey);
         const description = meta ? meta.description : getSubjectDescription(subjectKey);
         const icon = meta ? meta.icon : getSubjectIcon(subjectKey);
 
         const card = document.createElement("article");
         card.className = "dashboard-card";
+        const cardTarget = subjectKey === "current_affairs" ? `subject.html?subject=${encodeURIComponent(subjectKey)}` : `subject.html?subject=${encodeURIComponent(subjectKey)}`;
+        const cardLabel = subjectKey === "current_affairs" ? "Open CA Home" : "Open Subject";
+
         card.innerHTML = `
             <div class="card-icon">${icon}</div>
             <h2>${title}</h2>
             <p>${description}</p>
-            <a href="subject.html?subject=${encodeURIComponent(subjectKey)}" class="btn btn-primary btn-small">Open Subject</a>
+            <a href="${cardTarget}" class="btn btn-primary btn-small">${cardLabel}</a>
         `;
         subjectsContainer.appendChild(card);
     });
+}
+
+function buildCurrentAffairsSubjectCollection() {
+    const classifications = JSON.parse(localStorage.getItem("questionClassifications") || "{}");
+    const entries = Object.values(classifications).filter((entry) => entry && entry.CA === true);
+    return entries.reduce((acc, entry) => {
+        const subjectKey = String(entry.subjectKey || entry.subject || "unknown");
+        const chapter = String(entry.chapter || "Current Affairs");
+        if (!acc[subjectKey]) {
+            acc[subjectKey] = {};
+        }
+        if (!acc[subjectKey][chapter]) {
+            acc[subjectKey][chapter] = [];
+        }
+        const question = entry.question;
+        if (question) {
+            acc[subjectKey][chapter].push(question);
+        }
+        return acc;
+    }, {});
 }
 
 function loadDashboardSubjects() {

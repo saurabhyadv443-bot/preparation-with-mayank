@@ -17,6 +17,13 @@ try {
 } catch (error) {
     savedReviewFocus = null;
 }
+const classifiedReviewPayload = (() => {
+    try {
+        return JSON.parse(sessionStorage.getItem("classifiedReviewQuestions") || "null");
+    } catch (error) {
+        return null;
+    }
+})();
 const result = savedReviewFocus
     ? {
         subject: savedReviewFocus.subject,
@@ -31,10 +38,27 @@ const result = savedReviewFocus
         questions: [savedReviewFocus.question],
         userAnswers: [null]
     }
-    : (historicalAttempt || (rawResult ? JSON.parse(rawResult) : null));
+    : (classifiedReviewPayload
+        ? {
+            subject: classifiedReviewPayload.subject || classifiedReviewPayload.subjectKey || "Classified",
+            subjectKey: classifiedReviewPayload.subjectKey || classifiedReviewPayload.subject || "classified",
+            chapter: classifiedReviewPayload.chapter || "Important Questions",
+            total: Array.isArray(classifiedReviewPayload.questions) ? classifiedReviewPayload.questions.length : 0,
+            attempted: 0,
+            correct: 0,
+            wrong: 0,
+            skipped: Array.isArray(classifiedReviewPayload.questions) ? classifiedReviewPayload.questions.length : 0,
+            accuracy: 0,
+            questions: Array.isArray(classifiedReviewPayload.questions) ? classifiedReviewPayload.questions : [],
+            userAnswers: Array.isArray(classifiedReviewPayload.questions) ? new Array(classifiedReviewPayload.questions.length).fill(null) : []
+        }
+        : (historicalAttempt || (rawResult ? JSON.parse(rawResult) : null)));
 const savedReviewQuestionIndex = savedReviewFocus ? Number(savedReviewFocus.questionIndex || 0) : null;
 if (savedReviewFocus) {
     sessionStorage.removeItem("savedReviewFocus");
+}
+if (classifiedReviewPayload) {
+    sessionStorage.removeItem("classifiedReviewQuestions");
 }
 
 const reviewSubject = document.getElementById("reviewSubject");
@@ -137,9 +161,435 @@ function formatTime(seconds) {
     return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
 }
 
+// Reading Mode Highlighter Functions
+function getReadingHighlights() {
+    try {
+        return JSON.parse(localStorage.getItem("readingHighlights") || "{}");
+    } catch (e) {
+        return {};
+    }
+}
+
+function saveReadingHighlights(highlights) {
+    try {
+        localStorage.setItem("readingHighlights", JSON.stringify(highlights));
+    } catch (e) {
+        console.error("Failed to save highlights:", e);
+    }
+}
+
+function getQuestionHighlights(questionIndex) {
+    const allHighlights = getReadingHighlights();
+    return allHighlights[questionIndex] || [];
+}
+
+function saveQuestionHighlights(questionIndex, highlights) {
+    const allHighlights = getReadingHighlights();
+    allHighlights[questionIndex] = highlights;
+    saveReadingHighlights(allHighlights);
+}
+
+function addHighlight(questionIndex, range, color = "yellow") {
+    const highlights = getQuestionHighlights(questionIndex);
+    highlights.push({
+        startOffset: range.startOffset,
+        endOffset: range.endOffset,
+        startNodePath: getNodePath(range.startContainer),
+        endNodePath: getNodePath(range.endContainer),
+        color: color,
+        text: range.toString()
+    });
+    saveQuestionHighlights(questionIndex, highlights);
+}
+
+function removeHighlight(questionIndex, highlightIndex) {
+    const highlights = getQuestionHighlights(questionIndex);
+    highlights.splice(highlightIndex, 1);
+    saveQuestionHighlights(questionIndex, highlights);
+}
+
+function getNodePath(node) {
+    const path = [];
+    let current = node;
+    while (current && current.nodeType !== Node.DOCUMENT_NODE) {
+        let index = 0;
+        let sibling = current.previousSibling;
+        while (sibling) {
+            if (sibling.nodeType === current.nodeType) {
+                index++;
+            }
+            sibling = sibling.previousSibling;
+        }
+        path.unshift({ tagName: current.tagName, index, type: current.nodeType });
+        current = current.parentNode;
+    }
+    return path;
+}
+
+function applyReadingHighlights(explanationBox, questionIndex) {
+    if (!explanationBox || isHistoricalReview) return;
+    
+    const highlights = getQuestionHighlights(questionIndex);
+    if (!highlights.length) return;
+    
+    highlights.forEach((highlight) => {
+        try {
+            applyHighlightToDOM(explanationBox, highlight);
+        } catch (e) {
+            // Highlight range may be invalid after DOM changes
+        }
+    });
+}
+
+function applyHighlightToDOM(container, highlight) {
+    const range = document.createRange();
+    
+    try {
+        const startNode = findNodeByPath(container, highlight.startNodePath);
+        const endNode = findNodeByPath(container, highlight.endNodePath);
+        
+        if (startNode && endNode) {
+            range.setStart(startNode, highlight.startOffset);
+            range.setEnd(endNode, highlight.endOffset);
+            
+            const span = document.createElement("span");
+            span.className = `reading-highlight-${highlight.color}`;
+            span.dataset.highlightColor = highlight.color;
+            
+            try {
+                range.surroundContents(span);
+            } catch (e) {
+                const contents = range.extractContents();
+                span.appendChild(contents);
+                range.insertNode(span);
+            }
+        }
+    } catch (e) {
+        // Invalid highlight range
+    }
+}
+
+function findNodeByPath(container, path) {
+    let current = container;
+    for (const step of path) {
+        let index = 0;
+        let found = false;
+        for (const child of current.childNodes) {
+            if (child.nodeType === step.type) {
+                if (index === step.index) {
+                    current = child;
+                    found = true;
+                    break;
+                }
+                index++;
+            }
+        }
+        if (!found) return null;
+    }
+    return current;
+}
+
+function buildInlineNodesFromNode(node) {
+    if (!node) {
+        return [];
+    }
+    if (node.nodeType === Node.TEXT_NODE) {
+        const text = node.textContent || "";
+        return text ? [text] : [];
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+        return [];
+    }
+
+    const tagName = node.tagName.toLowerCase();
+    const childNodes = Array.from(node.childNodes).flatMap((child) => buildInlineNodesFromNode(child));
+
+    if (tagName === "br") {
+        return ["\n"];
+    }
+    if (tagName === "strong" || tagName === "b") {
+        return [{ type: "bold", text: childNodes }];
+    }
+    if (tagName === "em" || tagName === "i") {
+        return [{ type: "italic", text: childNodes }];
+    }
+    if (tagName === "u") {
+        return [{ type: "underline", text: childNodes }];
+    }
+    if (tagName === "s" || tagName === "strike") {
+        return [{ type: "strikethrough", text: childNodes }];
+    }
+    if (tagName === "mark") {
+        return [{ type: "highlight", text: childNodes }];
+    }
+    if (tagName === "sup") {
+        return [{ type: "superscript", text: childNodes }];
+    }
+    if (tagName === "sub") {
+        return [{ type: "subscript", text: childNodes }];
+    }
+    if (tagName === "code") {
+        return [{ type: "code", text: childNodes }];
+    }
+    if (tagName === "a") {
+        const href = node.getAttribute("href") || "";
+        return [{ type: "link", href, text: childNodes }];
+    }
+    if (tagName === "span") {
+        return childNodes;
+    }
+    return childNodes;
+}
+
+function buildInlineNodesFromNodeList(nodes) {
+    return nodes.flatMap((node) => buildInlineNodesFromNode(node));
+}
+
+function extractListItemContent(itemNode) {
+    const contentNodes = Array.from(itemNode.childNodes).filter((child) => {
+        if (child.nodeType === Node.ELEMENT_NODE && (child.tagName === "UL" || child.tagName === "OL")) {
+            return false;
+        }
+        return true;
+    });
+    const nestedListNodes = Array.from(itemNode.children).filter((child) => child.tagName === "UL" || child.tagName === "OL");
+    const content = buildInlineNodesFromNodeList(contentNodes);
+    const children = nestedListNodes.map((nestedList) => convertListNodeToBlock(nestedList));
+    return {
+        type: "list-item",
+        content: content.length ? content : "",
+        ...(children.length ? { children } : {})
+    };
+}
+
+function convertListNodeToBlock(listNode) {
+    if (!listNode || !listNode.tagName) {
+        return { type: "paragraph", content: "" };
+    }
+    const isOrdered = listNode.tagName.toLowerCase() === "ol";
+    const items = Array.from(listNode.children).filter((item) => item.tagName && item.tagName.toLowerCase() === "li").map((item) => extractListItemContent(item));
+    return {
+        type: isOrdered ? "ordered-list" : "bullet-list",
+        items
+    };
+}
+
+function convertTableNodeToBlock(tableNode) {
+    const headers = Array.from(tableNode.querySelectorAll("thead th")).map((header) => header.textContent.trim());
+    const rows = Array.from(tableNode.querySelectorAll("tbody tr")).map((row) => Array.from(row.children).map((cell) => cell.textContent.trim()));
+    return {
+        type: "table",
+        headers: headers.length ? headers : [],
+        rows
+    };
+}
+
+function figureNodeToBlock(figureNode) {
+    const img = figureNode.querySelector("img");
+    const caption = figureNode.querySelector("figcaption");
+    const src = img ? img.getAttribute("src") : "";
+    if (!src) {
+        return null;
+    }
+    return {
+        type: "image",
+        src,
+        alt: img ? (img.getAttribute("alt") || "") : "",
+        caption: caption ? caption.textContent.trim() : ""
+    };
+}
+
+function convertEditorNodeToBlock(node) {
+    if (!node || !node.tagName) {
+        return null;
+    }
+    const tagName = node.tagName.toLowerCase();
+
+    if (tagName === "h1" || tagName === "h2" || tagName === "h3" || tagName === "h4" || tagName === "h5" || tagName === "h6") {
+        const level = Number(tagName.replace("h", "")) || 2;
+        return { type: "heading", level, content: buildInlineNodesFromNodeList(Array.from(node.childNodes)) };
+    }
+    if (tagName === "p") {
+        return { type: "paragraph", content: buildInlineNodesFromNodeList(Array.from(node.childNodes)) };
+    }
+    if (tagName === "blockquote") {
+        return { type: "quote", content: buildInlineNodesFromNodeList(Array.from(node.childNodes)) };
+    }
+    if (tagName === "ul" || tagName === "ol") {
+        return convertListNodeToBlock(node);
+    }
+    if (tagName === "table") {
+        return convertTableNodeToBlock(node);
+    }
+    if (tagName === "figure") {
+        return figureNodeToBlock(node);
+    }
+    if (tagName === "hr") {
+        return { type: "separator" };
+    }
+    if (tagName === "pre") {
+        const codeNode = node.querySelector("code") || node;
+        return { type: "code", code: codeNode.textContent || "", language: "text" };
+    }
+    if (tagName === "div" || tagName === "section") {
+        const blocks = [];
+        Array.from(node.childNodes).forEach((child) => {
+            const block = convertEditorNodeToBlock(child);
+            if (block) {
+                blocks.push(block);
+            }
+        });
+        return blocks.length ? blocks : null;
+    }
+    return null;
+}
+
+function buildExplanationDocumentFromEditor(editor) {
+    if (!editor) {
+        return { type: "document", blocks: [] };
+    }
+
+    const blocks = [];
+    Array.from(editor.childNodes).forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+            const text = (node.textContent || "").trim();
+            if (text) {
+                blocks.push({ type: "paragraph", content: [text] });
+            }
+            return;
+        }
+
+        const block = convertEditorNodeToBlock(node);
+        if (Array.isArray(block)) {
+            blocks.push(...block.filter(Boolean));
+        } else if (block) {
+            blocks.push(block);
+        }
+    });
+
+    if (!blocks.length) {
+        const text = (editor.textContent || "").trim();
+        return text ? { type: "document", blocks: [{ type: "paragraph", content: [text] }] } : { type: "document", blocks: [] };
+    }
+
+    return { type: "document", blocks };
+}
+
+function renderEditableInlineContent(content) {
+    if (Array.isArray(content)) {
+        return content.map((item) => renderEditableInlineContent(item)).join("");
+    }
+    if (typeof content === "string") {
+        return escapeHtml(content);
+    }
+    if (!content || typeof content !== "object") {
+        return escapeHtml(String(content ?? ""));
+    }
+
+    if (content.type === "bold") return `<strong>${renderEditableInlineContent(content.text ?? content.content ?? "")}</strong>`;
+    if (content.type === "italic") return `<em>${renderEditableInlineContent(content.text ?? content.content ?? "")}</em>`;
+    if (content.type === "underline") return `<u>${renderEditableInlineContent(content.text ?? content.content ?? "")}</u>`;
+    if (content.type === "highlight") return `<mark>${renderEditableInlineContent(content.text ?? content.content ?? "")}</mark>`;
+    if (content.type === "strikethrough") return `<s>${renderEditableInlineContent(content.text ?? content.content ?? "")}</s>`;
+    if (content.type === "code") return `<code>${escapeHtml(String(content.text ?? content.content ?? ""))}</code>`;
+    if (content.type === "link") return `<a href="${escapeHtml(String(content.href || content.url || "#"))}" target="_blank" rel="noopener noreferrer">${renderEditableInlineContent(content.text ?? content.label ?? content.href ?? content.url ?? "")}</a>`;
+    if (content.type === "superscript") return `<sup>${renderEditableInlineContent(content.text ?? content.content ?? "")}</sup>`;
+    if (content.type === "subscript") return `<sub>${renderEditableInlineContent(content.text ?? content.content ?? "")}</sub>`;
+    return escapeHtml(String(content.text ?? content.content ?? ""));
+}
+
+function renderEditorDocument(documentLike) {
+    const doc = window.ExplanationRenderer ? window.ExplanationRenderer.normalizeExplanationDocument(documentLike) : { type: "document", blocks: [] };
+    if (!doc || !Array.isArray(doc.blocks) || !doc.blocks.length) {
+        return "";
+    }
+
+    return doc.blocks.map((block) => {
+        if (!block || typeof block !== "object") {
+            return "";
+        }
+        switch (block.type) {
+            case "heading": {
+                const level = Number(block.level) || 2;
+                return `<h${level}>${renderEditableInlineContent(block.content || block.text || "")}</h${level}>`;
+            }
+            case "paragraph":
+                return `<p>${renderEditableInlineContent(block.content || block.text || "")}</p>`;
+            case "quote":
+                return `<blockquote>${renderEditableInlineContent(block.content || block.text || "")}</blockquote>`;
+            case "bullet-list":
+                return `<ul>${(block.items || []).map((item) => `<li>${renderEditableInlineContent(item && item.content ? item.content : item)}</li>`).join("")}</ul>`;
+            case "ordered-list":
+                return `<ol>${(block.items || []).map((item) => `<li>${renderEditableInlineContent(item && item.content ? item.content : item)}</li>`).join("")}</ol>`;
+            case "table": {
+                const headers = Array.isArray(block.headers) && block.headers.length ? `<thead><tr>${block.headers.map((header) => `<th>${escapeHtml(String(header ?? ""))}</th>`).join("")}</tr></thead>` : "";
+                const rows = Array.isArray(block.rows) ? block.rows.map((row) => `<tr>${row.map((cell) => `<td>${escapeHtml(String(cell ?? ""))}</td>`).join("")}</tr>`).join("") : "";
+                return `<table><tbody>${rows}</tbody></table>`;
+            }
+            case "image":
+                return `<figure><img src="${escapeHtml(String(block.src || ""))}" alt="${escapeHtml(String(block.alt || ""))}" /><figcaption>${escapeHtml(String(block.caption || ""))}</figcaption></figure>`;
+            case "separator":
+                return "<hr />";
+            case "code":
+                return `<pre><code>${escapeHtml(String(block.code || block.text || ""))}</code></pre>`;
+            case "callout":
+            case "note":
+            case "warning":
+            case "important":
+                return `<div class="rich-callout"><strong>${escapeHtml(String(block.title || block.kind || "Note"))}</strong><div>${renderEditableInlineContent(block.content || block.text || "")}</div></div>`;
+            case "flowchart": {
+                const nodes = Array.isArray(block.nodes) ? block.nodes.map((node) => `<div>${renderEditableInlineContent(node.label || node.text || "")}</div>`).join("") : "";
+                return `<div class="rich-flowchart">${nodes}</div>`;
+            }
+            default:
+                return `<p>${renderEditableInlineContent(block.content || block.text || "")}</p>`;
+        }
+    }).join("");
+}
+
+function attachExplanationEditorToolbarHandlers() {
+    const editorButtons = document.querySelectorAll("[data-editor-command]");
+    editorButtons.forEach((button) => {
+        button.onclick = () => {
+            const command = button.dataset.editorCommand;
+            const editor = document.getElementById(button.dataset.editorTargetId);
+            if (!editor) {
+                return;
+            }
+            editor.focus();
+            if (command === "h2") {
+                document.execCommand("formatBlock", false, "h2");
+                return;
+            }
+            if (command === "h3") {
+                document.execCommand("formatBlock", false, "h3");
+                return;
+            }
+            if (command === "p") {
+                document.execCommand("formatBlock", false, "p");
+                return;
+            }
+            if (command === "blockquote") {
+                document.execCommand("formatBlock", false, "blockquote");
+                return;
+            }
+            if (command === "ul") {
+                document.execCommand("insertUnorderedList");
+                return;
+            }
+            if (command === "ol") {
+                document.execCommand("insertOrderedList");
+                return;
+            }
+            document.execCommand(command, false, null);
+        };
+    });
+}
+
 function startEditingExplanation(questionIndex) {
     editingExplanationIndex = questionIndex;
     renderQuestions();
+    requestAnimationFrame(() => attachExplanationEditorToolbarHandlers());
 }
 
 function cancelEditingExplanation() {
@@ -152,13 +602,14 @@ function saveEditedExplanation(questionIndex) {
     if (!explanationInput || !result.questions[questionIndex]) {
         return;
     }
-    const newExplanation = explanationInput.value.trim();
-    result.questions[questionIndex].explanation = newExplanation;
-    
-    // Persist to localStorage
-    const resultKey = localStorage.getItem("quizResult") ? "quizResult" : "quizResult_study";
+
+    const explanationDocument = buildExplanationDocumentFromEditor(explanationInput);
+    const plainText = (window.ExplanationRenderer && window.ExplanationRenderer.getPlainTextFromExplanation(explanationDocument)) || explanationInput.textContent.trim();
+    result.questions[questionIndex].explanationDocument = explanationDocument;
+    result.questions[questionIndex].explanation = plainText;
+
     localStorage.setItem(resultKey, JSON.stringify(result));
-    
+
     editingExplanationIndex = null;
     renderQuestions();
 }
@@ -217,6 +668,139 @@ function getBookmarks() {
     } catch (error) {
         return [];
     }
+}
+
+const CLASSIFICATION_LABELS = {
+    S: "Saved Questions",
+    H: "History",
+    G: "Geography",
+    E: "Economy",
+    P: "Polity",
+    CA: "Current Affairs"
+};
+
+function getClassificationStore() {
+    try {
+        return JSON.parse(localStorage.getItem("questionClassifications") || "{}");
+    } catch (error) {
+        return {};
+    }
+}
+
+function saveClassificationStore(store) {
+    try {
+        localStorage.setItem("questionClassifications", JSON.stringify(store));
+    } catch (error) {
+        console.error("Failed to save question classifications:", error);
+    }
+}
+
+function getQuestionReference(question, index) {
+    const subjectKey = result && (result.subjectKey || result.subject || "unknown");
+    const chapter = result && (result.chapter || "unknown");
+    const questionId = question
+        ? (question.id ?? question.qid ?? question.questionId ?? question._id ?? question.questionID ?? question.question_id ?? `${subjectKey}::${chapter}::${index}`)
+        : `${subjectKey}::${chapter}::${index}`;
+    return {
+        subjectKey,
+        chapter,
+        questionId: String(questionId)
+    };
+}
+
+function getCollectionTarget(tag) {
+    const map = {
+        H: { subjectKey: "modern", subject: "Modern History", chapter: "Important Questions" },
+        G: { subjectKey: "geography", subject: "Geography", chapter: "Important Questions" },
+        P: { subjectKey: "polity", subject: "Polity", chapter: "Important Questions" },
+        E: { subjectKey: "economy", subject: "Economy", chapter: "Important Questions" },
+        CA: { subjectKey: "current_affairs", subject: "Current Affairs", chapter: "Current Affairs" }
+    };
+    return map[tag] || null;
+}
+
+function getQuestionClassificationKey(index) {
+    const question = result && Array.isArray(result.questions) ? result.questions[index] : null;
+    const { subjectKey, chapter, questionId } = getQuestionReference(question, index);
+    return `${String(subjectKey)}::${String(chapter)}::${String(questionId)}`;
+}
+
+function getQuestionClassifications(index) {
+    const store = getClassificationStore();
+    const key = getQuestionClassificationKey(index);
+    return store[key] || {};
+}
+
+function isMockReviewContext() {
+    return Boolean(
+        result && (
+            result.quizType === "mock" ||
+            result.subjectKey === "mock" ||
+            result.subject === "Mock Test" ||
+            String(result.quizId || "").toLowerCase().includes("mock") ||
+            String(result.chapter || "").toLowerCase().includes("mock") ||
+            String(result.subjectKey || result.subject || "").toLowerCase().includes("mock")
+        )
+    );
+}
+
+function toggleQuestionClassification(index, tag) {
+    if (!isMockReviewContext()) {
+        return;
+    }
+
+    const store = getClassificationStore();
+    const question = result && Array.isArray(result.questions) ? result.questions[index] : null;
+    const { subjectKey, chapter, questionId } = getQuestionReference(question, index);
+    const key = `${String(subjectKey)}::${String(chapter)}::${String(questionId)}`;
+    const entry = store[key] || {
+        subjectKey,
+        subject: result.subject,
+        chapter,
+        questionIndex: index,
+        questionId,
+        question,
+        originalSubjectKey: subjectKey,
+        originalSubject: result.subject,
+        originalChapter: chapter
+    };
+
+    entry.subjectKey = subjectKey;
+    entry.subject = result.subject;
+    entry.chapter = chapter;
+    entry.questionIndex = index;
+    entry.questionId = questionId;
+    entry.question = question;
+    entry.originalSubjectKey = subjectKey;
+    entry.originalSubject = result.subject;
+    entry.originalChapter = chapter;
+
+    const target = getCollectionTarget(tag);
+    if (target) {
+        entry.collectionTarget = target.subjectKey;
+        entry.collectionTargetSubject = target.subject;
+        entry.collectionTargetChapter = target.chapter;
+    }
+
+    if (entry[tag]) {
+        delete entry[tag];
+    } else {
+        entry[tag] = true;
+    }
+
+    if (!Object.keys(CLASSIFICATION_LABELS).some((label) => Boolean(entry[label]))) {
+        delete store[key];
+    } else {
+        store[key] = entry;
+    }
+
+    saveClassificationStore(store);
+    renderQuestions();
+    updateFilterButtons();
+    renderPalette();
+    renderQuickNavigation();
+    updateResultCount();
+    updateActiveQuestion();
 }
 
 function isBookmarked(index) {
@@ -448,10 +1032,27 @@ function renderQuestions() {
         const selectedAnswerText = selected == null ? "Not Attempted" : highlightText(question.options[selected], activeSearchQuery);
         const correctAnswerText = highlightText(question.options[question.answer], activeSearchQuery);
         const status = getQuestionStatus(index);
-        const explanation = question.explanation;
-        const explanationText = explanation && String(explanation).trim();
+        const explanationDocument = question.explanationDocument || question.explanation || "";
+        const explanationHtml = window.ExplanationRenderer
+            ? window.ExplanationRenderer.renderExplanationDocument(explanationDocument, question.explanation || "")
+            : (question.explanation ? `<p>${escapeHtml(String(question.explanation))}</p>` : "");
+        const explanationText = (window.ExplanationRenderer && window.ExplanationRenderer.getPlainTextFromExplanation(explanationDocument)) || (question.explanation ? String(question.explanation).trim() : "");
         const questionText = highlightText(question.q, activeSearchQuery);
         const saved = isBookmarked(index);
+        const classifications = getQuestionClassifications(index);
+        const classificationButtonsHtml = isMockReviewContext() ? `
+            <div class="classification-mini-group">
+                ${Object.entries(CLASSIFICATION_LABELS).map(([tag, label]) => `
+                    <button
+                        type="button"
+                        class="classification-mini-btn ${classifications[tag] ? "active" : ""} ${tag === "CA" ? "ca" : tag.toLowerCase()}"
+                        data-tag="${tag}"
+                        title="${label}"
+                        onclick="toggleQuestionClassification(${index}, '${tag}')"
+                    >${tag}</button>
+                `).join("")}
+            </div>
+        ` : "";
         const answerSectionHtml = isHistoricalReview ? `<p><strong>Correct Answer:</strong> ${correctAnswerText}</p>` : editingAnswerIndex === index
             ? `<div class="answer-editor-section">
                     <strong>Edit Correct Answer</strong>
@@ -484,18 +1085,30 @@ function renderQuestions() {
         let explanationSectionHtml = "";
         if (isHistoricalReview) {
             explanationSectionHtml = `
-                <div class="explanation-box${explanationText ? "" : " missing"}">
-                    <strong>Explanation:</strong> ${explanationText ? highlightText(explanationText, activeSearchQuery) : "Explanation is currently unavailable for this question."}
+                <div class="explanation-box${explanationHtml ? "" : " missing"}">
+                    <strong>Explanation:</strong>
+                    ${explanationHtml || "Explanation is currently unavailable for this question."}
                 </div>
             `;
         } else if (editingExplanationIndex === index) {
-            // Show edit mode
             explanationSectionHtml = `
                 <div class="explanation-editor-section">
                     <div class="explanation-editor-header">
                         <h4>📝 Edit Explanation</h4>
                     </div>
-                    <textarea id="explanationInput-${index}" class="explanation-input" placeholder="Enter or edit the explanation for this question..." rows="5">${escapeHtml(explanationText || "")}</textarea>
+                    <div class="explanation-editor-toolbar">
+                        <button type="button" class="btn btn-secondary btn-small" data-editor-command="bold" data-editor-target-id="explanationInput-${index}"><strong>B</strong></button>
+                        <button type="button" class="btn btn-secondary btn-small" data-editor-command="italic" data-editor-target-id="explanationInput-${index}"><em>I</em></button>
+                        <button type="button" class="btn btn-secondary btn-small" data-editor-command="underline" data-editor-target-id="explanationInput-${index}"><u>U</u></button>
+                        <button type="button" class="btn btn-secondary btn-small" data-editor-command="strikeThrough" data-editor-target-id="explanationInput-${index}">S</button>
+                        <button type="button" class="btn btn-secondary btn-small" data-editor-command="h2" data-editor-target-id="explanationInput-${index}">H2</button>
+                        <button type="button" class="btn btn-secondary btn-small" data-editor-command="h3" data-editor-target-id="explanationInput-${index}">H3</button>
+                        <button type="button" class="btn btn-secondary btn-small" data-editor-command="p" data-editor-target-id="explanationInput-${index}">P</button>
+                        <button type="button" class="btn btn-secondary btn-small" data-editor-command="blockquote" data-editor-target-id="explanationInput-${index}">Quote</button>
+                        <button type="button" class="btn btn-secondary btn-small" data-editor-command="ul" data-editor-target-id="explanationInput-${index}">• List</button>
+                        <button type="button" class="btn btn-secondary btn-small" data-editor-command="ol" data-editor-target-id="explanationInput-${index}">1. List</button>
+                    </div>
+                    <div id="explanationInput-${index}" class="explanation-input rich-editor" contenteditable="true" spellcheck="true">${renderEditorDocument(explanationDocument || question.explanation || "") || "<p></p>"}</div>
                     <div class="explanation-editor-actions">
                         <button onclick="saveEditedExplanation(${index})" class="btn-save-explanation">💾 Save Explanation</button>
                         <button onclick="cancelEditingExplanation()" class="btn-cancel-explanation">✕ Cancel</button>
@@ -503,10 +1116,10 @@ function renderQuestions() {
                 </div>
             `;
         } else {
-            // Show view mode with edit button
             explanationSectionHtml = `
-                <div class="explanation-box${explanationText ? "" : " missing"}">
-                    <strong>Explanation:</strong> ${explanationText ? highlightText(explanationText, activeSearchQuery) : "Explanation is currently unavailable for this question."}
+                <div class="explanation-box${explanationHtml ? "" : " missing"}">
+                    <strong>Explanation:</strong>
+                    ${explanationHtml || "Explanation is currently unavailable for this question."}
                     <button onclick="startEditingExplanation(${index})" class="btn-edit-explanation">✎ Edit Explanation</button>
                 </div>
             `;
@@ -517,7 +1130,8 @@ function renderQuestions() {
                 <div class="review-card-header">
                     <h3>Q${index + 1}. ${questionText}</h3>
                     <div class="review-card-actions">
-                        <button type="button" class="save-question-btn${saved ? " saved" : ""}" onclick="toggleSavedQuestion(${index})"${isHistoricalReview ? " disabled" : ""}>${saved ? "★ Saved" : "☆ Save"}</button>
+                        <button type="button" class="save-question-btn${saved ? " saved" : ""}" onclick="toggleSavedQuestion(${index})"${isHistoricalReview ? " disabled" : ""}>${saved ? "★" : "S"}</button>
+                        ${classificationButtonsHtml}
                         <span class="review-status-pill ${status}">${status === "correct" ? "Correct" : status === "incorrect" ? "Incorrect" : "Not Attempted"}</span>
                     </div>
                 </div>
@@ -525,12 +1139,10 @@ function renderQuestions() {
                 <p><strong>Your Answer:</strong> ${selectedAnswerText}</p>
                 ${answerSectionHtml}
                 ${explanationSectionHtml}
-                ${typeof reviewAiPanelHtml === "function" ? reviewAiPanelHtml(index) : ""}
-                ${typeof externalAiPanelHtml === "function" ? externalAiPanelHtml(index) : ""}
+                ${typeof copyQuestionOptionsButtonHtml === "function" ? copyQuestionOptionsButtonHtml(index) : ""}
             </div>
         `;
     }).join("");
-    if (typeof bindReviewAiControls === "function") bindReviewAiControls();
 }
 
 function scrollToQuestion(index) {
@@ -596,6 +1208,19 @@ function updateActiveQuestion() {
     });
 }
 
+function applyHighlightsToAllQuestions() {
+    if (isHistoricalReview) return;
+    
+    questionReviewList.querySelectorAll(".review-item").forEach((card) => {
+        const questionIndex = Number(card.dataset.questionIndex);
+        const explanationBox = card.querySelector(".explanation-box");
+        
+        if (explanationBox && !card.classList.contains("hidden-question")) {
+            applyReadingHighlights(explanationBox, questionIndex);
+        }
+    });
+}
+
 if (!result) {
     window.location.href = "index.html";
 } else {
@@ -606,6 +1231,7 @@ if (!result) {
     renderSummary();
     renderPalette();
     renderQuestions();
+    applyHighlightsToAllQuestions();
     updateFilterButtons();
     renderSavedQuestions();
     updateActiveQuestion();

@@ -256,6 +256,10 @@ body.entry-locked {
     gap: 24px;
 }
 
+.collection-quiz-layout {
+    grid-template-columns: minmax(0, 1fr);
+}
+
 .quiz-main {
     background: white;
     border-radius: 18px;
@@ -843,6 +847,30 @@ body {
         height: fit-content;
         max-height: none;
         overflow: visible;
+    }
+
+    .collection-quiz-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .collection-quiz-columns {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.9fr);
+        gap: 18px;
+        align-items: start;
+    }
+
+    .collection-quiz-answer,
+    .collection-quiz-explanation {
+        min-width: 0;
+    }
+
+    .collection-quiz-explanation {
+        padding: 16px;
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        line-height: 1.55;
     }
 }
 
