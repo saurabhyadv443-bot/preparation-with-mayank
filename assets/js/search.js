@@ -71,7 +71,7 @@
         if (!matches.length) { resultsNode.innerHTML = '<p>No results found</p>'; return; }
         matches.forEach((m,i)=>{
             const div = document.createElement('div'); div.className='review-item';
-            const qhtml = `<div style="display:flex;justify-content:space-between;align-items:center;"><div style="flex:1"><h4>${highlight(m.q, terms)}</h4><div class=\"metric-row\"><span>${escapeHtml(m.subject)} • ${escapeHtml(m.chapter)}</span><strong>${escapeHtml(m.year)} ${m.difficulty? '• '+escapeHtml(m.difficulty):''} ${m.source? '• '+escapeHtml(m.source):''}</strong></div></div><div style=\"margin-left:12px;display:flex;flex-direction:column;gap:6px\"><button class=\"btn btn-primary btn-small reviewBtn\" data-i=\"${i}\">Review</button><button class=\"btn btn-secondary btn-small bookmarkBtn\" data-i=\"${i}\">Bookmark</button></div></div>`;
+            const qhtml = `<div style="display:flex;justify-content:space-between;align-items:center;"><div style="flex:1"><h4>${highlight(m.q, terms)}</h4><div class=\"metric-row\"><span>${escapeHtml(m.subject)} • ${escapeHtml(m.chapter)}</span><strong>${escapeHtml(m.year)} ${m.difficulty? '• '+escapeHtml(m.difficulty):''} ${m.source? '• '+escapeHtml(m.source):''}</strong></div></div><div style=\"margin-left:12px;display:flex;flex-direction:column;gap:6px\"><button class=\"btn btn-primary btn-small reviewBtn\" data-i=\"${i}\">Review</button></div></div>`;
             const optHtml = (m.options||[]).map(o=>`<div class=\"option-wrap\">${highlight(o, terms)}</div>`).join('');
             const expHtml = m.explanation ? `<div class=\"explanation-box\">${highlight(m.explanation, terms)}</div>` : '';
             div.innerHTML = qhtml + '<div style="margin-top:8px">' + optHtml + '</div>' + expHtml;
@@ -79,17 +79,6 @@
         });
         // wire buttons
         Array.from(resultsNode.querySelectorAll('.reviewBtn')).forEach(btn=> btn.onclick = (e)=>{ const i=Number(btn.dataset.i); openInReview(matches[i]); });
-        Array.from(resultsNode.querySelectorAll('.bookmarkBtn')).forEach(btn=> btn.onclick = (e)=>{ const i=Number(btn.dataset.i); toggleBookmark(matches[i]); });
-    }
-
-    function toggleBookmark(item){
-        try{
-            const raw = localStorage.getItem('bookmarks');
-            const arr = raw ? JSON.parse(raw) : [];
-            const found = arr.findIndex(b=> b.subjectKey===item.subjectKey && b.chapter===item.chapter && b.index===item.index && b.q===item.q);
-            if (found >=0) { arr.splice(found,1); localStorage.setItem('bookmarks', JSON.stringify(arr)); alert('Bookmark removed'); }
-            else { arr.push({subjectKey:item.subjectKey, subject:item.subject, chapter:item.chapter, questionIndex:item.index, question:item.raw}); localStorage.setItem('bookmarks', JSON.stringify(arr)); alert('Bookmarked'); }
-        }catch(e){console.error(e)}
     }
 
     function openInReview(item){

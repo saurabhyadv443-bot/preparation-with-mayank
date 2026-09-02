@@ -8,8 +8,8 @@
         try{ const r = await fetch('data/subjects.json'); if(!r.ok) return null; const j = await r.json(); return j && Array.isArray(j.subjects) ? j.subjects : null; } catch(e){ return null; }
     }
 
-    // read bookmarks
-    const bookmarks = safeParse(localStorage.getItem('bookmarks'), []);
+    // read saved questions
+    const savedQuestions = safeParse(localStorage.getItem('bookmarks'), []);
 
     const manifest = await readManifest();
     const subjectMap = {};
@@ -72,7 +72,7 @@
 
     function filteredSavedQuestions(){
         const query = (savedLibrarySearch?.value || '').trim().toLowerCase();
-        return bookmarks.filter((item) => {
+        return savedQuestions.filter((item) => {
             if (savedLibrarySubject?.value && savedSubject(item) !== savedLibrarySubject.value) return false;
             if (savedLibraryChapter?.value && savedChapter(item) !== savedLibraryChapter.value) return false;
             if (!query) return true;
@@ -89,8 +89,8 @@
     }
 
     function updateSavedLibraryFilters(){
-        const subjects = Object.keys(groupSaved(bookmarks, savedSubject)).sort();
-        const chapters = Object.keys(groupSaved(bookmarks, savedChapter)).sort();
+        const subjects = Object.keys(groupSaved(savedQuestions, savedSubject)).sort();
+        const chapters = Object.keys(groupSaved(savedQuestions, savedChapter)).sort();
         if (savedLibrarySubject) savedLibrarySubject.innerHTML = '<option value="">All Subjects</option>' + subjects.map((item) => `<option value="${escapeHtml(item)}">${escapeHtml(item)}</option>`).join('');
         if (savedLibraryChapter) savedLibraryChapter.innerHTML = '<option value="">All Chapters</option>' + chapters.map((item) => `<option value="${escapeHtml(item)}">${escapeHtml(item)}</option>`).join('');
     }
@@ -132,12 +132,12 @@
                 <article class="saved-question-item">
                     <input type="checkbox" class="classification-question-checkbox" data-saved-question-key="${escapeHtml(savedQuestionKey(item))}" aria-label="Select saved question ${Number(item.questionIndex || 0) + 1}">
                     <div><strong>Q${Number(item.questionIndex || 0) + 1}</strong><p>${escapeHtml(savedQuestionText(item))}</p></div>
-                    <button type="button" class="btn btn-primary btn-small saved-open-button" data-saved-index="${bookmarks.indexOf(item)}">Open Quiz</button>
+                    <button type="button" class="btn btn-primary btn-small saved-open-button" data-saved-index="${savedQuestions.indexOf(item)}">Open Quiz</button>
                 </article>
             `).join('')}
         ` : '<p class="saved-library-empty">No saved questions match this view.</p>';
         savedLibraryContent.querySelectorAll('.saved-open-button').forEach((button) => {
-            button.onclick = () => openSavedQuestion(bookmarks[Number(button.dataset.savedIndex)], items);
+            button.onclick = () => openSavedQuestion(savedQuestions[Number(button.dataset.savedIndex)], items);
         });
         const controls = document.getElementById('savedClassificationRemovalControls');
         if (controls) {
@@ -160,12 +160,12 @@
             removeButton.addEventListener('click', () => {
                 const selectedKeys = checkboxes.filter((checkbox) => checkbox.checked).map((checkbox) => checkbox.dataset.savedQuestionKey);
                 if (!selectedKeys.length || !window.confirm(`Remove ${selectedKeys.length} selected saved question${selectedKeys.length === 1 ? '' : 's'}?`)) return;
-                console.debug('Removing saved bookmark entries', { selectedKeys, savedEntries: bookmarks });
+                console.debug('Removing saved question entries', { selectedKeys, savedEntries: savedQuestions });
                 const selectedSet = new Set(selectedKeys);
-                const retained = bookmarks.filter((item) => !selectedSet.has(savedQuestionKey(item)));
-                bookmarks.splice(0, bookmarks.length, ...retained);
-                localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-                console.debug('Saved bookmark entries after removal', bookmarks);
+                const retained = savedQuestions.filter((item) => !selectedSet.has(savedQuestionKey(item)));
+                savedQuestions.splice(0, savedQuestions.length, ...retained);
+                localStorage.setItem('bookmarks', JSON.stringify(savedQuestions));
+                console.debug('Saved question entries after removal', savedQuestions);
                 renderSavedLibrary();
             });
             updateSavedSelection();
@@ -190,7 +190,7 @@
 
         savedLibraryBack.hidden = savedLibraryLevel === 'subjects';
         if (!items.length) {
-            savedLibraryContent.innerHTML = bookmarks.length ? '<p class="saved-library-empty">No saved questions match this view.</p>' : '<div class="saved-library-empty"><strong>No questions saved yet.</strong><p>Go to Review and use "Save for Revision" to add questions.</p></div>';
+            savedLibraryContent.innerHTML = savedQuestions.length ? '<p class="saved-library-empty">No saved questions match this view.</p>' : '<div class="saved-library-empty"><strong>No questions saved yet.</strong><p>Go to Review and use "Save for Revision" to add questions.</p></div>';
             return;
         }
 

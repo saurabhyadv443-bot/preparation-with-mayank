@@ -102,14 +102,11 @@ function renderMatches(list) {
             <div style="display:flex;justify-content:space-between;align-items:center;">
                 <strong>Q${i+1}</strong>
                 <div>
-                    <button class="btn btn-tertiary btn-small bookmarkBtn">Bookmark</button>
                 </div>
             </div>
             <p>${escapeHtml(q)}</p>
             <div class="metric-row"><span>${escapeHtml(item.subjectName)}</span><strong>${escapeHtml(item.chapter)}</strong></div>
         `;
-        const bookmarkBtn = div.querySelector('.bookmarkBtn');
-        bookmarkBtn.onclick = () => toggleBookmarkFromExplorer(item);
         container.appendChild(div);
     });
 }
@@ -121,26 +118,6 @@ function escapeHtml(value) {
         .replace(/>/g, "&gt;")
         .replace(/\"/g, "&quot;")
         .replace(/'/g, "&#39;");
-}
-
-function getBookmarks() {
-    try { return JSON.parse(localStorage.getItem('bookmarks') || '[]'); } catch (e) { return []; }
-}
-
-function saveBookmarks(b) { localStorage.setItem('bookmarks', JSON.stringify(b)); }
-
-function toggleBookmarkFromExplorer(item) {
-    const bookmarks = getBookmarks();
-    const found = bookmarks.findIndex(b => b.subjectKey === item.subjectKey && b.chapter === item.chapter && b.questionIndex === item.index);
-    if (found >= 0) {
-        bookmarks.splice(found,1);
-        saveBookmarks(bookmarks);
-        alert('Bookmark removed');
-    } else {
-        bookmarks.push({ subjectKey: item.subjectKey, subject: item.subjectName, chapter: item.chapter, questionIndex: item.index, question: item.question });
-        saveBookmarks(bookmarks);
-        alert('Bookmarked');
-    }
 }
 
 function buildFilterFromUi() {

@@ -7,7 +7,7 @@
 
 body {
     min-width: 320px;
-    background: linear-gradient(180deg, #eef4f8 0%, #f4f7fb 48%, #ffffff 100%);
+    background: linear-gradient(180deg, #eef5ff 0%, #f5f8fc 48%, #ffffff 100%);
     color: #0f172a;
 }
 
@@ -133,7 +133,6 @@ body.entry-locked {
 #pauseBtn,
 #prevBtn,
 #nextBtn,
-#bookmarkBtn,
 #markReviewBtn,
 .chapterBtn,
 .palette-btn,
@@ -146,7 +145,6 @@ body.entry-locked {
 #pauseBtn:hover,
 #prevBtn:hover,
 #nextBtn:hover,
-#bookmarkBtn:hover,
 #markReviewBtn:hover,
 .chapterBtn:hover,
 .palette-btn:hover,
@@ -155,7 +153,7 @@ body.entry-locked {
 }
 
 #pauseBtn {
-    background: #f59e0b;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
     color: #101828;
     padding: 10px 16px;
     border-radius: 999px;
@@ -245,7 +243,7 @@ body.entry-locked {
     font-size: 0.95rem;
     font-weight: 700;
     border-radius: 12px;
-    background: linear-gradient(135deg, #1565c0, #0d47a1);
+    background: linear-gradient(135deg, #2563eb, #1e40af);
     color: white;
     box-shadow: 0 8px 18px rgba(13, 71, 161, 0.2);
 }
@@ -264,7 +262,7 @@ body.entry-locked {
     background: white;
     border-radius: 18px;
     padding: 18px;
-    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    box-shadow: 0 12px 30px rgba(30, 64, 175, 0.1);
 }
 
 .palette-panel {
@@ -332,8 +330,9 @@ body.entry-locked {
 }
 
 .option-wrap:hover {
-    border-color: #2563eb;
+    border-color: #60a5fa;
     background: #eff6ff;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
 }
 
 .option-wrap input {
@@ -358,7 +357,7 @@ body.entry-locked {
 }
 
 #prevBtn {
-    background: #64748b;
+    background: linear-gradient(135deg, #64748b, #475569);
 }
 
 #nextBtn {
@@ -371,19 +370,6 @@ body.entry-locked {
 
 #markReviewBtn.review-active {
     box-shadow: 0 10px 24px rgba(234, 88, 12, 0.28);
-}
-
-#bookmarkBtn {
-    padding: 10px 16px;
-    border-radius: 999px;
-    background: #fef3c7;
-    color: #92400e;
-    font-weight: 700;
-}
-
-.bookmark-active {
-    background: #f59e0b !important;
-    color: #111827 !important;
 }
 
 .submit-footer {
@@ -441,13 +427,13 @@ body.entry-locked {
 }
 
 .palette-btn.current {
-    background: #2563eb;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: white;
     box-shadow: 0 0 0 2px #bfdbfe;
 }
 
 .palette-btn.answered {
-    background: #15803d;
+    background: linear-gradient(135deg, #16a34a, #15803d);
     color: white;
 }
 
@@ -749,7 +735,6 @@ body {
 #prevBtn,
 #nextBtn,
 #markReviewBtn,
-#bookmarkBtn,
 .chapterBtn,
 .material-submit-btn {
     min-height: 36px;

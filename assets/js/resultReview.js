@@ -662,7 +662,7 @@ function renderSummary() {
     `).join("");
 }
 
-function getBookmarks() {
+function getSavedQuestions() {
     try {
         return JSON.parse(localStorage.getItem("bookmarks") || "[]");
     } catch (error) {
@@ -802,26 +802,23 @@ function toggleQuestionClassification(index, tag) {
     updateActiveQuestion();
 }
 
-function isBookmarked(index) {
-    if (isHistoricalReview && Array.isArray(result.bookmarked)) {
-        return result.bookmarked.includes(index);
-    }
-    const bookmarks = getBookmarks();
+function isSavedQuestion(index) {
+    const savedQuestions = getSavedQuestions();
     const questionIndex = savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex;
-    return bookmarks.some((item) => item.subjectKey === (result.subjectKey || result.subject) && item.chapter === result.chapter && item.questionIndex === questionIndex);
+    return savedQuestions.some((item) => item.subjectKey === (result.subjectKey || result.subject) && item.chapter === result.chapter && item.questionIndex === questionIndex);
 }
 
 function toggleSavedQuestion(index) {
         if (isHistoricalReview) return;
-    const bookmarks = getBookmarks();
+    const savedQuestions = getSavedQuestions();
     const subjectKey = result.subjectKey || result.subject;
     const questionIndex = savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex;
-    const bookmarkIndex = bookmarks.findIndex((item) => item.subjectKey === subjectKey && item.chapter === result.chapter && item.questionIndex === questionIndex);
+    const savedQuestionIndex = savedQuestions.findIndex((item) => item.subjectKey === subjectKey && item.chapter === result.chapter && item.questionIndex === questionIndex);
 
-    if (bookmarkIndex >= 0) {
-        bookmarks.splice(bookmarkIndex, 1);
+    if (savedQuestionIndex >= 0) {
+        savedQuestions.splice(savedQuestionIndex, 1);
     } else {
-        bookmarks.push({
+        savedQuestions.push({
             subjectKey,
             subject: result.subject,
             chapter: result.chapter,
@@ -830,7 +827,7 @@ function toggleSavedQuestion(index) {
         });
     }
 
-    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+    localStorage.setItem("bookmarks", JSON.stringify(savedQuestions));
     renderQuestions();
     renderPalette();
     renderQuickNavigation();
@@ -846,7 +843,7 @@ function renderSavedQuestions() {
     }
 
     const savedIndexes = result.questions
-        .map((question, index) => isBookmarked(index) ? index : null)
+        .map((question, index) => isSavedQuestion(index) ? index : null)
         .filter((index) => index !== null);
 
     savedQuestionsToggle.innerText = `Saved for Revision (${savedIndexes.length})`;
@@ -882,9 +879,6 @@ function renderPalette() {
         const status = getQuestionStatus(index);
         const btn = document.createElement("button");
         btn.className = `palette-btn review-palette-btn ${status}`;
-        if (isBookmarked(index)) {
-            btn.classList.add("bookmarked");
-        }
         if (index === activeQuestionIndex) {
             btn.classList.add("current");
         }
@@ -914,7 +908,6 @@ function renderQuickNavigation() {
         correct: "Correct",
         incorrect: "Incorrect",
         skipped: "Skipped",
-        bookmarked: "Bookmarked"
     };
     const visibleIndexes = getVisibleQuestionIndexes();
     quickNavigationLabel.innerText = `${labels[activeFilter] || "All"}:`;
@@ -975,15 +968,11 @@ function getFilterCounts() {
         correct: 0,
         incorrect: 0,
         skipped: 0,
-        bookmarked: 0
     };
 
     result.questions.forEach((question, index) => {
         const status = getQuestionStatus(index);
         counts[status] += 1;
-        if (isBookmarked(index)) {
-            counts.bookmarked += 1;
-        }
     });
 
     return counts;
@@ -992,10 +981,6 @@ function getFilterCounts() {
 function isQuestionVisible(index) {
     if (activeFilter === "all") {
         return true;
-    }
-
-    if (activeFilter === "bookmarked") {
-        return isBookmarked(index);
     }
 
     return getQuestionStatus(index) === activeFilter;
@@ -1037,7 +1022,7 @@ function renderQuestions() {
             : (question.explanation ? `<p>${escapeHtml(String(question.explanation))}</p>` : "");
         const explanationText = (window.ExplanationRenderer && window.ExplanationRenderer.getPlainTextFromExplanation(explanationDocument)) || (question.explanation ? String(question.explanation).trim() : "");
         const questionText = highlightText(question.q, activeSearchQuery);
-        const saved = isBookmarked(index);
+        const saved = isSavedQuestion(index);
         const classifications = getQuestionClassifications(index);
         const classificationButtonsHtml = isMockReviewContext() ? `
             <div class="classification-mini-group">
@@ -1176,7 +1161,6 @@ function updateFilterButtons() {
         correct: "Correct",
         incorrect: "Incorrect",
         skipped: "Skipped",
-        bookmarked: "Bookmarked"
     };
 
     filterButtons.forEach((btn) => {

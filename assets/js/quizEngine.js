@@ -120,15 +120,14 @@ function saveAttempt(result) {
     const history = getAttemptHistory();
     const completedAt = result.completedAt;
     const completedDate = new Date(completedAt);
-    const bookmarks = getBookmarks();
-    const isSaved = (index) => bookmarks.some((item) =>
+    const savedQuestions = getSavedQuestions();
+    const isSaved = (index) => savedQuestions.some((item) =>
         item.subjectKey === result.subjectKey && item.chapter === result.chapter && item.questionIndex === index
     );
     const questionIds = {};
     const answers = {};
     const questionStatus = {};
     const correctAnswers = {};
-    const bookmarked = [];
     const saved = [];
     result.questions.forEach((question, index) => {
         const questionId = question.id ?? question.qid ?? question.questionId ?? index;
@@ -139,7 +138,6 @@ function saveAttempt(result) {
         correctAnswers[key] = question.answer;
         questionStatus[key] = selected == null ? "unanswered" : selected === question.answer ? "correct" : "incorrect";
         if (isSaved(index)) {
-            bookmarked.push(index);
             saved.push(index);
         }
     });
@@ -163,7 +161,6 @@ function saveAttempt(result) {
         question_status: questionStatus,
         correct_answers: correctAnswers,
         question_ids: questionIds,
-        bookmarked,
         saved,
         subject: result.subject,
         subjectKey: result.subjectKey,
@@ -431,12 +428,10 @@ function showQuestion() {
         return;
     }
 
-    const isBookmarked = isQuestionBookmarked(currentQuestion);
     const isMarkedReview = Boolean(markedForReview[currentQuestion]);
     let html = `
         <div class="question-header">
             <h3>Question ${currentQuestion + 1}</h3>
-            <button id="bookmarkBtn" class="${isBookmarked ? "bookmark-active" : ""}">${isBookmarked ? "★ Bookmarked" : "☆ Bookmark"}</button>
         </div>
         <div class="question-statement">
             <p>${q.q}</p>
@@ -457,11 +452,6 @@ function showQuestion() {
     const feedbackHtml = isStudyMode() ? renderStudyFeedback(q) : "";
     if (isStudyMode()) {
         questionBox.insertAdjacentHTML("beforeend", feedbackHtml);
-    }
-
-    const bookmarkBtn = document.getElementById("bookmarkBtn");
-    if (bookmarkBtn) {
-        bookmarkBtn.onclick = () => toggleBookmark(currentQuestion);
     }
 
     if (userAnswers[currentQuestion] != null) {
@@ -856,35 +846,7 @@ function finishQuiz(timeout = false) {
     window.location.href = resultUrl;
 }
 
-function getBookmarks() {
+function getSavedQuestions() {
     return safeParseStoredValue("bookmarks", []);
-}
-
-function isQuestionBookmarked(questionIndex) {
-    const bookmarks = getBookmarks();
-    return bookmarks.some((item) => item.subjectKey === currentSubjectKey && item.chapter === currentChapter && item.questionIndex === questionIndex);
-}
-
-function toggleBookmark(questionIndex) {
-    const bookmarks = getBookmarks();
-    const bookmarkIndex = bookmarks.findIndex((item) => item.subjectKey === currentSubjectKey && item.chapter === currentChapter && item.questionIndex === questionIndex);
-
-    if (bookmarkIndex >= 0) {
-        bookmarks.splice(bookmarkIndex, 1);
-        localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-        alert("Bookmark removed.");
-    } else {
-        bookmarks.push({
-            subjectKey: currentSubjectKey,
-            subject: quizData.subject,
-            chapter: currentChapter,
-            questionIndex,
-            question: questions[questionIndex]
-        });
-        localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-        alert("Question Bookmarked ⭐");
-    }
-
-    showQuestion();
 }
 

@@ -156,6 +156,98 @@ function buildCurrentAffairsSubjectCollection() {
     }, {});
 }
 
+function readCompletedAttempts() {
+    try {
+        const history = JSON.parse(localStorage.getItem("quiz_attempt_history") || "{}");
+        const attempts = Object.values(history || {})
+            .filter((records) => Array.isArray(records))
+            .flat()
+            .filter((attempt) => attempt && Number(attempt.total) > 0 && attempt.completedAt && !Number.isNaN(new Date(attempt.completedAt).getTime()))
+            .sort((a, b) => new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime());
+        const latestBySection = new Map();
+        attempts.forEach((attempt) => {
+            const sectionKey = `${attempt.subjectKey || attempt.subject || ""}::${attempt.chapter || ""}`;
+            if (!latestBySection.has(sectionKey)) {
+                latestBySection.set(sectionKey, attempt);
+            }
+        });
+        return [...latestBySection.values()].slice(0, 50);
+    } catch (error) {
+        return [];
+    }
+}
+
+function escapeProgressHtml(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+function renderProgress() {
+    const progressList = document.getElementById("progressList");
+    if (!progressList) return;
+
+    const attempts = readCompletedAttempts();
+    if (!attempts.length) return;
+
+    progressList.innerHTML = `
+        <table class="progress-table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Test / Section</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Correct</th>
+                    <th scope="col">Incorrect</th>
+                    <th scope="col">Skipped</th>
+                    <th scope="col">Marks</th>
+                    <th scope="col">%</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${attempts.map((attempt, index) => `
+                    ${(() => {
+                        const percentage = Number(attempt.percentage ?? attempt.accuracy ?? 0);
+                        const percentageClass = percentage >= 70 ? "high" : percentage >= 40 ? "medium" : "low";
+                        return `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${escapeProgressHtml(attempt.subject || attempt.subjectKey)} - ${escapeProgressHtml(attempt.chapter || "-")}</td>
+                        <td>${attempt.total || 0}</td>
+                        <td><span class="progress-value progress-correct">${attempt.correct || 0}</span></td>
+                        <td><span class="progress-value progress-incorrect">${attempt.wrong || attempt.incorrect || 0}</span></td>
+                        <td><span class="progress-value progress-skipped">${attempt.skipped || attempt.unanswered || 0}</span></td>
+                        <td><span class="progress-value progress-marks">${attempt.finalScore ?? attempt.score ?? 0}</span></td>
+                        <td><span class="progress-value progress-percent ${percentageClass}">${percentage}%</span></td>
+                    </tr>
+                        `;
+                    })()}
+                `).join("")}
+            </tbody>
+        </table>
+    `;
+}
+
+function openProgress() {
+    const subjectsContainer = document.getElementById("subjects");
+    const progressView = document.getElementById("progressView");
+    if (!subjectsContainer || !progressView) return;
+    renderProgress();
+    subjectsContainer.hidden = true;
+    progressView.hidden = false;
+}
+
+function closeProgress() {
+    const subjectsContainer = document.getElementById("subjects");
+    const progressView = document.getElementById("progressView");
+    if (!subjectsContainer || !progressView) return;
+    progressView.hidden = true;
+    subjectsContainer.hidden = false;
+}
+
 function loadDashboardSubjects() {
     return Promise.resolve().then(async () => {
         const manifest = await fetchSubjectManifest();
@@ -177,3 +269,6 @@ function loadDashboardSubjects() {
 }
 
 window.addEventListener("DOMContentLoaded", loadDashboardSubjects);
+
+document.getElementById("progressBtn")?.addEventListener("click", openProgress);
+document.getElementById("progressBackBtn")?.addEventListener("click", closeProgress);

@@ -28,6 +28,14 @@ function readHistory() {
     return safeParse(localStorage.getItem(historyKey), []) || [];
 }
 
+function readCompletedAttempts() {
+    const attemptHistory = safeParse(localStorage.getItem("quiz_attempt_history"), {});
+    return Object.values(attemptHistory || {})
+        .filter((records) => Array.isArray(records))
+        .flat()
+        .filter((attempt) => attempt && Number(attempt.total) > 0 && attempt.completedAt && !Number.isNaN(new Date(attempt.completedAt).getTime()));
+}
+
 function saveHistory(history) {
     try {
         localStorage.setItem(historyKey, JSON.stringify(history));
@@ -239,28 +247,33 @@ function renderPerformance(history) {
         options: { responsive: true, maintainAspectRatio: false }
     });
 
-    renderRecentTests(history.slice(-10).reverse());
+    renderRecentTests(history);
 }
 
 function renderRecentTests(list) {
     const container = document.getElementById("recentTestsList");
     if (!container) return;
     container.innerHTML = "";
-    if (!list.length) {
-        container.innerHTML = "<p>No recent tests available.</p>";
-        return;
-    }
 
-    list.forEach((item) => {
+    list
+        .filter((item) => item && Number(item.total) > 0 && item.completedAt && !Number.isNaN(new Date(item.completedAt).getTime()))
+        .slice()
+        .sort((a, b) => new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime())
+        .slice(0, 50)
+        .forEach((item) => {
         const el = document.createElement("div");
         el.className = "recent-test";
         el.innerHTML = `
-            <div class="metric-row"><span>${escapeHtml(item.subject || item.subjectKey)} - ${escapeHtml(item.chapter || "-")}</span>
-            <strong>${item.accuracy}%</strong></div>
-            <div class="metric-row"><span>${new Date(item.completedAt).toLocaleString()}</span><strong>${formatTime(item.timeTaken)}</strong></div>
+            <div class="metric-row"><span>Section/Test</span><strong>${escapeHtml(item.subject || item.subjectKey)} - ${escapeHtml(item.chapter || "-")}</strong></div>
+            <div class="metric-row"><span>Total Questions</span><strong>${item.total || 0}</strong></div>
+            <div class="metric-row"><span>Correct</span><strong>${item.correct || 0}</strong></div>
+            <div class="metric-row"><span>Incorrect</span><strong>${item.wrong || 0}</strong></div>
+            <div class="metric-row"><span>Skipped</span><strong>${item.skipped || 0}</strong></div>
+            <div class="metric-row"><span>Marks Obtained</span><strong>${item.finalScore ?? item.score ?? 0}</strong></div>
+            <div class="metric-row"><span>Percentage</span><strong>${item.accuracy ?? item.percentage ?? 0}%</strong></div>
         `;
         container.appendChild(el);
-    });
+        });
 }
 
 function exportCsv(history) {
@@ -327,7 +340,7 @@ const perfContainer = document.getElementById('performanceDashboard');
 const singleResultPresent = !!latestResult;
 if (!singleResultPresent && perfContainer) {
     perfContainer.style.display = 'block';
-    renderPerformance(history);
+    renderPerformance(readCompletedAttempts());
 } else {
     // render single result as before and wire 'View Performance' button
     renderSingleResult(latestResult);
@@ -337,7 +350,7 @@ if (!singleResultPresent && perfContainer) {
             document.querySelector('.result-shell').scrollIntoView({ behavior: 'smooth' });
             if (perfContainer) {
                 perfContainer.style.display = perfContainer.style.display === 'block' ? 'none' : 'block';
-                if (perfContainer.style.display === 'block') renderPerformance(history);
+                if (perfContainer.style.display === 'block') renderPerformance(readCompletedAttempts());
             }
         };
     }

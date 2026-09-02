@@ -21,6 +21,7 @@
             <a href="#subjects">Subjects</a>
             <a href="result.html">Results</a>
             <a href="subject.html?subject=mock">Mock</a>
+            <button id="progressBtn" class="btn-tertiary progress-button" type="button">Progress</button>
             <a href="#" id="logoutBtn" class="btn-tertiary">Logout</a>
         </nav>
     </header>
@@ -39,12 +40,6 @@
                 <a href="revision.html" class="btn btn-secondary btn-small">Open Saved</a>
             </article>
             <article class="dashboard-card dashboard-action-card">
-                <div class="card-icon">📊</div>
-                <h2>Performance</h2>
-                <p>Track accuracy, speed and topic mastery</p>
-                <a href="result.html" class="btn btn-secondary btn-small">View Results</a>
-            </article>
-            <article class="dashboard-card dashboard-action-card">
                 <div class="card-icon">📖</div>
                 <h2>Previous Year Questions</h2>
                 <p>Filter by year and topic</p>
@@ -56,6 +51,17 @@
                 <p>Full length mock test experience</p>
                 <a href="subject.html?subject=mock" class="btn btn-secondary btn-small">Open Subject</a>
             </article>
+        </section>
+
+        <section id="progressView" class="panel progress-view" hidden>
+            <div class="section-heading compact-heading">
+                <div>
+                    <span class="eyebrow">Completed Attempts</span>
+                    <h2>Progress</h2>
+                </div>
+                <button id="progressBackBtn" class="btn-tertiary" type="button">Back</button>
+            </div>
+            <div id="progressList" class="progress-table-wrapper"></div>
         </section>
 
     </main>
