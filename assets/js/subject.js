@@ -19,6 +19,16 @@ function getResumeProgressForTarget(targetName) {
     return progress;
 }
 
+function hasCompletedMockAttempt(targetName) {
+    if (subject !== "mock") {
+        return false;
+    }
+
+    const history = safeParseStoredValue("quiz_attempt_history", {});
+    const quizId = [subject, targetName, "mock"].join("::");
+    return Array.isArray(history[quizId]) && history[quizId].length > 0;
+}
+
 async function getSubjectMetaMap() {
     try {
         const resp = await fetch('data/subjects.json');
@@ -135,6 +145,9 @@ function renderSubjectCardButton(targetName, targetType) {
     button.className = targetType === "mock" ? "chapterBtn subject-set-btn" : "chapterBtn subject-chapter-btn";
 
     const progress = getResumeProgressForTarget(targetName);
+    if (targetType === "mock" && (progress || hasCompletedMockAttempt(targetName))) {
+        button.classList.add("mock-attempted");
+    }
     const actionText = targetType === "mock"
         ? (progress ? "Resume Mock Test" : "Start Mock Test")
         : (progress ? "Resume" : "Start Practice");

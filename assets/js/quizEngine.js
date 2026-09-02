@@ -485,6 +485,14 @@ function showQuestion() {
                 }
             });
         });
+    } else if (getQuizMode() === "mock") {
+        const answerInputs = document.querySelectorAll('input[name="answer"]');
+        answerInputs.forEach((input) => {
+            input.addEventListener("change", () => {
+                paused = false;
+                pauseBtn.innerHTML = "⏸ Pause";
+            });
+        });
     }
 
     progressText.innerHTML = `Question ${currentQuestion + 1} of ${questions.length}`;

@@ -112,7 +112,7 @@ body.entry-locked {
 }
 
 #timer.timer-warning {
-    background: #fff7ed;
+    background: #fff7e6;
     color: #c2410c;
 }
 
@@ -285,7 +285,7 @@ body.entry-locked {
 .progress-bar {
     width: 100%;
     height: 12px;
-    background: #dbe7ff;
+    background: #dbeafe;
     border-radius: 999px;
     overflow: hidden;
     margin-bottom: 20px;
@@ -443,20 +443,21 @@ body.entry-locked {
 .palette-btn.current {
     background: #2563eb;
     color: white;
+    box-shadow: 0 0 0 2px #bfdbfe;
 }
 
 .palette-btn.answered {
-    background: #16a34a;
+    background: #15803d;
     color: white;
 }
 
 .palette-btn.notanswered {
-    background: #e5e7eb;
-    color: #111827;
+    background: #e2e8f0;
+    color: #475569;
 }
 
 .palette-btn.review {
-    background: #f59e0b;
+    background: #d97706;
     color: white;
 }
 
