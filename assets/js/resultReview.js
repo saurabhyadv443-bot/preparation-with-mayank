@@ -82,6 +82,12 @@ const quickNavigationList = document.getElementById("quickNavigationList");
 const testHistory = document.getElementById("testHistory");
 const historyCount = document.getElementById("historyCount");
 const reattemptTestBtn = document.getElementById("reattemptTestBtn");
+const returnUrl = urlParams.get("returnUrl");
+
+if (returnUrl) {
+    const backButton = document.querySelector(".back-button");
+    if (backButton) backButton.href = returnUrl;
+}
 
 let activeQuestionIndex = 0;
 let activeFilter = "all";

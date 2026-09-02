@@ -1,6 +1,8 @@
 const params = new URLSearchParams(window.location.search);
 const subject = params.get("subject") || "ancient";
 const chapterList = document.getElementById("chapterList");
+const subjectReviewBtn = document.getElementById("subjectReviewBtn");
+const reviewSubjects = new Set(["ancient", "medieval", "modern", "geography", "polity", "economy", "mock"]);
 
 function safeParseStoredValue(key, fallback = []) {
     try {
@@ -48,6 +50,68 @@ function getClassifiedQuestionEntries(filterFn) {
     } catch (error) {
         return [];
     }
+}
+
+function getAttemptedReviewSections() {
+    if (!reviewSubjects.has(subject)) return [];
+
+    const history = safeParseStoredValue("quiz_attempt_history", {});
+    const grouped = new Map();
+    Object.values(history || {}).forEach((records) => {
+        if (!Array.isArray(records)) return;
+        records.forEach((attempt, index) => {
+            if (!attempt || (attempt.subjectKey || subject) !== subject || !attempt.chapter || Number(attempt.total) <= 0) return;
+            const completedAt = new Date(attempt.completedAt || 0).getTime();
+            if (!Number.isFinite(completedAt)) return;
+            const key = `${subject}::${attempt.chapter}`;
+            const attemptWithNumber = { ...attempt, attempt: Number(attempt.attempt) || index + 1 };
+            const current = grouped.get(key);
+            const marks = Number(attemptWithNumber.finalScore ?? attemptWithNumber.score ?? 0);
+            const currentMarks = current ? Number(current.best.finalScore ?? current.best.score ?? 0) : 0;
+            if (!current || marks > currentMarks || (marks === currentMarks && completedAt > current.completedAt)) {
+                grouped.set(key, { chapter: attempt.chapter, best: attemptWithNumber, completedAt });
+            }
+        });
+    });
+
+    return [...grouped.values()].sort((a, b) => b.completedAt - a.completedAt);
+}
+
+function renderAttemptedReviewSections() {
+    if (!chapterList) return;
+    const sections = getAttemptedReviewSections();
+    chapterList.innerHTML = "";
+    chapterList.classList.add("subject-card-grid", "review-section-list");
+    if (!sections.length) {
+        chapterList.innerHTML = '<p class="empty-state">No attempted sections yet.</p>';
+        return;
+    }
+
+    sections.forEach(({ chapter, best }) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "chapterBtn subject-chapter-btn review-section-btn";
+        button.innerHTML = `<div class="subject-card-content"><span class="subject-card-title">${escapeHtmlReviewText(chapter)}</span></div>`;
+        button.onclick = () => {
+            const query = new URLSearchParams({
+                historical: "1",
+                quizId: best.quizId || [subject, chapter, subject === "mock" ? "mock" : "practice"].join("::"),
+                attempt: String(best.attempt),
+                returnUrl: `subject.html?${new URLSearchParams({ subject, review: "1" }).toString()}`
+            });
+            window.location.href = `result-review.html?${query.toString()}`;
+        };
+        chapterList.appendChild(button);
+    });
+}
+
+function escapeHtmlReviewText(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
 }
 
 function renderClassificationRemovalControls(tag, refresh) {
@@ -216,6 +280,11 @@ function renderClassifiedCollection(title, questions, subjectKey) {
 async function loadSubjectContent() {
     const selectedChapter = new URLSearchParams(window.location.search).get("chapter");
 
+    if (!selectedChapter && new URLSearchParams(window.location.search).get("review") === "1") {
+        renderAttemptedReviewSections();
+        return;
+    }
+
     if (subject === "current_affairs") {
         const questions = buildCurrentAffairsQuestions();
         if (selectedChapter === "Current Affairs" || selectedChapter === "Important Questions") {
@@ -341,6 +410,14 @@ function renderMockSets(setNames) {
     const heading = document.getElementById("sectionHeading");
     if (heading) {
         heading.textContent = subject === "mock" ? "Mock Test Sets" : (subject === "current_affairs" ? "Current Affairs" : "Chapter Wise Practice");
+    }
+
+    if (subjectReviewBtn && reviewSubjects.has(subject)) {
+        subjectReviewBtn.hidden = false;
+        subjectReviewBtn.onclick = () => {
+            const query = new URLSearchParams({ subject, review: "1" });
+            window.location.href = `subject.html?${query.toString()}`;
+        };
     }
 
     loadSubjectContent();

@@ -1,5 +1,5 @@
 :root {
-    --bg: #f3f7fc;
+    --bg: #f8fafc;
     --panel: #ffffff;
     --text: #0f172a;
     --muted: #64748b;
@@ -25,9 +25,13 @@
     font-family: "Trebuchet MS", "Segoe UI", sans-serif;
 }
 
+[hidden] {
+    display: none !important;
+}
+
 body {
     min-width: 320px;
-    background: linear-gradient(180deg, #eef4f8 0%, var(--bg) 42%, #ffffff 100%);
+    background: linear-gradient(180deg, #f8fafc 0%, var(--bg) 42%, #ffffff 100%);
     color: var(--text);
     line-height: 1.5;
 }
@@ -329,6 +333,25 @@ img {
 .section-heading h1,
 .section-heading h2 {
     margin-bottom: 8px;
+}
+
+.subject-heading-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.subject-review-btn {
+    flex: 0 0 auto;
+    background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+    border-color: #818cf8;
+    color: #3730a3;
+}
+
+.subject-review-btn:hover {
+    background: linear-gradient(135deg, #c7d2fe, #a5b4fc);
+    border-color: #6366f1;
 }
 
 .page-section,
@@ -1914,6 +1937,14 @@ select:focus-visible {
     gap: 16px;
     margin-top: 18px;
     align-items: stretch;
+}
+
+.review-section-list {
+    margin-top: 0;
+}
+
+.review-section-btn {
+    min-height: 82px;
 }
 
 .subject-chapter-btn {
