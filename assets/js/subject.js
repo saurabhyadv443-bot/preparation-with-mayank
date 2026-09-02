@@ -117,28 +117,6 @@ function openImportantQuestionsQuiz(title, questions, subjectKey, questionIndex)
     window.location.href = "collection-quiz.html";
 }
 
-function buildSavedQuestionsGroupedBySet() {
-    try {
-        const store = JSON.parse(localStorage.getItem("questionClassifications") || "{}");
-        const entries = Object.values(store).filter((entry) => entry && entry.S);
-        
-        const grouped = {};
-        entries.forEach((entry) => {
-            const setKey = entry.chapter || "Other";
-            if (!grouped[setKey]) {
-                grouped[setKey] = [];
-            }
-            if (entry.question) {
-                grouped[setKey].push(entry.question);
-            }
-        });
-        
-        return grouped;
-    } catch (error) {
-        return {};
-    }
-}
-
 function renderSubjectCardButton(targetName, targetType) {
     const button = document.createElement("button");
     button.type = "button";
@@ -235,45 +213,8 @@ function renderClassifiedCollection(title, questions, subjectKey) {
     }
 }
 
-function renderSavedQuestionsGrouped(grouped) {
-    if (!chapterList) return;
-    chapterList.innerHTML = "";
-    chapterList.classList.add("subject-card-grid");
-
-    const setNames = Object.keys(grouped).sort();
-    if (!setNames.length) {
-        chapterList.innerHTML = `<p class="empty-state">No Saved questions yet.</p>`;
-        return;
-    }
-
-    setNames.forEach((setName) => {
-        const questions = grouped[setName] || [];
-        if (!questions.length) return;
-
-        const card = document.createElement("button");
-        card.type = "button";
-        card.className = "chapterBtn subject-chapter-btn";
-        card.innerHTML = `
-            <div class="subject-card-content">
-                <span class="subject-card-title">${setName}</span>
-            </div>
-            <small>${questions.length} question${questions.length !== 1 ? "s" : ""}</small>
-        `;
-        card.onclick = function () {
-            openCollectionListSession(setName, questions, subject, "Saved Questions", "S");
-        };
-        chapterList.appendChild(card);
-    });
-}
-
 async function loadSubjectContent() {
     const selectedChapter = new URLSearchParams(window.location.search).get("chapter");
-
-    if (selectedChapter === "Saved Questions") {
-        const grouped = buildSavedQuestionsGroupedBySet();
-        renderSavedQuestionsGrouped(grouped);
-        return;
-    }
 
     if (subject === "current_affairs") {
         const questions = buildCurrentAffairsQuestions();
@@ -330,22 +271,13 @@ async function loadSubjectContent() {
         if (["modern", "geography", "polity", "economy"].includes(subject)) {
             chapters.push("Important Questions");
         }
-        const savedGrouped = buildSavedQuestionsGroupedBySet();
-        if (Object.keys(savedGrouped).length > 0) {
-            chapters.push("Saved Questions");
-        }
         renderChapters(chapters);
     } catch (error) {
         if (chapterList) {
             if (subject === "mock") {
                 chapterList.innerHTML = '<p class="empty-state">Mock Test sets are currently unavailable.</p>';
             } else if (["modern", "geography", "polity", "economy"].includes(subject)) {
-                const savedGrouped = buildSavedQuestionsGroupedBySet();
-                const fallbackChapters = ["Important Questions"];
-                if (Object.keys(savedGrouped).length > 0) {
-                    fallbackChapters.push("Saved Questions");
-                }
-                renderChapters(fallbackChapters);
+                renderChapters(["Important Questions"]);
             } else {
                 chapterList.innerHTML = '<p class="empty-state">No chapters are available for this subject.</p>';
             }
@@ -375,15 +307,6 @@ function renderChapters(chapters) {
                     <span class="subject-card-title">Important Questions</span>
                 </div>
                 <small>${questionCount ? `${questionCount} saved` : "No Important Questions saved yet"}</small>
-            `;
-        } else if (chapterName === "Saved Questions") {
-            const savedGrouped = buildSavedQuestionsGroupedBySet();
-            const setCount = Object.keys(savedGrouped).length;
-            button.innerHTML = `
-                <div class="subject-card-content">
-                    <span class="subject-card-title">Saved Questions</span>
-                </div>
-                <small>${setCount ? `${setCount} set${setCount !== 1 ? "s" : ""}` : "No Saved questions yet"}</small>
             `;
         }
         chapterList.appendChild(button);

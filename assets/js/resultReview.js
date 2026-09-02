@@ -671,7 +671,6 @@ function getBookmarks() {
 }
 
 const CLASSIFICATION_LABELS = {
-    S: "Saved Questions",
     H: "History",
     G: "Geography",
     E: "Economy",
