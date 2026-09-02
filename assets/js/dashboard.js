@@ -167,8 +167,11 @@ function readCompletedAttempts() {
         const latestBySection = new Map();
         attempts.forEach((attempt) => {
             const sectionKey = `${attempt.subjectKey || attempt.subject || ""}::${attempt.chapter || ""}`;
-            if (!latestBySection.has(sectionKey)) {
-                latestBySection.set(sectionKey, attempt);
+            const existing = latestBySection.get(sectionKey);
+            if (existing) {
+                existing.attemptCount += 1;
+            } else {
+                latestBySection.set(sectionKey, { attempt, attemptCount: 1 });
             }
         });
         return [...latestBySection.values()].slice(0, 50);
@@ -199,6 +202,7 @@ function renderProgress() {
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Test / Section</th>
+                    <th scope="col">Attempts</th>
                     <th scope="col">Total</th>
                     <th scope="col">Correct</th>
                     <th scope="col">Incorrect</th>
@@ -208,20 +212,24 @@ function renderProgress() {
                 </tr>
             </thead>
             <tbody>
-                ${attempts.map((attempt, index) => `
+                ${attempts.map(({ attempt, attemptCount }, index) => `
                     ${(() => {
-                        const percentage = Number(attempt.percentage ?? attempt.accuracy ?? 0);
+                        const rawPercentage = Number(attempt.percentage ?? attempt.accuracy ?? 0);
+                        const percentage = Number.isFinite(rawPercentage) ? rawPercentage : 0;
+                        const rawMarks = Number(attempt.finalScore ?? attempt.score ?? 0);
+                        const marks = Number.isFinite(rawMarks) ? rawMarks : 0;
                         const percentageClass = percentage >= 70 ? "high" : percentage >= 40 ? "medium" : "low";
                         return `
                     <tr>
                         <td>${index + 1}</td>
                         <td>${escapeProgressHtml(attempt.subject || attempt.subjectKey)} - ${escapeProgressHtml(attempt.chapter || "-")}</td>
+                        <td>${attemptCount}</td>
                         <td>${attempt.total || 0}</td>
                         <td><span class="progress-value progress-correct">${attempt.correct || 0}</span></td>
                         <td><span class="progress-value progress-incorrect">${attempt.wrong || attempt.incorrect || 0}</span></td>
                         <td><span class="progress-value progress-skipped">${attempt.skipped || attempt.unanswered || 0}</span></td>
-                        <td><span class="progress-value progress-marks">${attempt.finalScore ?? attempt.score ?? 0}</span></td>
-                        <td><span class="progress-value progress-percent ${percentageClass}">${percentage}%</span></td>
+                        <td><span class="progress-value progress-marks">${marks.toFixed(2)}</span></td>
+                        <td><span class="progress-value progress-percent ${percentageClass}">${percentage.toFixed(2)}%</span></td>
                     </tr>
                         `;
                     })()}
