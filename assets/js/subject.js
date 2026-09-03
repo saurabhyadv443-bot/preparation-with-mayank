@@ -8,9 +8,7 @@ let serverImportantQuestions = {};
 let serverCurrentAffairsQuestions = null;
 
 function subjectApiUrl(path) {
-    return typeof quizApiUrl === "function"
-        ? quizApiUrl(path)
-        : `http://127.0.0.1:8000/${String(path).replace(/^\//, "")}`;
+    return quizApiUrl(path);
 }
 
 async function loadServerCollections() {
@@ -145,7 +143,7 @@ function escapeHtmlReviewText(value) {
         .replace(/'/g, "&#39;");
 }
 
-function renderClassificationRemovalControls(tag, refresh, questions = null, subjectKey = null) {
+function renderClassificationRemovalControls(tag, refresh) {
     const controls = document.getElementById("classificationRemovalControls");
     if (!controls) return;
     controls.hidden = false;
@@ -154,7 +152,7 @@ function renderClassificationRemovalControls(tag, refresh, questions = null, sub
         <button type="button" class="btn btn-secondary btn-small classification-remove-selected" disabled>Remove Selected</button>
         <span class="classification-selected-count">0 selected</span>
     `;
-    attachRemovalControls(controls, tag, refresh, questions, subjectKey, "Important Questions");
+    attachRemovalControls(controls, tag, refresh);
 }
 
 function buildImportantQuestionsForSubject(subjectKey) {
@@ -301,7 +299,7 @@ function renderClassifiedCollection(title, questions, subjectKey) {
         chapterList.appendChild(row);
     });
     if (classificationTag) {
-        renderClassificationRemovalControls(classificationTag, () => loadSubjectContent(), questions, subjectKey);
+        renderClassificationRemovalControls(classificationTag, () => loadSubjectContent());
     }
 }
 

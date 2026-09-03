@@ -101,6 +101,7 @@ let editingExplanationIndex = null;
 let editingAnswerIndex = null;
 let persistentSubjectClassifications = {};
 let persistentSubjectClassificationsLoaded = false;
+let persistentCurrentAffairsClassifications = {};
 let serverClassificationStore = {};
 let savedQuestionsCache = [];
 let savedQuestionsLoaded = false;
@@ -131,6 +132,19 @@ async function loadPersistentSubjectClassifications() {
             // Classification storage failure must not block Review rendering.
         }
     }));
+    try {
+        const response = await fetch(quizApiUrl("api/current-affairs"), { cache: "no-store" });
+        if (response.ok) {
+            const data = await response.json();
+            (data.questions || []).forEach((item) => {
+                const source = item.source || item._source;
+                if (!source) return;
+                persistentCurrentAffairsClassifications[`${source.sourceSubjectKey}::${source.chapter}::${source.questionId || ""}::${source.questionIndex ?? ""}`] = { CA: true };
+            });
+        }
+    } catch (error) {
+        // Classification storage failure must not block Review rendering.
+    }
     persistentSubjectClassificationsLoaded = true;
 }
 
@@ -645,11 +659,12 @@ function cancelEditingExplanation() {
 }
 
 function getReviewQuestionSource(question, index) {
+    const source = question?._source || question?.source || {};
     return {
-        sourceSubjectKey: question._pyqSubjectKey || result.subjectKey,
-        chapter: question._pyqChapter || result.chapter || "",
-        questionId: question.id ?? question.qid ?? question.questionId ?? question._id ?? question.questionID ?? question.question_id ?? null,
-        questionIndex: index
+        sourceSubjectKey: question?._pyqSubjectKey || source.sourceSubjectKey || result.subjectKey,
+        chapter: question?._pyqChapter || source.chapter || result.chapter || "",
+        questionId: question?._pyqQuestionId ?? source.questionId ?? question?.id ?? question?.qid ?? question?.questionId ?? question?._id ?? question?.questionID ?? question?.question_id ?? null,
+        questionIndex: question?._pyqQuestionIndex ?? source.questionIndex ?? index
     };
 }
 
@@ -869,7 +884,8 @@ function getQuestionClassifications(index) {
     const key = getQuestionClassificationKey(index);
     const question = result && Array.isArray(result.questions) ? result.questions[index] : null;
     const persistent = persistentSubjectClassifications[persistentClassificationIdentity(question, index)] || {};
-    return persistentSubjectClassificationsLoaded ? persistent : (store[key] || {});
+    const currentAffairs = persistentCurrentAffairsClassifications[persistentClassificationIdentity(question, index)] || {};
+    return persistentSubjectClassificationsLoaded ? { ...persistent, ...currentAffairs } : (store[key] || {});
 }
 
 function isMockReviewContext() {
@@ -895,18 +911,11 @@ function getApplicableClassificationTags() {
     }[result?.subjectKey] || [];
 }
 
-async function toggleQuestionClassification(index, tag) {
-    if (!isMockReviewContext()) {
-        return;
-    }
-
-    if (tag === "P" || tag === "E") {
-        await togglePersistentSubjectClassification(index, tag);
-        return;
-    }
-
+async function toggleQuestionClassification(index, tag, event) {
+    event?.preventDefault();
     const store = getClassificationStore();
     const question = result && Array.isArray(result.questions) ? result.questions[index] : null;
+    const source = getReviewQuestionSource(question, index);
     const { subjectKey, chapter, questionId } = getQuestionReference(question, index);
     const key = `${String(subjectKey)}::${String(chapter)}::${String(questionId)}`;
     const entry = store[key] || {
@@ -938,15 +947,15 @@ async function toggleQuestionClassification(index, tag) {
         entry.collectionTargetChapter = target.chapter;
     }
 
-    const source = getReviewQuestionSource(question, index);
     const button = questionReviewList.querySelector(`[data-question-index="${index}"] [data-tag="${tag}"]`);
     const active = Boolean(button?.classList.contains("active"));
     const endpoint = tag === "CA" ? "api/current-affairs" : "api/important-classifications";
+    const targetSubjectKey = target?.subjectKey;
     try {
         const response = await fetch(quizApiUrl(endpoint), {
             method: active ? "DELETE" : "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...source, tag, targetSubjectKey: target?.subjectKey, originalMockTestSet: source.chapter })
+            body: JSON.stringify({ ...source, tag, targetSubjectKey, originalMockTestSet: source.chapter })
         });
         let payload;
         try {
@@ -963,9 +972,18 @@ async function toggleQuestionClassification(index, tag) {
     if (active) {
         delete entry[tag];
         if (serverClassificationStore[key]) delete serverClassificationStore[key][tag];
+        const identity = persistentClassificationIdentity(question, index);
+        delete persistentSubjectClassifications[identity]?.[tag];
+        delete persistentCurrentAffairsClassifications[identity]?.[tag];
     } else {
         entry[tag] = true;
         serverClassificationStore[key] = { ...(serverClassificationStore[key] || {}), [tag]: true };
+        const identity = persistentClassificationIdentity(question, index);
+        if (tag === "CA") {
+            persistentCurrentAffairsClassifications[identity] = { ...(persistentCurrentAffairsClassifications[identity] || {}), CA: true };
+        } else {
+            persistentSubjectClassifications[identity] = { ...(persistentSubjectClassifications[identity] || {}), [tag]: true };
+        }
     }
     if (Object.keys(CLASSIFICATION_LABELS).some((label) => Boolean(entry[label]))) store[key] = entry;
     else delete store[key];
@@ -973,50 +991,26 @@ async function toggleQuestionClassification(index, tag) {
     if (button) button.classList.toggle("active", !active);
 }
 
-async function togglePersistentSubjectClassification(index, tag) {
-    const question = result && Array.isArray(result.questions) ? result.questions[index] : null;
-    const targetSubjectKey = tag === "P" ? "polity" : "economy";
-    const source = getReviewQuestionSource(question, index);
-    const identity = persistentClassificationIdentity(question, index);
-    const button = questionReviewList.querySelector(`[data-question-index="${index}"] [data-tag="${tag}"]`);
-    const active = Boolean(button?.classList.contains("active"));
-    try {
-        const response = await fetch(quizApiUrl("api/important-classifications"), {
-            method: active ? "DELETE" : "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...source, tag, targetSubjectKey })
-        });
-        const payload = await response.json();
-        if (!response.ok) throw new Error(payload.error || "The question classification could not be saved.");
-        if (!payload || typeof payload !== "object") throw new Error("The classification server did not confirm the change.");
-    } catch (error) {
-        window.alert(error.message || "The question classification could not be saved.");
-        return;
-    }
-    persistentSubjectClassifications[identity] = { ...(persistentSubjectClassifications[identity] || {}) };
-    if (active) {
-        delete persistentSubjectClassifications[identity][tag];
-    } else {
-        persistentSubjectClassifications[identity][tag] = true;
-    }
-    if (!Object.keys(persistentSubjectClassifications[identity]).length) delete persistentSubjectClassifications[identity];
-    if (button) button.classList.toggle("active", !active);
+function savedQuestionIdentity(item) {
+    const source = item?.source || item || {};
+    return `${source.sourceSubjectKey ?? item?.subjectKey ?? ""}::${source.chapter ?? item?.chapter ?? ""}::${source.questionId ?? item?.questionId ?? ""}::${source.questionIndex ?? item?.questionIndex ?? ""}`;
 }
 
 function isSavedQuestion(index) {
     const savedQuestions = getSavedQuestions();
-    const questionIndex = savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex;
-    return savedQuestions.some((item) => item.subjectKey === (result.subjectKey || result.subject) && item.chapter === result.chapter && item.questionIndex === questionIndex);
+    const question = result.questions[index];
+    const source = getReviewQuestionSource(question, savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex);
+    return savedQuestions.some((item) => savedQuestionIdentity(item) === savedQuestionIdentity(source));
 }
 
-async function toggleSavedQuestion(index) {
+async function toggleSavedQuestion(index, event) {
+    event?.preventDefault();
     const savedQuestions = getSavedQuestions();
     const subjectKey = result.subjectKey || result.subject;
     const questionIndex = savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex;
-    const savedQuestionIndex = savedQuestions.findIndex((item) => item.subjectKey === subjectKey && item.chapter === result.chapter && item.questionIndex === questionIndex);
-
     const question = result.questions[index];
     const source = getReviewQuestionSource(question, questionIndex);
+    const savedQuestionIndex = savedQuestions.findIndex((item) => savedQuestionIdentity(item) === savedQuestionIdentity(source));
     const endpoint = quizApiUrl("api/saved-questions");
     try {
         const response = await fetch(endpoint, {
@@ -1251,7 +1245,7 @@ function renderQuestions() {
                     class="classification-mini-btn ${classifications[tag] ? "active" : ""} ${tag === "CA" ? "ca" : tag.toLowerCase()}"
                     data-tag="${tag}"
                     title="${label}"
-                    onclick="toggleQuestionClassification(${index}, '${tag}')"
+                    onclick="toggleQuestionClassification(${index}, '${tag}', event)"
                 >${tag}</button>
             ` : "").join("")}
         ` : "";
@@ -1325,7 +1319,7 @@ function renderQuestions() {
                 <div class="review-card-header">
                     <h3>Q${index + 1}. ${questionText}</h3>
                     <div class="review-card-actions">
-                        ${isMockReviewContext() ? `<button type="button" class="save-question-btn${saved ? " saved" : ""}" onclick="toggleSavedQuestion(${index})">${saved ? "★" : "S"}</button>` : ""}
+                        ${isMockReviewContext() ? `<button type="button" class="save-question-btn${saved ? " saved" : ""}" onclick="toggleSavedQuestion(${index}, event)">${saved ? "★" : "S"}</button>` : ""}
                         ${classificationButtonsHtml}
                         ${typeof copyQuestionOptionsButtonHtml === "function" ? copyQuestionOptionsButtonHtml(index) : ""}
                         <span class="review-status-pill ${status}">${status === "correct" ? "Correct" : status === "incorrect" ? "Incorrect" : "Not Attempted"}</span>

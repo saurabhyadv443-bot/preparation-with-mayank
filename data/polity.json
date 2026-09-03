@@ -17,6 +17,28 @@
         "explanation": "(c) : Richard Hartshorne identified four distinct approaches for the study of the political geography of a state. These are – the power analysis approach, the historical approach, the functional approach, and the morphological approach. Hartshorne holds an important place in giving a systematic form to the study of political geography. He introduced a new approach in political geography which came to be known as the functional approach. Hartshorne conceived of a set of two major forces – centrifugal forces and centripetal forces, which constantly act upon the cohesion of a political unit. Hence, option (c) is correct."
       }
     ],
-    "Important Questions": []
+    "Important Questions": [
+      {
+        "q": "1. Where was Mahatma Gandhi arrested during the Quit India Movement?",
+        "options": [
+          "In Bombay",
+          "In Madras",
+          "In Calcutta",
+          "In New Delhi"
+        ],
+        "answer": 1,
+        "explanation": "After the resolution of the Quit India Movement was passed, Gandhiji was arrested in Bombay on 9 August, 1942. After that, he was kept under detention at the Aga Khan Palace in Poona (Pune). api-base-probe recovery-probe",
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 1",
+        "_pyqQuestionId": "mock-q-0",
+        "_pyqQuestionIndex": 0,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 1",
+          "questionId": "mock-q-0",
+          "questionIndex": 0
+        }
+      }
+    ]
   }
 }

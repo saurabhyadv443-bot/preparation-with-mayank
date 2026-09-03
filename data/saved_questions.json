@@ -1,6 +1,27 @@
 {
   "groups": {
-    "Set 1": [],
+    "Set 1": [
+      {
+        "source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 1",
+          "questionId": "mock-q-4",
+          "questionIndex": 4
+        },
+        "sourceIdentity": "mock::Set 1::mock-q-4::4",
+        "question": {
+          "q": "5. Which of the following social reforms were initiated by William Bentinck? 1. Abolition of the Sati practice 2. Abolition of slavery 3. Removal of the provision of disqualification on account of religious conversion 4. Suppression of organized gangs of Thugs",
+          "options": [
+            "1 and 2 only",
+            "1, 3 and 4 only",
+            "1, 2 and 4 only",
+            "1, 2, 3 and 4 only"
+          ],
+          "answer": 2,
+          "explanation": "Lord William Bentinck became the Governor-General of the Bengal Presidency in 1828 A.D. In 1829 A.D., through the ‘Bengal Sati Regulation’, he declared the practice of sati illegal and punishable. During Bentinck’s period itself, the Charter Act, 1833 took the initiative to abolish slavery, but its complete legal abolition took place through the Indian Slavery Act of 1843. Bentinck also launched a campaign against gangs of Thugs and tried to suppress them. Bentinck also worked for education and freedom of the press. In 1835 A.D., he returned to England. The provision of disqualification on the ground of religious conversion was removed in 1850 A.D. Therefore, statements (1), (2), and (4) are correct. Hence, option (c) is the correct answer."
+        }
+      }
+    ],
     "Set 9": [],
     "BPSC KGS Set 7": []
   }

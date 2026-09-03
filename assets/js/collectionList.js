@@ -82,7 +82,7 @@ function renderQuestionsList() {
         attachRemovalControls(removalControls, collectionPayload.classificationTag, (removedKeys) => {
             collectionPayload.questions = collectionPayload.questions.filter((question, index) => !removedKeys.includes(questionKeys[index]));
             renderQuestionsList();
-        }, collectionPayload.questions, collectionPayload.subjectKey, collectionPayload.chapter);
+        });
     }
 }
 

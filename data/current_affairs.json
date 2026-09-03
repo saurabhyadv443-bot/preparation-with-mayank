@@ -3,101 +3,31 @@
     {
       "source": {
         "sourceSubjectKey": "mock",
-        "chapter": "Set 1",
-        "questionId": null,
-        "questionIndex": 0
-      },
-      "sourceIdentity": "mock::Set 1::::0",
-      "question": {
-        "q": "1. Where was Mahatma Gandhi arrested during the Quit India Movement?",
-        "options": [
-          "In Bombay",
-          "In Madras",
-          "In Calcutta",
-          "In New Delhi"
-        ],
-        "answer": 1,
-        "explanation": "After the resolution of the Quit India Movement was passed, Gandhiji was arrested in Bombay on 9 August, 1942. After that, he was kept under detention at the Aga Khan Palace in Poona (Pune). api-base-probe recovery-probe"
-      }
-    },
-    {
-      "source": {
-        "sourceSubjectKey": "mock",
         "chapter": "Set 9",
         "questionId": null,
-        "questionIndex": 0
+        "questionIndex": 11
       },
-      "sourceIdentity": "mock::Set 9::::0",
+      "sourceIdentity": "mock::Set 9::::11",
       "question": {
-        "q": "1. Match List-I with List-II: A. Silver B. Cement (Clinker) C. Zinc (Mine) D. Uranium (Mine) | 1. Kazakhstan 2. China 3. Mexico 4. Turkiye",
+        "q": "12. Match List-I (Doab) with List-II (Rivers): A. Bist Doab B. Bari Doab C. Rachna Doab D. Chaj Doab | i. Between Ravi and Chenab ii. Between Ravi and Beas iii. Between Beas and Sutlej iv. Between Chenab and Jhelum",
         "options": [
-          "3 4 2 1",
-          "2 3 4 1",
-          "3 2 1 4",
-          "3 1 4 2"
+          "iii ii i iv",
+          "i ii iii iv",
+          "iv iii ii i",
+          "i iv ii iii"
         ],
         "answer": 0,
-        "explanation": "According to World Mineral Production 2020–24, in 2024, Mexico ranked first in mine production of silver, Turkey in the production of cement clinker, China in mine production of zinc, and Kazakhstan in mine production of uranium."
-      }
-    },
-    {
-      "source": {
-        "sourceSubjectKey": "mock",
-        "chapter": "BPSC KGS Set 7",
-        "questionId": null,
-        "questionIndex": 0
-      },
-      "sourceIdentity": "mock::BPSC KGS Set 7::::0",
-      "question": {
-        "q": "1. Match List-I with List-II: \n○ List I (Quantity) \n■",
-        "options": [
-          "Electric resistivity  ■",
-          "Capacitance  ■",
-          "Magnetic flux  ■",
-          "Electric charge  ○ List II (Unit)  ■  1.  Weber  ■  1.  Coulomb  ■  1.  Farad  ■  1. Ohm-meter  ○ Select the correct answer using the codes given below:  ■ A. 2 3 4 1  ■ B. 3 2 4 1  ■ C. 4 3 1 2  ■ D. 4 1 3 2  ■"
-        ],
-        "answer": 2,
-        "explanation": "The SI unit of Electric Resistance is Ohm (Ω). The SI unit of Electrical Resistivity (Specific Resistance) is Ohm-meter. Capacitance is measured in Farad (F). Magnetic Flux is measured in Weber (Wb). Electric Charge is measured in Coulomb (C). Additional Fact: Resistance vs. Resistivity: Resistance depends on the length and cross-sectional area of a conductor, whereas Resistivity is an intrinsic property of the material and its temperature (independent of shape or size). Magnetic Flux vs. Flux Density: While Magnetic Flux is Weber, Magnetic Flux Density is measured in Tesla (T) or Wb/m2. CGS Conversions (Frequently asked): The CGS unit for magnetic flux is the Maxwell. 1 Weber = 108 Maxwell. The CGS unit for magnetic flux density is Gauss. 1 Tesla = 104 Gauss. Coulomb / Ampere Link: Electric Current is the rate of flow of charge. Therefore, 1 Ampere = 1 Coulomb/second. One Coulomb contains approximately 6.24 x 1018 electrons. Farad Breakdown: 1 Farad = 1 Coulomb / 1 Volt. Because a Farad is a very large unit, practical capacitance is usually measured in microfarads (uF) or picofarads (pF)."
-      }
-    },
-    {
-      "source": {
-        "sourceSubjectKey": "mock",
-        "chapter": "Set 1",
-        "questionId": null,
-        "questionIndex": 12
-      },
-      "sourceIdentity": "mock::Set 1::::12",
-      "question": {
-        "q": "13. Who founded the 'Theosophical Society'?",
-        "options": [
-          "Madame H. P. Blavatsky",
-          "Raja Ram Mohan Roy",
-          "Mahatma Gandhi",
-          "Swami Vivekananda"
-        ],
-        "answer": 0,
-        "explanation": "The Theosophical Society was founded in New York in 1875 A.D. by Madame H. P. Blavatsky, Colonel Henry Steel Olcott, William Quan Judge and others. In 1882 A.D., the founders of this Society established its headquarters at Adyar, near Madras, now Chennai, which later became its International Headquarters. The official objects of the Society were to promote universal brotherhood, to encourage the study of comparative religion, philosophy and science, and to investigate the unexplained laws of Nature and the powers hidden in man."
-      }
-    },
-    {
-      "source": {
-        "sourceSubjectKey": "mock",
-        "chapter": "Set 9",
-        "questionId": null,
-        "questionIndex": 1
-      },
-      "sourceIdentity": "mock::Set 9::::1",
-      "question": {
-        "q": "2. In which state of India does the Southwest Monsoon arrive first?",
-        "options": [
-          "Assam",
-          "West Bengal",
-          "Maharashtra",
-          "Kerala"
-        ],
-        "answer": 3,
-        "explanation": "The South-West Monsoon sets in over the state of Kerala in India. A major part of Indian agriculture is still dependent on rainfall."
+        "explanation": "The correct matching is as follows— (Doab) Bist Doab Bari Doab – (Rivers)– Between the Beas and the Sutlej– Between the Ravi and the Beas Rachna Doab – Between the Ravi and the Chenab Chaj Doab – Between the Chenab and the Jhelum",
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 9",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 11,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 9",
+          "questionId": null,
+          "questionIndex": 11
+        }
       }
     }
   ]

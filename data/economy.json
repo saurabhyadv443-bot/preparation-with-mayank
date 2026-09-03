@@ -3,6 +3,19 @@
   "quizType": "practice",
   "secondsPerQuestion": 40,
   "chapters": {
-    "Important Questions": []
+    "Important Questions": [
+      {
+        "id": 1,
+        "q": "Richard Hartshorne has recognized four distinct approaches to the study of political geography of a State, these are:-\n A. Power analysis approach \n B. Historical approach \n C. Geographical approach \n D. Functional approach \n E. Morphological approach \n Choose the most appropriate answer from the options given below",
+        "options": [
+          "A, B, C and D Only",
+          "A, B, C and E Only",
+          "A, B, D and E Only",
+          "B, C, D and E Only"
+        ],
+        "answer": 2,
+        "explanation": "(c) : Richard Hartshorne identified four distinct approaches for the study of the political geography of a state. These are – the power analysis approach, the historical approach, the functional approach, and the morphological approach. Hartshorne holds an important place in giving a systematic form to the study of political geography. He introduced a new approach in political geography which came to be known as the functional approach. Hartshorne conceived of a set of two major forces – centrifugal forces and centripetal forces, which constantly act upon the cohesion of a political unit. Hence, option (c) is correct."
+      }
+    ]
   }
 }
