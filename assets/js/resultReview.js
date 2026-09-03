@@ -24,35 +24,40 @@ const classifiedReviewPayload = (() => {
         return null;
     }
 })();
-const result = savedReviewFocus
-    ? {
-        subject: savedReviewFocus.subject,
-        subjectKey: savedReviewFocus.subjectKey,
-        chapter: savedReviewFocus.chapter,
-        total: 1,
-        attempted: 0,
-        correct: 0,
-        wrong: 0,
-        skipped: 1,
-        accuracy: 0,
-        questions: [savedReviewFocus.question],
-        userAnswers: [null]
-    }
-    : (classifiedReviewPayload
-        ? {
-            subject: classifiedReviewPayload.subject || classifiedReviewPayload.subjectKey || "Classified",
-            subjectKey: classifiedReviewPayload.subjectKey || classifiedReviewPayload.subject || "classified",
-            chapter: classifiedReviewPayload.chapter || "Important Questions",
-            total: Array.isArray(classifiedReviewPayload.questions) ? classifiedReviewPayload.questions.length : 0,
-            attempted: 0,
-            correct: 0,
-            wrong: 0,
-            skipped: Array.isArray(classifiedReviewPayload.questions) ? classifiedReviewPayload.questions.length : 0,
-            accuracy: 0,
-            questions: Array.isArray(classifiedReviewPayload.questions) ? classifiedReviewPayload.questions : [],
-            userAnswers: Array.isArray(classifiedReviewPayload.questions) ? new Array(classifiedReviewPayload.questions.length).fill(null) : []
-        }
-        : (historicalAttempt || (rawResult ? JSON.parse(rawResult) : null)));
+const result = isHistoricalReview
+    ? historicalAttempt
+    : (rawResult
+        ? JSON.parse(rawResult)
+        : (savedReviewFocus
+            ? {
+                subject: savedReviewFocus.subject,
+                subjectKey: savedReviewFocus.subjectKey,
+                chapter: savedReviewFocus.chapter,
+                total: 1,
+                attempted: 0,
+                correct: 0,
+                wrong: 0,
+                skipped: 1,
+                accuracy: 0,
+                questions: [savedReviewFocus.question],
+                userAnswers: [null]
+            }
+            : (classifiedReviewPayload
+                ? {
+                    subject: classifiedReviewPayload.subject || classifiedReviewPayload.subjectKey || "Classified",
+                    subjectKey: classifiedReviewPayload.subjectKey || classifiedReviewPayload.subject || "classified",
+                    chapter: classifiedReviewPayload.chapter || "Important Questions",
+                    total: Array.isArray(classifiedReviewPayload.questions) ? classifiedReviewPayload.questions.length : 0,
+                    attempted: 0,
+                    correct: 0,
+                    wrong: 0,
+                    skipped: Array.isArray(classifiedReviewPayload.questions) ? classifiedReviewPayload.questions.length : 0,
+                    accuracy: 0,
+                    questions: Array.isArray(classifiedReviewPayload.questions) ? classifiedReviewPayload.questions : [],
+                    userAnswers: Array.isArray(classifiedReviewPayload.questions) ? new Array(classifiedReviewPayload.questions.length).fill(null) : []
+                }
+                : null)));
+const isPostSubmitReview = Boolean(rawResult && !isHistoricalReview && !savedReviewFocus && !classifiedReviewPayload);
 const savedReviewQuestionIndex = savedReviewFocus ? Number(savedReviewFocus.questionIndex || 0) : null;
 if (savedReviewFocus) {
     sessionStorage.removeItem("savedReviewFocus");
@@ -152,21 +157,6 @@ function closePalette() {
     paletteToggle.setAttribute("aria-expanded", "false");
 }
 
-function escapeHtml(value) {
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-}
-
-function formatTime(seconds) {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
-}
-
 // Reading Mode Highlighter Functions
 function getReadingHighlights() {
     try {
@@ -233,7 +223,7 @@ function getNodePath(node) {
 }
 
 function applyReadingHighlights(explanationBox, questionIndex) {
-    if (!explanationBox || isHistoricalReview) return;
+    if (!explanationBox) return;
     
     const highlights = getQuestionHighlights(questionIndex);
     if (!highlights.length) return;
@@ -603,7 +593,51 @@ function cancelEditingExplanation() {
     renderQuestions();
 }
 
-function saveEditedExplanation(questionIndex) {
+function getReviewQuestionSource(question, index) {
+    return {
+        sourceSubjectKey: question._pyqSubjectKey || result.subjectKey,
+        chapter: question._pyqChapter || result.chapter || "",
+        questionId: question.id ?? question.qid ?? question.questionId ?? question._id ?? question.questionID ?? question.question_id ?? null,
+        questionIndex: index
+    };
+}
+
+async function requestReviewQuestion(questionIndex, field, value) {
+    const question = result.questions[questionIndex];
+    const response = await fetch(quizApiUrl("api/review-question"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...getReviewQuestionSource(question, questionIndex), field, value })
+    });
+    const payload = await response.json();
+    if (!response.ok) {
+        throw new Error(payload.error || "The question could not be saved.");
+    }
+    return payload.question;
+}
+
+async function loadPersistedReviewQuestions() {
+    await Promise.all(result.questions.map(async (question, index) => {
+        const source = getReviewQuestionSource(question, index);
+        const query = new URLSearchParams(Object.entries(source).filter(([, value]) => value != null && value !== ""));
+        try {
+            const response = await fetch(quizApiUrl(`api/review-question?${query.toString()}`), { cache: "no-store" });
+            if (!response.ok) return;
+            const payload = await response.json();
+            if (payload.question) {
+                question.answer = payload.question.answer;
+                question.explanation = payload.question.explanation || "";
+                question.explanationDocument = window.ExplanationRenderer
+                    ? window.ExplanationRenderer.normalizeExplanationDocument(question.explanation)
+                    : question.explanation;
+            }
+        } catch (error) {
+            console.warn("Unable to load the current source question:", error);
+        }
+    }));
+}
+
+async function saveEditedExplanation(questionIndex) {
     const explanationInput = document.getElementById(`explanationInput-${questionIndex}`);
     if (!explanationInput || !result.questions[questionIndex]) {
         return;
@@ -611,13 +645,17 @@ function saveEditedExplanation(questionIndex) {
 
     const explanationDocument = buildExplanationDocumentFromEditor(explanationInput);
     const plainText = (window.ExplanationRenderer && window.ExplanationRenderer.getPlainTextFromExplanation(explanationDocument)) || explanationInput.textContent.trim();
-    result.questions[questionIndex].explanationDocument = explanationDocument;
-    result.questions[questionIndex].explanation = plainText;
-
-    localStorage.setItem(resultKey, JSON.stringify(result));
-
-    editingExplanationIndex = null;
-    renderQuestions();
+    try {
+        const savedQuestion = await requestReviewQuestion(questionIndex, "explanation", plainText);
+        result.questions[questionIndex].explanationDocument = explanationDocument;
+        result.questions[questionIndex].explanation = savedQuestion.explanation;
+        localStorage.setItem(resultKey, JSON.stringify(result));
+        editingExplanationIndex = null;
+        renderQuestions();
+        window.alert("Explanation saved successfully.");
+    } catch (error) {
+        window.alert(error.message);
+    }
 }
 
 function startEditingAnswer(questionIndex) {
@@ -630,21 +668,27 @@ function cancelEditingAnswer() {
     renderQuestions();
 }
 
-function saveEditedAnswer(questionIndex) {
+async function saveEditedAnswer(questionIndex) {
     const selectedAnswer = document.querySelector(`input[name="correctAnswer-${questionIndex}"]:checked`);
     if (!selectedAnswer || !result.questions[questionIndex]) {
         return;
     }
 
-    result.questions[questionIndex].answer = Number(selectedAnswer.value);
-    localStorage.setItem(resultKey, JSON.stringify(result));
-    editingAnswerIndex = null;
-    renderQuestions();
-    renderPalette();
-    renderQuickNavigation();
-    updateFilterButtons();
-    updateResultCount();
-    updateActiveQuestion();
+    try {
+        const savedQuestion = await requestReviewQuestion(questionIndex, "answer", Number(selectedAnswer.value));
+        result.questions[questionIndex].answer = savedQuestion.answer;
+        localStorage.setItem(resultKey, JSON.stringify(result));
+        editingAnswerIndex = null;
+        renderQuestions();
+        renderPalette();
+        renderQuickNavigation();
+        updateFilterButtons();
+        updateResultCount();
+        updateActiveQuestion();
+        window.alert("Correct answer saved successfully.");
+    } catch (error) {
+        window.alert(error.message);
+    }
 }
 
 function renderSummary() {
@@ -670,7 +714,7 @@ function renderSummary() {
 
 function getSavedQuestions() {
     try {
-        return JSON.parse(localStorage.getItem("bookmarks") || "[]");
+        return savedQuestionsLoaded ? savedQuestionsCache : JSON.parse(localStorage.getItem("bookmarks") || "[]");
     } catch (error) {
         return [];
     }
@@ -815,7 +859,6 @@ function isSavedQuestion(index) {
 }
 
 function toggleSavedQuestion(index) {
-        if (isHistoricalReview) return;
     const savedQuestions = getSavedQuestions();
     const subjectKey = result.subjectKey || result.subject;
     const questionIndex = savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex;
@@ -1031,19 +1074,17 @@ function renderQuestions() {
         const saved = isSavedQuestion(index);
         const classifications = getQuestionClassifications(index);
         const classificationButtonsHtml = isMockReviewContext() ? `
-            <div class="classification-mini-group">
-                ${Object.entries(CLASSIFICATION_LABELS).map(([tag, label]) => `
-                    <button
-                        type="button"
-                        class="classification-mini-btn ${classifications[tag] ? "active" : ""} ${tag === "CA" ? "ca" : tag.toLowerCase()}"
-                        data-tag="${tag}"
-                        title="${label}"
-                        onclick="toggleQuestionClassification(${index}, '${tag}')"
-                    >${tag}</button>
-                `).join("")}
-            </div>
+            ${Object.entries(CLASSIFICATION_LABELS).map(([tag, label]) => `
+                <button
+                    type="button"
+                    class="classification-mini-btn ${classifications[tag] ? "active" : ""} ${tag === "CA" ? "ca" : tag.toLowerCase()}"
+                    data-tag="${tag}"
+                    title="${label}"
+                    onclick="toggleQuestionClassification(${index}, '${tag}')"
+                >${tag}</button>
+            `).join("")}
         ` : "";
-        const answerSectionHtml = isHistoricalReview ? `<p><strong>Correct Answer:</strong> ${correctAnswerText}</p>` : editingAnswerIndex === index
+        const answerSectionHtml = editingAnswerIndex === index
             ? `<div class="answer-editor-section">
                     <strong>Edit Correct Answer</strong>
                     <div class="answer-editor-options">${question.options.map((option, optionIndex) => `
@@ -1073,14 +1114,7 @@ function renderQuestions() {
 
         // Build explanation section with edit capability
         let explanationSectionHtml = "";
-        if (isHistoricalReview) {
-            explanationSectionHtml = `
-                <div class="explanation-box${explanationHtml ? "" : " missing"}">
-                    <strong>Explanation:</strong>
-                    ${explanationHtml || "Explanation is currently unavailable for this question."}
-                </div>
-            `;
-        } else if (editingExplanationIndex === index) {
+        if (editingExplanationIndex === index) {
             explanationSectionHtml = `
                 <div class="explanation-editor-section">
                     <div class="explanation-editor-header">
@@ -1120,8 +1154,9 @@ function renderQuestions() {
                 <div class="review-card-header">
                     <h3>Q${index + 1}. ${questionText}</h3>
                     <div class="review-card-actions">
-                        <button type="button" class="save-question-btn${saved ? " saved" : ""}" onclick="toggleSavedQuestion(${index})"${isHistoricalReview ? " disabled" : ""}>${saved ? "★" : "S"}</button>
+                        <button type="button" class="save-question-btn${saved ? " saved" : ""}" onclick="toggleSavedQuestion(${index})">${saved ? "★" : "S"}</button>
                         ${classificationButtonsHtml}
+                        ${typeof copyQuestionOptionsButtonHtml === "function" ? copyQuestionOptionsButtonHtml(index) : ""}
                         <span class="review-status-pill ${status}">${status === "correct" ? "Correct" : status === "incorrect" ? "Incorrect" : "Not Attempted"}</span>
                     </div>
                 </div>
@@ -1129,7 +1164,6 @@ function renderQuestions() {
                 <p><strong>Your Answer:</strong> ${selectedAnswerText}</p>
                 ${answerSectionHtml}
                 ${explanationSectionHtml}
-                ${typeof copyQuestionOptionsButtonHtml === "function" ? copyQuestionOptionsButtonHtml(index) : ""}
             </div>
         `;
     }).join("");
@@ -1198,8 +1232,6 @@ function updateActiveQuestion() {
 }
 
 function applyHighlightsToAllQuestions() {
-    if (isHistoricalReview) return;
-    
     questionReviewList.querySelectorAll(".review-item").forEach((card) => {
         const questionIndex = Number(card.dataset.questionIndex);
         const explanationBox = card.querySelector(".explanation-box");
@@ -1213,18 +1245,20 @@ function applyHighlightsToAllQuestions() {
 if (!result) {
     window.location.href = "index.html";
 } else {
-    reviewSubject.innerText = result.subject || "Quiz Review";
-    const chapterLabel = result.chapter && result.chapter.trim() ? result.chapter : "Full Length Test";
-    reviewSubtitle.innerText = `${chapterLabel} • Accuracy ${result.accuracy}%`;
-    renderTestHistory();
-    renderSummary();
-    renderPalette();
-    renderQuestions();
-    applyHighlightsToAllQuestions();
-    updateFilterButtons();
-    renderSavedQuestions();
-    updateActiveQuestion();
-    updateResultCount();
+    ((isHistoricalReview || isPostSubmitReview) ? Promise.resolve() : loadPersistedReviewQuestions()).finally(() => {
+        reviewSubject.innerText = result.subject || "Quiz Review";
+        const chapterLabel = result.chapter && result.chapter.trim() ? result.chapter : "Full Length Test";
+        reviewSubtitle.innerText = `${chapterLabel} • Accuracy ${result.accuracy}%`;
+        renderTestHistory();
+        renderSummary();
+        renderPalette();
+        renderQuestions();
+        applyHighlightsToAllQuestions();
+        updateFilterButtons();
+        renderSavedQuestions();
+        updateActiveQuestion();
+        updateResultCount();
+    });
 }
 
 if (savedQuestionsToggle) {

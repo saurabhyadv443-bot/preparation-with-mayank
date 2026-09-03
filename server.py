@@ -27,6 +27,105 @@ SEARCH_TIMEOUT_SECONDS = 5
 OPERATION_TIMEOUT_SECONDS = 20
 MAX_DAILY_AI_REVIEWS = 20
 GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
+EDITABLE_REVIEW_FIELDS = {"explanation", "answer"}
+
+
+def load_subject_manifest():
+    try:
+        manifest = json.loads((ROOT / "data" / "subjects.json").read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        raise ValueError("Quiz subject manifest is unavailable.")
+    subjects = {str(item.get("id")): item.get("file") for item in manifest.get("subjects", []) if isinstance(item, dict)}
+    return {key: value for key, value in subjects.items() if key and isinstance(value, str) and re.fullmatch(r"[A-Za-z0-9_-]+\.json", value)}
+
+
+def question_id(question):
+    for key in ("id", "qid", "questionId", "_id", "questionID", "question_id"):
+        if key in question and question[key] is not None:
+            return str(question[key])
+    return None
+
+
+def find_question(data, chapter, stable_id, question_index):
+    containers = []
+    if chapter:
+        for key in ("chapters", "TEST NUMBER"):
+            groups = data.get(key) if isinstance(data, dict) else None
+            if isinstance(groups, dict) and isinstance(groups.get(chapter), list):
+                containers.append(groups[chapter])
+    if not containers:
+        def collect(value):
+            if isinstance(value, dict):
+                for child in value.values():
+                    collect(child)
+            elif isinstance(value, list) and all(isinstance(item, dict) for item in value):
+                containers.append(value)
+        collect(data)
+
+    for questions in containers:
+        if stable_id is not None:
+            for question in questions:
+                if question_id(question) == str(stable_id):
+                    return question
+        elif isinstance(question_index, int) and 0 <= question_index < len(questions):
+            question = questions[question_index]
+            if question_id(question) is None:
+                return question
+    raise ValueError("The original question could not be found.")
+
+
+def locate_review_question(payload):
+    subject_key = str(payload.get("sourceSubjectKey") or "")
+    files = load_subject_manifest()
+    file_name = files.get(subject_key)
+    if not file_name:
+        raise ValueError("The question source is not an approved quiz file.")
+    file_path = (ROOT / "data" / file_name).resolve()
+    if file_path.parent != (ROOT / "data").resolve() or not file_path.is_file():
+        raise ValueError("The question source is invalid.")
+    try:
+        data = json.loads(file_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        raise ValueError("The question source is not valid JSON.")
+    question = find_question(data, payload.get("chapter"), payload.get("questionId"), payload.get("questionIndex"))
+    return file_path, data, question
+
+
+def question_response(question):
+    return {"question": question}
+
+
+def save_review_question(payload):
+    field = payload.get("field")
+    if field not in EDITABLE_REVIEW_FIELDS:
+        raise ValueError("Only explanation and answer can be edited.")
+    question_id_value = payload.get("questionId")
+    question_index = payload.get("questionIndex")
+    if question_id_value is None and not isinstance(question_index, int):
+        raise ValueError("A stable question ID or source question index is required.")
+    file_path, data, question = locate_review_question(payload)
+    if field == "explanation":
+        if not isinstance(payload.get("value"), str):
+            raise ValueError("Explanation must be text.")
+        question[field] = payload["value"]
+    else:
+        value = payload.get("value")
+        if not isinstance(value, int) or isinstance(value, bool) or value < 0 or value >= len(question.get("options", [])):
+            raise ValueError("Correct answer must be a valid option index.")
+        question[field] = value
+    temporary_path = file_path.with_suffix(file_path.suffix + ".tmp")
+    try:
+        temporary_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        temporary_path.replace(file_path)
+    except OSError:
+        try:
+            temporary_path.unlink(missing_ok=True)
+        except OSError:
+            pass
+        raise ValueError("The quiz data could not be saved.")
+    return question_response(question)
+
+
 
 
 def review_prompt(payload):
@@ -505,6 +604,9 @@ class Handler(BaseHTTPRequestHandler):
             if length > 100_000:
                 raise ValueError("Review request is too large.")
             payload = json.loads(self.rfile.read(length).decode("utf-8"))
+            if path == "/api/review-question":
+                self.send_json(HTTPStatus.OK, save_review_question(payload))
+                return
             if not isinstance(payload.get("question"), str) or not payload["question"].strip():
                 raise ValueError("A question is required.")
             if not isinstance(payload.get("options", []), list):
@@ -527,8 +629,23 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json(HTTPStatus.INTERNAL_SERVER_ERROR, {"error": "The local Gemini bridge could not process this request."})
 
     def do_GET(self):
-        if urllib.parse.urlparse(self.path).path == "/api/health":
+        parsed = urllib.parse.urlparse(self.path)
+        if parsed.path == "/api/health":
             self.send_json(HTTPStatus.OK, {"ok": True, "geminiConfigured": bool(os.environ.get("GEMINI_API_KEY", "").strip())})
+            return
+        if parsed.path == "/api/review-question":
+            try:
+                query = urllib.parse.parse_qs(parsed.query)
+                payload = {
+                    "sourceSubjectKey": query.get("sourceSubjectKey", [""])[0],
+                    "chapter": query.get("chapter", [""])[0],
+                    "questionId": query.get("questionId", [None])[0],
+                    "questionIndex": int(query["questionIndex"][0]) if "questionIndex" in query else None
+                }
+                _, _, question = locate_review_question(payload)
+                self.send_json(HTTPStatus.OK, question_response(question))
+            except (TypeError, ValueError) as error:
+                self.send_json(HTTPStatus.BAD_REQUEST, {"error": str(error)})
             return
         path = urllib.parse.unquote(urllib.parse.urlparse(self.path).path.lstrip("/"))
         if not path:

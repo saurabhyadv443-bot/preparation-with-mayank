@@ -621,6 +621,13 @@ select:focus-visible {
     font-size: 0.9rem;
 }
 
+.copy-question-options-btn {
+    min-width: 2.75rem;
+    width: 2.75rem;
+    padding: 8px 4px;
+    text-align: center;
+}
+
 .hero-buttons,
 .result-buttons,
 .review-controls {
@@ -811,9 +818,12 @@ select:focus-visible {
 }
 
 .review-card-actions {
-    display: inline-flex;
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-auto-rows: minmax(26px, auto);
     align-items: center;
-    gap: 8px;
+    justify-content: end;
+    gap: 6px;
     flex-shrink: 0;
 }
 
@@ -1677,6 +1687,8 @@ select:focus-visible {
 
     .review-card-actions {
         width: 100%;
+        display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
     }
 }

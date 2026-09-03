@@ -8,7 +8,6 @@
         try{ const r = await fetch('data/subjects.json'); if(!r.ok) return null; const j = await r.json(); return j && Array.isArray(j.subjects) ? j.subjects : null; } catch(e){ return null; }
     }
 
-    // read saved questions
     const savedQuestions = safeParse(localStorage.getItem('bookmarks'), []);
 
     const manifest = await readManifest();

@@ -38,21 +38,6 @@ if (collectionTitle) {
     collectionTitle.textContent = collectionPracticePayload.subject || "Collection Practice";
 }
 
-function formatTime(seconds) {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
-}
-
-function escapeHtml(value) {
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-}
-
 function startTimer() {
     timeRemaining = TIMER_DURATION;
     isAnswered = false;

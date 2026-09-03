@@ -3,6 +3,7 @@ const subject = params.get("subject") || "ancient";
 const chapterList = document.getElementById("chapterList");
 const subjectReviewBtn = document.getElementById("subjectReviewBtn");
 const reviewSubjects = new Set(["ancient", "medieval", "modern", "geography", "polity", "economy", "mock"]);
+let subjectData = null;
 
 function safeParseStoredValue(key, fallback = []) {
     try {
@@ -57,14 +58,18 @@ function getAttemptedReviewSections() {
 
     const history = safeParseStoredValue("quiz_attempt_history", {});
     const grouped = new Map();
-    Object.values(history || {}).forEach((records) => {
+    Object.entries(history || {}).forEach(([historyQuizId, records]) => {
         if (!Array.isArray(records)) return;
         records.forEach((attempt, index) => {
             if (!attempt || (attempt.subjectKey || subject) !== subject || !attempt.chapter || Number(attempt.total) <= 0) return;
             const completedAt = new Date(attempt.completedAt || 0).getTime();
             if (!Number.isFinite(completedAt)) return;
             const key = `${subject}::${attempt.chapter}`;
-            const attemptWithNumber = { ...attempt, attempt: Number(attempt.attempt) || index + 1 };
+            const attemptWithNumber = {
+                ...attempt,
+                quizId: historyQuizId,
+                attempt: Number(attempt.attempt) || index + 1
+            };
             const current = grouped.get(key);
             const marks = Number(attemptWithNumber.finalScore ?? attemptWithNumber.score ?? 0);
             const currentMarks = current ? Number(current.best.finalScore ?? current.best.score ?? 0) : 0;
@@ -95,7 +100,7 @@ function renderAttemptedReviewSections() {
         button.onclick = () => {
             const query = new URLSearchParams({
                 historical: "1",
-                quizId: best.quizId || [subject, chapter, subject === "mock" ? "mock" : "practice"].join("::"),
+                quizId: best.quizId,
                 attempt: String(best.attempt),
                 returnUrl: `subject.html?${new URLSearchParams({ subject, review: "1" }).toString()}`
             });
@@ -137,18 +142,13 @@ function buildImportantQuestionsForSubject(subjectKey) {
     if (!targetTag) {
         return [];
     }
-
     const entries = getClassifiedQuestionEntries((entry) => Boolean(entry[targetTag]));
-    return entries
-        .map((entry) => entry.question || null)
-        .filter(Boolean);
+    return entries.map((entry) => entry.question || null).filter(Boolean);
 }
 
 function buildCurrentAffairsQuestions() {
     const entries = getClassifiedQuestionEntries((entry) => entry.CA === true);
-    return entries
-        .map((entry) => entry.question || null)
-        .filter(Boolean);
+    return entries.map((entry) => entry.question || null).filter(Boolean);
 }
 
 function openCollectionListSession(title, questions, subjectKey = subject, returnChapter = title, classificationTag = null) {
@@ -316,12 +316,6 @@ async function loadSubjectContent() {
         return;
     }
 
-    if (selectedChapter === "Important Questions") {
-        const questions = buildImportantQuestionsForSubject(subject);
-        renderClassifiedCollection("Important Questions", questions, subject);
-        return;
-    }
-
     const meta = await getSubjectMetaMap();
     const fileName = (meta && meta[subject] && meta[subject].file) || `${subject}.json`;
 
@@ -329,6 +323,11 @@ async function loadSubjectContent() {
         const resp = await fetch(`data/${fileName}?t=${Date.now()}`);
         if (!resp.ok) throw new Error('data missing');
         const data = await resp.json();
+        subjectData = data;
+        if (selectedChapter === "Important Questions") {
+            renderClassifiedCollection("Important Questions", buildImportantQuestionsForSubject(subject), subject);
+            return;
+        }
 
         if (subject === "mock") {
             const setNames = collectMockSetNames(data);

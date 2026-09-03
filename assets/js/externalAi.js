@@ -53,7 +53,7 @@ async function copyQuestionOptionsByIndex(index) {
             const originalText = button.textContent;
             button.textContent = "Question + options copied";
             window.setTimeout(() => {
-                button.textContent = "Copy Question + Options";
+                button.textContent = "CO";
             }, 2200);
         }
     } catch (error) {
@@ -61,12 +61,12 @@ async function copyQuestionOptionsByIndex(index) {
         if (button) {
             button.textContent = "Copy failed";
             window.setTimeout(() => {
-                button.textContent = "Copy Question + Options";
+                button.textContent = "CO";
             }, 2200);
         }
     }
 }
 
 function copyQuestionOptionsButtonHtml(index) {
-    return `<button type="button" class="btn btn-secondary btn-small" data-copy-question-index="${index}" onclick="copyQuestionOptionsByIndex(${index})">Copy Question + Options</button>`;
+    return `<button type="button" class="btn btn-secondary btn-small copy-question-options-btn" title="Copy Question + Options" aria-label="Copy Question + Options" data-copy-question-index="${index}" onclick="copyQuestionOptionsByIndex(${index})">CO</button>`;
 }
