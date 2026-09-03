@@ -176,16 +176,74 @@
                 checkboxes.forEach((checkbox) => { checkbox.checked = selectAll.checked; });
                 updateSavedSelection();
             });
-            removeButton.addEventListener('click', () => {
+            removeButton.addEventListener('click', async () => {
                 const selectedKeys = checkboxes.filter((checkbox) => checkbox.checked).map((checkbox) => checkbox.dataset.savedQuestionKey);
                 if (!selectedKeys.length || !window.confirm(`Remove ${selectedKeys.length} selected saved question${selectedKeys.length === 1 ? '' : 's'}?`)) return;
                 console.debug('Removing saved question entries', { selectedKeys, savedEntries: savedQuestions });
-                const selectedSet = new Set(selectedKeys);
-                const retained = savedQuestions.filter((item) => !selectedSet.has(savedQuestionKey(item)));
-                savedQuestions.splice(0, savedQuestions.length, ...retained);
-                localStorage.setItem('bookmarks', JSON.stringify(savedQuestions));
-                console.debug('Saved question entries after removal', savedQuestions);
-                renderSavedLibrary();
+                
+                removeButton.disabled = true;
+                removeButton.textContent = 'Removing...';
+                
+                try {
+                    // Remove via API for each selected question
+                    const selectedSet = new Set(selectedKeys);
+                    const itemsToRemove = savedQuestions.filter((item) => selectedSet.has(savedQuestionKey(item)));
+                    
+                    for (const item of itemsToRemove) {
+                        try {
+                            const sourceSubjectKey = item.source?.sourceSubjectKey || item.subjectKey || 'mock';
+                            const chapter = item.source?.chapter || item.chapter || '';
+                            const questionId = item.source?.questionId || item.questionId || null;
+                            const questionIndex = item.source?.questionIndex !== undefined ? item.source?.questionIndex : item.questionIndex;
+                            
+                            const payload = {
+                                sourceSubjectKey,
+                                chapter,
+                                questionId: questionId === undefined ? null : questionId,
+                                questionIndex: questionIndex,
+                                active: false
+                            };
+                            
+                            const apiUrl = typeof quizApiUrl === 'function' 
+                                ? quizApiUrl('api/saved-questions') 
+                                : 'http://127.0.0.1:8000/api/saved-questions';
+                            
+                            const response = await fetch(apiUrl, {
+                                method: 'DELETE',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(payload)
+                            });
+                            
+                            let responseData;
+                            try {
+                                responseData = await response.json();
+                            } catch (error) {
+                                throw new Error('The server returned an invalid response.');
+                            }
+                            
+                            if (!response.ok) {
+                                throw new Error(responseData?.error || `Failed to remove saved question (HTTP ${response.status})`);
+                            }
+                        } catch (error) {
+                            console.error('API removal failed for saved question:', { item, error: error.message });
+                            throw error;
+                        }
+                    }
+                    
+                    // Only update local state after successful API removal
+                    const retained = savedQuestions.filter((item) => !selectedSet.has(savedQuestionKey(item)));
+                    savedQuestions.splice(0, savedQuestions.length, ...retained);
+                    localStorage.setItem('bookmarks', JSON.stringify(savedQuestions));
+                    console.debug('Saved question entries after removal', savedQuestions);
+                    renderSavedLibrary();
+                } catch (error) {
+                    console.error('Removal failed:', error);
+                    alert(`Error removing saved questions: ${error.message}`);
+                } finally {
+                    removeButton.textContent = 'Remove Selected';
+                    removeButton.disabled = false;
+                    updateSavedSelection();
+                }
             });
             updateSavedSelection();
         }

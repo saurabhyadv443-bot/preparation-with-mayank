@@ -145,7 +145,7 @@ function escapeHtmlReviewText(value) {
         .replace(/'/g, "&#39;");
 }
 
-function renderClassificationRemovalControls(tag, refresh) {
+function renderClassificationRemovalControls(tag, refresh, questions = null, subjectKey = null) {
     const controls = document.getElementById("classificationRemovalControls");
     if (!controls) return;
     controls.hidden = false;
@@ -154,7 +154,7 @@ function renderClassificationRemovalControls(tag, refresh) {
         <button type="button" class="btn btn-secondary btn-small classification-remove-selected" disabled>Remove Selected</button>
         <span class="classification-selected-count">0 selected</span>
     `;
-    attachRemovalControls(controls, tag, refresh);
+    attachRemovalControls(controls, tag, refresh, questions, subjectKey, "Important Questions");
 }
 
 function buildImportantQuestionsForSubject(subjectKey) {
@@ -301,7 +301,7 @@ function renderClassifiedCollection(title, questions, subjectKey) {
         chapterList.appendChild(row);
     });
     if (classificationTag) {
-        renderClassificationRemovalControls(classificationTag, () => loadSubjectContent());
+        renderClassificationRemovalControls(classificationTag, () => loadSubjectContent(), questions, subjectKey);
     }
 }
 

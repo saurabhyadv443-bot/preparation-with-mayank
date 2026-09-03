@@ -5,216 +5,6 @@
         "sourceSubjectKey": "mock",
         "chapter": "Set 1",
         "questionId": null,
-        "questionIndex": 5
-      },
-      "sourceIdentity": "mock::Set 1::::5",
-      "question": {
-        "q": "6. Which of the following industrialists served as the treasurer of the A.I.C.C. for a long time and also went to jail in 1930?",
-        "options": [
-          "G.D. Birla",
-          "Jamnalal Bajaj",
-          "J.R.D. Tata",
-          "Walchand Hirachand"
-        ],
-        "answer": 1,
-        "explanation": "Jamnalal Bajaj was a prominent industrialist and Congress worker associated with the Gandhian national movement. He was one of the close associates of Gandhiji. He served as the treasurer of the Indian National Congress for a long time. He was imprisoned in 1923 for participating in the Nagpur Flag Satyagraha and again in 1930 during the Civil Disobedience Movement.",
-        "_pyqSubjectKey": "mock",
-        "_pyqChapter": "Set 1",
-        "_pyqQuestionId": null,
-        "_pyqQuestionIndex": 5,
-        "_source": {
-          "sourceSubjectKey": "mock",
-          "chapter": "Set 1",
-          "questionId": null,
-          "questionIndex": 5
-        }
-      }
-    },
-    {
-      "source": {
-        "sourceSubjectKey": "mock",
-        "chapter": "Set 1",
-        "questionId": null,
-        "questionIndex": 3
-      },
-      "sourceIdentity": "mock::Set 1::::3",
-      "question": {
-        "q": "4. With reference to forced labour (Vishti) in India during the Gupta period, which of the following statements is correct?",
-        "options": [
-          "It was considered a source of income for the state, a kind of tax paid by the people.",
-          "It was completely absent in the Madhya Pradesh and Kathiawar regions of the Gupta Empire.",
-          "The forced labourer was entitled to weekly wages.",
-          "The eldest son of the labourer was sent as a forced labourer."
-        ],
-        "answer": 0,
-        "explanation": "In the land-grant inscriptions of the Gupta-Vakataka period, Vishti (begar/forced labour) is mentioned in the context of taxes, royal dues, and exemptions granted from them. In the Riddhapur copper plate of Prabhavati Gupta, the land grants has been described as exempt from taxes and vishti. Therefore, vishti was understood as a labour tax as well as a royal due under the authority of the state/king. Although evidence of the begar system is found from the Mauryan period itself, during the Gupta period it became a form of tax received by the king on different occasions. Under this system, labourers, artisans, and peasants were compulsorily required to work for the king or the state, for which they were not given any payment. This practice was most prevalent in Madhya Pradesh and Kathiawar. This practice of begar continued from generation to generation, but it did not have any rule like primogeniture; it applied to all workers.",
-        "_pyqSubjectKey": "mock",
-        "_pyqChapter": "Set 1",
-        "_pyqQuestionId": null,
-        "_pyqQuestionIndex": 3,
-        "_source": {
-          "sourceSubjectKey": "mock",
-          "chapter": "Set 1",
-          "questionId": null,
-          "questionIndex": 3
-        }
-      }
-    },
-    {
-      "source": {
-        "sourceSubjectKey": "mock",
-        "chapter": "Set 1",
-        "questionId": null,
-        "questionIndex": 1
-      },
-      "sourceIdentity": "mock::Set 1::::1",
-      "question": {
-        "q": "2. Which one of the following statements is correct?",
-        "options": [
-          "In the year 1946, the Constituent Assembly of India was elected by the Provincial Assemblies.",
-          "Jawaharlal Nehru, M.A. Jinnah and Sardar Vallabhbhai Patel were members of the Constituent Assembly of India.",
-          "The First Session of the Constituent Assembly of India was held in January 1947.",
-          "The Constitution of India was adopted on 26 January 1950."
-        ],
-        "answer": 0,
-        "explanation": "According to the Cabinet Mission Plan, elections to the Constituent Assembly were held in July, 1946. For the Constituent Assembly, 296 members were elected from British India, including 292 provincial representatives and 4 representatives from the Chief Commissioners’ Provinces. Of these, 208 were from the Congress, 73 from the Muslim League, and 15 were elected from other parties or as independent candidates. Muhammad Ali Jinnah was not a member of the Constituent Assembly of India. The first meeting of the Constituent Assembly was held on 9 December, 1946. Its temporary President was Dr. Sachchidananda Sinha. In the second meeting of the Constituent Assembly on 11 December, 1946, Dr. Rajendra Prasad was elected as its permanent President. The Constitution of India was adopted, enacted, and given to ourselves on 26 November, 1949, and it came into force on 26 January, 1950.rrr",
-        "_pyqSubjectKey": "mock",
-        "_pyqChapter": "Set 1",
-        "_pyqQuestionId": null,
-        "_pyqQuestionIndex": 1,
-        "_source": {
-          "sourceSubjectKey": "mock",
-          "chapter": "Set 1",
-          "questionId": null,
-          "questionIndex": 1
-        }
-      }
-    },
-    {
-      "source": {
-        "sourceSubjectKey": "mock",
-        "chapter": "Set 1",
-        "questionId": null,
-        "questionIndex": 9
-      },
-      "sourceIdentity": "mock::Set 1::::9",
-      "question": {
-        "q": "10. Who presided over the session of the 'All India Trade Union Congress' held at Nagpur in the year 1929?",
-        "options": [
-          "Jawaharlal Nehru",
-          "Acharya Narendra Dev",
-          "Subhas Chandra Bose",
-          "Yusuf Meherally"
-        ],
-        "answer": 0,
-        "explanation": "Jawaharlal Nehru presided over the session of the All India Trade Union Congress (A.I.T.U.C.) held at Nagpur in 1929. It was also in the Nagpur session that the A.I.T.U.C. split due to differences between the communists and the moderates.",
-        "_pyqSubjectKey": "mock",
-        "_pyqChapter": "Set 1",
-        "_pyqQuestionId": null,
-        "_pyqQuestionIndex": 9,
-        "_source": {
-          "sourceSubjectKey": "mock",
-          "chapter": "Set 1",
-          "questionId": null,
-          "questionIndex": 9
-        }
-      }
-    },
-    {
-      "source": {
-        "sourceSubjectKey": "mock",
-        "chapter": "Set 1",
-        "questionId": null,
-        "questionIndex": 6
-      },
-      "sourceIdentity": "mock::Set 1::::6",
-      "question": {
-        "q": "7. With reference to Chandragupta-II, which of the following statement(s) is/are correct? 1. The strongest evidence of his victory over the Shakas is the silver coins of this ruler. 2. The weight of these coins was approximately 33 grains.",
-        "options": [
-          "Both 1 and 2",
-          "1 only",
-          "Neither 1 nor 2",
-          "2 only"
-        ],
-        "answer": 0,
-        "explanation": "The most important archaeological evidence of Chandragupta II’s victory over the Shakas is his silver coins. After defeating the Western Kshatrapas, he issued silver coins based on their pattern. According to John Allan, after the conquest of Saurashtra, Chandragupta II issued silver coins closely imitating the Kshatrapa coins. This proves statement (1) to be correct. Regarding the weight of the coins, A. S. Altekar considered the theoretical weight of Gupta silver coins to be about 33 grains, although variations in their weight are also found. Therefore, statement (2) is also correct.",
-        "_pyqSubjectKey": "mock",
-        "_pyqChapter": "Set 1",
-        "_pyqQuestionId": null,
-        "_pyqQuestionIndex": 6,
-        "_source": {
-          "sourceSubjectKey": "mock",
-          "chapter": "Set 1",
-          "questionId": null,
-          "questionIndex": 6
-        }
-      }
-    },
-    {
-      "source": {
-        "sourceSubjectKey": "mock",
-        "chapter": "Set 1",
-        "questionId": null,
-        "questionIndex": 30
-      },
-      "sourceIdentity": "mock::Set 1::::30",
-      "question": {
-        "q": "31. Match List-I with List-II: A. Bardoli Satyagraha B. Indian Peasants Institute C. Bengal Praja Party D. Bakasht Struggle | 1. Swami Shraddhanand 2. Sardar Vallabhbhai Patel 3. Fazlul Huq 4. N.G. Ranga",
-        "options": [
-          "4 3 2 1",
-          "2 4 3 1",
-          "1 4 2 3",
-          "4 1 3 2"
-        ],
-        "answer": 1,
-        "explanation": "In 1928, the Gandhian movement and satyagraha achieved considerable success in the Bardoli taluka of Surat district. The Mehta brothers and other local leaders had been carrying out organisational, social, and constructive work in this region since 1920. The conditions arose after 1922 prepared the background for the Bardoli Satyagraha. In 1928, the peasant discontent that arose there was led by Vallabhbhai Patel, and it became famous as the Bardoli Satyagraha. Due to the success of this movement, the women of Bardoli gave Patel the title ‘Sardar’. The Indian Peasants’ Institute was founded by N. G. Ranga. In 1929, Fazlul Huq founded the Praja Party, which later became the Bengal Praja Party. This party later came to be known as the ‘Krishak Praja Party’. The Bakasht (self-cultivated land) struggle of Bihar is associated with Swami Shraddhanand Saraswati.",
-        "_pyqSubjectKey": "mock",
-        "_pyqChapter": "Set 1",
-        "_pyqQuestionId": null,
-        "_pyqQuestionIndex": 30,
-        "_source": {
-          "sourceSubjectKey": "mock",
-          "chapter": "Set 1",
-          "questionId": null,
-          "questionIndex": 30
-        }
-      }
-    },
-    {
-      "source": {
-        "sourceSubjectKey": "mock",
-        "chapter": "Set 9",
-        "questionId": null,
-        "questionIndex": 11
-      },
-      "sourceIdentity": "mock::Set 9::::11",
-      "question": {
-        "q": "12. Match List-I (Doab) with List-II (Rivers): A. Bist Doab B. Bari Doab C. Rachna Doab D. Chaj Doab | i. Between Ravi and Chenab ii. Between Ravi and Beas iii. Between Beas and Sutlej iv. Between Chenab and Jhelum",
-        "options": [
-          "iii ii i iv",
-          "i ii iii iv",
-          "iv iii ii i",
-          "i iv ii iii"
-        ],
-        "answer": 0,
-        "explanation": "The correct matching is as follows— (Doab) Bist Doab Bari Doab – (Rivers)– Between the Beas and the Sutlej– Between the Ravi and the Beas Rachna Doab – Between the Ravi and the Chenab Chaj Doab – Between the Chenab and the Jhelum",
-        "_pyqSubjectKey": "mock",
-        "_pyqChapter": "Set 9",
-        "_pyqQuestionId": null,
-        "_pyqQuestionIndex": 11,
-        "_source": {
-          "sourceSubjectKey": "mock",
-          "chapter": "Set 9",
-          "questionId": null,
-          "questionIndex": 11
-        }
-      }
-    },
-    {
-      "source": {
-        "sourceSubjectKey": "mock",
-        "chapter": "Set 1",
-        "questionId": null,
         "questionIndex": 0
       },
       "sourceIdentity": "mock::Set 1::::0",
@@ -268,6 +58,46 @@
         ],
         "answer": 2,
         "explanation": "The SI unit of Electric Resistance is Ohm (Ω). The SI unit of Electrical Resistivity (Specific Resistance) is Ohm-meter. Capacitance is measured in Farad (F). Magnetic Flux is measured in Weber (Wb). Electric Charge is measured in Coulomb (C). Additional Fact: Resistance vs. Resistivity: Resistance depends on the length and cross-sectional area of a conductor, whereas Resistivity is an intrinsic property of the material and its temperature (independent of shape or size). Magnetic Flux vs. Flux Density: While Magnetic Flux is Weber, Magnetic Flux Density is measured in Tesla (T) or Wb/m2. CGS Conversions (Frequently asked): The CGS unit for magnetic flux is the Maxwell. 1 Weber = 108 Maxwell. The CGS unit for magnetic flux density is Gauss. 1 Tesla = 104 Gauss. Coulomb / Ampere Link: Electric Current is the rate of flow of charge. Therefore, 1 Ampere = 1 Coulomb/second. One Coulomb contains approximately 6.24 x 1018 electrons. Farad Breakdown: 1 Farad = 1 Coulomb / 1 Volt. Because a Farad is a very large unit, practical capacitance is usually measured in microfarads (uF) or picofarads (pF)."
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 1",
+        "questionId": null,
+        "questionIndex": 12
+      },
+      "sourceIdentity": "mock::Set 1::::12",
+      "question": {
+        "q": "13. Who founded the 'Theosophical Society'?",
+        "options": [
+          "Madame H. P. Blavatsky",
+          "Raja Ram Mohan Roy",
+          "Mahatma Gandhi",
+          "Swami Vivekananda"
+        ],
+        "answer": 0,
+        "explanation": "The Theosophical Society was founded in New York in 1875 A.D. by Madame H. P. Blavatsky, Colonel Henry Steel Olcott, William Quan Judge and others. In 1882 A.D., the founders of this Society established its headquarters at Adyar, near Madras, now Chennai, which later became its International Headquarters. The official objects of the Society were to promote universal brotherhood, to encourage the study of comparative religion, philosophy and science, and to investigate the unexplained laws of Nature and the powers hidden in man."
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 9",
+        "questionId": null,
+        "questionIndex": 1
+      },
+      "sourceIdentity": "mock::Set 9::::1",
+      "question": {
+        "q": "2. In which state of India does the Southwest Monsoon arrive first?",
+        "options": [
+          "Assam",
+          "West Bengal",
+          "Maharashtra",
+          "Kerala"
+        ],
+        "answer": 3,
+        "explanation": "The South-West Monsoon sets in over the state of Kerala in India. A major part of Indian agriculture is still dependent on rainfall."
       }
     }
   ]
