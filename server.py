@@ -21,8 +21,8 @@ from dotenv import load_dotenv
 
 ROOT = Path(__file__).resolve().parent
 load_dotenv(ROOT / ".env", override=False)
-HOST = "127.0.0.1"
-PORT = 8000
+HOST = os.environ.get("QUIZ_HOST", "127.0.0.1")
+PORT = int(os.environ.get("QUIZ_PORT", "8000"))
 SEARCH_DIAGNOSTICS = {}
 SEARCH_TIMEOUT_SECONDS = 5
 OPERATION_TIMEOUT_SECONDS = 20
@@ -35,7 +35,11 @@ DEDICATED_STORE_FILES = {
     "current": DATA_DIR / "current_affairs.json",
 }
 STORAGE_PATHS = {"/api/important-classifications", "/api/saved-questions", "/api/current-affairs"}
-ALLOWED_FRONTEND_ORIGINS = {"http://127.0.0.1:5500", "http://localhost:5500"}
+ALLOWED_FRONTEND_ORIGINS = {
+    "http://127.0.0.1:5500",
+    "http://localhost:5500",
+    "https://saurabhy443-bot.github.io",
+}
 
 
 def load_subject_manifest():
@@ -690,7 +694,7 @@ class Handler(BaseHTTPRequestHandler):
         if origin in ALLOWED_FRONTEND_ORIGINS:
             self.send_header("Access-Control-Allow-Origin", origin)
             self.send_header("Vary", "Origin")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.send_header("Content-Length", str(len(data)))
         self.end_headers()

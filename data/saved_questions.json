@@ -20,6 +20,26 @@
           "answer": 2,
           "explanation": "Lord William Bentinck became the Governor-General of the Bengal Presidency in 1828 A.D. In 1829 A.D., through the ‘Bengal Sati Regulation’, he declared the practice of sati illegal and punishable. During Bentinck’s period itself, the Charter Act, 1833 took the initiative to abolish slavery, but its complete legal abolition took place through the Indian Slavery Act of 1843. Bentinck also launched a campaign against gangs of Thugs and tried to suppress them. Bentinck also worked for education and freedom of the press. In 1835 A.D., he returned to England. The provision of disqualification on the ground of religious conversion was removed in 1850 A.D. Therefore, statements (1), (2), and (4) are correct. Hence, option (c) is the correct answer."
         }
+      },
+      {
+        "source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 1",
+          "questionId": null,
+          "questionIndex": 0
+        },
+        "sourceIdentity": "mock::Set 1::::0",
+        "question": {
+          "q": "1. Where was Mahatma Gandhi arrested during the Quit India Movement?",
+          "options": [
+            "In Bombay",
+            "In Madras",
+            "In Calcutta",
+            "In New Delhi"
+          ],
+          "answer": 1,
+          "explanation": "After the resolution of the Quit India Movement was passed, Gandhiji was arrested in Bombay on 9 August, 1942. After that, he was kept under detention at the Aga Khan Palace in Poona (Pune). api-base-probe recovery-probe"
+        }
       }
     ],
     "Set 9": [],

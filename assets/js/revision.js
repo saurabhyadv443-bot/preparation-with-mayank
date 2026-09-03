@@ -8,23 +8,27 @@
         try{ const r = await fetch('data/subjects.json'); if(!r.ok) return null; const j = await r.json(); return j && Array.isArray(j.subjects) ? j.subjects : null; } catch(e){ return null; }
     }
 
-    let savedQuestions = safeParse(localStorage.getItem('bookmarks'), []);
+    let savedQuestions = [];
 
     async function loadSavedQuestionsFromServer() {
         try {
-            const response = await fetch(quizApiUrl('api/saved-questions'), { cache: 'no-store' });
+            const response = await fetch('data/mock.json?t=' + Date.now(), { cache: 'no-store' });
             if (!response.ok) return;
             const data = await response.json();
-            savedQuestions = Object.values(data.groups || {}).flatMap((items) => items.map((item) => ({
-                ...item,
-                ...(item.source || {}),
-                subjectKey: item.source?.sourceSubjectKey,
-                chapter: item.source?.chapter,
-                questionIndex: item.source?.questionIndex
-            })));
-            if (localStorage.getItem('bookmarks')) localStorage.removeItem('bookmarks');
+            const groups = data['TEST NUMBER'] || {};
+            savedQuestions = Object.entries(groups).flatMap(([chapter, questions]) => Array.isArray(questions)
+                ? questions.map((question, questionIndex) => {
+                    const source = quizPendingQuestionSource(question, 'mock', chapter, questionIndex);
+                    const copy = { ...question };
+                    applyQuizPendingChanges(copy, source);
+                    applyQuizPendingMetadata(copy, source);
+                    return copy.quizMeta?.saved === true
+                        ? { subjectKey: 'mock', subject: data.subject || 'Mock Test', chapter, questionIndex, question: copy, source }
+                        : null;
+                }).filter(Boolean)
+                : []);
         } catch (error) {
-            // Keep the legacy list available if the storage service is unavailable.
+            savedQuestions = [];
         }
     }
 
@@ -181,6 +185,15 @@
                 if (!selectedKeys.length || !window.confirm(`Remove ${selectedKeys.length} selected saved question${selectedKeys.length === 1 ? '' : 's'}?`)) return;
                 console.debug('Removing saved question entries', { selectedKeys, savedEntries: savedQuestions });
                 const selectedSet = new Set(selectedKeys);
+                savedQuestions.filter((item) => selectedSet.has(savedQuestionKey(item))).forEach((item) => {
+                    if (typeof queueQuizPendingChange === 'function') {
+                        queueQuizPendingChange({
+                            operationType: 'saved-question',
+                            ...quizPendingQuestionSource(item.question || {}, item.subjectKey || item.source?.sourceSubjectKey, item.chapter || item.source?.chapter, item.questionIndex ?? item.source?.questionIndex),
+                            active: false
+                        });
+                    }
+                });
                 const retained = savedQuestions.filter((item) => !selectedSet.has(savedQuestionKey(item)));
                 savedQuestions.splice(0, savedQuestions.length, ...retained);
                 localStorage.setItem('bookmarks', JSON.stringify(savedQuestions));

@@ -6,27 +6,14 @@ const reviewSubjects = new Set(["ancient", "medieval", "modern", "geography", "p
 let subjectData = null;
 let serverImportantQuestions = {};
 let serverCurrentAffairsQuestions = null;
+let originalCurrentAffairsQuestions = [];
+let mockCollectionData = null;
 
 function subjectApiUrl(path) {
     return quizApiUrl(path);
 }
 
 async function loadServerCollections() {
-    const targets = ["modern", "geography", "polity", "economy"];
-    await Promise.all(targets.map(async (subjectKey) => {
-        try {
-            const response = await fetch(subjectApiUrl(`api/important-classifications?targetSubjectKey=${subjectKey}`), { cache: "no-store" });
-            if (response.ok) serverImportantQuestions[subjectKey] = (await response.json()).questions || [];
-        } catch (error) {
-            // Storage failures must not block normal subject content.
-        }
-    }));
-    try {
-        const response = await fetch(subjectApiUrl("api/current-affairs"), { cache: "no-store" });
-        if (response.ok) serverCurrentAffairsQuestions = (await response.json()).questions || [];
-    } catch (error) {
-        // Storage failures must not block normal subject content.
-    }
 }
 
 function safeParseStoredValue(key, fallback = []) {
@@ -75,6 +62,75 @@ function getClassifiedQuestionEntries(filterFn) {
     } catch (error) {
         return [];
     }
+}
+
+function copyOriginalQuestion(question, sourceSubjectKey, chapter, questionIndex) {
+    const source = quizPendingQuestionSource(question, sourceSubjectKey, chapter, questionIndex);
+    const copy = {
+        ...question,
+        _source: {
+            sourceSubjectKey: source.sourceSubjectKey,
+            chapter: source.chapter,
+            questionId: source.questionId,
+            questionIndex: source.questionIndex
+        },
+        _pyqSubjectKey: source.sourceSubjectKey,
+        _pyqChapter: source.chapter,
+        _pyqQuestionId: source.questionId,
+        _pyqQuestionIndex: source.questionIndex
+    };
+    applyQuizPendingChanges(copy, source);
+    applyQuizPendingMetadata(copy, source);
+    return copy;
+}
+
+function getOriginalClassifiedQuestions(data, sourceSubjectKey, tag) {
+    const sources = [
+        { data, sourceSubjectKey },
+        { data: mockCollectionData, sourceSubjectKey: "mock" }
+    ];
+    const seen = new Set();
+    return sources.flatMap(({ data: sourceData, sourceSubjectKey: originalSubjectKey }) => {
+        const groups = sourceData?.chapters || sourceData?.["TEST NUMBER"];
+        if (!groups || typeof groups !== "object") return [];
+        return Object.entries(groups)
+            .filter(([chapter, questions]) => chapter !== "Important Questions" || (Array.isArray(questions) && questions.some((question) => !question?._source && !question?._pyqSubjectKey)))
+            .flatMap(([chapter, questions]) => Array.isArray(questions)
+                ? questions.map((question, index) => copyOriginalQuestion(question, originalSubjectKey, chapter, index))
+                : []);
+    })
+        .filter((question) => {
+            if (question._source?.sourceSubjectKey && question._source.sourceSubjectKey !== sourceSubjectKey && question._source.sourceSubjectKey !== "mock") return false;
+            const source = quizPendingQuestionSource(question, question._source?.sourceSubjectKey || sourceSubjectKey, question._source?.chapter, question._source?.questionIndex);
+            const pending = getQuizPendingQuestionChanges(source).filter((change) => change.operationType === "classification" && change.tag === tag);
+            const pendingActive = pending.length ? pending[pending.length - 1].active !== false : false;
+            if (question.quizMeta?.classifications?.[tag] !== true && !pendingActive) return false;
+            const identity = `${question._source?.sourceSubjectKey || sourceSubjectKey}::${question._source?.chapter || ""}::${question._source?.questionIndex ?? ""}`;
+            const content = `${question.q || ""}::${JSON.stringify(question.options || [])}`;
+            const key = question._source?.sourceSubjectKey ? identity : content;
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+        });
+}
+
+async function loadOriginalCurrentAffairsQuestions() {
+    const manifest = await getSubjectMetaMap();
+    const entries = Object.entries(manifest || {});
+    const groups = await Promise.all(entries.map(async ([subjectKey, meta]) => {
+        try {
+            const response = await fetch(`data/${meta.file}?t=${Date.now()}`, { cache: "no-store" });
+            if (!response.ok) return [];
+            const data = await response.json();
+            const containers = data.chapters || data["TEST NUMBER"] || {};
+            return Object.entries(containers).flatMap(([chapter, questions]) => Array.isArray(questions)
+                ? questions.map((question, index) => copyOriginalQuestion(question, subjectKey, chapter, index))
+                : []);
+        } catch (error) {
+            return [];
+        }
+    }));
+    originalCurrentAffairsQuestions = groups.flat().filter((question) => question.quizMeta?.classifications?.CA === true);
 }
 
 function getAttemptedReviewSections() {
@@ -152,7 +208,7 @@ function renderClassificationRemovalControls(tag, refresh) {
         <button type="button" class="btn btn-secondary btn-small classification-remove-selected" disabled>Remove Selected</button>
         <span class="classification-selected-count">0 selected</span>
     `;
-    attachRemovalControls(controls, tag, refresh);
+    attachRemovalControls(controls, tag, refresh, window.__classificationQuestions || [], subject, "Important Questions");
 }
 
 function buildImportantQuestionsForSubject(subjectKey) {
@@ -166,15 +222,21 @@ function buildImportantQuestionsForSubject(subjectKey) {
     if (!targetTag) {
         return [];
     }
-    if (Array.isArray(serverImportantQuestions[subjectKey])) return serverImportantQuestions[subjectKey];
-    const entries = getClassifiedQuestionEntries((entry) => Boolean(entry[targetTag]));
-    return entries.map((entry) => entry.question || null).filter(Boolean);
+    return getOriginalClassifiedQuestions(subjectData, subjectKey, targetTag);
+}
+
+async function loadMockCollectionData() {
+    if (mockCollectionData) return;
+    try {
+        const response = await fetch(`data/mock.json?t=${Date.now()}`, { cache: "no-store" });
+        if (response.ok) mockCollectionData = await response.json();
+    } catch (error) {
+        mockCollectionData = null;
+    }
 }
 
 function buildCurrentAffairsQuestions() {
-    if (Array.isArray(serverCurrentAffairsQuestions)) return serverCurrentAffairsQuestions.map((entry) => entry.question || entry).filter(Boolean);
-    const entries = getClassifiedQuestionEntries((entry) => entry.CA === true);
-    return entries.map((entry) => entry.question || null).filter(Boolean);
+    return originalCurrentAffairsQuestions;
 }
 
 function openCollectionListSession(title, questions, subjectKey = subject, returnChapter = title, classificationTag = null) {
@@ -269,6 +331,8 @@ function renderClassifiedCollection(title, questions, subjectKey) {
         return;
     }
 
+    window.__classificationQuestions = questions;
+
     questions.forEach((question, index) => {
         const row = document.createElement("div");
         row.style.cssText = "display:flex;align-items:center;gap:10px;width:100%;";
@@ -312,6 +376,7 @@ async function loadSubjectContent() {
     }
 
     if (subject === "current_affairs") {
+        await loadOriginalCurrentAffairsQuestions();
         const questions = buildCurrentAffairsQuestions();
         if (selectedChapter === "Current Affairs" || selectedChapter === "Important Questions") {
             renderClassifiedCollection("Current Affairs", questions, "current_affairs");
@@ -351,6 +416,7 @@ async function loadSubjectContent() {
         const data = await resp.json();
         subjectData = data;
         if (selectedChapter === "Important Questions") {
+            await loadMockCollectionData();
             renderClassifiedCollection("Important Questions", buildImportantQuestionsForSubject(subject), subject);
             return;
         }

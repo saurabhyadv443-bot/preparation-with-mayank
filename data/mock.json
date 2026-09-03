@@ -13,7 +13,7 @@
           "In New Delhi"
         ],
         "answer": 1,
-        "explanation": "After the resolution of the Quit India Movement was passed, Gandhiji was arrested in Bombay on 9 August, 1942. After that, he was kept under detention at the Aga Khan Palace in Poona (Pune). api-base-probe recovery-probe"
+        "explanation": "After the resolution of the Quit India Movement was passed, Gandhiji was arrested in Bombay on 9 August, 1942. After that, he was kept under detention at the Aga Khan Palace in Poona (Pune). api-base-probe recovery-probe1"
       },
       {
         "q": "2. Which one of the following statements is correct?",
@@ -57,7 +57,12 @@
           "1, 2, 3 and 4 only"
         ],
         "answer": 2,
-        "explanation": "Lord William Bentinck became the Governor-General of the Bengal Presidency in 1828 A.D. In 1829 A.D., through the ‘Bengal Sati Regulation’, he declared the practice of sati illegal and punishable. During Bentinck’s period itself, the Charter Act, 1833 took the initiative to abolish slavery, but its complete legal abolition took place through the Indian Slavery Act of 1843. Bentinck also launched a campaign against gangs of Thugs and tried to suppress them. Bentinck also worked for education and freedom of the press. In 1835 A.D., he returned to England. The provision of disqualification on the ground of religious conversion was removed in 1850 A.D. Therefore, statements (1), (2), and (4) are correct. Hence, option (c) is the correct answer."
+        "explanation": "Lord William Bentinck became the Governor-General of the Bengal Presidency in 1828 A.D. In 1829 A.D., through the ‘Bengal Sati Regulation’, he declared the practice of sati illegal and punishable. During Bentinck’s period itself, the Charter Act, 1833 took the initiative to abolish slavery, but its complete legal abolition took place through the Indian Slavery Act of 1843. Bentinck also launched a campaign against gangs of Thugs and tried to suppress them. Bentinck also worked for education and freedom of the press. In 1835 A.D., he returned to England. The provision of disqualification on the ground of religious conversion was removed in 1850 A.D. Therefore, statements (1), (2), and (4) are correct. Hence, option (c) is the correct answer.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        }
       },
       {
         "q": "6. Which of the following industrialists served as the treasurer of the A.I.C.C. for a long time and also went to jail in 1930?",
@@ -3317,7 +3322,10 @@
           "4 2 3 1"
         ],
         "answer": 2,
-        "explanation": "Explanation: The correct matching of the given options is as follows— (Grasslands) – (Country) Steppes – Russia Prairies – United States of America Velds – South Africa Downs – Australia"
+        "explanation": "Explanation: The correct matching of the given options is as follows— (Grasslands) – (Country) Steppes – Russia Prairies – United States of America Velds – South Africa Downs – Australia",
+        "quizMeta": {
+          "saved": true
+        }
       },
       {
         "q": "2. Which of the following statements are true? I. The Tropic of Cancer divides India into two parts. II. The Tropic of Cancer divides India's international boundaries into two parts. III. India's maximum east-west extent is along the Tropic of Cancer. IV. The line joining the easternmost and westernmost points of India lies north of the Tropic of Cancer.",
@@ -3328,7 +3336,12 @@
           "I and IV"
         ],
         "answer": 3,
-        "explanation": "Explanation: The Tropic of Cancer, i.e. the line of 23°30′ north latitude, passes almost through the middle of India, that is, it divides India into almost two equal parts. The line joining the easternmost and westernmost points of India lies to the north of the Tropic of Cancer. Therefore, statements I and IV are true. The Tropic of Cancer does not divide India’s international boundaries into two parts. India’s maximum east–west extent is also not along the Tropic of Cancer. Therefore, statements II and III are false. Thus, option (d) is the correct answer."
+        "explanation": "Explanation: The Tropic of Cancer, i.e. the line of 23°30′ north latitude, passes almost through the middle of India, that is, it divides India into almost two equal parts. The line joining the easternmost and westernmost points of India lies to the north of the Tropic of Cancer. Therefore, statements I and IV are true. The Tropic of Cancer does not divide India’s international boundaries into two parts. India’s maximum east–west extent is also not along the Tropic of Cancer. Therefore, statements II and III are false. Thus, option (d) is the correct answer.",
+        "quizMeta": {
+          "classifications": {
+            "H": true
+          }
+        }
       },
       {
         "q": "3. Among the following, the pass which is situated at the highest altitude is-",
@@ -3339,7 +3352,12 @@
           "Khyber"
         ],
         "answer": 2,
-        "explanation": "Explanation: Among the given options, Nathu La is situated at the highest altitude. The elevation of Nathu La Pass is 14,450 feet (4,404 metres), that of Zoji La Pass is 11,650 feet, that of Rohtang Pass is 13,051 feet (3,978 metres), and that of Khyber Pass is 3,518 feet. However, the highest pass in India is Kalindi Khal (5,950 metres)."
+        "explanation": "Explanation: Among the given options, Nathu La is situated at the highest altitude. The elevation of Nathu La Pass is 14,450 feet (4,404 metres), that of Zoji La Pass is 11,650 feet, that of Rohtang Pass is 13,051 feet (3,978 metres), and that of Khyber Pass is 3,518 feet. However, the highest pass in India is Kalindi Khal (5,950 metres).",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        }
       },
       {
         "q": "4. On which of the following hills do the Eastern Ghats meet the Western Ghats?",
@@ -3350,7 +3368,12 @@
           "Shevaroy Hills"
         ],
         "answer": 2,
-        "explanation": "Explanation: The Nilgiri Hills are located at the meeting point of the Eastern Ghats and the Western Ghats of the Indian Peninsula. The Nilgiri Hills are also called the Blue Mountains. Their highest peak is Doddabetta, which is 2,637 metres high."
+        "explanation": "Explanation: The Nilgiri Hills are located at the meeting point of the Eastern Ghats and the Western Ghats of the Indian Peninsula. The Nilgiri Hills are also called the Blue Mountains. Their highest peak is Doddabetta, which is 2,637 metres high.",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        }
       },
       {
         "q": "5. Match List-I with List-II: A. Etna B. Vesuvius C. Erebus D. Cotopaxi | 1. Ross Island 2. Ecuador 3. Italy 4. Sicily",
@@ -3361,7 +3384,12 @@
           "4 3 2 1"
         ],
         "answer": 1,
-        "explanation": "Explanation: Mount Etna is an active volcano located on the eastern coast of Sicily, the largest island in the Mediterranean Sea. Mount Vesuvius is an active volcano located near the Gulf of Naples in Italy. Mount Erebus is an active volcano located on Ross Island in Antarctica. Cotopaxi is an active volcano located in the Cordillera Central of the Andes Mountains in Ecuador."
+        "explanation": "Explanation: Mount Etna is an active volcano located on the eastern coast of Sicily, the largest island in the Mediterranean Sea. Mount Vesuvius is an active volcano located near the Gulf of Naples in Italy. Mount Erebus is an active volcano located on Ross Island in Antarctica. Cotopaxi is an active volcano located in the Cordillera Central of the Andes Mountains in Ecuador.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        }
       },
       {
         "q": "6. Which of the following pairs is correct? (Tribe : State)",
@@ -3372,7 +3400,12 @@
           "Kol : Tamil Nadu"
         ],
         "answer": 0,
-        "explanation": "Explanation: The Tharu tribe is found in Uttarakhand, Bihar and Uttar Pradesh in India, and in the Terai region of Nepal. The Bhutia tribe is found in Sikkim, Tripura and West Bengal. The Khasi tribe is found in Mizoram, Assam and Meghalaya. The Kol tribe is mainly found in Bihar, Jharkhand, Odisha, Chhattisgarh, Madhya Pradesh and Maharashtra."
+        "explanation": "Explanation: The Tharu tribe is found in Uttarakhand, Bihar and Uttar Pradesh in India, and in the Terai region of Nepal. The Bhutia tribe is found in Sikkim, Tripura and West Bengal. The Khasi tribe is found in Mizoram, Assam and Meghalaya. The Kol tribe is mainly found in Bihar, Jharkhand, Odisha, Chhattisgarh, Madhya Pradesh and Maharashtra.",
+        "quizMeta": {
+          "classifications": {
+            "E": true
+          }
+        }
       },
       {
         "q": "7. Which range acts as the water divide between the Yamuna and the Son?",

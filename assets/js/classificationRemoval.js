@@ -26,7 +26,12 @@ function getClassificationKeyForRemoval(question, tag) {
         ].filter((value) => value !== undefined && value !== null).map(String);
         return stableId ? entryIds.includes(stableId) : entry.question.q === question?.q;
     });
-    return match ? match[0] : "";
+    if (match) return match[0];
+    const source = question?._source || {};
+    const subjectKey = source.sourceSubjectKey || question?._pyqSubjectKey || "";
+    const chapter = source.chapter || question?._pyqChapter || "";
+    const questionIndex = source.questionIndex ?? question?._pyqQuestionIndex ?? "";
+    return subjectKey ? `${subjectKey}::${chapter}::${questionIndex}` : "";
 }
 
 function removeClassificationEntries(keys, tag) {
@@ -61,7 +66,7 @@ function updateRemovalControls(container) {
     if (count) count.textContent = `${selected.length} selected`;
 }
 
-function attachRemovalControls(container, tag, onRemoved) {
+function attachRemovalControls(container, tag, onRemoved, questions = [], sourceSubjectKey = "", chapter = "") {
     const root = container.parentElement || container;
     const selectAll = container.querySelector(".classification-select-all");
     const removeButton = container.querySelector(".classification-remove-selected");
@@ -78,6 +83,19 @@ function attachRemovalControls(container, tag, onRemoved) {
         if (!selectedKeys.length) return;
         if (!window.confirm(`Remove ${selectedKeys.length} selected question${selectedKeys.length === 1 ? "" : "s"} from this collection?`)) return;
         removeClassificationEntries(selectedKeys, tag);
+        selectedKeys.forEach((key) => {
+            const index = Array.from(root.querySelectorAll(".classification-question-checkbox"))
+                .findIndex((checkbox) => checkbox.dataset.classificationKey === key);
+            const question = questions[index];
+            if (question && typeof queueQuizPendingChange === "function") {
+                queueQuizPendingChange({
+                    operationType: tag === "S" ? "saved-question" : "classification",
+                    ...quizPendingQuestionSource(question, sourceSubjectKey, chapter, index),
+                    tag: tag === "S" ? undefined : tag,
+                    active: false
+                });
+            }
+        });
         onRemoved(selectedKeys);
     });
     updateRemovalControls(container);

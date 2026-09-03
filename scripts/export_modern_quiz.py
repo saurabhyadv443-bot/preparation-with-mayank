@@ -72,12 +72,15 @@ for chapter_name, items in obj.items():
     for item in items:
         if not isinstance(item, dict):
             continue
-        cleaned_items.append({
+        cleaned_item = {
             'q': item.get('q') or item.get('question') or '',
             'options': item.get('options') or [],
             'answer': item.get('answer', 0),
             'explanation': item.get('explanation', '') or ''
-        })
+        }
+        if item.get('quizMeta'):
+            cleaned_item['quizMeta'] = item['quizMeta']
+        cleaned_items.append(cleaned_item)
     normalized['chapters'][chapter_name] = cleaned_items
     question_total += len(cleaned_items)
 

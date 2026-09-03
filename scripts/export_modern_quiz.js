@@ -68,7 +68,8 @@ for (const [chapterName, items] of Object.entries(quizData)) {
     q: item?.q || item?.question || '',
     options: Array.isArray(item?.options) ? item.options : [],
     answer: typeof item?.answer === 'number' ? item.answer : 0,
-    explanation: item?.explanation || ''
+    explanation: item?.explanation || '',
+    ...(item?.quizMeta ? { quizMeta: item.quizMeta } : {})
   }));
 
   normalized.chapters[chapterName] = cleanedItems;
