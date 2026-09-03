@@ -28,7 +28,9 @@ function formatTime(seconds) {
     return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
 }
 
-const quizApiOrigin = window.location.port && window.location.port !== "8000" ? "http://127.0.0.1:8000" : "";
+const quizApiOrigin = window.location.hostname === "127.0.0.1" && window.location.port === "8000"
+    ? ""
+    : "http://127.0.0.1:8000";
 function quizApiUrl(path) {
     return `${quizApiOrigin}/${String(path).replace(/^\//, "")}`;
 }

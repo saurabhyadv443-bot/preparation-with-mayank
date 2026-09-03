@@ -10,6 +10,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
+import tempfile
 from html import unescape
 from html.parser import HTMLParser
 from http import HTTPStatus
@@ -28,6 +29,13 @@ OPERATION_TIMEOUT_SECONDS = 20
 MAX_DAILY_AI_REVIEWS = 20
 GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.6-flash")
 EDITABLE_REVIEW_FIELDS = {"explanation", "answer"}
+DATA_DIR = ROOT / "data"
+DEDICATED_STORE_FILES = {
+    "saved": DATA_DIR / "saved_questions.json",
+    "current": DATA_DIR / "current_affairs.json",
+}
+STORAGE_PATHS = {"/api/important-classifications", "/api/saved-questions", "/api/current-affairs"}
+ALLOWED_FRONTEND_ORIGINS = {"http://127.0.0.1:5500", "http://localhost:5500"}
 
 
 def load_subject_manifest():
@@ -62,15 +70,18 @@ def find_question(data, chapter, stable_id, question_index):
                 containers.append(value)
         collect(data)
 
-    for questions in containers:
-        if stable_id is not None:
+    # First try to find by stable_id if provided
+    if stable_id is not None:
+        for questions in containers:
             for question in questions:
                 if question_id(question) == str(stable_id):
                     return question
-        elif isinstance(question_index, int) and 0 <= question_index < len(questions):
-            question = questions[question_index]
-            if question_id(question) is None:
-                return question
+    
+    # Fall back to searching by index
+    for questions in containers:
+        if isinstance(question_index, int) and 0 <= question_index < len(questions):
+            return questions[question_index]
+    
     raise ValueError("The original question could not be found.")
 
 
@@ -93,6 +104,105 @@ def locate_review_question(payload):
 
 def question_response(question):
     return {"question": question}
+
+
+def atomic_write_json(path, data):
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=path.parent, delete=False, suffix=".tmp") as handle:
+        temporary = Path(handle.name)
+        json.dump(data, handle, ensure_ascii=False, indent=2)
+        handle.write("\n")
+    try:
+        temporary.replace(path)
+    except OSError as error:
+        temporary.unlink(missing_ok=True)
+        raise ValueError("The question store could not be saved.") from error
+
+
+def read_store(name, default):
+    path = DEDICATED_STORE_FILES[name]
+    if not path.exists():
+        return default
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise ValueError(f"The {name} question store is not valid JSON.") from error
+    if not isinstance(data, dict):
+        raise ValueError(f"The {name} question store has an invalid format.")
+    return data
+
+
+def source_identity(payload):
+    return "{}::{}::{}::{}".format(payload.get("sourceSubjectKey"), payload.get("chapter"), payload.get("questionId") or "", payload.get("questionIndex") if payload.get("questionIndex") is not None else "")
+
+
+def save_classification(payload):
+    tag = payload.get("tag")
+    target = payload.get("targetSubjectKey")
+    if tag not in {"H", "G", "P", "E"} or target not in {"modern", "geography", "polity", "economy"}:
+        raise ValueError("The classification target is invalid.")
+    source = {"sourceSubjectKey": payload.get("sourceSubjectKey"), "chapter": payload.get("chapter"), "questionId": payload.get("questionId"), "questionIndex": payload.get("questionIndex")}
+    file_path, data, question = locate_review_question(source)
+    target_file = load_subject_manifest().get(target)
+    target_path = (DATA_DIR / target_file).resolve() if target_file else None
+    if target_path is None or target_path.parent != DATA_DIR.resolve() or not target_path.is_file():
+        raise ValueError("The target subject data is unavailable; no questions were saved.")
+    try:
+        target_data = json.loads(target_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise ValueError("The target subject data is not valid JSON; no questions were saved.") from error
+    chapters = target_data.get("chapters")
+    if not isinstance(chapters, dict) and isinstance(target_data.get("Important Questions"), dict):
+        chapters = target_data.pop("Important Questions")
+        target_data["chapters"] = chapters
+    if chapters is None:
+        chapters = {}
+        target_data["chapters"] = chapters
+    if not isinstance(chapters, dict):
+        raise ValueError("The target subject has no usable chapters; no questions were saved.")
+    important = chapters.setdefault("Important Questions", [])
+    if not isinstance(important, list):
+        raise ValueError("The Important Questions chapter has an invalid format.")
+    identity = source_identity(source)
+    copy = json.loads(json.dumps(question, ensure_ascii=False))
+    copy.update({"_pyqSubjectKey": source["sourceSubjectKey"], "_pyqChapter": source["chapter"], "_pyqQuestionId": source["questionId"], "_pyqQuestionIndex": source["questionIndex"], "_source": source})
+    def item_identity(item):
+        return source_identity({"sourceSubjectKey": item.get("_pyqSubjectKey"), "chapter": item.get("_pyqChapter"), "questionId": item.get("_pyqQuestionId"), "questionIndex": item.get("_pyqQuestionIndex")}) if isinstance(item, dict) and item.get("_pyqSubjectKey") else None
+    retained = [item for item in important if item_identity(item) != identity and not (item_identity(item) is None and item.get("q") == question.get("q") and item.get("options") == question.get("options"))]
+    if payload.get("active", True):
+        retained.append(copy)
+    chapters["Important Questions"] = retained
+    atomic_write_json(target_path, target_data)
+    return {"question": copy, "targetSubjectKey": target}
+
+
+def save_saved_question(payload):
+    source = {"sourceSubjectKey": payload.get("sourceSubjectKey"), "chapter": payload.get("chapter"), "questionId": payload.get("questionId"), "questionIndex": payload.get("questionIndex")}
+    _, _, question = locate_review_question(source)
+    data = read_store("saved", {"groups": {}})
+    groups = data.get("groups")
+    if not isinstance(groups, dict):
+        raise ValueError("The saved question store has an invalid format.")
+    identity = source_identity(source)
+    groups = {name: [item for item in items if item.get("sourceIdentity") != identity] for name, items in groups.items() if isinstance(items, list)}
+    if payload.get("active", True):
+        group = str(payload.get("originalMockTestSet") or source["chapter"] or "").strip()
+        if not group: raise ValueError("The original Mock Test Set is required.")
+        groups.setdefault(group, []).append({"source": source, "sourceIdentity": identity, "question": question})
+    atomic_write_json(DEDICATED_STORE_FILES["saved"], {"groups": groups})
+    return {"groups": groups}
+
+
+def save_current_affairs(payload):
+    source = {"sourceSubjectKey": payload.get("sourceSubjectKey"), "chapter": payload.get("chapter"), "questionId": payload.get("questionId"), "questionIndex": payload.get("questionIndex")}
+    _, _, question = locate_review_question(source)
+    data = read_store("current", {"questions": []})
+    questions = data.get("questions")
+    if not isinstance(questions, list): raise ValueError("The current affairs store has an invalid format.")
+    identity = source_identity(source)
+    questions = [item for item in questions if item.get("sourceIdentity") != identity]
+    if payload.get("active", True): questions.append({"source": source, "sourceIdentity": identity, "question": question})
+    atomic_write_json(DEDICATED_STORE_FILES["current"], {"questions": questions})
+    return {"questions": questions}
 
 
 def save_review_question(payload):
@@ -576,7 +686,10 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Cache-Control", "no-store")
-        self.send_header("Access-Control-Allow-Origin", "*")
+        origin = self.headers.get("Origin")
+        if origin in ALLOWED_FRONTEND_ORIGINS:
+            self.send_header("Access-Control-Allow-Origin", origin)
+            self.send_header("Vary", "Origin")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.send_header("Content-Length", str(len(data)))
@@ -584,19 +697,22 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(data)
 
     def do_OPTIONS(self):
-        if urllib.parse.urlparse(self.path).path not in {"/api/review-question", "/api/online-explanation"}:
+        if urllib.parse.urlparse(self.path).path not in {"/api/review-question", "/api/online-explanation", *STORAGE_PATHS}:
             self.send_error(HTTPStatus.NOT_FOUND)
             return
         self.send_response(HTTPStatus.NO_CONTENT)
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
+        origin = self.headers.get("Origin")
+        if origin in ALLOWED_FRONTEND_ORIGINS:
+            self.send_header("Access-Control-Allow-Origin", origin)
+            self.send_header("Vary", "Origin")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.end_headers()
 
     def do_POST(self):
         path = urllib.parse.urlparse(self.path).path
         print(f"Source request received: {self.command} {path}", flush=True)
-        if path not in {"/api/review-question", "/api/online-explanation"}:
+        if path not in {"/api/review-question", "/api/online-explanation", *STORAGE_PATHS}:
             self.send_error(HTTPStatus.NOT_FOUND)
             return
         try:
@@ -606,6 +722,15 @@ class Handler(BaseHTTPRequestHandler):
             payload = json.loads(self.rfile.read(length).decode("utf-8"))
             if path == "/api/review-question":
                 self.send_json(HTTPStatus.OK, save_review_question(payload))
+                return
+            if path == "/api/important-classifications":
+                self.send_json(HTTPStatus.OK, save_classification(payload))
+                return
+            if path == "/api/saved-questions":
+                self.send_json(HTTPStatus.OK, save_saved_question(payload))
+                return
+            if path == "/api/current-affairs":
+                self.send_json(HTTPStatus.OK, save_current_affairs(payload))
                 return
             if not isinstance(payload.get("question"), str) or not payload["question"].strip():
                 raise ValueError("A question is required.")
@@ -628,6 +753,31 @@ class Handler(BaseHTTPRequestHandler):
         except Exception:
             self.send_json(HTTPStatus.INTERNAL_SERVER_ERROR, {"error": "The local Gemini bridge could not process this request."})
 
+    def do_DELETE(self):
+        path = urllib.parse.urlparse(self.path).path
+        if path not in STORAGE_PATHS:
+            self.send_error(HTTPStatus.NOT_FOUND)
+            return
+        try:
+            length = int(self.headers.get("Content-Length", "0"))
+            payload = json.loads(self.rfile.read(length).decode("utf-8")) if length else {}
+            if not isinstance(payload, dict):
+                raise ValueError("Request data must be an object.")
+            payload["active"] = False
+            if path == "/api/important-classifications":
+                result = save_classification(payload)
+            elif path == "/api/saved-questions":
+                result = save_saved_question(payload)
+            else:
+                result = save_current_affairs(payload)
+            self.send_json(HTTPStatus.OK, result)
+        except json.JSONDecodeError:
+            self.send_json(HTTPStatus.BAD_REQUEST, {"error": "Invalid storage request."})
+        except ValueError as error:
+            self.send_json(HTTPStatus.BAD_REQUEST, {"error": str(error)})
+        except Exception:
+            self.send_json(HTTPStatus.INTERNAL_SERVER_ERROR, {"error": "The question store could not be updated."})
+
     def do_GET(self):
         parsed = urllib.parse.urlparse(self.path)
         if parsed.path == "/api/health":
@@ -645,6 +795,31 @@ class Handler(BaseHTTPRequestHandler):
                 _, _, question = locate_review_question(payload)
                 self.send_json(HTTPStatus.OK, question_response(question))
             except (TypeError, ValueError) as error:
+                self.send_json(HTTPStatus.BAD_REQUEST, {"error": str(error)})
+            return
+        if parsed.path in STORAGE_PATHS:
+            try:
+                if parsed.path == "/api/saved-questions":
+                    self.send_json(HTTPStatus.OK, read_store("saved", {"groups": {}}))
+                    return
+                if parsed.path == "/api/current-affairs":
+                    self.send_json(HTTPStatus.OK, read_store("current", {"questions": []}))
+                    return
+                query = urllib.parse.parse_qs(parsed.query)
+                target = query.get("targetSubjectKey", [""])[0]
+                file_path = load_subject_manifest().get(target)
+                if not file_path:
+                    raise ValueError("The classification target is invalid.")
+                source_path = (DATA_DIR / file_path).resolve()
+                if source_path.parent != DATA_DIR.resolve() or not source_path.is_file():
+                    raise ValueError("The target subject data is unavailable.")
+                data = json.loads(source_path.read_text(encoding="utf-8"))
+                chapters = data.get("chapters") if isinstance(data, dict) else None
+                questions = chapters.get("Important Questions", []) if isinstance(chapters, dict) else []
+                if not isinstance(questions, list):
+                    raise ValueError("The Important Questions chapter has an invalid format.")
+                self.send_json(HTTPStatus.OK, {"questions": questions, "targetSubjectKey": target})
+            except (OSError, json.JSONDecodeError, ValueError) as error:
                 self.send_json(HTTPStatus.BAD_REQUEST, {"error": str(error)})
             return
         path = urllib.parse.unquote(urllib.parse.urlparse(self.path).path.lstrip("/"))

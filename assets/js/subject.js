@@ -4,6 +4,32 @@ const chapterList = document.getElementById("chapterList");
 const subjectReviewBtn = document.getElementById("subjectReviewBtn");
 const reviewSubjects = new Set(["ancient", "medieval", "modern", "geography", "polity", "economy", "mock"]);
 let subjectData = null;
+let serverImportantQuestions = {};
+let serverCurrentAffairsQuestions = null;
+
+function subjectApiUrl(path) {
+    return typeof quizApiUrl === "function"
+        ? quizApiUrl(path)
+        : `http://127.0.0.1:8000/${String(path).replace(/^\//, "")}`;
+}
+
+async function loadServerCollections() {
+    const targets = ["modern", "geography", "polity", "economy"];
+    await Promise.all(targets.map(async (subjectKey) => {
+        try {
+            const response = await fetch(subjectApiUrl(`api/important-classifications?targetSubjectKey=${subjectKey}`), { cache: "no-store" });
+            if (response.ok) serverImportantQuestions[subjectKey] = (await response.json()).questions || [];
+        } catch (error) {
+            // Storage failures must not block normal subject content.
+        }
+    }));
+    try {
+        const response = await fetch(subjectApiUrl("api/current-affairs"), { cache: "no-store" });
+        if (response.ok) serverCurrentAffairsQuestions = (await response.json()).questions || [];
+    } catch (error) {
+        // Storage failures must not block normal subject content.
+    }
+}
 
 function safeParseStoredValue(key, fallback = []) {
     try {
@@ -142,11 +168,13 @@ function buildImportantQuestionsForSubject(subjectKey) {
     if (!targetTag) {
         return [];
     }
+    if (Array.isArray(serverImportantQuestions[subjectKey])) return serverImportantQuestions[subjectKey];
     const entries = getClassifiedQuestionEntries((entry) => Boolean(entry[targetTag]));
     return entries.map((entry) => entry.question || null).filter(Boolean);
 }
 
 function buildCurrentAffairsQuestions() {
+    if (Array.isArray(serverCurrentAffairsQuestions)) return serverCurrentAffairsQuestions.map((entry) => entry.question || entry).filter(Boolean);
     const entries = getClassifiedQuestionEntries((entry) => entry.CA === true);
     return entries.map((entry) => entry.question || null).filter(Boolean);
 }
@@ -399,6 +427,7 @@ function renderMockSets(setNames) {
 }
 
 (async function initSubjectPage(){
+    const storagePromise = loadServerCollections().catch(() => {});
     const meta = await getSubjectMetaMap();
     const title = (meta && meta[subject] && meta[subject].title) || (subject === "current_affairs" ? "Current Affairs" : subject);
     const subjectTitle = document.getElementById("subjectTitle");
@@ -419,5 +448,7 @@ function renderMockSets(setNames) {
         };
     }
 
+    const selectedChapter = new URLSearchParams(window.location.search).get("chapter");
+    if (selectedChapter === "Important Questions" || subject === "current_affairs") await storagePromise;
     loadSubjectContent();
 })();

@@ -99,7 +99,58 @@ let activeFilter = "all";
 let activeSearchQuery = "";
 let editingExplanationIndex = null;
 let editingAnswerIndex = null;
+let persistentSubjectClassifications = {};
+let persistentSubjectClassificationsLoaded = false;
+let serverClassificationStore = {};
+let savedQuestionsCache = [];
+let savedQuestionsLoaded = false;
 window.reviewResultQuestions = result && Array.isArray(result.questions) ? result.questions : [];
+
+function persistentClassificationIdentity(question, index) {
+    const source = getReviewQuestionSource(question, index);
+    return `${source.sourceSubjectKey}::${source.chapter}::${source.questionId || ""}::${source.questionIndex ?? index}`;
+}
+
+async function loadPersistentSubjectClassifications() {
+    const targets = { modern: "H", geography: "G", polity: "P", economy: "E" };
+    await Promise.all(Object.entries(targets).map(async ([subjectKey, tag]) => {
+        try {
+            const response = await fetch(quizApiUrl(`api/important-classifications?targetSubjectKey=${subjectKey}`), { cache: "no-store" });
+            if (!response.ok) return;
+            const data = await response.json();
+            (data.questions || []).forEach((question) => {
+                const source = question._source;
+                if (!source) return;
+                const identity = `${source.sourceSubjectKey}::${source.chapter}::${source.questionId || ""}::${source.questionIndex ?? ""}`;
+                persistentSubjectClassifications[identity] = {
+                    ...(persistentSubjectClassifications[identity] || {}),
+                    [tag]: true
+                };
+            });
+        } catch (error) {
+            // Classification storage failure must not block Review rendering.
+        }
+    }));
+    persistentSubjectClassificationsLoaded = true;
+}
+
+async function loadSavedQuestionsFromServer() {
+    try {
+        const response = await fetch(quizApiUrl("api/saved-questions"), { cache: "no-store" });
+        if (!response.ok) return;
+        const data = await response.json();
+        savedQuestionsCache = Object.values(data.groups || {}).flatMap((items) => items.map((item) => ({
+            ...item,
+            ...(item.source || {}),
+            subjectKey: item.source?.sourceSubjectKey,
+            chapter: item.source?.chapter,
+            questionIndex: item.source?.questionIndex
+        })));
+        savedQuestionsLoaded = true;
+    } catch (error) {
+        // Keep Review available when the storage service is unavailable.
+    }
+}
 
 function renderTestHistory() {
     if (!testHistory || !result || !result.quizId) return;
@@ -609,11 +660,56 @@ async function requestReviewQuestion(questionIndex, field, value) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...getReviewQuestionSource(question, questionIndex), field, value })
     });
-    const payload = await response.json();
+    let payload;
+    try {
+        payload = await response.json();
+    } catch (error) {
+        throw new Error("The server returned an invalid save response.");
+    }
     if (!response.ok) {
         throw new Error(payload.error || "The question could not be saved.");
     }
+    if (!payload || !payload.question || typeof payload.question !== "object") {
+        throw new Error("The server did not confirm the question save.");
+    }
     return payload.question;
+}
+
+function replaceExplanationView(questionIndex) {
+    const question = result.questions[questionIndex];
+    const card = questionReviewList.querySelector(`[data-question-index="${questionIndex}"]`);
+    const editor = card?.querySelector(".explanation-editor-section");
+    if (!question || !editor) return;
+    const documentValue = question.explanationDocument || question.explanation || "";
+    const html = window.ExplanationRenderer
+        ? window.ExplanationRenderer.renderExplanationDocument(documentValue, question.explanation || "")
+        : `<p>${escapeHtml(String(question.explanation || ""))}</p>`;
+    const view = document.createElement("div");
+    view.className = `explanation-box${html ? "" : " missing"}`;
+    view.innerHTML = `<strong>Explanation:</strong>${html || "Explanation is currently unavailable for this question."}<button type="button" onclick="startEditingExplanation(${questionIndex})" class="btn-edit-explanation">✎ Edit Explanation</button>`;
+    editor.replaceWith(view);
+}
+
+function replaceAnswerView(questionIndex) {
+    const question = result.questions[questionIndex];
+    const card = questionReviewList.querySelector(`[data-question-index="${questionIndex}"]`);
+    const editor = card?.querySelector(".answer-editor-section");
+    if (!question || !editor) return;
+    const view = document.createElement("p");
+    view.innerHTML = `<strong>Correct Answer:</strong> ${highlightText(question.options[question.answer], activeSearchQuery)} <button type="button" class="btn-edit-answer" onclick="startEditingAnswer(${questionIndex})">Edit Correct Answer</button>`;
+    editor.replaceWith(view);
+    card.querySelectorAll(".review-option").forEach((option, optionIndex) => {
+        option.classList.toggle("correct-option", optionIndex === question.answer);
+        const marker = option.querySelector(".option-tag.correct");
+        if (optionIndex === question.answer && !marker) {
+            const label = document.createElement("strong");
+            label.className = "option-tag correct";
+            label.textContent = "Correct answer";
+            option.appendChild(label);
+        } else if (optionIndex !== question.answer && marker) {
+            marker.remove();
+        }
+    });
 }
 
 async function loadPersistedReviewQuestions() {
@@ -651,7 +747,7 @@ async function saveEditedExplanation(questionIndex) {
         result.questions[questionIndex].explanation = savedQuestion.explanation;
         localStorage.setItem(resultKey, JSON.stringify(result));
         editingExplanationIndex = null;
-        renderQuestions();
+        replaceExplanationView(questionIndex);
         window.alert("Explanation saved successfully.");
     } catch (error) {
         window.alert(error.message);
@@ -679,12 +775,7 @@ async function saveEditedAnswer(questionIndex) {
         result.questions[questionIndex].answer = savedQuestion.answer;
         localStorage.setItem(resultKey, JSON.stringify(result));
         editingAnswerIndex = null;
-        renderQuestions();
-        renderPalette();
-        renderQuickNavigation();
-        updateFilterButtons();
-        updateResultCount();
-        updateActiveQuestion();
+        replaceAnswerView(questionIndex);
         window.alert("Correct answer saved successfully.");
     } catch (error) {
         window.alert(error.message);
@@ -770,14 +861,15 @@ function getCollectionTarget(tag) {
 
 function getQuestionClassificationKey(index) {
     const question = result && Array.isArray(result.questions) ? result.questions[index] : null;
-    const { subjectKey, chapter, questionId } = getQuestionReference(question, index);
-    return `${String(subjectKey)}::${String(chapter)}::${String(questionId)}`;
+    return persistentClassificationIdentity(question, index);
 }
 
 function getQuestionClassifications(index) {
     const store = getClassificationStore();
     const key = getQuestionClassificationKey(index);
-    return store[key] || {};
+    const question = result && Array.isArray(result.questions) ? result.questions[index] : null;
+    const persistent = persistentSubjectClassifications[persistentClassificationIdentity(question, index)] || {};
+    return persistentSubjectClassificationsLoaded ? persistent : (store[key] || {});
 }
 
 function isMockReviewContext() {
@@ -793,8 +885,23 @@ function isMockReviewContext() {
     );
 }
 
-function toggleQuestionClassification(index, tag) {
+function getApplicableClassificationTags() {
+    if (isMockReviewContext()) return Object.keys(CLASSIFICATION_LABELS);
+    return {
+        modern: ["H"],
+        geography: ["G"],
+        polity: ["P"],
+        economy: ["E"]
+    }[result?.subjectKey] || [];
+}
+
+async function toggleQuestionClassification(index, tag) {
     if (!isMockReviewContext()) {
+        return;
+    }
+
+    if (tag === "P" || tag === "E") {
+        await togglePersistentSubjectClassification(index, tag);
         return;
     }
 
@@ -831,25 +938,69 @@ function toggleQuestionClassification(index, tag) {
         entry.collectionTargetChapter = target.chapter;
     }
 
-    if (entry[tag]) {
+    const source = getReviewQuestionSource(question, index);
+    const button = questionReviewList.querySelector(`[data-question-index="${index}"] [data-tag="${tag}"]`);
+    const active = Boolean(button?.classList.contains("active"));
+    const endpoint = tag === "CA" ? "api/current-affairs" : "api/important-classifications";
+    try {
+        const response = await fetch(quizApiUrl(endpoint), {
+            method: active ? "DELETE" : "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...source, tag, targetSubjectKey: target?.subjectKey, originalMockTestSet: source.chapter })
+        });
+        let payload;
+        try {
+            payload = await response.json();
+        } catch (error) {
+            throw new Error("The classification server returned an invalid response.");
+        }
+        if (!response.ok) throw new Error(payload.error || "The question classification could not be saved.");
+        if (!payload || typeof payload !== "object") throw new Error("The classification server did not confirm the change.");
+    } catch (error) {
+        window.alert(error.message || "The question classification could not be saved.");
+        return;
+    }
+    if (active) {
         delete entry[tag];
+        if (serverClassificationStore[key]) delete serverClassificationStore[key][tag];
     } else {
         entry[tag] = true;
+        serverClassificationStore[key] = { ...(serverClassificationStore[key] || {}), [tag]: true };
     }
-
-    if (!Object.keys(CLASSIFICATION_LABELS).some((label) => Boolean(entry[label]))) {
-        delete store[key];
-    } else {
-        store[key] = entry;
-    }
-
+    if (Object.keys(CLASSIFICATION_LABELS).some((label) => Boolean(entry[label]))) store[key] = entry;
+    else delete store[key];
     saveClassificationStore(store);
-    renderQuestions();
-    updateFilterButtons();
-    renderPalette();
-    renderQuickNavigation();
-    updateResultCount();
-    updateActiveQuestion();
+    if (button) button.classList.toggle("active", !active);
+}
+
+async function togglePersistentSubjectClassification(index, tag) {
+    const question = result && Array.isArray(result.questions) ? result.questions[index] : null;
+    const targetSubjectKey = tag === "P" ? "polity" : "economy";
+    const source = getReviewQuestionSource(question, index);
+    const identity = persistentClassificationIdentity(question, index);
+    const button = questionReviewList.querySelector(`[data-question-index="${index}"] [data-tag="${tag}"]`);
+    const active = Boolean(button?.classList.contains("active"));
+    try {
+        const response = await fetch(quizApiUrl("api/important-classifications"), {
+            method: active ? "DELETE" : "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...source, tag, targetSubjectKey })
+        });
+        const payload = await response.json();
+        if (!response.ok) throw new Error(payload.error || "The question classification could not be saved.");
+        if (!payload || typeof payload !== "object") throw new Error("The classification server did not confirm the change.");
+    } catch (error) {
+        window.alert(error.message || "The question classification could not be saved.");
+        return;
+    }
+    persistentSubjectClassifications[identity] = { ...(persistentSubjectClassifications[identity] || {}) };
+    if (active) {
+        delete persistentSubjectClassifications[identity][tag];
+    } else {
+        persistentSubjectClassifications[identity][tag] = true;
+    }
+    if (!Object.keys(persistentSubjectClassifications[identity]).length) delete persistentSubjectClassifications[identity];
+    if (button) button.classList.toggle("active", !active);
 }
 
 function isSavedQuestion(index) {
@@ -858,25 +1009,44 @@ function isSavedQuestion(index) {
     return savedQuestions.some((item) => item.subjectKey === (result.subjectKey || result.subject) && item.chapter === result.chapter && item.questionIndex === questionIndex);
 }
 
-function toggleSavedQuestion(index) {
+async function toggleSavedQuestion(index) {
     const savedQuestions = getSavedQuestions();
     const subjectKey = result.subjectKey || result.subject;
     const questionIndex = savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex;
     const savedQuestionIndex = savedQuestions.findIndex((item) => item.subjectKey === subjectKey && item.chapter === result.chapter && item.questionIndex === questionIndex);
 
-    if (savedQuestionIndex >= 0) {
-        savedQuestions.splice(savedQuestionIndex, 1);
-    } else {
-        savedQuestions.push({
-            subjectKey,
-            subject: result.subject,
-            chapter: result.chapter,
-            questionIndex,
-            question: result.questions[index]
+    const question = result.questions[index];
+    const source = getReviewQuestionSource(question, questionIndex);
+    const endpoint = quizApiUrl("api/saved-questions");
+    try {
+        const response = await fetch(endpoint, {
+            method: savedQuestionIndex >= 0 ? "DELETE" : "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...source, originalMockTestSet: result.chapter })
         });
+        let payload;
+        try {
+            payload = await response.json();
+        } catch (error) {
+            throw new Error("The Saved Questions server returned an invalid response.");
+        }
+        if (!response.ok) throw new Error(payload.error || "The Saved Question could not be saved.");
+        if (!payload || typeof payload !== "object") throw new Error("The Saved Questions server did not confirm the change.");
+    } catch (error) {
+        window.alert(error.message || "The Saved Question could not be saved.");
+        return;
     }
 
-    localStorage.setItem("bookmarks", JSON.stringify(savedQuestions));
+    if (savedQuestionsLoaded) {
+        if (savedQuestionIndex >= 0) savedQuestions.splice(savedQuestionIndex, 1);
+        else savedQuestions.push({ subjectKey, subject: result.subject, chapter: result.chapter, questionIndex, source, question });
+    } else if (savedQuestionIndex >= 0) {
+        savedQuestions.splice(savedQuestionIndex, 1);
+    } else {
+        savedQuestions.push({ subjectKey, subject: result.subject, chapter: result.chapter, questionIndex, question });
+    }
+
+    if (!savedQuestionsLoaded) localStorage.setItem("bookmarks", JSON.stringify(savedQuestions));
     renderQuestions();
     renderPalette();
     renderQuickNavigation();
@@ -1073,8 +1243,9 @@ function renderQuestions() {
         const questionText = highlightText(question.q, activeSearchQuery);
         const saved = isSavedQuestion(index);
         const classifications = getQuestionClassifications(index);
-        const classificationButtonsHtml = isMockReviewContext() ? `
-            ${Object.entries(CLASSIFICATION_LABELS).map(([tag, label]) => `
+        const applicableClassificationTags = getApplicableClassificationTags();
+        const classificationButtonsHtml = applicableClassificationTags.length ? `
+            ${Object.entries(CLASSIFICATION_LABELS).map(([tag, label]) => applicableClassificationTags.includes(tag) ? `
                 <button
                     type="button"
                     class="classification-mini-btn ${classifications[tag] ? "active" : ""} ${tag === "CA" ? "ca" : tag.toLowerCase()}"
@@ -1082,7 +1253,7 @@ function renderQuestions() {
                     title="${label}"
                     onclick="toggleQuestionClassification(${index}, '${tag}')"
                 >${tag}</button>
-            `).join("")}
+            ` : "").join("")}
         ` : "";
         const answerSectionHtml = editingAnswerIndex === index
             ? `<div class="answer-editor-section">
@@ -1134,7 +1305,7 @@ function renderQuestions() {
                     </div>
                     <div id="explanationInput-${index}" class="explanation-input rich-editor" contenteditable="true" spellcheck="true">${renderEditorDocument(explanationDocument || question.explanation || "") || "<p></p>"}</div>
                     <div class="explanation-editor-actions">
-                        <button onclick="saveEditedExplanation(${index})" class="btn-save-explanation">💾 Save Explanation</button>
+                        <button type="button" onclick="saveEditedExplanation(${index})" class="btn-save-explanation">💾 Save Explanation</button>
                         <button onclick="cancelEditingExplanation()" class="btn-cancel-explanation">✕ Cancel</button>
                     </div>
                 </div>
@@ -1154,7 +1325,7 @@ function renderQuestions() {
                 <div class="review-card-header">
                     <h3>Q${index + 1}. ${questionText}</h3>
                     <div class="review-card-actions">
-                        <button type="button" class="save-question-btn${saved ? " saved" : ""}" onclick="toggleSavedQuestion(${index})">${saved ? "★" : "S"}</button>
+                        ${isMockReviewContext() ? `<button type="button" class="save-question-btn${saved ? " saved" : ""}" onclick="toggleSavedQuestion(${index})">${saved ? "★" : "S"}</button>` : ""}
                         ${classificationButtonsHtml}
                         ${typeof copyQuestionOptionsButtonHtml === "function" ? copyQuestionOptionsButtonHtml(index) : ""}
                         <span class="review-status-pill ${status}">${status === "correct" ? "Correct" : status === "incorrect" ? "Incorrect" : "Not Attempted"}</span>
@@ -1245,7 +1416,11 @@ function applyHighlightsToAllQuestions() {
 if (!result) {
     window.location.href = "index.html";
 } else {
-    ((isHistoricalReview || isPostSubmitReview) ? Promise.resolve() : loadPersistedReviewQuestions()).finally(() => {
+    Promise.all([
+        (isHistoricalReview || isPostSubmitReview) ? Promise.resolve() : loadPersistedReviewQuestions(),
+        loadPersistentSubjectClassifications(),
+        loadSavedQuestionsFromServer()
+    ]).finally(() => {
         reviewSubject.innerText = result.subject || "Quiz Review";
         const chapterLabel = result.chapter && result.chapter.trim() ? result.chapter : "Full Length Test";
         reviewSubtitle.innerText = `${chapterLabel} • Accuracy ${result.accuracy}%`;

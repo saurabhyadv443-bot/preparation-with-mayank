@@ -8,7 +8,27 @@
         try{ const r = await fetch('data/subjects.json'); if(!r.ok) return null; const j = await r.json(); return j && Array.isArray(j.subjects) ? j.subjects : null; } catch(e){ return null; }
     }
 
-    const savedQuestions = safeParse(localStorage.getItem('bookmarks'), []);
+    let savedQuestions = safeParse(localStorage.getItem('bookmarks'), []);
+
+    async function loadSavedQuestionsFromServer() {
+        try {
+            const response = await fetch(typeof quizApiUrl === 'function' ? quizApiUrl('api/saved-questions') : 'http://127.0.0.1:8000/api/saved-questions', { cache: 'no-store' });
+            if (!response.ok) return;
+            const data = await response.json();
+            savedQuestions = Object.values(data.groups || {}).flatMap((items) => items.map((item) => ({
+                ...item,
+                ...(item.source || {}),
+                subjectKey: item.source?.sourceSubjectKey,
+                chapter: item.source?.chapter,
+                questionIndex: item.source?.questionIndex
+            })));
+            if (localStorage.getItem('bookmarks')) localStorage.removeItem('bookmarks');
+        } catch (error) {
+            // Keep the legacy list available if the storage service is unavailable.
+        }
+    }
+
+    await loadSavedQuestionsFromServer();
 
     const manifest = await readManifest();
     const subjectMap = {};
