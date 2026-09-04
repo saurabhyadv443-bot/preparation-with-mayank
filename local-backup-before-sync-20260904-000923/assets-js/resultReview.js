@@ -113,10 +113,62 @@ function persistentClassificationIdentity(question, index) {
 }
 
 async function loadPersistentSubjectClassifications() {
+    if (!quizApiUrl("api/health")) {
+        persistentSubjectClassificationsLoaded = true;
+        return;
+    }
+    const targets = { modern: "H", geography: "G", polity: "P", economy: "E" };
+    await Promise.all(Object.entries(targets).map(async ([subjectKey, tag]) => {
+        try {
+            const response = await fetch(quizApiUrl(`api/important-classifications?targetSubjectKey=${subjectKey}`), { cache: "no-store" });
+            if (!response.ok) return;
+            const data = await response.json();
+            (data.questions || []).forEach((question) => {
+                const source = question._source;
+                if (!source) return;
+                const identity = `${source.sourceSubjectKey}::${source.chapter}::${source.questionId || ""}::${source.questionIndex ?? ""}`;
+                persistentSubjectClassifications[identity] = {
+                    ...(persistentSubjectClassifications[identity] || {}),
+                    [tag]: true
+                };
+            });
+        } catch (error) {
+            // Classification storage failure must not block Review rendering.
+        }
+    }));
+    try {
+        const response = await fetch(quizApiUrl("api/current-affairs"), { cache: "no-store" });
+        if (response.ok) {
+            const data = await response.json();
+            (data.questions || []).forEach((item) => {
+                const source = item.source || item._source;
+                if (!source) return;
+                persistentCurrentAffairsClassifications[`${source.sourceSubjectKey}::${source.chapter}::${source.questionId || ""}::${source.questionIndex ?? ""}`] = { CA: true };
+            });
+        }
+    } catch (error) {
+        // Classification storage failure must not block Review rendering.
+    }
     persistentSubjectClassificationsLoaded = true;
 }
 
 async function loadSavedQuestionsFromServer() {
+    if (!quizApiUrl("api/health")) return;
+    try {
+        const response = await fetch(quizApiUrl("api/saved-questions"), { cache: "no-store" });
+        if (!response.ok) return;
+        const data = await response.json();
+        savedQuestionsCache = Object.values(data.groups || {}).flatMap((items) => items.map((item) => ({
+            ...item,
+            ...(item.source || {}),
+            subjectKey: item.source?.sourceSubjectKey,
+            chapter: item.source?.chapter,
+            questionIndex: item.source?.questionIndex
+        })));
+        savedQuestionsLoaded = true;
+    } catch (error) {
+        // Keep Review available when the storage service is unavailable.
+    }
 }
 
 function renderTestHistory() {
@@ -622,10 +674,26 @@ function getReviewQuestionSource(question, index) {
 }
 
 async function requestReviewQuestion(questionIndex, field, value) {
+    if (!quizApiUrl("api/health")) throw new Error(quizApiUnavailableMessage());
     const question = result.questions[questionIndex];
-    const pendingSource = quizPendingQuestionSource(question, result.subjectKey, result.chapter, questionIndex);
-    queueQuizPendingChange({ operationType: "edit-question", ...pendingSource, field, value });
-    return { ...question, [field]: value };
+    const response = await fetch(quizApiUrl("api/review-question"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...getReviewQuestionSource(question, questionIndex), field, value })
+    });
+    let payload;
+    try {
+        payload = await response.json();
+    } catch (error) {
+        throw new Error("The server returned an invalid save response.");
+    }
+    if (!response.ok) {
+        throw new Error(payload.error || "The question could not be saved.");
+    }
+    if (!payload || !payload.question || typeof payload.question !== "object") {
+        throw new Error("The server did not confirm the question save.");
+    }
+    return payload.question;
 }
 
 function replaceExplanationView(questionIndex) {
@@ -639,7 +707,7 @@ function replaceExplanationView(questionIndex) {
         : `<p>${escapeHtml(String(question.explanation || ""))}</p>`;
     const view = document.createElement("div");
     view.className = `explanation-box${html ? "" : " missing"}`;
-    view.innerHTML = `<strong>Explanation:</strong>${html || "Explanation is currently unavailable for this question."}<button type="button" onclick="startEditingExplanation(${questionIndex})" class="btn-edit-explanation" aria-label="Edit explanation" title="Edit explanation">✎</button>`;
+    view.innerHTML = `<strong>Explanation:</strong>${html || "Explanation is currently unavailable for this question."}<button type="button" onclick="startEditingExplanation(${questionIndex})" class="btn-edit-explanation">✎ Edit Explanation</button>`;
     editor.replaceWith(view);
 }
 
@@ -648,9 +716,8 @@ function replaceAnswerView(questionIndex) {
     const card = questionReviewList.querySelector(`[data-question-index="${questionIndex}"]`);
     const editor = card?.querySelector(".answer-editor-section");
     if (!question || !editor) return;
-    const view = document.createElement("div");
-    view.className = "correct-answer-box";
-    view.innerHTML = `<strong>Correct Answer:</strong> ${highlightText(question.options[question.answer], activeSearchQuery)} <button type="button" class="btn-edit-answer" onclick="startEditingAnswer(${questionIndex})" aria-label="Edit correct answer" title="Edit correct answer">✎</button>`;
+    const view = document.createElement("p");
+    view.innerHTML = `<strong>Correct Answer:</strong> ${highlightText(question.options[question.answer], activeSearchQuery)} <button type="button" class="btn-edit-answer" onclick="startEditingAnswer(${questionIndex})">Edit Correct Answer</button>`;
     editor.replaceWith(view);
     card.querySelectorAll(".review-option").forEach((option, optionIndex) => {
         option.classList.toggle("correct-option", optionIndex === question.answer);
@@ -667,10 +734,25 @@ function replaceAnswerView(questionIndex) {
 }
 
 async function loadPersistedReviewQuestions() {
-    result.questions.forEach((question, index) => {
-        const source = quizPendingQuestionSource(question, result.subjectKey, result.chapter, index);
-        applyQuizPendingChanges(question, source);
-    });
+    if (!quizApiUrl("api/health")) return;
+    await Promise.all(result.questions.map(async (question, index) => {
+        const source = getReviewQuestionSource(question, index);
+        const query = new URLSearchParams(Object.entries(source).filter(([, value]) => value != null && value !== ""));
+        try {
+            const response = await fetch(quizApiUrl(`api/review-question?${query.toString()}`), { cache: "no-store" });
+            if (!response.ok) return;
+            const payload = await response.json();
+            if (payload.question) {
+                question.answer = payload.question.answer;
+                question.explanation = payload.question.explanation || "";
+                question.explanationDocument = window.ExplanationRenderer
+                    ? window.ExplanationRenderer.normalizeExplanationDocument(question.explanation)
+                    : question.explanation;
+            }
+        } catch (error) {
+            console.warn("Unable to load the current source question:", error);
+        }
+    }));
 }
 
 async function saveEditedExplanation(questionIndex) {
@@ -810,10 +892,7 @@ function getQuestionClassifications(index) {
     const question = result && Array.isArray(result.questions) ? result.questions[index] : null;
     const persistent = persistentSubjectClassifications[persistentClassificationIdentity(question, index)] || {};
     const currentAffairs = persistentCurrentAffairsClassifications[persistentClassificationIdentity(question, index)] || {};
-    const pending = getQuizPendingQuestionChanges(quizPendingQuestionSource(question, result.subjectKey, result.chapter, index))
-        .filter((change) => change.operationType === "classification")
-        .reduce((tags, change) => ({ ...tags, [change.tag]: change.active !== false }), {});
-    return { ...(persistentSubjectClassificationsLoaded ? persistent : (store[key] || {})), ...currentAffairs, ...pending };
+    return persistentSubjectClassificationsLoaded ? { ...persistent, ...currentAffairs } : (store[key] || {});
 }
 
 function isMockReviewContext() {
@@ -831,11 +910,20 @@ function isMockReviewContext() {
 
 function getApplicableClassificationTags() {
     if (isMockReviewContext()) return Object.keys(CLASSIFICATION_LABELS);
-    return [];
+    return {
+        modern: ["H"],
+        geography: ["G"],
+        polity: ["P"],
+        economy: ["E"]
+    }[result?.subjectKey] || [];
 }
 
 async function toggleQuestionClassification(index, tag, event) {
     event?.preventDefault();
+    if (!quizApiUrl("api/health")) {
+        window.alert(quizApiUnavailableMessage());
+        return;
+    }
     const store = getClassificationStore();
     const question = result && Array.isArray(result.questions) ? result.questions[index] : null;
     const source = getReviewQuestionSource(question, index);
@@ -872,7 +960,26 @@ async function toggleQuestionClassification(index, tag, event) {
 
     const button = questionReviewList.querySelector(`[data-question-index="${index}"] [data-tag="${tag}"]`);
     const active = Boolean(button?.classList.contains("active"));
-    queueQuizPendingChange({ operationType: "classification", ...quizPendingQuestionSource(question, subjectKey, chapter, index), tag, active: !active });
+    const endpoint = tag === "CA" ? "api/current-affairs" : "api/important-classifications";
+    const targetSubjectKey = target?.subjectKey;
+    try {
+        const response = await fetch(quizApiUrl(endpoint), {
+            method: active ? "DELETE" : "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...source, tag, targetSubjectKey, originalMockTestSet: source.chapter })
+        });
+        let payload;
+        try {
+            payload = await response.json();
+        } catch (error) {
+            throw new Error("The classification server returned an invalid response.");
+        }
+        if (!response.ok) throw new Error(payload.error || "The question classification could not be saved.");
+        if (!payload || typeof payload !== "object") throw new Error("The classification server did not confirm the change.");
+    } catch (error) {
+        window.alert(error.message || "The question classification could not be saved.");
+        return;
+    }
     if (active) {
         delete entry[tag];
         if (serverClassificationStore[key]) delete serverClassificationStore[key][tag];
@@ -904,30 +1011,45 @@ function isSavedQuestion(index) {
     const savedQuestions = getSavedQuestions();
     const question = result.questions[index];
     const source = getReviewQuestionSource(question, savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex);
-    const pendingSource = quizPendingQuestionSource(question, result.subjectKey, result.chapter, savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex);
-    if (getQuizPendingQuestionChanges(pendingSource).some((change) => change.operationType === "saved-question")) {
-        return isQuizPendingActive(pendingSource, "saved-question", "");
-    }
     return savedQuestions.some((item) => savedQuestionIdentity(item) === savedQuestionIdentity(source));
 }
 
 async function toggleSavedQuestion(index, event) {
     event?.preventDefault();
+    if (!quizApiUrl("api/health")) {
+        window.alert(quizApiUnavailableMessage());
+        return;
+    }
     const savedQuestions = getSavedQuestions();
     const subjectKey = result.subjectKey || result.subject;
     const questionIndex = savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex;
     const question = result.questions[index];
     const source = getReviewQuestionSource(question, questionIndex);
     const savedQuestionIndex = savedQuestions.findIndex((item) => savedQuestionIdentity(item) === savedQuestionIdentity(source));
-    const pendingSource = quizPendingQuestionSource(question, result.subjectKey, result.chapter, questionIndex);
-    const pendingSavedChanges = getQuizPendingQuestionChanges(pendingSource).filter((change) => change.operationType === "saved-question");
-    const currentlySaved = pendingSavedChanges.length ? pendingSavedChanges[pendingSavedChanges.length - 1].active !== false : savedQuestionIndex >= 0;
-    queueQuizPendingChange({ operationType: "saved-question", ...pendingSource, active: !currentlySaved });
+    const endpoint = quizApiUrl("api/saved-questions");
+    try {
+        const response = await fetch(endpoint, {
+            method: savedQuestionIndex >= 0 ? "DELETE" : "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...source, originalMockTestSet: result.chapter })
+        });
+        let payload;
+        try {
+            payload = await response.json();
+        } catch (error) {
+            throw new Error("The Saved Questions server returned an invalid response.");
+        }
+        if (!response.ok) throw new Error(payload.error || "The Saved Question could not be saved.");
+        if (!payload || typeof payload !== "object") throw new Error("The Saved Questions server did not confirm the change.");
+    } catch (error) {
+        window.alert(error.message || "The Saved Question could not be saved.");
+        return;
+    }
 
     if (savedQuestionsLoaded) {
-        if (currentlySaved && savedQuestionIndex >= 0) savedQuestions.splice(savedQuestionIndex, 1);
+        if (savedQuestionIndex >= 0) savedQuestions.splice(savedQuestionIndex, 1);
         else savedQuestions.push({ subjectKey, subject: result.subject, chapter: result.chapter, questionIndex, source, question });
-    } else if (currentlySaved && savedQuestionIndex >= 0) {
+    } else if (savedQuestionIndex >= 0) {
         savedQuestions.splice(savedQuestionIndex, 1);
     } else {
         savedQuestions.push({ subjectKey, subject: result.subject, chapter: result.chapter, questionIndex, question });
@@ -1153,7 +1275,7 @@ function renderQuestions() {
                         <button type="button" class="btn btn-tertiary btn-small" onclick="cancelEditingAnswer()">Cancel</button>
                     </div>
                 </div>`
-            : `<div class="correct-answer-box"><strong>Correct Answer:</strong> ${correctAnswerText} <button type="button" class="btn-edit-answer" onclick="startEditingAnswer(${index})" aria-label="Edit correct answer" title="Edit correct answer">✎</button></div>`;
+            : `<p><strong>Correct Answer:</strong> ${correctAnswerText} <button type="button" class="btn-edit-answer" onclick="startEditingAnswer(${index})">Edit Correct Answer</button></p>`;
         const optionsHtml = question.options.map((option, optionIndex) => {
             const isCorrect = optionIndex === question.answer;
             const isSelected = optionIndex === selected;
@@ -1202,7 +1324,7 @@ function renderQuestions() {
                 <div class="explanation-box${explanationHtml ? "" : " missing"}">
                     <strong>Explanation:</strong>
                     ${explanationHtml || "Explanation is currently unavailable for this question."}
-                    <button type="button" onclick="startEditingExplanation(${index})" class="btn-edit-explanation" aria-label="Edit explanation" title="Edit explanation">✎</button>
+                    <button onclick="startEditingExplanation(${index})" class="btn-edit-explanation">✎ Edit Explanation</button>
                 </div>
             `;
         }
@@ -1304,7 +1426,7 @@ if (!result) {
     window.location.href = "index.html";
 } else {
     Promise.all([
-        loadPersistedReviewQuestions(),
+        (isHistoricalReview || isPostSubmitReview) ? Promise.resolve() : loadPersistedReviewQuestions(),
         loadPersistentSubjectClassifications(),
         loadSavedQuestionsFromServer()
     ]).finally(() => {

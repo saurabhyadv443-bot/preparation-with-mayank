@@ -846,15 +846,27 @@ select:focus-visible {
 }
 
 .btn-edit-answer {
-    margin-left: 8px;
-    padding: 4px 8px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
     border: 1px solid #cbd5e1;
     border-radius: 6px;
     background: #f8fafc;
     color: var(--primary-strong);
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 1rem;
+    line-height: 1;
     font-weight: 700;
+}
+
+.correct-answer-box {
+    position: relative;
+    padding: 14px 46px 14px 14px;
+    border-radius: 12px;
+    background: #f8fbff;
 }
 
 .answer-editor-section {
@@ -946,8 +958,9 @@ select:focus-visible {
 }
 
 .explanation-box {
+    position: relative;
     margin-top: 12px;
-    padding: 14px;
+    padding: 14px 52px 14px 14px;
     border-radius: 12px;
     background: #fff7ed;
 }
@@ -2378,15 +2391,31 @@ select:focus-visible {
 }
 
 .btn-edit-explanation {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
     background: #f0f4ff;
     color: #1d4ed8;
     border: 1px solid #d9e5ff;
-    margin-left: 8px;
+    font-size: 1rem;
+    line-height: 1;
 }
 
 .btn-edit-explanation:hover {
     background: #dbe7ff;
     border-color: #2563eb;
+}
+
+.btn-edit-answer:hover,
+.btn-edit-answer:focus-visible,
+.btn-edit-explanation:focus-visible {
+    background: #dbe7ff;
+    border-color: #2563eb;
+    outline: 2px solid rgba(37, 99, 235, 0.25);
+    outline-offset: 2px;
 }
 
 .btn-edit-explanation:active {

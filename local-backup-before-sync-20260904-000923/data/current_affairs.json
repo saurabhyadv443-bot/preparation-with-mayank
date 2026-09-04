@@ -1,0 +1,34 @@
+{
+  "questions": [
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 9",
+        "questionId": null,
+        "questionIndex": 11
+      },
+      "sourceIdentity": "mock::Set 9::::11",
+      "question": {
+        "q": "12. Match List-I (Doab) with List-II (Rivers): A. Bist Doab B. Bari Doab C. Rachna Doab D. Chaj Doab | i. Between Ravi and Chenab ii. Between Ravi and Beas iii. Between Beas and Sutlej iv. Between Chenab and Jhelum",
+        "options": [
+          "iii ii i iv",
+          "i ii iii iv",
+          "iv iii ii i",
+          "i iv ii iii"
+        ],
+        "answer": 0,
+        "explanation": "The correct matching is as follows— (Doab) Bist Doab Bari Doab – (Rivers)– Between the Beas and the Sutlej– Between the Ravi and the Beas Rachna Doab – Between the Ravi and the Chenab Chaj Doab – Between the Chenab and the Jhelum",
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 9",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 11,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 9",
+          "questionId": null,
+          "questionIndex": 11
+        }
+      }
+    }
+  ]
+}
