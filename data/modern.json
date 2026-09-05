@@ -57331,6 +57331,163 @@
           "questionId": null,
           "questionIndex": 11
         }
+      },
+      {
+        "q": "27. Consider the following historical sites— 1. Ajanta Caves 2. Lepakshi Temple 3. Sanchi Stupa. Which of the above sites is/are also known for mural paintings?",
+        "options": [
+          "1 only",
+          "1 and 2 only",
+          "1, 2 and 3",
+          "None"
+        ],
+        "answer": 1,
+        "explanation": "The evidence of mural painting is very clear in the Ajanta Caves and the Lepakshi Temple; however, the evidence of mural painting is not clear in the Sanchi Stupa. The toranas placed around the stupa are full of depictions of events from the life of Buddha and Jataka stories, and are decorated from bottom to top. Since the toranas cannot be considered a part of the stupa, option (b) will be the intended answer.",
+        "quizMeta": {
+          "classifications": {
+            "H": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 26,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 26
+        }
+      },
+      {
+        "q": "38. With reference to Indian history, consider the following statements— 1. The first Mongol invasion of India took place during the reign of Jalaluddin Khalji. 2. During the reign of Alauddin Khalji, a Mongol invasion reached Delhi and besieged the city. 3. Muhammad bin Tughlaq temporarily lost some north-western parts of his kingdom to the Mongols.",
+        "options": [
+          "Only 1 and 2",
+          "2 only",
+          "Only 1 and 3",
+          "3 only"
+        ],
+        "answer": 1,
+        "explanation": "The first Mongol invasion of India did not take place during the time of Jalaluddin Khilji. The Mongol threat had appeared much earlier during the reign of Iltutmish, when the Mongols reached the Indus region while pursuing Jalaluddin Mangbarni. During the period of Alauddin Khilji, the Mongol invader Targhi/Taraghai attacked Delhi in around 1303 AD. At that time, Alauddin Khilji was engaged in the Chittor campaign. During the reign of Muhammad bin Tughlaq, a Mongol campaign took place under the leadership of Tarmashirin. However, Muhammad bin Tughlaq captured Kalanaur and Peshawar and foiled the Mongol campaign.",
+        "quizMeta": {
+          "classifications": {
+            "H": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 37,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 37
+        }
+      },
+      {
+        "q": "40. Which of the following Brahmana texts is related to the Rigveda?",
+        "options": [
+          "Aitareya Brahmana",
+          "Gopatha Brahmana",
+          "Shatapatha Brahmana",
+          "Taittiriya Brahmana"
+        ],
+        "answer": 0,
+        "explanation": "The Brahmana texts are prose texts related to the rituals, sacrificial procedures and their meanings/interpretations associated with the Vedas. The Aitareya Brahmana and the Kaushitaki/ Shankhayana Brahmana are related to the Rigveda. The Panchavimsha or Tandya Brahmana and the Jaiminiya Brahmana are related to the Samaveda. The Shatapatha Brahmana is related to the Shukla Yajurveda, while the Taittiriya Brahmana is related to the Krishna Yajurveda. The Gopatha Brahmana is the Brahmana text of the Atharvaveda. Therefore, among the given options, the Brahmana text related to the Rigveda is the Aitareya Brahmana.",
+        "quizMeta": {
+          "classifications": {
+            "H": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 39,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 39
+        }
+      },
+      {
+        "q": "44. Who wrote the Mughal-period text ‘Maasir-i-Alamgiri’?",
+        "options": [
+          "Saqi Musta’id Khan",
+          "Hatim Khan",
+          "Kazim Shirazi",
+          "Khafi Khan"
+        ],
+        "answer": 0,
+        "explanation": "The Mughal-period text ‘Maasir i-Alamgiri’ was written by Saqi Mustaid Khan. Written in the Persian language, this text provides details of the reign of Aurangzeb.",
+        "quizMeta": {
+          "classifications": {
+            "H": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 43,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 43
+        }
+      },
+      {
+        "q": "45. “If Muslims are happy and satisfied, they will be the greatest safeguard of British power in India.” Who wrote this statement?",
+        "options": [
+          "Herbert Risley",
+          "Lord Lytton",
+          "W. W. Hunter",
+          "H.N. Brailsford"
+        ],
+        "answer": 2,
+        "explanation": "W. W. Hunter wrote in his book ‘The Indian Musalmans’ that “if the Muslims are happy and satisfied, it will be the greatest safeguard of British power in India.”",
+        "quizMeta": {
+          "classifications": {
+            "H": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 44,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 44
+        }
+      },
+      {
+        "q": "86. Whom did Iltutmish appoint as the first Subedar of Bihar?",
+        "options": [
+          "Aiwaz",
+          "Nasiruddin Mahmud",
+          "Ali Mardan",
+          "Malik Jani"
+        ],
+        "answer": 3,
+        "explanation": "Iltutmish captured Bihar Sharif and Barh and defeated Husamuddin Iwaz Khalji near Teliagarhi in the Rajmahal hills. Iwaz accepted the authority of Iltutmish. Iltutmish appointed Malik Alauddin Jani as the governor of Bihar in place of Iwaz.",
+        "quizMeta": {
+          "classifications": {
+            "H": true
+          },
+          "saved": true
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 85,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 85
+        }
       }
     ]
   }

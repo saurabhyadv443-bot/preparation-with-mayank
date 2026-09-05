@@ -27,16 +27,74 @@
           "In New Delhi"
         ],
         "answer": 1,
-        "explanation": "After the resolution of the Quit India Movement was passed, Gandhiji was arrested in Bombay on 9 August, 1942. After that, he was kept under detention at the Aga Khan Palace in Poona (Pune). api-base-probe recovery-probe",
+        "explanation": "After the resolution of the Quit India Movement was passed, Gandhiji was arrested in Bombay on 9 August, 1942. After that, he was kept under detention at the Aga Khan Palace in Poona (Pune). api-base-probe recovery-probe1",
+        "quizMeta": {
+          "classifications": {
+            "P": true,
+            "E": true
+          }
+        },
         "_pyqSubjectKey": "mock",
         "_pyqChapter": "Set 1",
-        "_pyqQuestionId": "mock-q-0",
+        "_pyqQuestionId": null,
         "_pyqQuestionIndex": 0,
         "_source": {
           "sourceSubjectKey": "mock",
           "chapter": "Set 1",
-          "questionId": "mock-q-0",
+          "questionId": null,
           "questionIndex": 0
+        }
+      },
+      {
+        "q": "5. The term of office of the Comptroller and Auditor-General of India is—",
+        "options": [
+          "4 years",
+          "5 years",
+          "6 years",
+          "7 years"
+        ],
+        "answer": 2,
+        "explanation": "According to Article 148(3) of the Indian Constitution, Parliament has been given the power to determine the salary and conditions of service of the Comptroller and Auditor-General. Therefore, Parliament enacted provisions relating to the salary and conditions of service of the Comptroller and Auditor-General in the year 1971. According to these provisions, the Comptroller and Auditor-General holds office for a term of 6 years or until he attains the age of 65 years, whichever is earlier. Therefore, the correct answer is option (c).",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 4,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 4
+        }
+      },
+      {
+        "q": "7. Consider the following statements: 1. In India, the Advocate-General of a State is appointed by the President of India on the recommendation of the Governor of the concerned State. 2. According to the provisions of the Code of Civil Procedure, at the State level, High Courts have original, appellate and advisory jurisdiction.",
+        "options": [
+          "Only 1",
+          "Only 2",
+          "Both 1 and 2",
+          "Neither 1 nor 2"
+        ],
+        "answer": 3,
+        "explanation": "According to Article 165(1) of the Constitution, the Advocate General of a State is appointed by the Governor of the State and not by the President. Therefore, statement 1 is incorrect. Advisory jurisdiction is exclusively granted to the Supreme Court of India under Article 143 of the Constitution.While High Courts do possess original, appellate, and supervisory jurisdictions, these foundational powers are derived primarily from the Constitution of India and historical Letters Patent, rather than the Code of Civil Procedure itself (which strictly regulates civil procedural rules).\n ",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 6,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 6
         }
       }
     ]

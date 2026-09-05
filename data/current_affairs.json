@@ -29,6 +29,181 @@
           "questionIndex": 11
         }
       }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 108
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::108",
+      "question": {
+        "q": "109. Consider the following statements with reference to the Climate Change Performance Index (CCPI) 2026— (i) This index is released by a consortium of Germanwatch and two other organisations. (ii) India has secured the 23rd rank in this index.",
+        "options": [
+          "Only (i)",
+          "Only (ii)",
+          "Both (i) and (ii)",
+          "Neither (i) nor (ii)"
+        ],
+        "answer": 2,
+        "explanation": "The Climate Change Performance Index (CCPI) 2026 is published by Germanwatch, CAN International and the NewClimate Institute. India secured the 23rd position in this index. The top ranked countries in the index are as follows— Denmark (Rank 4), the United Kingdom (Rank 5) and Morocco (Rank 6).",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 108,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 108
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 110
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::110",
+      "question": {
+        "q": "111. Consider the following statements with reference to the 2026 Whitley Award (Green Oscar): 1. The 2026 award was presented to Indian conservationist Parveen Shaikh in London. 2. This award has been given to her for the conservation of the endangered Indian Skimmer bird species.",
+        "options": [
+          "Only 1",
+          "Only 2",
+          "Both 1 and 2",
+          "Neither 1 nor 2"
+        ],
+        "answer": 2,
+        "explanation": "On April 29, 2026, Parveen Shaikh was honoured with the 2026 Whitley Award at the Royal Geographical Society in London. The Whitley Awards are often called the “Green Oscars”. Parveen Shaikh is a conservation scientist associated with BNHS. Therefore, statement 1 correct. She received this award for community-based conservation work for the endangered Indian Skimmer. The Indian Skimmer is included in the Endangered category of the IUCN Red List. More than 90% of its global breeding population is found in India, and the Chambal River region is one of its major breeding habitats. Under Parveen Shaikh’s “Guardians of the Skimmer” initiative, local communities were involved as nest guardians, which increased the nest survival rate from 14% to 27%.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 110,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 110
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 113
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::113",
+      "question": {
+        "q": "114. In the context of medical technology, the All India Institute of Medical Sciences (AIIMS), New Delhi, has, for the first time in India, started a portable bedside MRI service for regular clinical use. It is based on which system?",
+        "options": [
+          "Tesla Scanning Architecture",
+          "Swoop Portable MRI System",
+          "N Nano-Imaging Grid",
+          "Siemens Mobile MRI QP"
+        ],
+        "answer": 1,
+        "explanation": "AIIMS, New Delhi has launched a portable bedside MRI service for routine clinical use for the first time in the country. This service is based on Hyperfine’s Swoop® portable MRI system. This portable system can be taken to the patient’s bedside to perform a brain MRI. It is especially beneficial for critically ill or unstable patients in ICUs, emergency rooms, trauma/ stroke units and neurosurgical care.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 113,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 113
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 116
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::116",
+      "question": {
+        "q": "117. The Ministry of Information and Broadcasting has recently appointed the former Chairperson of the Central Board of Film Certification (CBFC) as the new Chairman of Prasar Bharati. Who is he?",
+        "options": [
+          "Shashi Shekhar Vempati",
+          "Prasoon Joshi",
+          "Ashwini Vaishnaw",
+          "Gaurav Dwivedi"
+        ],
+        "answer": 1,
+        "explanation": "The Ministry of Information and Broadcasting appointed renowned lyricist, writer and communications expert Prasoon Joshi as the Chairman of Prasar Bharati on May 2, 2026. Before this appointment, Prasoon Joshi had been serving as the Chairperson of the Central Board of Film Certification (CBFC), Mumbai, since August",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 116,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 116
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 3
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::3",
+      "question": {
+        "q": "4. Which of the following statements are true about the Constituent Assembly? 1. It was based on adult franchise. 2. It was the result of direct elections. 3. It was a multi-party body. 4. It worked through several committees.",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "3 and 4 only",
+          "1, 2, 3 and 4"
+        ],
+        "answer": 2,
+        "explanation": "Alipore Conspiracy Case – Aurob indo Ghose",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 3,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 3
+        }
+      }
     }
   ]
 }

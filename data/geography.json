@@ -106638,6 +106638,32 @@
           "questionId": null,
           "questionIndex": 11
         }
+      },
+      {
+        "q": "98. Rajasthan receives very little rainfall because—",
+        "options": [
+          "the monsoon fails to reach this region",
+          "it is very hot here",
+          "water is not available here and thus the winds remain dry",
+          "the winds do not encounter any kind of barrier, due to which they do not attain the height necessary for cooling"
+        ],
+        "answer": 3,
+        "explanation": "Rajasthan receives very little rainfall. The main reason for low rainfall here is that the Arabian Sea branch of the southwest monsoon flows almost parallel to the Aravalli Range. Therefore, the Aravalli Range does not form an effective barrier to lift these moisture-laden winds. As a result, the winds do not cool and condense sufficiently, and rainfall remains low.",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 97,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 97
+        }
       }
     ]
   }

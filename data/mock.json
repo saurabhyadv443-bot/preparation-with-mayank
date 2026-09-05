@@ -9974,7 +9974,12 @@
           "1, 2, 3 and 4"
         ],
         "answer": 2,
-        "explanation": "Alipore Conspiracy Case – Aurob indo Ghose"
+        "explanation": "Alipore Conspiracy Case – Aurob indo Ghose",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        }
       },
       {
         "q": "5. The term of office of the Comptroller and Auditor-General of India is—",
