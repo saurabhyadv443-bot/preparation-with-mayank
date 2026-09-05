@@ -42,6 +42,9 @@ function quizApiUnavailableMessage() {
 }
 
 const QUIZ_PENDING_CHANGES_KEY = "quizPendingChanges";
+const QUIZ_PENDING_BATCHES_KEY = "quizPendingChangeBatches";
+const QUIZ_PENDING_BATCHES_VERSION = 1;
+const QUIZ_PENDING_BATCH_HISTORY_LIMIT = 5;
 const QUIZ_PENDING_SOURCE_FILES = {
     ancient: "ancient.json",
     medieval: "medeival.json",
@@ -67,13 +70,52 @@ function quizPendingFingerprint(value) {
     return { algorithm: "fnv1a32", value: (hash >>> 0).toString(16), snapshot: text.slice(0, 240) };
 }
 
-function getQuizPendingChanges() {
+function quizPendingReadJson(key, fallback) {
     try {
-        const parsed = JSON.parse(localStorage.getItem(QUIZ_PENDING_CHANGES_KEY) || "[]");
-        return Array.isArray(parsed) ? parsed : [];
+        return JSON.parse(localStorage.getItem(key) || "null") ?? fallback;
     } catch (error) {
-        return [];
+        return fallback;
     }
+}
+
+function quizPendingWriteState(state) {
+    localStorage.setItem(QUIZ_PENDING_BATCHES_KEY, JSON.stringify(state));
+    localStorage.setItem(QUIZ_PENDING_CHANGES_KEY, JSON.stringify(state.changes));
+}
+
+function quizPendingNormalizeChange(change, index, nextChangeId) {
+    const normalized = { ...change };
+    if (!normalized.pendingChangeId) normalized.pendingChangeId = `legacy-${Date.now()}-${index}-${nextChangeId}`;
+    return normalized;
+}
+
+function quizPendingReadState() {
+    const stored = quizPendingReadJson(QUIZ_PENDING_BATCHES_KEY, null);
+    if (stored && stored.version === QUIZ_PENDING_BATCHES_VERSION && Array.isArray(stored.changes) && Array.isArray(stored.batches)) {
+        return {
+            version: QUIZ_PENDING_BATCHES_VERSION,
+            nextBatchId: Number(stored.nextBatchId) || 1,
+            nextChangeId: Number(stored.nextChangeId) || stored.changes.length + 1,
+            changes: stored.changes,
+            batches: stored.batches
+        };
+    }
+
+    const legacy = quizPendingReadJson(QUIZ_PENDING_CHANGES_KEY, []);
+    const changes = (Array.isArray(legacy) ? legacy : []).map((change, index) => quizPendingNormalizeChange(change, index, index + 1));
+    const state = {
+        version: QUIZ_PENDING_BATCHES_VERSION,
+        nextBatchId: 1,
+        nextChangeId: changes.length + 1,
+        changes,
+        batches: []
+    };
+    quizPendingWriteState(state);
+    return state;
+}
+
+function getQuizPendingChanges() {
+    return quizPendingReadState().changes;
 }
 
 function quizPendingIdentity(change) {
@@ -81,7 +123,8 @@ function quizPendingIdentity(change) {
 }
 
 function queueQuizPendingChange(change) {
-    const changes = getQuizPendingChanges();
+    const state = quizPendingReadState();
+    const changes = state.changes;
     const normalized = {
         ...change,
         sourceJsonFile: change.sourceJsonFile || quizPendingSourceFile(change.sourceSubjectKey),
@@ -91,9 +134,15 @@ function queueQuizPendingChange(change) {
     const operationKey = `${normalized.operationType}::${normalized.field || normalized.tag || ""}::${quizPendingIdentity(normalized)}`;
     const existingIndex = changes.findIndex((item) => item.operationKey === operationKey);
     normalized.operationKey = operationKey;
+    const existing = existingIndex >= 0 ? changes[existingIndex] : null;
+    normalized.pendingChangeId = existing && !existing.downloadedBatchId
+        ? existing.pendingChangeId
+        : `change-${state.nextChangeId++}`;
+    delete normalized.downloadedBatchId;
     if (existingIndex >= 0) changes[existingIndex] = normalized;
     else changes.push(normalized);
-    localStorage.setItem(QUIZ_PENDING_CHANGES_KEY, JSON.stringify(changes));
+    state.changes = changes;
+    quizPendingWriteState(state);
     return normalized;
 }
 
@@ -144,8 +193,7 @@ function isQuizPendingActive(source, operationType, fieldOrTag) {
     return changes.length ? changes[changes.length - 1].active !== false : false;
 }
 
-function exportQuizPendingChanges() {
-    const changes = getQuizPendingChanges();
+function quizPendingDownloadPayload(changes, successMessage) {
     if (!changes.length) {
         window.alert("No pending changes to download.");
         return false;
@@ -157,7 +205,59 @@ function exportQuizPendingChanges() {
     link.download = "quiz_pending_changes.json";
     link.click();
     URL.revokeObjectURL(url);
-    window.alert("All pending changes downloaded successfully.");
+    if (successMessage) window.alert(successMessage);
     return true;
+}
+
+function quizPendingPruneCompletedBatches(state) {
+    const completed = state.batches
+        .filter((batch) => batch.status === "synced")
+        .sort((left, right) => new Date(right.syncedAt || right.downloadedAt).getTime() - new Date(left.syncedAt || left.downloadedAt).getTime());
+    const retained = new Set(completed.slice(0, QUIZ_PENDING_BATCH_HISTORY_LIMIT).map((batch) => batch.batchId));
+    state.batches = state.batches.filter((batch) => batch.status !== "synced" || retained.has(batch.batchId));
+}
+
+function exportQuizPendingChanges() {
+    const state = quizPendingReadState();
+    const changes = state.changes.filter((change) => !change.downloadedBatchId);
+    if (!changes.length) {
+        window.alert("No pending changes to download.");
+        return false;
+    }
+    const batchId = state.nextBatchId++;
+    if (!quizPendingDownloadPayload(changes, null)) return false;
+    const downloadedAt = new Date().toISOString();
+    const batchChanges = changes.map((change) => ({ ...change }));
+    changes.forEach((change) => { change.downloadedBatchId = batchId; });
+    state.batches.push({ batchId, downloadedAt, status: "downloaded", changes: batchChanges });
+    quizPendingWriteState(state);
+    window.alert("All pending changes downloaded successfully.");
+    window.dispatchEvent(new CustomEvent("quizPendingBatchesChanged"));
+    return true;
+}
+
+function exportQuizPendingBatch(batchId) {
+    const state = quizPendingReadState();
+    const batch = state.batches.find((item) => item.batchId === Number(batchId));
+    if (!batch || !Array.isArray(batch.changes) || !batch.changes.length) return false;
+    return quizPendingDownloadPayload(batch.changes, "Pending change batch downloaded successfully.");
+}
+
+function markQuizPendingBatchSynced(batchId) {
+    const state = quizPendingReadState();
+    const batch = state.batches.find((item) => item.batchId === Number(batchId));
+    if (!batch || batch.status === "synced") return false;
+    batch.status = "synced";
+    batch.syncedAt = new Date().toISOString();
+    const changeIds = new Set(batch.changes.map((change) => change.pendingChangeId));
+    state.changes = state.changes.filter((change) => !changeIds.has(change.pendingChangeId));
+    quizPendingPruneCompletedBatches(state);
+    quizPendingWriteState(state);
+    window.dispatchEvent(new CustomEvent("quizPendingBatchesChanged"));
+    return true;
+}
+
+function getQuizPendingBatches() {
+    return quizPendingReadState().batches;
 }
 

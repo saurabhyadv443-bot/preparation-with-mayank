@@ -256,6 +256,32 @@ function closeProgress() {
     subjectsContainer.hidden = false;
 }
 
+function formatPendingBatchDate(value) {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? "Unknown date" : date.toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" });
+}
+
+function renderPendingBatchHistory() {
+    const list = document.getElementById("pendingBatchList");
+    if (!list || typeof getQuizPendingBatches !== "function") return;
+    const batches = getQuizPendingBatches()
+        .filter((batch) => batch.status !== "synced" || batch.syncedAt)
+        .sort((left, right) => Number(right.batchId) - Number(left.batchId));
+    list.innerHTML = batches.length
+        ? batches.map((batch) => {
+            const status = batch.status === "synced" ? "Synced" : "Downloaded, awaiting sync";
+            const statusIcon = batch.status === "synced" ? "✅" : "⏳";
+            return `<div class="pending-batch-row">
+                <span>Batch ${escapeHtml(batch.batchId)} — ${escapeHtml(formatPendingBatchDate(batch.downloadedAt))} — ${status} ${statusIcon}</span>
+                <button type="button" class="pending-batch-download" data-batch-id="${escapeHtml(batch.batchId)}" aria-label="Download Batch ${escapeHtml(batch.batchId)} again" title="Download Batch ${escapeHtml(batch.batchId)} again">↓</button>
+            </div>`;
+        }).join("")
+        : `<p class="pending-batches-empty">No downloaded batches yet.</p>`;
+    list.querySelectorAll(".pending-batch-download").forEach((button) => {
+        button.addEventListener("click", () => exportQuizPendingBatch(button.dataset.batchId));
+    });
+}
+
 function loadDashboardSubjects() {
     return Promise.resolve().then(async () => {
         const manifest = await fetchSubjectManifest();
@@ -277,6 +303,8 @@ function loadDashboardSubjects() {
 }
 
 window.addEventListener("DOMContentLoaded", loadDashboardSubjects);
+window.addEventListener("DOMContentLoaded", renderPendingBatchHistory);
+window.addEventListener("quizPendingBatchesChanged", renderPendingBatchHistory);
 
 document.getElementById("progressBtn")?.addEventListener("click", openProgress);
 document.getElementById("progressBackBtn")?.addEventListener("click", closeProgress);
