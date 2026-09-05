@@ -13,13 +13,7 @@
           "In New Delhi"
         ],
         "answer": 1,
-        "explanation": "After the resolution of the Quit India Movement was passed, Gandhiji was arrested in Bombay on 9 August, 1942. After that, he was kept under detention at the Aga Khan Palace in Poona (Pune). api-base-probe recovery-probe1",
-        "quizMeta": {
-          "classifications": {
-            "P": true,
-            "E": true
-          }
-        }
+        "explanation": "After the resolution of the Quit India Movement was passed, Gandhiji was arrested in Bombay on 9 August, 1942. After that, he was kept under detention at the Aga Khan Palace in Poona (Pune). api-base-probe recovery-probe1"
       },
       {
         "q": "2. Which one of the following statements is correct?",
@@ -63,7 +57,12 @@
           "1, 2, 3 and 4 only"
         ],
         "answer": 2,
-        "explanation": "Lord William Bentinck became the Governor-General of the Bengal Presidency in 1828 A.D. In 1829 A.D., through the ‘Bengal Sati Regulation’, he declared the practice of sati illegal and punishable. During Bentinck’s period itself, the Charter Act, 1833 took the initiative to abolish slavery, but its complete legal abolition took place through the Indian Slavery Act of 1843. Bentinck also launched a campaign against gangs of Thugs and tried to suppress them. Bentinck also worked for education and freedom of the press. In 1835 A.D., he returned to England. The provision of disqualification on the ground of religious conversion was removed in 1850 A.D. Therefore, statements (1), (2), and (4) are correct. Hence, option (c) is the correct answer."
+        "explanation": "Lord William Bentinck became the Governor-General of the Bengal Presidency in 1828 A.D. In 1829 A.D., through the ‘Bengal Sati Regulation’, he declared the practice of sati illegal and punishable. During Bentinck’s period itself, the Charter Act, 1833 took the initiative to abolish slavery, but its complete legal abolition took place through the Indian Slavery Act of 1843. Bentinck also launched a campaign against gangs of Thugs and tried to suppress them. Bentinck also worked for education and freedom of the press. In 1835 A.D., he returned to England. The provision of disqualification on the ground of religious conversion was removed in 1850 A.D. Therefore, statements (1), (2), and (4) are correct. Hence, option (c) is the correct answer.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        }
       },
       {
         "q": "6. Which of the following industrialists served as the treasurer of the A.I.C.C. for a long time and also went to jail in 1930?",
@@ -3323,7 +3322,10 @@
           "4 2 3 1"
         ],
         "answer": 2,
-        "explanation": "Explanation: The correct matching of the given options is as follows— (Grasslands) – (Country) Steppes – Russia Prairies – United States of America Velds – South Africa Downs – Australia"
+        "explanation": "Explanation: The correct matching of the given options is as follows— (Grasslands) – (Country) Steppes – Russia Prairies – United States of America Velds – South Africa Downs – Australia",
+        "quizMeta": {
+          "saved": true
+        }
       },
       {
         "q": "2. Which of the following statements are true? I. The Tropic of Cancer divides India into two parts. II. The Tropic of Cancer divides India's international boundaries into two parts. III. India's maximum east-west extent is along the Tropic of Cancer. IV. The line joining the easternmost and westernmost points of India lies north of the Tropic of Cancer.",
@@ -3334,7 +3336,12 @@
           "I and IV"
         ],
         "answer": 3,
-        "explanation": "Explanation: The Tropic of Cancer, i.e. the line of 23°30′ north latitude, passes almost through the middle of India, that is, it divides India into almost two equal parts. The line joining the easternmost and westernmost points of India lies to the north of the Tropic of Cancer. Therefore, statements I and IV are true. The Tropic of Cancer does not divide India’s international boundaries into two parts. India’s maximum east–west extent is also not along the Tropic of Cancer. Therefore, statements II and III are false. Thus, option (d) is the correct answer."
+        "explanation": "Explanation: The Tropic of Cancer, i.e. the line of 23°30′ north latitude, passes almost through the middle of India, that is, it divides India into almost two equal parts. The line joining the easternmost and westernmost points of India lies to the north of the Tropic of Cancer. Therefore, statements I and IV are true. The Tropic of Cancer does not divide India’s international boundaries into two parts. India’s maximum east–west extent is also not along the Tropic of Cancer. Therefore, statements II and III are false. Thus, option (d) is the correct answer.",
+        "quizMeta": {
+          "classifications": {
+            "H": true
+          }
+        }
       },
       {
         "q": "3. Among the following, the pass which is situated at the highest altitude is-",
@@ -3345,7 +3352,12 @@
           "Khyber"
         ],
         "answer": 2,
-        "explanation": "Explanation: Among the given options, Nathu La is situated at the highest altitude. The elevation of Nathu La Pass is 14,450 feet (4,404 metres), that of Zoji La Pass is 11,650 feet, that of Rohtang Pass is 13,051 feet (3,978 metres), and that of Khyber Pass is 3,518 feet. However, the highest pass in India is Kalindi Khal (5,950 metres)."
+        "explanation": "Explanation: Among the given options, Nathu La is situated at the highest altitude. The elevation of Nathu La Pass is 14,450 feet (4,404 metres), that of Zoji La Pass is 11,650 feet, that of Rohtang Pass is 13,051 feet (3,978 metres), and that of Khyber Pass is 3,518 feet. However, the highest pass in India is Kalindi Khal (5,950 metres).",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        }
       },
       {
         "q": "4. On which of the following hills do the Eastern Ghats meet the Western Ghats?",
@@ -3372,7 +3384,12 @@
           "4 3 2 1"
         ],
         "answer": 1,
-        "explanation": "Explanation: Mount Etna is an active volcano located on the eastern coast of Sicily, the largest island in the Mediterranean Sea. Mount Vesuvius is an active volcano located near the Gulf of Naples in Italy. Mount Erebus is an active volcano located on Ross Island in Antarctica. Cotopaxi is an active volcano located in the Cordillera Central of the Andes Mountains in Ecuador."
+        "explanation": "Explanation: Mount Etna is an active volcano located on the eastern coast of Sicily, the largest island in the Mediterranean Sea. Mount Vesuvius is an active volcano located near the Gulf of Naples in Italy. Mount Erebus is an active volcano located on Ross Island in Antarctica. Cotopaxi is an active volcano located in the Cordillera Central of the Andes Mountains in Ecuador.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        }
       },
       {
         "q": "6. Which of the following pairs is correct? (Tribe : State)",
@@ -9985,12 +10002,7 @@
           "7 years"
         ],
         "answer": 2,
-        "explanation": "According to Article 148(3) of the Indian Constitution, Parliament has been given the power to determine the salary and conditions of service of the Comptroller and Auditor-General. Therefore, Parliament enacted provisions relating to the salary and conditions of service of the Comptroller and Auditor-General in the year 1971. According to these provisions, the Comptroller and Auditor-General holds office for a term of 6 years or until he attains the age of 65 years, whichever is earlier. Therefore, the correct answer is option (c).",
-        "quizMeta": {
-          "classifications": {
-            "P": true
-          }
-        }
+        "explanation": "According to Article 148(3) of the Indian Constitution, Parliament has been given the power to determine the salary and conditions of service of the Comptroller and Auditor-General. Therefore, Parliament enacted provisions relating to the salary and conditions of service of the Comptroller and Auditor-General in the year 1971. According to these provisions, the Comptroller and Auditor-General holds office for a term of 6 years or until he attains the age of 65 years, whichever is earlier. Therefore, the correct answer is option (c)."
       },
       {
         "q": "6. Choose the correct statements from the following regarding the Directive Principles of State Policy— (i) They are inspired by the Constitution of Ireland. (ii) They are not enforceable by any court. (iii) The concept of a welfare state is not a part of them. (iv) Under these principles, the Uniform Civil Code is mentioned in Article 45.",
@@ -10012,12 +10024,7 @@
           "Neither 1 nor 2"
         ],
         "answer": 3,
-        "explanation": "According to Article 165(1) of the Constitution, the Advocate General of a State is appointed by the Governor of the State and not by the President. Therefore, statement 1 is incorrect. Advisory jurisdiction is exclusively granted to the Supreme Court of India under Article 143 of the Constitution.While High Courts do possess original, appellate, and supervisory jurisdictions, these foundational powers are derived primarily from the Constitution of India and historical Letters Patent, rather than the Code of Civil Procedure itself (which strictly regulates civil procedural rules).\n ",
-        "quizMeta": {
-          "classifications": {
-            "P": true
-          }
-        }
+        "explanation": "According to Article 165(1) of the Constitution, the Advocate General of a State is appointed by the Governor of the State and not by the President. Therefore, statement 1 is incorrect. Advisory jurisdiction is vested in the Supreme Court under Article"
       },
       {
         "q": "8. Which of the following types of citizenship does the Indian Constitution provide?",
@@ -10116,10 +10123,7 @@
           "3 1 2 4"
         ],
         "answer": 0,
-        "explanation": "The correct matching of the given newspapers and their editors is as follows Kaal – Shivram Mahadev Paranjape The Bengalee – Surendranath Banerjee Sudharak – Gopal Krishna Gokhale Som Prakash – Dwarakanath Vidyabhushan",
-        "quizMeta": {
-          "saved": true
-        }
+        "explanation": "The correct matching of the given newspapers and their editors is as follows Kaal – Shivram Mahadev Paranjape The Bengalee – Surendranath Banerjee Sudharak – Gopal Krishna Gokhale Som Prakash – Dwarakanath Vidyabhushan"
       },
       {
         "q": "17. The principle of Anuvrata was propounded by—",
@@ -10240,12 +10244,7 @@
           "None"
         ],
         "answer": 1,
-        "explanation": "The evidence of mural painting is very clear in the Ajanta Caves and the Lepakshi Temple; however, the evidence of mural painting is not clear in the Sanchi Stupa. The toranas placed around the stupa are full of depictions of events from the life of Buddha and Jataka stories, and are decorated from bottom to top. Since the toranas cannot be considered a part of the stupa, option (b) will be the intended answer.",
-        "quizMeta": {
-          "classifications": {
-            "H": true
-          }
-        }
+        "explanation": "The evidence of mural painting is very clear in the Ajanta Caves and the Lepakshi Temple; however, the evidence of mural painting is not clear in the Sanchi Stupa. The toranas placed around the stupa are full of depictions of events from the life of Buddha and Jataka stories, and are decorated from bottom to top. Since the toranas cannot be considered a part of the stupa, option (b) will be the intended answer."
       },
       {
         "q": "28. Who was the Bengali leader who opposed socio-religious reforms and supported orthodoxy?",
@@ -10355,10 +10354,7 @@
           "technical education"
         ],
         "answer": 2,
-        "explanation": "To review the progress made in the field of education after 1854 AD, Lord Ripon appointed the First Indian Education Commission in 1882 AD under the chairmanship of W. W. Hunter. The report of this commission laid special emphasis on the reform and development of primary education.",
-        "quizMeta": {
-          "saved": true
-        }
+        "explanation": "To review the progress made in the field of education after 1854 AD, Lord Ripon appointed the First Indian Education Commission in 1882 AD under the chairmanship of W. W. Hunter. The report of this commission laid special emphasis on the reform and development of primary education."
       },
       {
         "q": "38. With reference to Indian history, consider the following statements— 1. The first Mongol invasion of India took place during the reign of Jalaluddin Khalji. 2. During the reign of Alauddin Khalji, a Mongol invasion reached Delhi and besieged the city. 3. Muhammad bin Tughlaq temporarily lost some north-western parts of his kingdom to the Mongols.",
@@ -10369,12 +10365,7 @@
           "3 only"
         ],
         "answer": 1,
-        "explanation": "The first Mongol invasion of India did not take place during the time of Jalaluddin Khilji. The Mongol threat had appeared much earlier during the reign of Iltutmish, when the Mongols reached the Indus region while pursuing Jalaluddin Mangbarni. During the period of Alauddin Khilji, the Mongol invader Targhi/Taraghai attacked Delhi in around 1303 AD. At that time, Alauddin Khilji was engaged in the Chittor campaign. During the reign of Muhammad bin Tughlaq, a Mongol campaign took place under the leadership of Tarmashirin. However, Muhammad bin Tughlaq captured Kalanaur and Peshawar and foiled the Mongol campaign.",
-        "quizMeta": {
-          "classifications": {
-            "H": true
-          }
-        }
+        "explanation": "The first Mongol invasion of India did not take place during the time of Jalaluddin Khilji. The Mongol threat had appeared much earlier during the reign of Iltutmish, when the Mongols reached the Indus region while pursuing Jalaluddin Mangbarni. During the period of Alauddin Khilji, the Mongol invader Targhi/Taraghai attacked Delhi in around 1303 AD. At that time, Alauddin Khilji was engaged in the Chittor campaign. During the reign of Muhammad bin Tughlaq, a Mongol campaign took place under the leadership of Tarmashirin. However, Muhammad bin Tughlaq captured Kalanaur and Peshawar and foiled the Mongol campaign."
       },
       {
         "q": "39. Which one of the following statements about Rabindranath Tagore is false?",
@@ -10396,12 +10387,7 @@
           "Taittiriya Brahmana"
         ],
         "answer": 0,
-        "explanation": "The Brahmana texts are prose texts related to the rituals, sacrificial procedures and their meanings/interpretations associated with the Vedas. The Aitareya Brahmana and the Kaushitaki/ Shankhayana Brahmana are related to the Rigveda. The Panchavimsha or Tandya Brahmana and the Jaiminiya Brahmana are related to the Samaveda. The Shatapatha Brahmana is related to the Shukla Yajurveda, while the Taittiriya Brahmana is related to the Krishna Yajurveda. The Gopatha Brahmana is the Brahmana text of the Atharvaveda. Therefore, among the given options, the Brahmana text related to the Rigveda is the Aitareya Brahmana.",
-        "quizMeta": {
-          "classifications": {
-            "H": true
-          }
-        }
+        "explanation": "The Brahmana texts are prose texts related to the rituals, sacrificial procedures and their meanings/interpretations associated with the Vedas. The Aitareya Brahmana and the Kaushitaki/ Shankhayana Brahmana are related to the Rigveda. The Panchavimsha or Tandya Brahmana and the Jaiminiya Brahmana are related to the Samaveda. The Shatapatha Brahmana is related to the Shukla Yajurveda, while the Taittiriya Brahmana is related to the Krishna Yajurveda. The Gopatha Brahmana is the Brahmana text of the Atharvaveda. Therefore, among the given options, the Brahmana text related to the Rigveda is the Aitareya Brahmana."
       },
       {
         "q": "41. Match List-I with List-II: A. Landholders’ Society B. British India Society C. Indian Society D. Indian Association | 1. S.N. Banerjee 2. Ananda Mohan Bose 3. William Adam 4. Dwarkanath Tagore",
@@ -10445,12 +10431,7 @@
           "Khafi Khan"
         ],
         "answer": 0,
-        "explanation": "The Mughal-period text ‘Maasir i-Alamgiri’ was written by Saqi Mustaid Khan. Written in the Persian language, this text provides details of the reign of Aurangzeb.",
-        "quizMeta": {
-          "classifications": {
-            "H": true
-          }
-        }
+        "explanation": "The Mughal-period text ‘Maasir i-Alamgiri’ was written by Saqi Mustaid Khan. Written in the Persian language, this text provides details of the reign of Aurangzeb."
       },
       {
         "q": "45. “If Muslims are happy and satisfied, they will be the greatest safeguard of British power in India.” Who wrote this statement?",
@@ -10461,12 +10442,7 @@
           "H.N. Brailsford"
         ],
         "answer": 2,
-        "explanation": "W. W. Hunter wrote in his book ‘The Indian Musalmans’ that “if the Muslims are happy and satisfied, it will be the greatest safeguard of British power in India.”",
-        "quizMeta": {
-          "classifications": {
-            "H": true
-          }
-        }
+        "explanation": "W. W. Hunter wrote in his book ‘The Indian Musalmans’ that “if the Muslims are happy and satisfied, it will be the greatest safeguard of British power in India.”"
       },
       {
         "q": "46. The Balkan Plan for the partition of India was the brainchild of—",
@@ -10554,10 +10530,7 @@
           "None of the above statements is correct."
         ],
         "answer": 2,
-        "explanation": "Ball bearings are used in bicycles and cars to reduce friction between the wheel and the axle. Ball bearings contain small spherical balls, which reduce direct rubbing between the axle and the wheel. As a result, sliding friction is converted into rolling friction. Since rolling friction is much less than sliding friction, the wheel rotates easily.",
-        "quizMeta": {
-          "saved": true
-        }
+        "explanation": "Ball bearings are used in bicycles and cars to reduce friction between the wheel and the axle. Ball bearings contain small spherical balls, which reduce direct rubbing between the axle and the wheel. As a result, sliding friction is converted into rolling friction. Since rolling friction is much less than sliding friction, the wheel rotates easily."
       },
       {
         "q": "54. Which statement about red blood cells (RBCs) in humans is not true?",
@@ -10579,10 +10552,7 @@
           "Does not form an explosive mixture with air."
         ],
         "answer": 3,
-        "explanation": "Hydrogen is a highly flammable gas and reacts very explosively with oxygen in the air. The lifting power of helium in balloons is only about 92 percent of that of hydrogen, but helium is used in balloons because it is inert and non-flammable.",
-        "quizMeta": {
-          "saved": true
-        }
+        "explanation": "Hydrogen is a highly flammable gas and reacts very explosively with oxygen in the air. The lifting power of helium in balloons is only about 92 percent of that of hydrogen, but helium is used in balloons because it is inert and non-flammable."
       },
       {
         "q": "56. Sodium vapour lamps are generally used for street lighting because—",
@@ -10637,10 +10607,7 @@
           "Ash"
         ],
         "answer": 0,
-        "explanation": "Lime | CaO | 60 - 67 | Provides core strength; controls setting time and soundness.Limestone and silica clay are used as raw materials in the production of cement. When silica clay and limestone are heated together, they melt and react to form “cement clinker”. Gypsum, up to 2–3% by weight, is added to this clinker.\nSilica | SiO2 | 17 - 25 | Imparts long-term strength and durability (dicalcium/tricalcium silicates).\nAlumina | Al2O3 | 3 - 8 | Provides quick-setting properties; acts as a flux to lower kiln temperatures.\nIron Oxide | Fe2O3 | 0.5 - 6 | Imparts the distinct grey color; adds hardness and aids raw material fusion.\nMagnesia | MgO | 0.1 - 4 | Adds strength and color in small amounts; excess causes unsoundness (expansion).\nSulphur Trioxide | SO3 | 1 - 3 | Retards setting time (typically added as gypsum) to maintain workability.\nAlkalies | K2O, Na2O | 0.4 - 1.3 | Kept strictly low to prevent efflorescence (white staining) and structural reactions.",
-        "quizMeta": {
-          "saved": true
-        }
+        "explanation": "Limestone and silica clay are used as raw materials in the production of cement. When silica clay and limestone are heated together, they melt and react to form “cement clinker”. Gypsum, up to 2–3% by weight, is added to this clinker."
       },
       {
         "q": "61. An artificial satellite revolving around the Earth does not fall to the Earth because the Earth’s attraction—",
@@ -10651,10 +10618,7 @@
           "provides the acceleration required for its motion."
         ],
         "answer": 3,
-        "explanation": "Two types of forces act on an artificial satellite revolving around the Earth. One is the central force and the other is the perturbing force. The central force is the gravitational force of the spherical Earth, due to which the satellite obtains the required centripetal acceleration for its motion and revolves around the Earth in a circular or elliptical orbit and does not fall to Earth.",
-        "quizMeta": {
-          "saved": true
-        }
+        "explanation": "Two types of forces act on an artificial satellite revolving around the Earth. One is the central force and the other is the perturbing force. The central force is the gravitational force of the spherical Earth, due to which the satellite obtains the required centripetal acceleration for its motion and revolves around the Earth in a circular or elliptical orbit and does not fall to Earth."
       },
       {
         "q": "62. Which of the following are not tastes of the tongue? 1. Sweet 2. Bitter 3. Salty 4. Spicy 5. Umami 6. Sour 7. Pungent",
@@ -10808,10 +10772,7 @@
           "Ministry of Home Affairs"
         ],
         "answer": 2,
-        "explanation": "India’s Foreign Trade Policy is related to the Ministry of Commerce and Industry. The Directorate General of Foreign Trade functions under this ministry. It is the key body connected with the formulation and implementation of the Foreign Trade Policy and export promotion.",
-        "quizMeta": {
-          "saved": true
-        }
+        "explanation": "India’s Foreign Trade Policy is related to the Ministry of Commerce and Industry. The Directorate General of Foreign Trade functions under this ministry. It is the key body connected with the formulation and implementation of the Foreign Trade Policy and export promotion."
       },
       {
         "q": "76. With reference to External Commercial Borrowings (ECB) in India, which of the following statements is correct?",
@@ -10833,10 +10794,7 @@
           "Credit creation"
         ],
         "answer": 3,
-        "explanation": "The Reserve Bank of India is India’s central bank. It formulates monetary policy, controls credit, and works as the banker to scheduled banks and the regulator of the banking system. The work of credit creation is mainly done by commercial banks because they accept deposits and give loans, and credit expands through this process. Therefore, the correct answer is option (d).",
-        "quizMeta": {
-          "saved": true
-        }
+        "explanation": "The Reserve Bank of India is India’s central bank. It formulates monetary policy, controls credit, and works as the banker to scheduled banks and the regulator of the banking system. The work of credit creation is mainly done by commercial banks because they accept deposits and give loans, and credit expands through this process. Therefore, the correct answer is option (d)."
       },
       {
         "q": "78. The first Industrial Policy Resolution of independent India was announced in—",
@@ -10847,10 +10805,7 @@
           "1956"
         ],
         "answer": 1,
-        "explanation": "The first Industrial Policy of independent India was announced on 6 April 1948. It is called the Industrial Policy Resolution, 1948. This policy accepted the role of both the public and private sectors; therefore, it is considered the policy foundation of the mixed economy in India. This announcement was associated with Dr. Syama Prasad Mookerjee, the then Minister for Industry and Supply.",
-        "quizMeta": {
-          "saved": true
-        }
+        "explanation": "The first Industrial Policy of independent India was announced on 6 April 1948. It is called the Industrial Policy Resolution, 1948. This policy accepted the role of both the public and private sectors; therefore, it is considered the policy foundation of the mixed economy in India. This announcement was associated with Dr. Syama Prasad Mookerjee, the then Minister for Industry and Supply."
       },
       {
         "q": "79. Match the following plans and programmes— A. First Plan B. Second Plan C. Third Plan D. Fourth Plan E. Fifth Plan | 1. Rapid industrialisation 2. Community development 3. Expansion of basic industries 4. Minimum Needs Programme 5. Attainment of self-reliance and growth with stability",
@@ -10861,10 +10816,7 @@
           "2 1 3 5 4"
         ],
         "answer": 3,
-        "explanation": "Community Development was related to the First Five-Year Plan, rapid industrialization to the Second Plan, expansion of basic industries to the Third Plan, attainment of self reliance and growth with stability to the Fourth Plan, and the Minimum Needs Programme to the Fifth Plan. Therefore, the correct matching is A–2, B–1, C–3, D–5, E–4. Hence, the correct answer is option (d).",
-        "quizMeta": {
-          "saved": true
-        }
+        "explanation": "Community Development was related to the First Five-Year Plan, rapid industrialization to the Second Plan, expansion of basic industries to the Third Plan, attainment of self reliance and growth with stability to the Fourth Plan, and the Minimum Needs Programme to the Fifth Plan. Therefore, the correct matching is A–2, B–1, C–3, D–5, E–4. Hence, the correct answer is option (d)."
       },
       {
         "q": "80. Match List–I (Deficit/Concept) with List–II (Most appropriate indicator): A. Fiscal Deficit B. Revenue Deficit C. Primary Deficit D. Total Debt of the Central Government | 1. Total outstanding liabilities of the government 2. Revenue expenditure − Revenue receipts 3. Fiscal deficit − Interest payments 4. Total expenditure − (Revenue receipts + non-debt capital receipts)",
@@ -10941,13 +10893,7 @@
           "Malik Jani"
         ],
         "answer": 3,
-        "explanation": "Iltutmish captured Bihar Sharif and Barh and defeated Husamuddin Iwaz Khalji near Teliagarhi in the Rajmahal hills. Iwaz accepted the authority of Iltutmish. Iltutmish appointed Malik Alauddin Jani as the governor of Bihar in place of Iwaz.",
-        "quizMeta": {
-          "classifications": {
-            "H": true
-          },
-          "saved": true
-        }
+        "explanation": "Iltutmish captured Bihar Sharif and Barh and defeated Husamuddin Iwaz Khalji near Teliagarhi in the Rajmahal hills. Iwaz accepted the authority of Iltutmish. Iltutmish appointed Malik Alauddin Jani as the governor of Bihar in place of Iwaz."
       },
       {
         "q": "87. Who among the following was not a member of the Champaran Agrarian Enquiry Committee?",
@@ -11079,12 +11025,7 @@
           "the winds do not encounter any kind of barrier, due to which they do not attain the height necessary for cooling"
         ],
         "answer": 3,
-        "explanation": "Rajasthan receives very little rainfall. The main reason for low rainfall here is that the Arabian Sea branch of the southwest monsoon flows almost parallel to the Aravalli Range. Therefore, the Aravalli Range does not form an effective barrier to lift these moisture-laden winds. As a result, the winds do not cool and condense sufficiently, and rainfall remains low.",
-        "quizMeta": {
-          "classifications": {
-            "G": true
-          }
-        }
+        "explanation": "Rajasthan receives very little rainfall. The main reason for low rainfall here is that the Arabian Sea branch of the southwest monsoon flows almost parallel to the Aravalli Range. Therefore, the Aravalli Range does not form an effective barrier to lift these moisture-laden winds. As a result, the winds do not cool and condense sufficiently, and rainfall remains low."
       },
       {
         "q": "99. Consider the following countries— 1. Azerbaijan 2. Kyrgyzstan 3. Tajikistan 4. Turkmenistan 5. Uzbekistan. Which of the above share borders with Afghanistan?",
@@ -11193,7 +11134,7 @@
           "Oral cancer",
           "Skin cancer"
         ],
-        "answer": 3,
+        "answer": 1,
         "explanation": "Harmful ultraviolet radiation from the Sun can increase the risk of skin cancer. Prolonged exposure of the body to the Sun’s ultraviolet radiation may cause genetic mutations in DNA, which can cause skin cancer. It should be noted that the Sun’s ultraviolet rays are generally divided into three categories: UV-A, UV-B and UV-C rays. UV-A and UV-B rays have harmful effects on the skin. UV-C rays (100–280 nm) are also extremely harmful, but they do not reach the Earth’s surface."
       },
       {
@@ -11204,13 +11145,8 @@
           "Both (i) and (ii)",
           "Neither (i) nor (ii)"
         ],
-        "answer": 2,
-        "explanation": "The Climate Change Performance Index (CCPI) 2026 is published by Germanwatch, CAN International and the NewClimate Institute. India secured the 23rd position in this index. The top ranked countries in the index are as follows— Denmark (Rank 4), the United Kingdom (Rank 5) and Morocco (Rank 6).",
-        "quizMeta": {
-          "classifications": {
-            "CA": true
-          }
-        }
+        "answer": 0,
+        "explanation": "The Climate Change Performance Index (CCPI) 2026 is published by Germanwatch, CAN International and the NewClimate Institute. India secured the 23rd position in this index. The top ranked countries in the index are as follows— Denmark (Rank 4), the United Kingdom (Rank 5) and Morocco (Rank 6)."
       },
       {
         "q": "110. Who has recently become the first Indian economist to be honoured with the Professional Achievement Award under the Alumni Awards by the University of Chicago?",
@@ -11231,13 +11167,8 @@
           "Both 1 and 2",
           "Neither 1 nor 2"
         ],
-        "answer": 2,
-        "explanation": "On April 29, 2026, Parveen Shaikh was honoured with the 2026 Whitley Award at the Royal Geographical Society in London. The Whitley Awards are often called the “Green Oscars”. Parveen Shaikh is a conservation scientist associated with BNHS. Therefore, statement 1 correct. She received this award for community-based conservation work for the endangered Indian Skimmer. The Indian Skimmer is included in the Endangered category of the IUCN Red List. More than 90% of its global breeding population is found in India, and the Chambal River region is one of its major breeding habitats. Under Parveen Shaikh’s “Guardians of the Skimmer” initiative, local communities were involved as nest guardians, which increased the nest survival rate from 14% to 27%.",
-        "quizMeta": {
-          "classifications": {
-            "CA": true
-          }
-        }
+        "answer": 1,
+        "explanation": "On April 29, 2026, Parveen Shaikh was honoured with the 2026 Whitley Award at the Royal Geographical Society in London. The Whitley Awards are often called the “Green Oscars”. Parveen Shaikh is a conservation scientist associated with BNHS, not an economist. Therefore, statement 1 is incorrect. She received this award for community-based conservation work for the endangered Indian Skimmer. The Indian Skimmer is included in the Endangered category of the IUCN Red List. More than 90% of its global breeding population is found in India, and the Chambal River region is one of its major breeding habitats. Under Parveen Shaikh’s “Guardians of the Skimmer” initiative, local communities were involved as nest guardians, which increased the nest survival rate from 14% to 27%."
       },
       {
         "q": "112. What is the name of India’s first commercial seaplane airline to receive the Air Operator Certificate (AOC) from the Directorate General of Civil Aviation (DGCA)?",
@@ -11270,12 +11201,7 @@
           "Siemens Mobile MRI QP"
         ],
         "answer": 1,
-        "explanation": "AIIMS, New Delhi has launched a portable bedside MRI service for routine clinical use for the first time in the country. This service is based on Hyperfine’s Swoop® portable MRI system. This portable system can be taken to the patient’s bedside to perform a brain MRI. It is especially beneficial for critically ill or unstable patients in ICUs, emergency rooms, trauma/ stroke units and neurosurgical care.",
-        "quizMeta": {
-          "classifications": {
-            "CA": true
-          }
-        }
+        "explanation": "AIIMS, New Delhi has launched a portable bedside MRI service for routine clinical use for the first time in the country. This service is based on Hyperfine’s Swoop® portable MRI system. This portable system can be taken to the patient’s bedside to perform a brain MRI. It is especially beneficial for critically ill or unstable patients in ICUs, emergency rooms, trauma/ stroke units and neurosurgical care."
       },
       {
         "q": "115. Recently, at which place was a Guinness World Record created by unfurling a 60 × 40-metre national flag (Tricolour), the largest underwater national flag?",
@@ -11308,12 +11234,7 @@
           "Gaurav Dwivedi"
         ],
         "answer": 1,
-        "explanation": "The Ministry of Information and Broadcasting appointed renowned lyricist, writer and communications expert Prasoon Joshi as the Chairman of Prasar Bharati on May 2, 2026. Before this appointment, Prasoon Joshi had been serving as the Chairperson of the Central Board of Film Certification (CBFC), Mumbai, since August",
-        "quizMeta": {
-          "classifications": {
-            "CA": true
-          }
-        }
+        "explanation": "The Ministry of Information and Broadcasting appointed renowned lyricist, writer and communications expert Prasoon Joshi as the Chairman of Prasar Bharati on May 2, 2026. Before this appointment, Prasoon Joshi had been serving as the Chairperson of the Central Board of Film Certification (CBFC), Mumbai, since August"
       },
       {
         "q": "118. Which institution has recently approved the approximately USD 10 billion ‘Great Nicobar Project’ with strict environmental conditions...?",
