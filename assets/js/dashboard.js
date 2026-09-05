@@ -280,3 +280,4 @@ window.addEventListener("DOMContentLoaded", loadDashboardSubjects);
 
 document.getElementById("progressBtn")?.addEventListener("click", openProgress);
 document.getElementById("progressBackBtn")?.addEventListener("click", closeProgress);
+document.getElementById("downloadAllChangesBtn")?.addEventListener("click", exportQuizPendingChanges);

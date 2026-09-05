@@ -145,12 +145,19 @@ function isQuizPendingActive(source, operationType, fieldOrTag) {
 }
 
 function exportQuizPendingChanges() {
-    const blob = new Blob([JSON.stringify(getQuizPendingChanges(), null, 2) + "\n"], { type: "application/json" });
+    const changes = getQuizPendingChanges();
+    if (!changes.length) {
+        window.alert("No pending changes to download.");
+        return false;
+    }
+    const blob = new Blob([JSON.stringify(changes, null, 2) + "\n"], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
     link.download = "quiz_pending_changes.json";
     link.click();
     URL.revokeObjectURL(url);
+    window.alert("All pending changes downloaded successfully.");
+    return true;
 }
 

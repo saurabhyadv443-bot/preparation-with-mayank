@@ -116,15 +116,5 @@
     <script src="assets/js/explanationRenderer.js"></script>
     <script src="assets/js/externalAi.js?v=copy-co-20260903"></script>
     <script src="assets/js/resultReview.js?v=post-submit-review-20260903"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const button = document.createElement("button");
-            button.type = "button";
-            button.className = "btn btn-secondary btn-small";
-            button.textContent = "Export Pending Changes";
-            button.onclick = exportQuizPendingChanges;
-            document.querySelector(".review-actions")?.appendChild(button);
-        });
-    </script>
 </body>
 </html>
