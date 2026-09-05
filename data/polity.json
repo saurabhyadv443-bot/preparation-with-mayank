@@ -96,6 +96,318 @@
           "questionId": null,
           "questionIndex": 6
         }
+      },
+      {
+        "q": "9. With reference to Fundamental Rights, select the correct option from the following—",
+        "options": [
+          "According to Article 24(1), no child below the age of fourteen years shall be employed to work in any factory or mine.",
+          "According to Article 22(2), no arrested person shall be detained in custody without being informed, as soon as possible, of the grounds for such arrest.",
+          "According to Article 21, no person shall be deprived of his life or personal liberty except according to due process of law.",
+          "According to Article 20(3), no accused person shall be compelled to be a witness against himself."
+        ],
+        "answer": 3,
+        "explanation": "Article 20(3) (Option D): This is verbatim from the Constitution: \"No person accused of any offence shall be compelled to be a witness against himself.\" This protects the fundamental right against self-incrimination.\nOption A is incorrect: Article 24 has no sub-clauses or subsections; it simply reads as a single standalone provision (\"No child below the age of fourteen years shall be employed to work in any factory or mine...\"). \nOption B is incorrect: The right to be informed of the grounds of arrest is protected under Article 22(1). Article 22(2) mandates that an arrested person must be produced before the nearest magistrate within 24 hours.\nOption C is incorrect: The text of Article 21 specifically states \"except according to procedure established by law\", not \"due process of law\".",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 8,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 8
+        }
+      },
+      {
+        "q": "2. Consider the following statements— 1. No criminal proceedings shall be instituted against the Governor of a State in any court during his term of office. 2. The emoluments and allowances of the Governor of a State shall not be diminished during his term of office.",
+        "options": [
+          "Only 1",
+          "Only 2",
+          "Both 1 and 2",
+          "Neither 1 nor 2"
+        ],
+        "answer": 2,
+        "explanation": "Statement 1 is correct: Under Article 361(2) of the Constitution of India, no criminal proceedings whatsoever shall be instituted or continued against the President, or the Governor of a State, in any court during their term of office. They also enjoy complete immunity from arrest or imprisonment during their tenure under Article 361(3). Statement 2 is correct: Under Article 158(4) of the Constitution of India, the emoluments and allowances of the Governor of a State shall not be diminished during his or her term of office.",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 1,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 1
+        }
+      },
+      {
+        "q": "10. With reference to the Union Government, consider the following statements: 1. The ministries/departments of the Government of India are created by the Prime Minister on the advice of the Cabinet Secretary. 2. Each ministry is allocated to a Minister by the President of India on the advice of the Prime Minister.",
+        "options": [
+          "Only 1",
+          "Only 2",
+          "Both 1 and 2",
+          "Neither 1 nor 2"
+        ],
+        "answer": 1,
+        "explanation": "The Cabinet Secretary is the head of the Cabinet Secretariat the and is also the ex-officio Chairman of Civil Services Board. His functions include providing information about the various activities of the ministries and the rules related to the conduct of business. Under the Government of India (Allocation of Business) Rules, 1961, the ministries/departments of the Government are created by the President on the advice of the Prime Minister. A Minister is appointed by the President of India on the advice of the Prime Minister, and the allocation of ministries/departments is also made by the President on the advice of the Prime Minister. Therefore, statement 1 is incorrect and statement 2 is correct. Hence, option (b) is the correct answer.",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 9,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 9
+        }
+      },
+      {
+        "q": "11. Members of the Rajya Sabha are not associated with— 1. Public Accounts Committee 2. Estimates Committee 3. Committee on Public Undertakings",
+        "options": [
+          "Only 1 and 2",
+          "Only 3",
+          "Only 2",
+          "Only 1 and 3"
+        ],
+        "answer": 2,
+        "explanation": "Public Accounts Committee (PAC) | 22 | 15 | 7 | Yes | Scrutinizes the appropriation accounts of the Government of India and the audit reports submitted by the Comptroller and Auditor General (CAG) to detect financial irregularities and ensure funds were spent as sanctioned.\nEstimates Committee | 30 | 30 | 0 | No | Examines budget estimates presented to Parliament to suggest economies, improvements in organization, administrative reforms, and alternative policies to achieve efficiency in spending (\"continuous economy committee\").\nCommittee on Public Undertakings (COPU) | 22 | 15 | 7 | Yes | Examines the reports, accounts, and efficiency of Central Public Sector Undertakings (CPSUs), reviewing CAG audit reports on public enterprises to ensure sound commercial principles and prudent business practices.",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 10,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 10
+        }
+      },
+      {
+        "q": "12. Select the constitutional bodies from the following and choose the correct option. (i) Comptroller and Auditor General of India (ii) National Human Rights Commission (iii) Central Vigilance Commission (iv) Finance Commission",
+        "options": [
+          "Only (i), (ii)",
+          "Only (ii), (iii)",
+          "Only (iii), (iv)",
+          "Only (i), (iv)"
+        ],
+        "answer": 3,
+        "explanation": "The National Human Rights Commission and the Central Vigilance Commission are statutory bodies. The Finance Commission is provided under Article 280, and provisions relating to the Comptroller and Auditor-General are contained in Articles 148 to 151 of the Constitution. Therefore, the Finance Commission and the Comptroller and Auditor-General are constitutional bodies. The National Human Rights Commission was established under the Protection of Human Rights Act, 1993, and the Central Vigilance Commission was established under the Central Vigilance Commission Act, 2003. Therefore, the correct answer is option (d).",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 11,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 11
+        }
+      },
+      {
+        "q": "13. Which of the following statements regarding Parliament’s control over the Budget is not correct?",
+        "options": [
+          "Parliament has no role in the preparation of the Budget.",
+          "Parliament has the power to increase the expenditure charged upon the Consolidated Fund of India.",
+          "Parliament does not have the power to impose any tax without the recommendation of the President.",
+          "Parliament does not have the power to increase any tax without the recommendation of the President."
+        ],
+        "answer": 1,
+        "explanation": "Expenditure charged upon the Consolidated Fund of India [Article 113(1)] is not submitted to Parliament for voting. These items of expenditure can be discussed in both Houses of Parliament, but their amount cannot be altered through voting during the budget/ appropriation process. Therefore, the statement that Parliament has the power to increase charged expenditure is not correct. Hence, the correct answer is option (b).",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 12,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 12
+        }
+      },
+      {
+        "q": "5. Who were not allotted separate electorates and reserved seats under MacDonald’s Communal Award?",
+        "options": [
+          "Muslims",
+          "Sikhs",
+          "Scheduled Castes",
+          "Buddhists"
+        ],
+        "answer": 3,
+        "explanation": "On 16 August 1932, British Prime Minister Ramsay MacDonald announced the Communal Award. In this, the system of separate electorates was not only continued for Muslims, but was also applied to the Depressed Classes. Under this, the facility of separate electorates was provided for Muslims, Indian Christians, Sikhs, Anglo-Indians, Europeans and others, and it was applicable only to the provincial legislatures. Therefore, it is clear that separate electorates and reserved seats were not allotted to Buddhists under it.",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 4,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 4
+        }
+      },
+      {
+        "q": "98. Arrange the following States in descending order of their number of seats in the Rajya Sabha—",
+        "options": [
+          "Gujarat > Karnataka > Kerala > Odisha",
+          "Karnataka > Gujarat > Kerala > Odisha",
+          "Karnataka > Gujarat > Odisha > Kerala",
+          "Gujarat > Karnataka > Odisha > Kerala"
+        ],
+        "answer": 2,
+        "explanation": "1 | Karnataka | 12\n2 | Gujarat | 11\n3 | Odisha | 10\n4 | Kerala | 9",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 97,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 97
+        }
+      },
+      {
+        "q": "99. Consider the following statements with reference to the constitutional provisions relating to co-operative societies. (i) Provisions relating to co-operative societies have been made by inserting Part IX-B... (ii) The maximum number of directors of a co-operative society may be 21.",
+        "options": [
+          "Only (i)",
+          "Only (ii)",
+          "Both (i) and (ii)",
+          "Neither (i) nor (ii)"
+        ],
+        "answer": 2,
+        "explanation": "1. Statement (i) is correct: The Constitution (97th Amendment) Act, 2011 inserted Part IX-B (Articles 243ZH to 243ZT) into the Constitution of India, which contains provisions relating to the incorporation, regulation, and functioning of co-operative societies.  \n\n2. Statement (ii) is correct: According to Article 243ZJ(1), the board of a co-operative society shall consist of such number of directors as may be provided by the Legislature of a State by law, with the proviso that the maximum number of directors of a co-operative society shall not exceed twenty-one.  ",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 98,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 98
+        }
+      },
+      {
+        "q": "105. Choose the incorrect pair from the following pairs—",
+        "options": [
+          "Equal justice and free legal aid - Article 39A",
+          "Right to public assistance - Article 41",
+          "Promotion of cottage industries in rural areas - Article 43",
+          "Prohibition of slaughter of milch and draught cattle - Article 48"
+        ],
+        "answer": 0,
+        "explanation": "All four pairs are constitutionally correct under Part IV (Directive Principles of State Policy) of the Constitution of India:\n1. A. Equal justice and free legal aid — Article 39A: Correct. Inserted by the 42nd Amendment Act, 1976, it directs the State to provide free legal aid by suitable legislation or schemes to ensure justice is not denied due to economic or other disabilities.\n\n2. B. Right to public assistance — Article 41: Correct. It provides for securing the right to work, to education, and to public assistance in cases of unemployment, old age, sickness, and disablement.  \n\n3. C. Promotion of cottage industries in rural areas — Article 43: Correct. Article 43 directs the State to secure a living wage and decent standard of life for workers, and specifically states that the State shall endeavour to \"promote cottage industries on an individual or co-operative basis in rural areas\".  \n\n4. D. Prohibition of slaughter of milch and draught cattle — Article 48: Correct. Article 48 directs the State to organize agriculture and animal husbandry on modern and scientific lines and specifically take steps for \"prohibiting the slaughter, of cows and calves and other milch and draught cattle\".  \n\n\n",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 104,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 104
+        }
+      },
+      {
+        "q": "107. Under which one of the following Articles of the Indian Constitution can the Governor reserve a Bill for the consideration of the President?",
+        "options": [
+          "Article 169",
+          "Article 200",
+          "Article 201",
+          "Article 202"
+        ],
+        "answer": 1,
+        "explanation": "According to Article 200, when a Bill passed by both Houses of the State Legislature is presented to the Governor, the Governor, in addition to giving his assent to it or withholding assent from it, may reserve the Bill for the consideration of the President.",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 106,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 106
+        }
+      },
+      {
+        "q": "109. If the President of India exercises his/her powers as provided under Article 356 of the Constitution with respect to a particular State, then",
+        "options": [
+          "The Legislative Assembly of that State is automatically dissolved.",
+          "The powers of the Legislature of that State shall be exercisable by or under the authority of Parliament.",
+          "Article 19 is suspended in that State.",
+          "The President can make laws relating to that State."
+        ],
+        "answer": 1,
+        "explanation": "The effect of the exercise of powers by the President under Article 356 of the Constitution in relation to a particular State is as follows— (1) The President may assume to himself all or any of the functions of the government of that State and all or any of the powers vested in or exercisable by the Governor or any authority or body in the State; (2) The President may declare that the powers of the Legislature of the State shall be exercisable by or under the authority of Parliament. It should be noted that when President’s Rule is imposed under Article 356, the State Legislative Assembly is not automatically suspended; rather, the President may, if he so wishes, dissolve it or place it under suspended animation. It is noteworthy that Article 19 is automatically suspended in a State during a Proclamation of Emergency issued under Article 352 of the Constitution on the grounds of war or external aggression, and not under a Proclamation issued under Article 356.\n1. Article 356(1)(b) Mandate: Under Article 356(1)(b), when President's Rule is proclaimed in a State, the President may declare that \"the powers of the Legislature of the State shall be exercisable by or under the authority of Parliament.\"\n\n2. Why A is incorrect: The Legislative Assembly is not automatically dissolved; it is usually initially kept in suspended animation and may only be dissolved after Parliament approves the proclamation (as established in the landmark S.R. Bommai case, 1994).\n\n3. Why C is incorrect: Fundamental rights under Article 19 are only subject to automatic suspension under Article 358 during a National Emergency (Article 352) declared on the grounds of war or external aggression, not during President's Rule (Article 356).\n\n4. Why D is incorrect: The President does not directly make ordinary state laws under Article 356; rather, Parliament exercises legislative powers or, under Article 357(1)(a), Parliament may confer that power on the President (or delegate it further). Therefore, Option B directly quotes the constitutional effect under Article 356(1)(b).",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 108,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 108
+        }
       }
     ]
   }

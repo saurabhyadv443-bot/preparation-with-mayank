@@ -204,6 +204,1896 @@
           "questionIndex": 3
         }
       }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 117
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::117",
+      "question": {
+        "q": "118. Which institution has recently approved the approximately USD 10 billion ‘Great Nicobar Project’ with strict environmental conditions...?",
+        "options": [
+          "Ministry of Environment, Forest and Climate Change (MoEFCC)",
+          "National Green Tribunal (NGT)",
+          "NITI Aayog",
+          "Indian Naval Command COP"
+        ],
+        "answer": 1,
+        "explanation": "While disposing of the objections related to the Great Nicobar Project, the National Green Tribunal (NGT) refused to interfere with the environmental and CRZ clearances granted by the MoEFCC in 2022. The NGT directed the concerned authorities to ensure complete and strict compliance with the conditions of the environmental clearance. The Great Nicobar Project is important from strategic, economic and maritime security perspectives. It includes components such as an International Container Transhipment Terminal, regional development and energy infrastructure. Great Nicobar is located at the southern end of India and lies close to important sea routes passing through the Strait of Malacca. Therefore, this project is considered helpful in strengthening India’s maritime surveillance, trade connectivity and defence logistics capability.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 117,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 117
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 120
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::120",
+      "question": {
+        "q": "121. In May 2026, who became the first overseas bowler in the history of the Indian Premier League (IPL) to reach the milestone of 200 wickets?",
+        "options": [
+          "Lasith Malinga",
+          "Sunil Narine",
+          "Rashid Khan",
+          "Dwayne Bravo"
+        ],
+        "answer": 1,
+        "explanation": "Explanation: Kolkata Knight Riders’ (KKR) mystery spinner Sunil Narine became the first overseas bowler in IPL history to take 200 wickets. He achieved this milestone against SunRisers Hyderabad on May 3, 2026. In this match, he took two wickets, and by the end of the match, he had 201 wickets in 197 IPL matches. He became the third bowler overall to reach 200 wickets in the IPL after Yuzvendra Chahal and Bhuvneshwar Kumar.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 120,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 120
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 121
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::121",
+      "question": {
+        "q": "122. In May 2026, which state government launched India’s first state-led Centre of Excellence for Space Technology (CoE SpaceTech Foundation) to promote research and the commercialisation of space products?",
+        "options": [
+          "Andhra Pradesh",
+          "Kerala",
+          "Karnataka",
+          "Gujarat"
+        ],
+        "answer": 2,
+        "explanation": "Explanation: The Karnataka government launched India’s first state-led Centre of Excellence in Space Technology, CoE Space Tech Foundation, in Bengaluru on May 1, 2026. It has been promoted by the Karnataka Innovation and Technology Society (KITS) in collaboration with SIA-India. Its objective is to bridge the gap between space research, product development and commercialisation. This centre will bring together startups, industry, academic institutions and the government and help in training, research, incubation, testing facilities, market linkages and the development of commercial solutions.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 121,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 121
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 126
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::126",
+      "question": {
+        "q": "127. Where is the first tri-service ‘Joint Operations Control Centre’ (JOCC) of the Indian Armed Forces being established for rapid and integrated military decision-making across the Army, Navy and Air Force during war or emergencies?",
+        "options": [
+          "Visakhapatnam",
+          "Jaipur Cantonment",
+          "Delhi Cantonment",
+          "Lucknow"
+        ],
+        "answer": 2,
+        "explanation": "The Indian Defence Forces plan to operationalise the first tri-services Joint Operations Control Centre (JOCC) in the Delhi Cantonment area in May 2026. This centre will strengthen operational coordination among the Army, Navy and Air Force, provide a real-time operational picture and support faster decision-making. Under the same wider theaterisation reforms, work is also being carried out on the proposed theatre commands in Jaipur, Lucknow and Thiruvananthapuram.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 126,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 126
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 128
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::128",
+      "question": {
+        "q": "129. With reference to the ‘World Press Freedom Index 2026’, which of the following statements is/are correct? 1. In this index released by Reporters Without Borders (RSF), India ranked 157th among 180 countries. 2. In this index, Norway ranked first globally for the 10th consecutive year.",
+        "options": [
+          "Only 1",
+          "Only 2",
+          "Both 1 and 2",
+          "Neither 1 nor 2"
+        ],
+        "answer": 2,
+        "explanation": "The World Press Freedom Index 2026 was released by the Paris-based organization Reporters Without Borders (RSF). In this index, India ranked 157th out of 180 countries, while in 2025 India was ranked 151st. India’s score was 31.96, placing it in RSF’s “Very Serious” category. Norway ranked first globally for the 10th consecutive year in this index, while Eritrea ranked last at 180th position. In South Asia, Nepal, Maldives, Sri Lanka, Bhutan, Bangladesh and Pakistan ranked above India. Therefore, both statements are correct.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 128,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 128
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 130
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::130",
+      "question": {
+        "q": "131. Marking a historic milestone in India’s space startup ecosystem, which startup became the country’s first space-tech unicorn on May 7, 2026, with a valuation of $1.1 billion?",
+        "options": [
+          "Pixxel",
+          "Skyroot Aerospace",
+          "Agnikul Cosmos",
+          "Dhruva Space"
+        ],
+        "answer": 1,
+        "explanation": "On 7 May 2026, Hyderabad-based private space startup Skyroot Aerospace raised US$60 million in fresh funding. After this funding, the company’s valuation reached around US$1.1 billion, and Skyroot Aerospace became India’s first space-tech unicorn. Skyroot’s Vikram-I is India’s first private orbital rocket/ launch vehicle, and preparations for its first orbital launch are being made from the Satish Dhawan Space Centre in Sriharikota. Earlier, on 18 November 2022, Skyroot launched the Vikram-S suborbital rocket under Mission Prarambh, which marked India’s first successful private rocket launch.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 130,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 130
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 131
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::131",
+      "question": {
+        "q": "132. Which Indian teacher won the prestigious South Asia regional title in the Cambridge Dedicated Teacher Awards 2026 for engaging students globally with climate change and environmental protection through education?",
+        "options": [
+          "Soma Mandal",
+          "Suprabha Das",
+          "Anandamayi Sen",
+          "Lily Das"
+        ],
+        "answer": 0,
+        "explanation": "Indian science teacher Soma Mandal was named the South Asia regional winner at the 2026 Cambridge Dedicated Teacher Awards. She was honoured for connecting students with topics such as climate education, environmental sustainability, green energy, biodiversity conservation, climate awareness and water conservation. Through project-based and practical teaching, she encouraged environmental responsibility and scientific thinking among students. More than 12,000 nominations were received from 129 countries for this award. Soma Mandal later went on to become the global winner of the 2026 Cambridge Dedicated Teacher Awards.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 131,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 131
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 133
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::133",
+      "question": {
+        "q": "134. Under the aegis of the Ministry of Earth Sciences (MoES), at which place has the Indian Institute of Tropical Meteorology (IITM), Pune, established the country’s first Urban Testbed and Aerosol Observatory for accurate weather forecasting and urban flood prediction?",
+        "options": [
+          "Pune, Maharashtra",
+          "Chennai, Tamil Nadu",
+          "Patna, Bihar",
+          "Ahmedabad, Gujarat"
+        ],
+        "answer": 1,
+        "explanation": "The Indian Institute of Tropical Meteorology (IITM), Pune, under the Ministry of Earth Sciences, has established India’s first-of-its kind comprehensive Urban Testbed and Aerosol Observatory at the SRM Institute of Science and Technology (SRMIST), Ramapuram, Chennai, under the Mission Mausam initiative. The facility was inaugurated by Dr. M. Ravichandran, Secretary, Ministry of Earth Sciences, on 6 May 2026.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 133,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 133
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 137
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::137",
+      "question": {
+        "q": "138. According to the Crime in India 2024 report released by the National Crime Records Bureau (NCRB), in which state were the highest number of crimes involving foreign nationals recorded in the country?",
+        "options": [
+          "Delhi",
+          "Maharashtra",
+          "West Bengal",
+          "Assam"
+        ],
+        "answer": 2,
+        "explanation": "According to the National Crime Records Bureau’s (NCRB) ‘Crime in India 2024’ report, West Bengal topped among the states in cases of crimes committed by foreign nationals in 2024, with 992 cases registered. Among the Union Territories, Delhi was at the top. In 2024, a total of 4,794 foreign nationals were arrested in criminal cases across the country, of whom Bangladeshi nationals accounted for the highest number, at 3,091.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 137,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 137
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 138
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::138",
+      "question": {
+        "q": "139. In the history of the American soccer league Major League Soccer (MLS), which world-famous player created a new record for the fastest 100 goal contributions (59 goals and 41 assists) in only 64 matches?",
+        "options": [
+          "Sebastian Giovinco",
+          "Cristiano Ronaldo",
+          "Lionel Messi",
+          "Luis Suárez"
+        ],
+        "answer": 2,
+        "explanation": "Argentine star footballer Lionel Messi, while playing for Inter Miami CF, set the record as the fastest player to reach 100 goal contributions in the regular season of Major League Soccer (MLS). He scored one goal and provided two assists in the match against Toronto FC. With this, Messi completed 100 goal contributions in only 64 matches, including 59 goals and 41 assists.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 138,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 138
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 139
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::139",
+      "question": {
+        "q": "140. Who has been appointed as the Chairperson of the high-level committee constituted by Chief Justice of India (CJI) Surya Kant for the infrastructural and technological modernization of district and subordinate courts across the country?",
+        "options": [
+          "Justice Aravind Kumar",
+          "Sanjeev Sanyal",
+          "Justice D.Y. Chandrachud",
+          "K.V. Subramanian"
+        ],
+        "answer": 0,
+        "explanation": "Chief Justice of India Justice Surya Kant has constituted a “Judicial Infrastructure Advisory Committee” to assess the infrastructural requirements of courts and prepare a framework for modern judicial infrastructure. The committee is chaired by Supreme Court judge Justice Aravind Kumar. The objective of the committee is to identify infrastructural deficiencies in High Courts and District Courts, and to suggest measures to make modern court complexes, e-Courts/ technical infrastructure and the justice delivery system more efficient. After considering the committee’s report, the CJI will take up the matter further with the Government of India and the State Governments.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 139,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 139
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 51
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::51",
+      "question": {
+        "q": "52. The term ‘Goldilocks Zone’ is often seen in the news in the context of which of the following?",
+        "options": [
+          "The limits of the habitable zone above the Earth’s surface",
+          "The region inside the Earth where shale gas is available",
+          "The search for Earth-like planets in outer space",
+          "The search for meteorites containing valuable metals"
+        ],
+        "answer": 2,
+        "explanation": "The Goldilocks zone is also called the habitable zone. It is a region around a star where suitable conditions exist for liquid water to be present on the surface of a planet. Liquid water is an important component in the search for life on planets. In our solar system, Earth is the planet located in the Goldilocks zone. Research is continuing in the search for other Earth-like planets. This zone is neither too hot nor too cold.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 51,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 51
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 81
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::81",
+      "question": {
+        "q": "82. Under the e-Office mission of the Government of Bihar, which district of Bihar became the first to make the operations of its collectorate completely digital and paperless, thereby promoting good governance?",
+        "options": [
+          "Saharsa",
+          "Munger",
+          "Madhubani",
+          "Nalanda"
+        ],
+        "answer": 0,
+        "explanation": "Saharsa became Bihar’s first e-Collectorate/paperless Collectorate. Under the e-Office system, files and correspondence are processed digitally instead of through physical files. This makes it easier to track the movement of files, increases transparency and accountability, and speeds up work processes.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 81,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 81
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 109
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::109",
+      "question": {
+        "q": "110. Who has recently become the first Indian economist to be honoured with the Professional Achievement Award under the Alumni Awards by the University of Chicago?",
+        "options": [
+          "Raghuram Rajan",
+          "K. V. Subramanian",
+          "Amartya Sen",
+          "Arvind Subramanian"
+        ],
+        "answer": 1,
+        "explanation": "K.V. Subramanian, India’s former Chief Economic Adviser and former Executive Director at the IMF, has been honoured with the University of Chicago Alumni Award for Professional Achievement. He became the first Indian economist to receive this honour. This honour is considered significant for his contribution to economic policy during the COVID-19 pandemic, his role in the Economic Surveys,",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 109,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 109
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 124
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::124",
+      "question": {
+        "q": "125. Who was the first Assamese woman newsreader of All India Radio (AIR) and Assam’s first woman radio journalist, who recently passed away at the age of 90?",
+        "options": [
+          "Lily Das Malik",
+          "Suprabha Devi",
+          "Kanaklata Barua",
+          "Dr. Indira Goswami"
+        ],
+        "answer": 0,
+        "explanation": "Lily Das, whose full name was Lily Das Malik, was the first Assamese woman newsreader of All India Radio. She passed away on 3 May 2026 in Bengaluru at the age of 90. Due to her clear pronunciation, impressive news-reading style and contribution to public service broadcasting, she is counted among the pioneering voices of Assamese electronic media.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 124,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 124
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 136
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::136",
+      "question": {
+        "q": "137. In the context of motorsports, which country’s rider Jorge Martín recently won the 2026 French MotoGP Grand Prix?",
+        "options": [
+          "Italy",
+          "Spain",
+          "France",
+          "Germany"
+        ],
+        "answer": 1,
+        "explanation": "Spanish MotoGP rider Jorge Martin won the main race of the 2026 French Grand Prix MotoGP held at Le Mans, France, on May 10, 2026. In the closing stages of the race, he overtook his Aprilia Racing teammate and championship leader Marco Bezzecchi. This was his first MotoGP Grand Prix victory since the 2024 Indonesian Grand Prix. Therefore, the correct answer is option (b).",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 136,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 136
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 70
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::70",
+      "question": {
+        "q": "71. With reference to the deficit indicators of the Bihar Budget 2026–27, consider the following statements— 1. In 2026–27, the fiscal deficit is targeted at 3% of GSDP. 2. In 2026–27, the revenue surplus is estimated to be about ₹1,143 crore. 3. In the revised estimates for 2025–26, the fiscal deficit is estimated at 11.8% of GSDP.",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "1 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 3,
+        "explanation": "In the Bihar Budget 2026–27, the fiscal deficit has been targeted at 3% of the Gross State Domestic Product (GSDP). For the same year, the revenue surplus is estimated at about ₹1,143 crore. As per the revised estimates for 2025–26, the fiscal deficit is stated to be 11.8% of GSDP. Therefore, all three statements are correct and the correct answer is option (d).",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 70,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 70
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 71
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::71",
+      "question": {
+        "q": "72. What is the base year of the new series of the Consumer Price Index (CPI) in India?",
+        "options": [
+          "2011–12 = 100",
+          "2012 = 100",
+          "2024 = 100",
+          "2016 = 100"
+        ],
+        "answer": 2,
+        "explanation": "The Consumer Price Index measures changes in the prices of goods and services purchased by households at the retail level. In India, the base year of the new series of the Consumer Price Index is 2024 = 100. Earlier, the main CPI series was based on the base year 2012 = 100, but in the new series, the base year has been changed to 2024.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 71,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 71
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 82
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::82",
+      "question": {
+        "q": "83. In the recently announced Padma Awards, three eminent personalities from Bihar have been honoured with the Padma Shri. Which of the following persons, who had served as a Vice-Chancellor, received this honour in the field of Science and Engineering?",
+        "options": [
+          "Bharat Singh Bharti",
+          "Dr. Gopal Ji Trivedi",
+          "Bishwa Bandhu (Posthumous)",
+          "Dr. Manas Bihari Verma"
+        ],
+        "answer": 1,
+        "explanation": "In the Padma Awards of the year 2026, Dr. Gopal Ji Trivedi from Bihar was conferred the Padma Shri posthumously. He received this honour for his outstanding contribution to agricultural science, agricultural extension, and agricultural education. He was a former Vice-Chancellor of Rajendra Agricultural University, Pusa.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 82,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 82
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 87
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::87",
+      "question": {
+        "q": "88. At the Bharat Electricity Summit 2026 held at Yashobhoomi, New Delhi, which state was selected as the Focus State Partner, where the state’s energy reforms were showcased under the ‘Powering Bihar’ initiative?",
+        "options": [
+          "Uttar Pradesh",
+          "Gujarat",
+          "Bihar",
+          "Madhya Pradesh"
+        ],
+        "answer": 2,
+        "explanation": "The Bharat Electricity Summit 2026 was held from March 19 to 22, 2026, at Yashobhoomi, Dwarka, New Delhi. Bihar was included as the Focus State in this conference. The Bihar Pavilion was inaugurated by the then Energy Minister, Bijendra Prasad Yadav.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 87,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 87
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 91
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::91",
+      "question": {
+        "q": "92. Under the One District One Product scheme, the state’s first ‘Turmeric Cluster’ is being established in Sakra block of Muzaffarpur district in Bihar. Under this scheme, which famous premium turmeric variety of Meghalaya... will be cultivated?",
+        "options": [
+          "Salem Turmeric",
+          "Erode Turmeric",
+          "Lakadong Turmeric",
+          "Kandhamal Turmeric"
+        ],
+        "answer": 2,
+        "explanation": "Bihar’s first ‘turmeric cluster’ is being developed in Sakra block of Muzaffarpur district, where Meghalaya’s famous ‘Lakadong turmeric’ will be cultivated. This variety is known for its high curcumin content of 7–12%, which is higher than that of common turmeric. Due to its medicinal properties, it is widely used in the spice, pharmaceutical, and nutraceutical industries.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 91,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 91
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 111
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::111",
+      "question": {
+        "q": "112. What is the name of India’s first commercial seaplane airline to receive the Air Operator Certificate (AOC) from the Directorate General of Civil Aviation (DGCA)?",
+        "options": [
+          "WaterHop Aviation",
+          "SkyHop Aviation",
+          "Sealink Airways",
+          "Deccan Aviation"
+        ],
+        "answer": 1,
+        "explanation": "After receiving the Air Operator Certificate (AOC) from the Directorate General of Civil Aviation (DGCA), SkyHop Aviation has emerged as India’s first dedicated commercial seaplane operator. Seaplanes are aircraft that can take off from and land on water. SkyHop Aviation conducted water take-off and landing trials at Ganga Barrage and Tehri Lake in Uttarakhand. Led by Avani Singh, this company plans, in its initial phase, to connect five islands of Lakshadweep with one another and with the mainland through a 19-seater aircraft.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 111,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 111
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 112
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::112",
+      "question": {
+        "q": "113. The University of Oxford and the Serum Institute of India (SII) have recently entered into a licence agreement for the development of the next-generation multi-stage vaccine candidate component R78C for which disease?",
+        "options": [
+          "Malaria",
+          "Tuberculosis",
+          "COVID-19",
+          "Zika virus"
+        ],
+        "answer": 0,
+        "explanation": "A licence agreement has been signed between the University of Oxford and the Serum Institute of India (SII) to advance the development and manufacture of a new malaria vaccine candidate component, R78C. R78C is being developed as a component of a next-generation multi-stage malaria vaccine candidate. Its objective is to develop stronger and longer lasting protection against malaria by targeting different stages of the parasite’s lifecycle.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 112,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 112
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 114
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::114",
+      "question": {
+        "q": "115. Recently, at which place was a Guinness World Record created by unfurling a 60 × 40-metre national flag (Tricolour), the largest underwater national flag?",
+        "options": [
+          "Marine Drive, Mumbai",
+          "Radhanagar Beach, Swaraj Dweep, Andaman and Nicobar Islands",
+          "Visakhapatnam Coast, Andhra Pradesh",
+          "Minicoy Island, Lakshadweep"
+        ],
+        "answer": 1,
+        "explanation": "The Andaman and Nicobar Administration created a Guinness World Record by unfurling the Indian Tricolour underwater at Radhanagar Beach on Swaraj Dweep in the Andaman and Nicobar Islands. The flag measured 60 × 40 metres, which was recorded by Guinness World Records as 2,400.764 square metres. This record has been recognised in the category of “Largest flag unfurled underwater”. Divers from the Department of Tourism, Andaman and Nicobar Police, Forest Department, Indian Navy, Indian Coast Guard and local diving centres supported this campaign.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 114,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 114
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 115
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::115",
+      "question": {
+        "q": "116. In the context of the digital revolution in the Indian judicial system, which of the following statements is true?",
+        "options": [
+          "Kerala has become the first state in the country with a completely paperless judicial system.",
+          "Sikkim has become the first state in India to adopt a completely paperless state judiciary.",
+          "Paperless courts are based entirely on the state’s own local private cloud database.",
+          "Under this system, physical e-Sewa Kendras have been completely prohibited."
+        ],
+        "answer": 1,
+        "explanation": "Chief Justice of India Justice Surya Kant declared Sikkim as India’s first paperless state judiciary on May 1, 2026, at the Conclave on Technology and Judicial Education held in Gangtok. This initiative is linked to the e-Courts Project and the increasing use of Information and Communication Technology in the judiciary. Under this initiative, e-filing, digital case management, digital records, online access to orders/judgments, video conferencing and other digital services are being promoted.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 115,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 115
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 118
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::118",
+      "question": {
+        "q": "119. Which statement is incorrect regarding the world’s first ‘OptoSAR’ satellite, ‘Mission Drishti’, launched by the space-tech start-up ‘GalaxEye’ in May 2026?",
+        "options": [
+          "It was launched from California by SpaceX’s Falcon 9 rocket.",
+          "It is the world’s first platform to combine both Electro-Optical (EO) and Synthetic Aperture Radar (SAR) technologies.",
+          "It is equipped with the NVIDIA Jetson Orin AI system for in-space data processing.",
+          "Imagery from this satellite can be captured only in daylight and clear weather."
+        ],
+        "answer": 3,
+        "explanation": "On May 3, 2026, the Mission Drishti satellite of Bengaluru-based space startup GalaxEye was launched aboard SpaceX’s Falcon 9 rocket from SLC 4E, California. It is the world’s first OptoSAR imaging satellite, in which Synthetic Aperture Radar (SAR) and multispectral imaging (MSI) sensors have been combined on a single platform. Due to SAR technology, this satellite is capable of day-and night, all-weather imaging despite clouds, darkness and weather-related obstacles. Therefore, statement (d) is incorrect.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 118,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 118
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 119
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::119",
+      "question": {
+        "q": "120. In May 2026, where is the second edition of the joint military exercise ‘CINBAX-II 2026’ being held to strengthen bilateral defence cooperation between the Indian Army and the Royal Cambodian Army?",
+        "options": [
+          "Umroi, Meghalaya",
+          "Kampong Speu Province, Cambodia",
+          "Pune, Maharashtra",
+          "Siem Reap, Cambodia"
+        ],
+        "answer": 1,
+        "explanation": "The second edition of the bilateral military exercise CINBAX-II 2026 between India and Cambodia was held from May 04 to 17, 2026, at Techo Sen Phnom Thom Mreas Prov Royal Cambodian Air Force Training Centre (Camp Basil), Kampong Speu Province, Kingdom of Cambodia. A total of 120 Indian Army personnel participated in it, mainly from a battalion of the Maratha Light Infantry Regiment. From the Cambodian side, 160 personnel of the Royal Cambodian Army participated. The main objective of this exercise was to enhance interoperability, coordination and operational synergy between the two armies.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 119,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 119
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 122
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::122",
+      "question": {
+        "q": "123. Which retired judge has recently been appointed by the central government as the full-time President of the National Company Law Tribunal (NCLT)...?",
+        "options": [
+          "Justice Arvind Kumar",
+          "Justice Anupinder Singh Grewal",
+          "Justice Surya Kant",
+          "Justice Sanjay Kishan Kaul"
+        ],
+        "answer": 1,
+        "explanation": "The central government appointed Justice Anupinder Singh Grewal as the President of the National Company Law Tribunal (NCLT). He is a retired judge of the Punjab and Haryana High Court. His appointment was made on April 29, 2026, and he assumed charge on May 11, 2026. His tenure will be for five years from the date of assuming charge or until he attains the age of 67 years, whichever is earlier. NCLT is a quasi-judicial body that deals with matters related to company law and the Insolvency and Bankruptcy Code, 2016.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 122,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 122
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 123
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::123",
+      "question": {
+        "q": "124. Which state has launched India’s first ‘Digital Grievance Redressal Mechanism’ for gig workers with the aim of providing social and legal protection to platform-based workers?",
+        "options": [
+          "Rajasthan",
+          "Maharashtra",
+          "Karnataka",
+          "Tamil Nadu"
+        ],
+        "answer": 2,
+        "explanation": "Explanation: Karnataka has launched India’s first dedicated digital grievance redressal system for platform-based gig workers. Through this system, gig workers associated with platforms such as Ola, Swiggy and Zomato can register and track online complaints related to payments, deductions, incentives, termination, unfair penalties and unsafe or unfair working conditions. Complaints can be sent to the Internal Dispute Resolution Committee (IDRC) of the concerned platform, and if required, the matter can be taken to the Karnataka Platform Based Gig Workers Welfare Board.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 123,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 123
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 125
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::125",
+      "question": {
+        "q": "126. Which Indian Institute of Technology (IIT) has established its first global research centre in Menlo Park, California, USA...?",
+        "options": [
+          "IIT Bombay",
+          "IIT Delhi",
+          "IIT Madras",
+          "IIT Kanpur"
+        ],
+        "answer": 2,
+        "explanation": "The Indian Institute of Technology Madras (IIT Madras) Global Research Foundation has established its first U.S. center in Menlo Park, California, in the United States. This center is located near Silicon Valley and is being developed with the objective of connecting Indian research, innovation and deep-tech startups with global markets, investors, mentorship and international partnerships.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 125,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 125
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 127
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::127",
+      "question": {
+        "q": "128. According to the ‘World Migration Report 2026’ released by the International Organization for Migration (IOM), which country ranked first globally in receiving remittance inflows in 2024?",
+        "options": [
+          "Mexico",
+          "China",
+          "Philippines",
+          "India"
+        ],
+        "answer": 3,
+        "explanation": "According to the World Migration Report 2026, India ranked first in the world in 2024 by receiving remittances worth US$137.67 billion. Remittances refer to money sent by migrants living or working abroad to their home country. In 2024 as well, India remained the only country in the world to receive remittances of more than US$100 billion. India was followed by Mexico, the Philippines, France and Pakistan. In South Asia, remittance inflows increased by",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 127,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 127
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 129
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::129",
+      "question": {
+        "q": "130. Who has been appointed by the Central Government as the new Chairperson of the Central Board of Film Certification (CBFC), replacing outgoing Chairperson Prasoon Joshi?",
+        "options": [
+          "Shashi Shekhar Vempati",
+          "Gaurav Dwivedi",
+          "Sanjeev Sanyal",
+          "Anurag Thakur"
+        ],
+        "answer": 0,
+        "explanation": "The Government of India, through a notification dated 6 May 2026, appointed Shashi Shekhar Vempati as the Chairperson of the Central Board of Film Certification (CBFC). He was appointed in place of Prasoon Joshi. Prasoon Joshi stepped down from the position of CBFC Chairperson after being appointed Chairman of Prasar Bharati. Shashi Shekhar Vempati is the former Chief Executive Officer (CEO) of Prasar Bharati and a graduate of IIT Bombay. He will hold this post for three years from the date of assuming charge. CBFC is a statutory body under the Ministry of Information and Broadcasting, which certifies and regulates films for public exhibition under the Cinematograph Act, 1952.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 129,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 129
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 132
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::132",
+      "question": {
+        "q": "133. The Bihar State Cabinet has recently approved a loan proposal of $500 million, approximately ₹4,750 crore, from which global financial institution to strengthen urban areas and civic infrastructure in the state under the Bihar Urban Transformation Program?",
+        "options": [
+          "Asian Development Bank (ADB)",
+          "World Bank",
+          "New Development Bank (NDB)",
+          "International Monetary Fund (IMF)"
+        ],
+        "answer": 1,
+        "explanation": "The Bihar State Cabinet approved a loan proposal of about US$500 million, or around ₹4,750 crore, from the World Bank for the Bihar Urban Transformation Programme. The objective of this programme is to strengthen planned urbanization, civic infrastructure, the capacity of urban local bodies and sustainable urban development in selected urban areas of the state.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 132,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 132
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 134
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::134",
+      "question": {
+        "q": "135. Who has the Government of India recently appointed as the country’s next Chief of Defence Staff (CDS) after the completion of General Anil Chauhan’s tenure?",
+        "options": [
+          "Lieutenant General N.S. Raja Subramani",
+          "Vice Admiral Krishna Swaminathan",
+          "General Upendra Dwivedi",
+          "Air Marshal Amar Preet Singh"
+        ],
+        "answer": 0,
+        "explanation": "The Government of India appointed Lieutenant General N.S. Raja Subramani (Retd.) as the new Chief of Defence Staff (CDS) of the country on 9 May 2026. He was serving as the Military Adviser in the National Security Council Secretariat (NSCS). General Anil Chauhan’s tenure ended on 30 May 2026, and General N.S. Raja Subramani assumed charge as the third CDS and Secretary of the Department of Military Affairs (DMA) on 31 May 2026. He has more than four decades of military service and experience in key command and staff appointments. ",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 134,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 134
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 7",
+        "questionId": null,
+        "questionIndex": 135
+      },
+      "sourceIdentity": "mock::mock.json::Set 7::135",
+      "question": {
+        "q": "136. Who has been appointed as the new Chief of the Naval Staff of the Indian Navy to replace outgoing Admiral Dinesh K. Tripathi on May 31, 2026?",
+        "options": [
+          "Vice Admiral Krishna Swaminathan",
+          "Vice Admiral Sanjay Jasjit Singh",
+          "Admiral R. Hari Kumar",
+          "Lieutenant General N.S. Raja Subramani"
+        ],
+        "answer": 0,
+        "explanation": "Admiral Krishna Swaminathan assumed charge as the 27th Chief of the Naval Staff of the Indian Navy on May 31, 2026. He succeeded Admiral Dinesh Kumar Tripathi, who retired from service on May 31, 2026. Before assuming charge, Krishna Swaminathan was the Flag Officer Commanding in-Chief of the Western Naval Command. He was commissioned into the Indian Navy on July 1, 1987, and is a Communication and Electronic Warfare specialist. He has been awarded the Param Vishisht Seva Medal, Ati Vishisht Seva Medal and Vishisht Seva Medal for distinguished service.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 135,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 135
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 74
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::74",
+      "question": {
+        "q": "75. Which Ministry/Ministries will implement the PM-SETU scheme? 1. Ministry of Labour and Employment 2. Ministry of Skill Development and Entrepreneurship 3. Ministry of Electronics and Information Technology 4. NITI Aayog",
+        "options": [
+          "Only 1 and 4",
+          "Only 2",
+          "Only 3 and 4",
+          "Only 4"
+        ],
+        "answer": 1,
+        "explanation": "The PM-SETU Scheme is related to making Industrial Training Institutes modern and industry oriented. It is implemented under the Ministry of Skill Development and Entrepreneurship. Therefore, only statement 2 is correct.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 74,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 74
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 78
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::78",
+      "question": {
+        "q": "79. With reference to the unemployment rate and labour force participation, consider the following statements: 1. When the labour force participation rate increases, the unemployment rate decreases. 2. When monthly/quarterly labour market indicators are released...",
+        "options": [
+          "Neither 1 nor 2",
+          "Only 1",
+          "Only 2",
+          "Both 1 and 2"
+        ],
+        "answer": 2,
+        "explanation": "The Labour Force Participation Rate is the proportion of persons in the population who are employed or are seeking or available for work, whereas the unemployment rate is the proportion of unemployed persons in the labour force. Therefore, it is not necessary that the unemployment rate will automatically decrease when the Labour Force Participation Rate increases. If new persons join the labour force and do not get employment, the unemployment rate may also increase. The release of monthly and quarterly labour market indicators makes it possible to analyse separate trends for rural and urban areas. This makes it possible to understand fluctuations in unemployment in a more detailed manner. Therefore, only statement 2 is correct.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 78,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 78
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 90
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::90",
+      "question": {
+        "q": "91. On January 29, 2026, Chief Minister Nitish Kumar inaugurated ‘APICON 2026’... What was the main theme of the conference this year?",
+        "options": [
+          "Digital Health and Rural India",
+          "Medical Science and Humanity",
+          "Infectious Diseases and the Future of AI",
+          "Universal Health Coverage: A New Resolve"
+        ],
+        "answer": 1,
+        "explanation": "‘APICON 2026’ was organized in Patna from January 29 to February 1, 2026. Its theme was Medical Science and Humanity. About 10,000 physicians from across the country participated in it.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 90,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 90
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 109
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::109",
+      "question": {
+        "q": "110. Which institutions jointly launched the recently launched national-level cybersecurity awareness programme ‘e-SafeHER’ to make rural women digitally secure?",
+        "options": [
+          "NITI Aayog and Reliance Foundation",
+          "C-DAC (MeitY) and Reliance Foundation",
+          "National Commission for Women and Infosys",
+          "Indian Cyber Crime Coordination Centre (I4C) and TCS"
+        ],
+        "answer": 1,
+        "explanation": "Explanation: level The national cyber security awareness training programme e-SafeHER has been jointly launched by C-DAC, Hyderabad and Reliance Foundation. C-DAC, Hyderabad is a scientific society under the Ministry of Electronics and Information Technology (MeitY). The objective of this programme is to create awareness and provide training to 10 lakh women in rural India in safe digital practices and cyber security over the next three years.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 109,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 109
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 112
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::112",
+      "question": {
+        "q": "113. In April 2026, who was appointed as the new Secretary General of the country’s leading industry organization, the ‘Federation of Indian Chambers of Commerce and Industry’ (FICCI)?",
+        "options": [
+          "Anant Swarup",
+          "Jyoti Vij",
+          "Suman K. Bery",
+          "Srikanth Velamakanni"
+        ],
+        "answer": 0,
+        "explanation": "The Federation of Indian Chambers of Commerce and Industry (FICCI) appointed Anant Swarup as its new Secretary General, effective 15 April 2026. He is a 1992-batch officer of the Indian Railway Personnel Service (IRPS).",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 112,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 112
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 114
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::114",
+      "question": {
+        "q": "115. In the context of wildlife conservation and connectivity, the country’s first ‘Trans-Boundary Tiger Reserve’ is proposed to be established by bringing together the forest areas of which three states?",
+        "options": [
+          "Madhya Pradesh, Chhattisgarh and Maharashtra",
+          "Uttarakhand, Uttar Pradesh and Himachal Pradesh",
+          "Assam, Arunachal Pradesh and Nagaland",
+          "Karnataka, Kerala and Tamil Nadu"
+        ],
+        "answer": 1,
+        "explanation": "Uttarakhand has proposed the country’s first “Trans Boundary Tiger Reserve.” This proposal is related to the safe move ment of wildlife, habitat connectivity, and coordinated conservation management in the adjoining forest areas of Uttarakhand, Uttar Pradesh, and Himachal Pradesh.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 114,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 114
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 116
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::116",
+      "question": {
+        "q": "117. In April 2026, which famous tennis player did India’s leading IT company Infosys appoint as its new ‘Global Brand Ambassador’?",
+        "options": [
+          "Novak Djokovic",
+          "Carlos Alcaraz",
+          "Rafael Nadal",
+          "Lamine Yamal"
+        ],
+        "answer": 1,
+        "explanation": "In April 2026, Infosys appointed Spanish tennis star Carlos Alcaraz as its new “Global Brand Ambassador.” Infosys announced a multi-year partnership with him. Carlos Alcaraz became the youngest player to attain the world No. 1 position in the ATP rankings in men’s tennis. He is a seven-time Grand Slam winner and, in 2026, became the youngest male player to complete the Career Grand Slam after winning the Australian Open. Under this partnership, Infosys will promote AI-powered match analytics, a personalised performance application, and digital innovation.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 116,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 116
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 119
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::119",
+      "question": {
+        "q": "120. Marking a shift in its diplomatic policy, which senior political leader has the Government of India appointed, instead of a career diplomat, as India’s new High Commissioner to Bangladesh?",
+        "options": [
+          "Ajay Kumar Bhalla",
+          "Dinesh Trivedi",
+          "Samrat Choudhary",
+          "Ashok Kumar Lahiri"
+        ],
+        "answer": 1,
+        "explanation": "On 27 April 2026, the Ministry of External Affairs appointed senior politician and former Union Minister Dinesh Trivedi as the next High Commissioner of India to Bangladesh. This appointment was considered significant because career diplomats or officers of the Indian Foreign Service are generally appointed to such high diplomatic posts. Dinesh Trivedi’s appointment underlines political dialogue and diplomatic priority in India-Bangladesh relations. It is also important in the broader context of India’s Neighbourhood First Policy.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 119,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 119
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 120
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::120",
+      "question": {
+        "q": "121. India’s first major private gold mine after Independence, the ‘Jonnagiri Gold Project’, will be dedicated to the nation in May 2026. In which state is this project located?",
+        "options": [
+          "Karnataka",
+          "Telangana",
+          "Odisha",
+          "Andhra Pradesh"
+        ],
+        "answer": 3,
+        "explanation": "The Jonnagiri Gold Project is located in the area of Jonnagiri, Pagidirai, and Erragudi villages in Tuggali Mandal of Kurnool district, Andhra Pradesh. This project is being developed over a mining lease area of 597.82 hectares, i.e., approximately 598 hectares. It is being developed by Geomysore Services India Pvt",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 120,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 120
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 126
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::126",
+      "question": {
+        "q": "127. Who has been honoured with the 9th ‘Prof. M.S. Swaminathan Award’ for the year 2024-25 for outstanding contribution in the field of agricultural research and leadership?",
+        "options": [
+          "Dr. Ch. Srinivasa Rao",
+          "Acharya Balkrishna",
+          "Anant Swarup",
+          "Dr. Milind Sudhakar Marathe"
+        ],
+        "answer": 0,
+        "explanation": "Dr. Ch. Srinivasa Rao, Director and Vice-Chancellor of ICAR-Indian Agricultural Research Institute (ICAR-IARI), New Delhi, was honoured with the 9th ‘Prof. M.S. Swaminathan Award’ for the year 2024-25. The award was presented by former Vice-President of India M. Venkaiah Naidu at a ceremony held in Hyderabad on 18 April 2026. Dr. Rao received this award for his exceptional and sustained contribution to climate-resilient farming and natural resource management. This award was instituted by the Retired ICAR Employees Association (RICAREA) and Nuziveedu Seeds Limited (NSL), and it recognises outstanding lifetime achievements in agricultural science.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 126,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 126
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 132
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::132",
+      "question": {
+        "q": "133. Who has been honoured with the ‘Global Green Icon’ title for environmental conservation and the ‘Green India Challenge’ at the World Climate Leaders Conclave 2026 held at the ‘House of Lords’ in London?",
+        "options": [
+          "Joginipally Santosh Kumar",
+          "K.C. Venugopal",
+          "Baijayant Panda",
+          "Faggan Singh Kulaste"
+        ],
+        "answer": 0,
+        "explanation": "Former Rajya Sabha member and Chairman of the Igniting Minds Organisation, Joginipally Santosh Kumar, was honoured with the ‘Global Green Icon’ award at the World Climate Leaders Conclave 2026 held at the House of Lords in London. He was given this honour for his contribution to public participation-based tree plantation, increasing green cover and making environmental protection a people’s movement through the ‘Green India Challenge’. The Green India Challenge was started in 2018. He also presented the ‘Green India Challenge/ Green India Model’ at a high-level meeting of the Commonwealth Secretariat in London, which was regarded as an example of citizen based climate action linked to the Sustainable Development Goals.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 132,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 132
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 86
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::86",
+      "question": {
+        "q": "87. ‘Jitwarpur village’, approved by the Ministry of Textiles, Government of India, is set to become Bihar’s first Shilpgram (Craft Village). This village is located in which district of Bihar?",
+        "options": [
+          "Muzaffarpur",
+          "Bhagalpur",
+          "Madhubani",
+          "Patna"
+        ],
+        "answer": 2,
+        "explanation": "‘Jitwarpur village’ is located in Madhubani district of Bihar. It is being developed as the first Shilpgram of Bihar. This village is a major centre of Mithila/ Madhubani painting and is known as the School of Mithila Painting.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 86,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 86
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 87
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::87",
+      "question": {
+        "q": "88. As per the recent decision taken by the Bihar Cabinet, what has ‘Sanjay Gandhi Biological Park’ now officially been renamed?",
+        "options": [
+          "Pataliputra National Park",
+          "Patna Zoo",
+          "Magadh Wildlife Sanctuary",
+          "Gandak Biological Park"
+        ],
+        "answer": 1,
+        "explanation": "On April 29, 2026, the Bihar Council of Ministers approved renaming ‘Sanjay Gandhi Biological Park’ as ‘Patna Zoo’ and changing the name of its management society to ‘Patna Zoo Management and Development Society’. This park was established in 1973 and is classified as a large zoo by the Central Zoo Authority. It is famous for the successful breeding of the one-horned rhinoceros.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 87,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 87
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 91
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::91",
+      "question": {
+        "q": "92. What was the Santhal Pargana region called in very ancient times?",
+        "options": [
+          "Narikhand",
+          "Man-Varjikah",
+          "Kartasina",
+          "None of these"
+        ],
+        "answer": 0,
+        "explanation": "In very ancient times, the Santhal Pargana region was called ‘Narikhand’. It is also mentioned in the Bhavishya Purana. In addition, in Buddhist literature, it has also been called Kajangala. At present, it is a part of Jharkhand. Lok Sabha prematurely on the advice of such a Council of Ministers, the President may also exercise discretion regarding the possibility of forming a new government.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 91,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 91
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 111
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::111",
+      "question": {
+        "q": "112. Which company has become the first in India to receive the globally recognized ‘Farm Sustainability Assessment (FSA) 3.0’ certification for wheat and paddy cultivation?",
+        "options": [
+          "Patanjali Ayurved Limited",
+          "ITC Limited",
+          "Adani Wilmar Limited",
+          "Tata Consumer Products"
+        ],
+        "answer": 1,
+        "explanation": "ITC Limited became the first company in India to receive the globally recognised Farm Sustainability Assessment (FSA)",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 111,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 111
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 122
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::122",
+      "question": {
+        "q": "123. Who has won the title of ‘Femina Miss India World 2026’ at the national beauty pageant held for the first time in Bhubaneswar, Odisha?",
+        "options": [
+          "Sadhvi Satish Sail",
+          "Rajnandini Pawar",
+          "Sree Advaita",
+          "Sayani Gupta"
+        ],
+        "answer": 0,
+        "explanation": "Sadhvi Satish Sail of Goa won the title of “Femina Miss India World 2026” at the grand finale of the 61st Femina Miss India 2026, held on 18 April 2026 at KIIT in Bhubaneswar, Odisha. This event was held in Odisha for the first time. Representatives from 30 states/ Union Territories across the country participated in the competition. Sadhvi Sail will represent India at the 74th Miss World Festival to be held in Tanzania in 2027.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 122,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 122
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 130
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::130",
+      "question": {
+        "q": "131. Who has been selected for the World Economic Forum’s (WEF) “Young Global Leaders Class of 2026” for space management and sustainable development through technology-based ‘self-storage’ services in densely populated Asian cities?",
+        "options": [
+          "Arthur Law",
+          "Frank Schnabel",
+          "Rory McIlroy",
+          "Toni Kroos"
+        ],
+        "answer": 0,
+        "explanation": "Arthur Law, Co founder and Managing Principal of Storefriendly Self Storage Group Asia, has been selected by the World Economic Forum (WEF) as a ‘Young Global Leader’ for 2026. Under the vision “Make Space for the Future”, he is working to solve challenges related to urban living and limited space in Asia’s densely populated cities through technology-based self-storage services. His work also includes strategic partnerships with Blackstone and Partners Group. WEF’s Young Global Leaders platform recognises emerging leaders under the age of 40 who are creating a positive global impact in various fields.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 130,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 130
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 134
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::134",
+      "question": {
+        "q": "135. From a scientific and environmental point of view, where has the world’s first permanent deep geological repository for spent nuclear fuel been made operational to safely store highly radioactive spent nuclear fuel for thousands of years?",
+        "options": [
+          "Onkalo (Finland)",
+          "Olkiluoto (Sweden)",
+          "Osaka (Japan)",
+          "Sibt (Russia)"
+        ],
+        "answer": 0,
+        "explanation": "Explanation: The Onkalo Repository is located in Olkiluoto, Eurajoki, Finland. It is considered the world’s first deep geological repository for the final disposal of spent nuclear fuel. This facility has been built in stable underground bedrock at a depth of about 400-430 12 Skeâerke=âle 72JeeR mebÙegòeâ (ØeejbefYekeâ) ØeefleÙeesefielee hejer#ee रफ कार्य हेतु metres. Its safety is based on a multi barrier system, which includes final disposal canisters, a bentonite buffer, tunnel backfill and natural bedrock.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 134,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 134
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 6",
+        "questionId": null,
+        "questionIndex": 137
+      },
+      "sourceIdentity": "mock::mock.json::Set 6::137",
+      "question": {
+        "q": "138. Who won the title of the international golf tournament ‘Singapore Open 2026’ (Asian Tour) with a ‘wire-to-wire’ victory?",
+        "options": [
+          "Jeongwoo Ham (South Korea)",
+          "Cameron John (Australia)",
+          "Gaganjeet Bhullar (India)",
+          "Pukhraj Singh Gill (India)"
+        ],
+        "answer": 0,
+        "explanation": "South Korean golfer Jeongwoo Ham won the 2026 Singapore Open presented by The Business Times. This tournament was held from 23 to 26 April 2026 at Sentosa Golf Club, The Serapong, Singapore. India’s Pukhraj Singh Gill and Gaganjeet Bhullar finished tied 26th with a score of 4-under 280.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 137,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 137
+        }
+      }
     }
   ]
 }

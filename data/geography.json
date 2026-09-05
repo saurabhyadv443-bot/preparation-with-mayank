@@ -106664,6 +106664,110 @@
           "questionId": null,
           "questionIndex": 97
         }
+      },
+      {
+        "q": "97. Among the four southern states—Andhra Pradesh, Karnataka, Kerala and Tamil Nadu—which one shares borders with the largest number of Indian states?",
+        "options": [
+          "Andhra Pradesh",
+          "Karnataka",
+          "Andhra Pradesh and Karnataka",
+          "Tamil Nadu and Kerala"
+        ],
+        "answer": 1,
+        "explanation": "With the present state boundaries, among the four given states, Karnataka borders the highest number of Indian states. Karnataka shares borders with Maharashtra, Goa, Telangana, Andhra Pradesh, Tamil Nadu, and Kerala—a total of 6 states. In contrast, Andhra Pradesh shares borders with 5 states, Tamil Nadu with 3 states, and Kerala with 2 Indian states. Therefore, option (b) is the correct answer.",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 96,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 96
+        }
+      },
+      {
+        "q": "66. Palghat Gap is situated between which of the following?",
+        "options": [
+          "Nilgiri and Cardamom Hills",
+          "Nilgiri and Annamalai Hills",
+          "Annamalai and Cardamom Hills",
+          "Cardamom Hills and Palani Hills"
+        ],
+        "answer": 1,
+        "explanation": "The Palghat Gap is located between the Nilgiri and Anaimalai Hills.",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 65,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 65
+        }
+      },
+      {
+        "q": "74. The size of a marginal agricultural landholding in India is",
+        "options": [
+          "More than 5 hectares",
+          "2 hectares to 4 hectares",
+          "1 hectare to 2 hectares",
+          "Less than 1 hectare"
+        ],
+        "answer": 3,
+        "explanation": "Operational holdings are classified on the basis of their size. According to the Agriculture Census 2015–16, the size of a marginal holding in India is less than 1 hectare. A holding of 1 to 2 hectares is called a small holding, 2 to 4 hectares a semi-medium holding, 4 to 10 hectares a medium holding, and 10 hectares or more a large holding. In India, the number of marginal holdings is the highest; in the Agriculture Census 2015–16, their share was about 68.5%.",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 73,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 73
+        }
+      },
+      {
+        "q": "86. The number of Indian states sharing a boundary with Bihar is",
+        "options": [
+          "three",
+          "five",
+          "six",
+          "seven"
+        ],
+        "answer": 0,
+        "explanation": "The Indian states sharing borders with Bihar are Uttar Pradesh, West Bengal and Jharkhand. Bihar also shares a border with Nepal.",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 6",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 85,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 6",
+          "questionId": null,
+          "questionIndex": 85
+        }
       }
     ]
   }

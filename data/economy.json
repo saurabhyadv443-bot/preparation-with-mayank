@@ -42,6 +42,32 @@
           "questionId": null,
           "questionIndex": 0
         }
+      },
+      {
+        "q": "80. Match List–I (Deficit/Concept) with List–II (Most appropriate indicator): A. Fiscal Deficit B. Revenue Deficit C. Primary Deficit D. Total Debt of the Central Government | 1. Total outstanding liabilities of the government 2. Revenue expenditure − Revenue receipts 3. Fiscal deficit − Interest payments 4. Total expenditure − (Revenue receipts + non-debt capital receipts)",
+        "options": [
+          "A–4, B–2, C–3, D–1",
+          "A–1, B–4, C–2, D–3",
+          "A–4, B–2, C–1, D–3",
+          "A–3, B–2, C–4, D–1"
+        ],
+        "answer": 0,
+        "explanation": "Fiscal deficit shows the total borrowing requirement of the government, and it is calculated as: total expenditure − (revenue receipts + non-debt capital receipts). Revenue deficit is revenue expenditure − revenue receipts. Primary deficit is fiscal deficit − interest payments. The total debt of the Central Government shows the total outstanding liabilities or accumulated borrowings of the government. Therefore, the correct matching is A–4, B–2, C–3, D–1. Hence, the correct answer is option (a).",
+        "quizMeta": {
+          "classifications": {
+            "E": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 7",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 79,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 7",
+          "questionId": null,
+          "questionIndex": 79
+        }
       }
     ]
   }
