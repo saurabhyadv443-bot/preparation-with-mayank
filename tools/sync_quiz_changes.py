@@ -1,6 +1,7 @@
 """Apply exported quizPendingChanges to copies of the original quiz JSON files."""
 
 import argparse
+import copy
 import hashlib
 import json
 import shutil
@@ -21,6 +22,13 @@ SUBJECT_FILES = {
 }
 EDITABLE_FIELDS = {"explanation", "answer"}
 CLASSIFICATION_OPERATIONS = {"saved-question", "classification"}
+CLASSIFICATION_DESTINATIONS = {
+    "H": "modern.json",
+    "G": "geography.json",
+    "P": "polity.json",
+    "E": "economy.json",
+    "CA": "current_affairs.json",
+}
 
 
 def question_text(question):
@@ -151,6 +159,110 @@ def apply_change(data_dir, change, data=None):
     return path, data
 
 
+def source_identity(change):
+    return (
+        str(change.get("sourceSubjectKey") or ""),
+        str(change.get("sourceJsonFile") or ""),
+        str(change.get("chapter") or ""),
+        change.get("questionIndex"),
+        None if change.get("questionId") is None else str(change.get("questionId")),
+    )
+
+
+def question_source_identity(question):
+    source = question.get("_source") if isinstance(question, dict) else None
+    if not isinstance(source, dict):
+        source = question if isinstance(question, dict) else {}
+    question_id_value = source.get("questionId")
+    return (
+        str(source.get("sourceSubjectKey") or ""),
+        str(source.get("sourceJsonFile") or ""),
+        str(source.get("chapter") or ""),
+        source.get("questionIndex"),
+        None if question_id_value is None else str(question_id_value),
+    )
+
+
+def source_identity_matches(question, change):
+    expected = source_identity(change)
+    actual = question_source_identity(question)
+    if not actual[0] or actual[0] != expected[0] or actual[2] != expected[2] or actual[3] != expected[3]:
+        return False
+    if actual[1] and expected[1] and actual[1] != expected[1]:
+        return False
+    return expected[4] is None or actual[4] == expected[4]
+
+
+def destination_copy(question, change):
+    result = copy.deepcopy(question)
+    source = {
+        "sourceSubjectKey": change.get("sourceSubjectKey"),
+        "chapter": change.get("chapter"),
+        "questionId": change.get("questionId"),
+        "questionIndex": change.get("questionIndex"),
+    }
+    result["_pyqSubjectKey"] = source["sourceSubjectKey"]
+    result["_pyqChapter"] = source["chapter"]
+    result["_pyqQuestionId"] = source["questionId"]
+    result["_pyqQuestionIndex"] = source["questionIndex"]
+    result["_source"] = source
+    return result
+
+
+def synchronize_destination(data_dir, tag, question, change, active, updates):
+    destination_name = CLASSIFICATION_DESTINATIONS[tag]
+    destination_path = (data_dir / destination_name).resolve()
+    if destination_path.parent != data_dir.resolve() or not destination_path.is_file():
+        raise ValueError("destination JSON file is unavailable")
+    destination_data = updates.get(destination_path)
+    if destination_data is None:
+        destination_data = json.loads(destination_path.read_text(encoding="utf-8"))
+
+    if tag == "CA":
+        entries = destination_data.setdefault("questions", [])
+        if not isinstance(entries, list):
+            raise ValueError("current affairs destination questions must be an array")
+        matches = [index for index, entry in enumerate(entries)
+                   if isinstance(entry, dict) and source_identity_matches(entry.get("question", {}), change)]
+        if active:
+            synchronized = destination_copy(question, change)
+            entry = {
+                "source": synchronized["_source"],
+                "sourceIdentity": "::".join(str(value or "") for value in source_identity(change)[:4]),
+                "question": synchronized,
+            }
+            if matches:
+                entries[matches[0]] = entry
+                for index in reversed(matches[1:]):
+                    entries.pop(index)
+            else:
+                entries.append(entry)
+        else:
+            for index in reversed(matches):
+                entries.pop(index)
+    else:
+        chapters = destination_data.get("chapters")
+        if not isinstance(chapters, dict):
+            raise ValueError("destination chapters must be an object")
+        entries = chapters.setdefault("Important Questions", [])
+        if not isinstance(entries, list):
+            raise ValueError("destination Important Questions must be an array")
+        matches = [index for index, item in enumerate(entries)
+                   if isinstance(item, dict) and source_identity_matches(item, change)]
+        if active:
+            synchronized = destination_copy(question, change)
+            if matches:
+                entries[matches[0]] = synchronized
+                for index in reversed(matches[1:]):
+                    entries.pop(index)
+            else:
+                entries.append(synchronized)
+        else:
+            for index in reversed(matches):
+                entries.pop(index)
+    updates[destination_path] = destination_data
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("legacy_changes", nargs="?", type=Path, help=argparse.SUPPRESS)
@@ -164,15 +276,39 @@ def main():
     changes = load_changes(changes_path.resolve())
     results = []
     updates = {}
+    touched = {}
     for number, change in enumerate(changes, 1):
         try:
             path = source_path(data_dir, change)
             data = updates.get(path)
             path, data = apply_change(data_dir, change, data)
             updates[path] = data
+            identity = source_identity(change)
+            record = touched.setdefault(identity, {"data": data, "change": change, "tags": set()})
+            record["data"] = data
+            record["change"] = change
+            if change.get("operationType") == "classification":
+                record["tags"].add(change.get("tag"))
+            elif change.get("operationType") == "edit-question":
+                record["tags"].update(CLASSIFICATION_DESTINATIONS)
             results.append((number, "APPLIED", change, "validated"))
         except (OSError, json.JSONDecodeError, ValueError) as error:
             results.append((number, "SKIPPED/CONFLICT", change, str(error)))
+    for record in touched.values():
+        change = record["change"]
+        question = resolve_question(record["data"], change)
+        active_classifications = question.get("quizMeta", {}).get("classifications", {})
+        for tag in sorted(record["tags"]):
+            if tag not in CLASSIFICATION_DESTINATIONS:
+                continue
+            synchronize_destination(
+                data_dir,
+                tag,
+                question,
+                change,
+                active_classifications.get(tag) is True,
+                updates,
+            )
     if updates and not args.dry_run:
         backup_dir = args.backup_dir or data_dir.parent / f"quiz-sync-backup-{datetime.now().strftime('%Y%m%d-%H%M%S-%f')}"
         backup_paths(list(updates), backup_dir)
