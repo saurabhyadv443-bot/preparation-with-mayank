@@ -33,6 +33,7 @@ if (!result) {
 
         const card = document.createElement("div");
         card.className = "review-item";
+        card.dataset.highlightScope = `review-${index}`;
         card.innerHTML = `
             <h3>Q${index + 1}. ${escapeHtml(question.q)}</h3>
             <p><strong>Your answer:</strong> ${answerText}</p>
@@ -45,4 +46,5 @@ if (!result) {
         `;
         reviewList.appendChild(card);
     });
+    window.ReviewHighlighter?.refresh();
 }

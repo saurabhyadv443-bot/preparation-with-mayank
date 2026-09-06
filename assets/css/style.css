@@ -25,6 +25,40 @@
     font-family: "Trebuchet MS", "Segoe UI", sans-serif;
 }
 
+.review-page,
+.review-page button,
+.review-page input,
+.review-page select,
+.review-page textarea {
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.review-page {
+    --text: #243447;
+    --muted: #5f7185;
+    --primary: #245b8f;
+    --primary-strong: #1d4d78;
+}
+
+.review-page h1,
+.review-page h2,
+.review-page h3,
+.review-page h4,
+.review-page strong,
+.review-page .eyebrow,
+.review-page .section-heading {
+    color: #294866;
+}
+
+.review-page p,
+.review-page label,
+.review-page .metric-row span,
+.review-page .review-meta,
+.review-page .history-empty,
+.review-page .saved-library-empty {
+    color: var(--muted);
+}
+
 [hidden] {
     display: none !important;
 }
@@ -962,7 +996,7 @@ select:focus-visible {
     margin-top: 12px;
     padding: 14px 52px 14px 14px;
     border-radius: 12px;
-    background: #fff7ed;
+    background: #f1f5f9;
 }
 
 .explanation-box.missing {
@@ -1031,6 +1065,122 @@ select:focus-visible {
 
 .reading-highlight-pink:hover {
     box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+}
+
+.review-highlighter-button {
+    position: fixed;
+    top: 76px;
+    right: 18px;
+    z-index: 2200;
+    width: 34px;
+    min-height: 34px;
+    padding: 6px 9px;
+    border: 1px solid #b91c1c;
+    border-radius: 7px;
+    background: #dc2626;
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 5px 16px rgba(127, 29, 29, 0.24);
+    font: 700 1rem/1 Georgia, "Times New Roman", serif;
+}
+
+.review-highlighter-button:hover,
+.review-highlighter-button:focus-visible {
+    background: #b91c1c;
+    outline: 2px solid rgba(185, 28, 28, 0.28);
+    outline-offset: 1px;
+}
+
+.review-highlighter-button.is-active {
+    border-color: #7f1d1d;
+    background: #dc2626;
+    color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.24), 0 5px 16px rgba(127, 29, 29, 0.24);
+}
+
+.dashboard-heading-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.text-selection-toggle {
+    flex: 0 0 auto;
+    min-height: 34px;
+    padding: 6px 10px;
+    border: 1px solid #c4d4e4;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #526273;
+    cursor: pointer;
+    font: 700 0.82rem/1.2 Georgia, "Times New Roman", serif;
+}
+
+.text-selection-toggle.is-active {
+    border-color: #245b8f;
+    background: #e8f1f8;
+    color: #1f4d73;
+    box-shadow: 0 0 0 2px rgba(36, 91, 143, 0.14);
+}
+
+body.text-selection-locked,
+body.text-selection-locked * {
+    user-select: none;
+}
+
+body.text-selection-locked input,
+body.text-selection-locked textarea,
+body.text-selection-locked select,
+body.text-selection-locked [contenteditable="true"],
+body.text-selection-locked.highlighter-selection-active .explanation-box,
+body.text-selection-locked.highlighter-selection-active .explanation-box *,
+body.text-selection-locked.highlighter-selection-active .collection-quiz-explanation,
+body.text-selection-locked.highlighter-selection-active .collection-quiz-explanation *,
+body.text-selection-locked.highlighter-selection-active .review-item > h3,
+body.text-selection-locked.highlighter-selection-active .review-item > h4,
+body.text-selection-locked.highlighter-selection-active .question-card h3,
+body.text-selection-locked.highlighter-selection-active #searchResults .review-item h4,
+body.text-selection-locked.highlighter-selection-active #matchesList .review-item > p:first-of-type,
+body.text-selection-locked.highlighter-selection-active .saved-question-item > div p {
+    user-select: text;
+}
+
+@media (max-width: 720px) {
+    .review-highlighter-button {
+        top: 68px;
+        right: 10px;
+        width: 32px;
+        min-height: 32px;
+        padding: 5px 8px;
+    }
+}
+
+.review-page .review-item,
+.review-page .review-option {
+    color: #243447;
+}
+
+.review-page .review-item > h3,
+.review-page .question-card h3 {
+    color: #1f3b55;
+}
+
+.review-page .explanation-box,
+.review-page .explanation-box p,
+.review-page .explanation-box li,
+.review-page .explanation-box blockquote,
+.review-page .explanation-box td,
+.review-page .explanation-box th {
+    color: #526273;
+}
+
+.review-highlight {
+    padding: 0 2px;
+    border-radius: 2px;
+    background: #ffeb3b;
+    color: inherit;
+    cursor: pointer;
 }
 
 .rich-table-wrapper {

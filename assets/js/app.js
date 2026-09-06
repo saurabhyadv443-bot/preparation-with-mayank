@@ -17,6 +17,36 @@ function escapeHtml(value) {
         .replace(/'/g, "&#39;");
 }
 
+const TEXT_SELECTION_PREFERENCE_KEY = "portalTextSelectionLocked";
+
+function setTextSelectionPreference(locked) {
+    document.body.classList.toggle("text-selection-locked", locked);
+    const toggle = document.getElementById("textSelectionToggle");
+    if (toggle) {
+        toggle.setAttribute("aria-pressed", String(locked));
+        toggle.setAttribute("aria-label", locked ? "Turn off text selection lock" : "Turn on text selection lock");
+        toggle.textContent = locked ? "Selection: On" : "Selection: Off";
+        toggle.classList.toggle("is-active", locked);
+    }
+}
+
+function initializeTextSelectionPreference() {
+    const locked = localStorage.getItem(TEXT_SELECTION_PREFERENCE_KEY) === "true";
+    setTextSelectionPreference(locked);
+    const toggle = document.getElementById("textSelectionToggle");
+    toggle?.addEventListener("click", () => {
+        const nextValue = !document.body.classList.contains("text-selection-locked");
+        localStorage.setItem(TEXT_SELECTION_PREFERENCE_KEY, String(nextValue));
+        setTextSelectionPreference(nextValue);
+    });
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeTextSelectionPreference, { once: true });
+} else {
+    initializeTextSelectionPreference();
+}
+
 /**
  * Formats seconds into MM:SS format.
  * Used for timer display across quiz, practice, and collection modes.

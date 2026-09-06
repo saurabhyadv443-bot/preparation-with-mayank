@@ -70,7 +70,7 @@
         resultsNode.innerHTML = '';
         if (!matches.length) { resultsNode.innerHTML = '<p>No results found</p>'; return; }
         matches.forEach((m,i)=>{
-            const div = document.createElement('div'); div.className='review-item';
+            const div = document.createElement('div'); div.className='review-item'; div.dataset.highlightScope = `search-${i}`;
             const qhtml = `<div style="display:flex;justify-content:space-between;align-items:center;"><div style="flex:1"><h4>${highlight(m.q, terms)}</h4><div class=\"metric-row\"><span>${escapeHtml(m.subject)} • ${escapeHtml(m.chapter)}</span><strong>${escapeHtml(m.year)} ${m.difficulty? '• '+escapeHtml(m.difficulty):''} ${m.source? '• '+escapeHtml(m.source):''}</strong></div></div><div style=\"margin-left:12px;display:flex;flex-direction:column;gap:6px\"><button class=\"btn btn-primary btn-small reviewBtn\" data-i=\"${i}\">Review</button></div></div>`;
             const optHtml = (m.options||[]).map(o=>`<div class=\"option-wrap\">${highlight(o, terms)}</div>`).join('');
             const expHtml = m.explanation ? `<div class=\"explanation-box\">${highlight(m.explanation, terms)}</div>` : '';
