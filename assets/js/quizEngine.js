@@ -44,6 +44,8 @@ let currentSubjectKey = subject;
 let quizStartedAt = 0;
 let cachedProgressQuestions = null;
 let cachedProgressQuestionsJson = "";
+let progressSaveTimeout = null;
+const PROGRESS_SAVE_INTERVAL_MS = 5000;
 
 const timerNode = document.getElementById("timer");
 const pauseBtn = document.getElementById("pauseBtn");
@@ -1046,7 +1048,7 @@ function runTimer() {
 
     remainingTime -= 1;
     updateTimer();
-    saveProgress();
+    scheduleProgressSave();
 
     if (remainingTime <= 0) {
         clearInterval(timer);
@@ -1274,6 +1276,11 @@ function updatePalette() {
 }
 
 function saveProgress() {
+    if (progressSaveTimeout !== null) {
+        clearTimeout(progressSaveTimeout);
+        progressSaveTimeout = null;
+    }
+
     if (cachedProgressQuestions !== questions) {
         cachedProgressQuestions = questions;
         cachedProgressQuestionsJson = JSON.stringify(questions);
@@ -1297,6 +1304,22 @@ function saveProgress() {
     const serializedProgress = `${progressPrefix.slice(0, -1)},"questions":${cachedProgressQuestionsJson},${progressSuffix.slice(1)}`;
     localStorage.setItem(getProgressKey(), serializedProgress);
 }
+
+function scheduleProgressSave() {
+    if (progressSaveTimeout !== null) {
+        return;
+    }
+    progressSaveTimeout = window.setTimeout(() => {
+        progressSaveTimeout = null;
+        saveProgress();
+    }, PROGRESS_SAVE_INTERVAL_MS);
+}
+
+window.addEventListener("pagehide", () => {
+    if (currentChapter && questions.length) {
+        saveProgress();
+    }
+});
 
 function toggleReviewMark(questionIndex) {
     markedForReview[questionIndex] = !markedForReview[questionIndex];
