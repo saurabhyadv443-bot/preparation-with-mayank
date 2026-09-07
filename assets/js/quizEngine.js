@@ -413,6 +413,19 @@ function startQuiz(chapter) {
     createPalette();
 }
 
+function isMatchListQuestion(question) {
+    return /\bmatch\s+list\b/i.test(String(question?.q || "")) && Array.isArray(question?.options) && question.options.length === 4;
+}
+
+function getRenderedQuestionText(question, isMatchList) {
+    const text = String(question?.q || "");
+    if (!isMatchList) {
+        return text;
+    }
+
+    return text.replace(/(?:\s|<br\s*\/?>)*(?:Code\s*:?\s*){1,2}(?:\s|<br\s*\/?>)*A(?:\s|<br\s*\/?>)+B(?:\s|<br\s*\/?>)+C(?:\s|<br\s*\/?>)+D\s*$/i, "").trim();
+}
+
 function showQuestion() {
     const q = questions[currentQuestion];
     if (!q) {
@@ -420,12 +433,14 @@ function showQuestion() {
     }
 
     const isMarkedReview = Boolean(markedForReview[currentQuestion]);
+    const isMatchList = isMatchListQuestion(q);
+    const renderedQuestionText = getRenderedQuestionText(q, isMatchList);
     let html = `
         <div class="question-header">
             <h3>Question ${currentQuestion + 1}</h3>
         </div>
         <div class="question-statement">
-            <p>${q.q}</p>
+            <p>${renderedQuestionText}</p>
         </div>
     `;
 
@@ -433,7 +448,7 @@ function showQuestion() {
         html += `
             <label class="option-wrap">
                 <input type="radio" name="answer" value="${index}" />
-                <span>${option}</span>
+                <span>${isMatchList ? `${String.fromCharCode(65 + index)}. ` : ""}${option}</span>
             </label>
         `;
     });
