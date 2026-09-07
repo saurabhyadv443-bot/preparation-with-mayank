@@ -12,7 +12,7 @@
 
     async function loadSavedQuestionsFromServer() {
         try {
-            const response = await fetch('data/mock.json?t=' + Date.now(), { cache: 'no-store' });
+            const response = await fetch('data/mock.json');
             if (!response.ok) return;
             const data = await response.json();
             const groups = data['TEST NUMBER'] || {};
@@ -43,7 +43,7 @@
         const sub = subjectMap[subjectId];
         const file = sub ? sub.file : `${subjectId}.json`;
         try{
-            const r = await fetch(`data/${file}?t=${Date.now()}`);
+            const r = await fetch(`data/${file}`);
             if(!r.ok) return [];
             const j = await r.json();
             const ch = j.chapters && j.chapters[chapterName] || [];

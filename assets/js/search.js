@@ -31,7 +31,7 @@
         await Promise.all(files.map(async (file)=>{
             if (!file.toLowerCase().endsWith('.json')) return;
             try{
-                const resp = await fetch(`data/${file}?t=${Date.now()}`);
+                const resp = await fetch(`data/${file}`);
                 if (!resp.ok) return;
                 const j = await resp.json();
                 const subject = j.subject || getSlug(file);

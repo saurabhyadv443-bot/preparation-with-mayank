@@ -115,22 +115,27 @@ function getOriginalClassifiedQuestions(data, sourceSubjectKey, tag) {
 }
 
 async function loadOriginalCurrentAffairsQuestions() {
-    const manifest = await getSubjectMetaMap();
-    const entries = Object.entries(manifest || {});
-    const groups = await Promise.all(entries.map(async ([subjectKey, meta]) => {
-        try {
-            const response = await fetch(`data/${meta.file}`);
-            if (!response.ok) return [];
-            const data = await response.json();
-            const containers = data.chapters || data["TEST NUMBER"] || {};
-            return Object.entries(containers).flatMap(([chapter, questions]) => Array.isArray(questions)
-                ? questions.map((question, index) => copyOriginalQuestion(question, subjectKey, chapter, index))
-                : []);
-        } catch (error) {
-            return [];
-        }
-    }));
-    originalCurrentAffairsQuestions = groups.flat().filter((question) => question.quizMeta?.classifications?.CA === true);
+    try {
+        const response = await fetch("data/current_affairs.json");
+        if (!response.ok) throw new Error("current affairs data missing");
+        const data = await response.json();
+        const entries = Array.isArray(data?.questions) ? data.questions : [];
+        originalCurrentAffairsQuestions = entries
+            .map((entry, index) => {
+                const source = entry?.source || {};
+                const question = entry?.question || entry;
+                const questionIndex = Number.isInteger(source.questionIndex) ? source.questionIndex : index;
+                return copyOriginalQuestion(
+                    question,
+                    source.sourceSubjectKey || "current_affairs",
+                    source.chapter || "Current Affairs",
+                    questionIndex
+                );
+            })
+            .filter((question) => question.quizMeta?.classifications?.CA === true);
+    } catch (error) {
+        originalCurrentAffairsQuestions = [];
+    }
 }
 
 function getAttemptedReviewSections() {
@@ -228,7 +233,7 @@ function buildImportantQuestionsForSubject(subjectKey) {
 async function loadMockCollectionData() {
     if (mockCollectionData) return;
     try {
-        const response = await fetch(`data/mock.json?t=${Date.now()}`, { cache: "no-store" });
+        const response = await fetch("data/mock.json");
         if (response.ok) mockCollectionData = await response.json();
     } catch (error) {
         mockCollectionData = null;
@@ -411,7 +416,7 @@ async function loadSubjectContent() {
     const fileName = (meta && meta[subject] && meta[subject].file) || `${subject}.json`;
 
     try {
-        const resp = await fetch(`data/${fileName}?t=${Date.now()}`);
+        const resp = await fetch(`data/${fileName}`);
         if (!resp.ok) throw new Error('data missing');
         const data = await resp.json();
         subjectData = data;
