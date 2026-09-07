@@ -2786,6 +2786,422 @@ body.text-selection-locked.highlighter-selection-active .saved-question-item > d
     }
 }
 
+/* BPSC classical study-room theme */
+:root {
+    --bg: #f4efe6;
+    --panel: #fffdf8;
+    --text: #243447;
+    --muted: #687789;
+    --primary: #123b5d;
+    --primary-strong: #0b2942;
+    --success: #157a68;
+    --success-soft: #e5f4ef;
+    --warning: #b77716;
+    --warning-soft: #fff4d8;
+    --danger: #a33b45;
+    --danger-soft: #f9e8e7;
+    --accent-soft: #e8f0f5;
+    --neutral-soft: #f2eee7;
+    --line: #d8cfc0;
+    --shadow: 0 10px 28px rgba(36, 52, 71, 0.09);
+    --radius: 10px;
+}
+
+*,
+button,
+input,
+select,
+textarea {
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+body {
+    background:
+        radial-gradient(circle at 12% 0%, rgba(183, 119, 22, 0.08), transparent 28%),
+        linear-gradient(180deg, #f4efe6 0%, #fbfaf7 52%, #f0ece4 100%);
+    color: var(--text);
+}
+
+.header,
+.footer {
+    background: linear-gradient(120deg, #0b2942 0%, #123b5d 64%, #6f2638 100%);
+    box-shadow: 0 8px 22px rgba(11, 41, 66, 0.2);
+}
+
+.header {
+    border-bottom: 3px solid #c18a2d;
+}
+
+.logo-badge {
+    background: linear-gradient(145deg, #c18a2d, #8f5d18);
+    color: #fffaf0;
+    border: 1px solid rgba(255, 250, 240, 0.35);
+    box-shadow: 0 5px 12px rgba(11, 41, 66, 0.2);
+}
+
+.brand-title {
+    letter-spacing: 0.02em;
+}
+
+.brand-subtitle {
+    color: rgba(255, 250, 240, 0.76);
+}
+
+.top-nav a {
+    color: #fffaf0;
+}
+
+.top-nav a:hover,
+.top-nav a:focus-visible {
+    background: rgba(255, 250, 240, 0.12);
+    border-color: rgba(255, 250, 240, 0.3);
+}
+
+.hero {
+    background:
+        linear-gradient(120deg, rgba(11, 41, 66, 0.96), rgba(18, 59, 93, 0.94) 64%, rgba(111, 38, 56, 0.92)),
+        radial-gradient(circle at 80% 0%, rgba(193, 138, 45, 0.3), transparent 32%);
+}
+
+.hero h1,
+.section-heading h1,
+.section-heading h2,
+.panel h2,
+.panel h3,
+.card h3,
+.dashboard-card h2,
+.result-hero h1,
+.review-header h1,
+.review-header h2 {
+    color: var(--primary-strong);
+}
+
+.hero h1,
+.section-heading h1,
+.section-heading h2,
+.result-hero h1,
+.review-header h1,
+.review-header h2 {
+    letter-spacing: 0.01em;
+}
+
+.hero p,
+.card p,
+.dashboard-card p,
+.panel p {
+    color: var(--muted);
+}
+
+.panel,
+.card,
+.dashboard-card,
+.result-hero,
+.review-item,
+.question-palette-modal,
+.entry-gate-card {
+    background: rgba(255, 253, 248, 0.96);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.panel,
+.card,
+.dashboard-card {
+    background: linear-gradient(180deg, #fffdf8 0%, #f8f4ec 100%);
+}
+
+.card:hover,
+.dashboard-card:hover,
+.saved-question-item:hover,
+.review-item:hover {
+    border-color: #c18a2d;
+    box-shadow: 0 12px 26px rgba(36, 52, 71, 0.13);
+}
+
+.stat-card {
+    border: 1px solid rgba(255, 250, 240, 0.25);
+    background: linear-gradient(135deg, #123b5d, #1a5b70);
+    box-shadow: 0 10px 24px rgba(18, 59, 93, 0.2);
+}
+
+.result-stats .stat-card:nth-child(1) {
+    background: linear-gradient(135deg, #126b5a, #1a927c);
+}
+
+.result-stats .stat-card:nth-child(2) {
+    background: linear-gradient(135deg, #8d303e, #b44c52);
+}
+
+.result-stats .stat-card:nth-child(3) {
+    background: linear-gradient(135deg, #526779, #718392);
+}
+
+.result-stats .stat-card:nth-child(4) {
+    background: linear-gradient(135deg, #a96b16, #c18a2d);
+}
+
+.btn,
+.btn-small,
+.back-button,
+.chapter-link,
+.filter-btn,
+.save-question-btn,
+.saved-question-link,
+.classification-mini-btn,
+.progress-button,
+.review-highlighter-button,
+.text-selection-toggle,
+.palette-close,
+.quick-navigation-button,
+.question-palette-modal .palette-btn,
+.btn-save-explanation,
+.btn-cancel-explanation,
+.btn-edit-explanation,
+.btn-edit-answer {
+    border-radius: 7px;
+    font-weight: 700;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
+}
+
+.btn,
+.btn-small {
+    min-height: 36px;
+    padding: 7px 13px;
+    border: 1px solid transparent;
+}
+
+.btn-primary,
+.btn-save-explanation {
+    background: linear-gradient(135deg, #123b5d, #1d5a73);
+    border-color: #0b2942;
+    color: #fffaf0;
+    box-shadow: 0 5px 12px rgba(18, 59, 93, 0.18);
+}
+
+.btn-primary:hover,
+.btn-save-explanation:hover {
+    background: #0b2942;
+    box-shadow: 0 8px 18px rgba(18, 59, 93, 0.25);
+}
+
+.btn-secondary,
+.btn-tertiary,
+.btn-cancel-explanation,
+.text-selection-toggle,
+.palette-close {
+    background: #f2eee7;
+    border-color: #cfc3b2;
+    color: var(--primary);
+}
+
+.btn-secondary:hover,
+.btn-tertiary:hover,
+.btn-cancel-explanation:hover,
+.text-selection-toggle:hover,
+.palette-close:hover {
+    background: #e7dfd2;
+    border-color: #b59d7d;
+}
+
+.btn:active,
+.btn-small:active,
+button:active {
+    transform: translateY(1px);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid rgba(193, 138, 45, 0.42);
+    outline-offset: 2px;
+}
+
+input,
+select,
+textarea,
+.search-input,
+.explanation-input,
+.rich-editor {
+    border-color: #cfc3b2;
+    border-radius: 7px;
+    background: #fffdf8;
+    color: var(--text);
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+.search-input:focus {
+    border-color: #1d5a73;
+    box-shadow: 0 0 0 3px rgba(29, 90, 115, 0.14);
+}
+
+.search-input {
+    background: #fffdf8;
+}
+
+.review-pill,
+.review-status-pill.review-on {
+    background: var(--warning-soft);
+    border: 1px solid #e5c477;
+    color: #80520d;
+}
+
+.result-hero {
+    background: linear-gradient(135deg, #e8f0f5, #fffdf8 68%, #f5e8e8);
+}
+
+.score-ring {
+    background: conic-gradient(#157a68 0 65%, #d8cfc0 65% 100%);
+}
+
+.score-ring div {
+    background: #0b2942;
+}
+
+.progress-track {
+    background: #e3ddd2;
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, #157a68, #2a9b83);
+}
+
+.review-item,
+.review-option,
+.saved-question-item,
+.saved-library-group,
+.option-line,
+.correct-answer-box,
+.answer-editor-section,
+.explanation-box {
+    border-color: var(--line);
+    background: #fffdf8;
+}
+
+.review-option.option-selected,
+.option-selected {
+    border-color: #2b6f85;
+    background: #e8f0f5;
+    box-shadow: inset 3px 0 0 #1d5a73;
+}
+
+.review-option.option-correct,
+.option-correct,
+.review-correct {
+    border-color: #70b9a5;
+    background: var(--success-soft);
+    box-shadow: inset 3px 0 0 var(--success);
+}
+
+.review-wrong,
+.explanation-box.missing {
+    border-color: #dfa2a2;
+    background: var(--danger-soft);
+    color: #7f2634;
+}
+
+.saved-question-link:hover,
+.saved-question-link.saved {
+    border-color: #70b9a5;
+    background: var(--success-soft);
+    color: #12604f;
+}
+
+.palette-close:hover,
+.quick-navigation-button:hover,
+.question-palette-modal .palette-btn:hover {
+    border-color: #c18a2d;
+    box-shadow: 0 4px 10px rgba(36, 52, 71, 0.12);
+}
+
+.question-palette-overlay {
+    background: rgba(11, 41, 66, 0.58);
+}
+
+.question-palette-modal {
+    background: #fffdf8;
+}
+
+.rich-table {
+    border-color: var(--line);
+    background: #fffdf8;
+}
+
+.rich-table th,
+.progress-table th {
+    background: #123b5d;
+    color: #fffaf0;
+}
+
+.rich-table th,
+.rich-table td,
+.progress-table th,
+.progress-table td {
+    border-color: var(--line);
+}
+
+.progress-table tbody tr:nth-child(even) {
+    background: #f8f4ec;
+}
+
+.progress-table tbody tr:hover {
+    background: #e8f0f5;
+}
+
+.progress-correct,
+.progress-percent.high {
+    background: var(--success-soft);
+    color: #12604f;
+}
+
+.progress-incorrect,
+.progress-percent.low {
+    background: var(--danger-soft);
+    color: #7f2634;
+}
+
+.progress-skipped,
+.progress-percent.medium {
+    background: var(--warning-soft);
+    color: #80520d;
+}
+
+.progress-marks {
+    background: var(--accent-soft);
+    color: var(--primary);
+}
+
+.footer {
+    border-top: 3px solid #c18a2d;
+}
+
+@media (max-width: 720px) {
+    .header {
+        padding: 10px 14px;
+    }
+
+    .logo-wrap,
+    .dashboard-heading-row,
+    .review-header {
+        gap: 10px;
+    }
+
+    .hero {
+        padding: 30px 16px;
+    }
+
+    .card,
+    .dashboard-card,
+    .panel,
+    .review-item {
+        padding: 15px;
+    }
+}
+
 /* Final shared presentation layer */
 html {
     scroll-behavior: smooth;

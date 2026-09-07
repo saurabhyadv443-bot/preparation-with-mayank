@@ -28,7 +28,6 @@ async function loadSubjectManifest() {
 
 function resolveSubjectDataFile(subjectKey) {
     if (SUBJECT_MANIFEST && SUBJECT_MANIFEST[subjectKey]) return SUBJECT_MANIFEST[subjectKey].file;
-    // fallback to predictable filename
     return `${subjectKey}.json`;
 }
 
@@ -75,18 +74,9 @@ function safeParseStoredValue(key, fallback = []) {
 }
 
 function getQuizMode() {
-    if (selectedMode === "study") {
-        return "study";
-    }
-
-    if (quizData.quizType === "mock") {
-        return "mock";
-    }
-
-    if (subject === "mock" || quizData.subject === "Mock Test" || quizData.totalTimeSeconds || quizData.duration) {
-        return "mock";
-    }
-
+    if (selectedMode === "study") return "study";
+    if (quizData.quizType === "mock") return "mock";
+    if (subject === "mock" || quizData.subject === "Mock Test" || quizData.totalTimeSeconds || quizData.duration) return "mock";
     return quizData.quizType || "practice";
 }
 
@@ -128,9 +118,7 @@ function saveAttempt(result) {
         answers[key] = selected == null ? null : selected;
         correctAnswers[key] = question.answer;
         questionStatus[key] = selected == null ? "unanswered" : selected === question.answer ? "correct" : "incorrect";
-        if (isSaved(index)) {
-            saved.push(index);
-        }
+        if (isSaved(index)) saved.push(index);
     });
     const attempt = {
         date: completedDate.toLocaleDateString(),
@@ -172,7 +160,6 @@ function saveAttempt(result) {
     history[result.quizId] = retained.map((item, index) => ({ ...item, attempt: index + 1 }));
     localStorage.setItem("quiz_attempt_history", JSON.stringify(history));
 }
-
 function getQuizDuration() {
     return Number(quizData.duration || quizData.totalTimeSeconds || quizData.durationSeconds || 7200);
 }
@@ -414,16 +401,204 @@ function startQuiz(chapter) {
 }
 
 function isMatchListQuestion(question) {
-    return /\bmatch\s+list\b/i.test(String(question?.q || "")) && Array.isArray(question?.options) && question.options.length === 4;
+    const text = String(question?.q || "");
+    const hasListHeaders = /\blist\s*[-–—]?\s*i\b/i.test(text)
+        && /\blist\s*[-–—]?\s*ii\b/i.test(text);
+    const hasColumnHeaders = /\bcolumn\s*[-–—]?\s*(?:i|a)\b/i.test(text)
+        && /\bcolumn\s*[-–—]?\s*(?:ii|b)\b/i.test(text);
+    const hasMatchWording = /\bmatch(?:\s+the)?\s+(?:following|list|lists|columns|pairs)\b/i.test(text);
+    return (hasListHeaders || hasColumnHeaders || hasMatchWording) && Array.isArray(question?.options);
 }
 
-function getRenderedQuestionText(question, isMatchList) {
+function parseMatchListQuestion(question) {
+    if (!isMatchListQuestion(question)) {
+        return null;
+    }
+
+    const text = String(question.q || "")
+        .replace(/<br\s*\/?>/gi, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+    // Find headers - prefer those with parentheses (actual section headers)
+    const headerPattern = /((?:List|Column)\s*[-–—]?\s*(?:I|II|A|B)\b(?:\s*\([^)]*\))?)/gi;
+    const headers = Array.from(text.matchAll(headerPattern));
+
+    // Split headers into two groups: with and without parentheses
+    const headersWithParens = headers.filter((h) => /\([^)]*\)/.test(h[0]));
+    const headersWithoutParens = headers.filter((h) => !/\([^)]*\)/.test(h[0]));
+
+    // Try to find List-I and List-II, preferring those with parentheses
+    const allHeadersForSearch = headersWithParens.length > 0 ? headersWithParens : headers;
+
+    const listOneMatch = allHeadersForSearch.find((header) => /\b(?:List\s*[-–—]?\s*I|Column\s*[-–—]?\s*(?:I|A))\b/i.test(header[0]));
+    const listTwoMatch = allHeadersForSearch.find((header) => /\b(?:List\s*[-–—]?\s*II|Column\s*[-–—]?\s*(?:II|B))\b/i.test(header[0])
+        && header.index > listOneMatch?.index);
+    const firstMarkerMatch = text.match(/(?:^|\s)(\(?[A-Z]\)?[.)]?)(?=\s+)/i);
+    const hasExplicitHeaders = Boolean(listOneMatch && listTwoMatch && listTwoMatch.index > listOneMatch.index);
+    if (!hasExplicitHeaders && !firstMarkerMatch) {
+        return null;
+    }
+
+    const entriesStart = hasExplicitHeaders ? listOneMatch.index + listOneMatch[0].length : firstMarkerMatch.index + firstMarkerMatch[0].length - firstMarkerMatch[1].length;
+    const afterHeaderText = text.slice(entriesStart);
+    const codeMatch = afterHeaderText.match(/\s+Codes?\s*:?/i);
+    const entriesText = (codeMatch ? afterHeaderText.slice(0, codeMatch.index) : afterHeaderText)
+        .replace(listTwoMatch?.[0] || "", " ");
+    const markerPattern = /(?:^|\s)(\(?[A-Z]\)?(?:[.)])?|\(?[IVX]+\)?(?:[.)])?|\(?\d{1,2}\)?(?:[.)])?)(?=\s+)/gi;
+    const markers = Array.from(entriesText.matchAll(markerPattern)).map((marker) => ({
+        marker: marker[1],
+        index: marker.index + marker[0].length - marker[1].length,
+        end: marker.index + marker[0].length
+    }));
+    const letterMarkers = markers.filter(({ marker }) => /^\(?[A-Z]\)?[.)]?$/i.test(marker));
+    const numberMarkers = markers.filter(({ marker }) => /^\(?\d{1,2}\)?[.)]?$/.test(marker) || /^\(?[ivx]+\)?[.)]?$/i.test(marker));
+    const extractEntries = (entryMarkers) => entryMarkers.map((marker) => ({
+        marker: marker.marker,
+        text: entriesText.slice(marker.end, markers.find((nextMarker) => nextMarker.index > marker.index)?.index ?? entriesText.length)
+            .trim()
+    }));
+    const letterEntries = extractEntries(letterMarkers);
+    const numberEntries = extractEntries(numberMarkers);
+    const lettersAreOrdered = letterEntries.length >= 2 && letterEntries.every((entry, index) =>
+        entry.marker.replace(/[^A-Z]/gi, "").toUpperCase().charCodeAt(0) === 65 + index);
+    const romanValues = { I: 1, V: 5, X: 10 };
+    const romanToNumber = (value) => value.toUpperCase().replace(/[^IVX]/g, "").split("").reduce((total, numeral, index, numerals) => {
+        const current = romanValues[numeral];
+        const next = romanValues[numerals[index + 1]] || 0;
+        return total + (current < next ? -current : current);
+    }, 0);
+    const numbersAreOrdered = numberEntries.length >= 2 && numberEntries.every((entry, index) => {
+        const numericMarker = entry.marker.replace(/\D/g, "");
+        const value = numericMarker ? Number.parseInt(numericMarker, 10) : romanToNumber(entry.marker);
+        return value === index + 1;
+    });
+    if (!lettersAreOrdered || !numbersAreOrdered || letterEntries.length !== numberEntries.length) {
+        return null;
+    }
+
+    return {
+        prompt: text.slice(0, entriesStart).trim(),
+        listOneHeader: listOneMatch?.[1] || "",
+        listTwoHeader: listTwoMatch?.[1] || "",
+        rows: letterEntries.map((letterEntry, index) => ({
+            left: `${letterEntry.marker} ${letterEntry.text}`,
+            right: `${numberEntries[index].marker} ${numberEntries[index].text}`
+        }))
+    };
+}
+
+function renderMatchListTable(parsed) {
+    if (!parsed) {
+        return "";
+    }
+
+    const escape = (value) => String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    const rows = parsed.rows.map((row) => `
+        <div class="match-list-row" role="row">
+            <div class="match-list-cell match-list-left" role="cell">${escape(row.left)}</div>
+            <div class="match-list-cell match-list-right" role="cell">${escape(row.right)}</div>
+        </div>
+    `).join("");
+    return `
+        <div class="match-list-table" role="table" aria-label="${escape(parsed.listOneHeader)} and ${escape(parsed.listTwoHeader)}">
+            <div class="match-list-header match-list-left" role="columnheader">${escape(parsed.listOneHeader)}</div>
+            <div class="match-list-header match-list-right" role="columnheader">${escape(parsed.listTwoHeader)}</div>
+            ${rows}
+        </div>
+    `;
+}
+
+function parseStatementQuestion(question) {
+    if (isMatchListQuestion(question)) {
+        return null;
+    }
+
     const text = String(question?.q || "");
-    if (!isMatchList) {
+    const markerPattern = /(?<![A-Za-z0-9])(\(?\d{1,2}\)?[.,):]?|\(?[A-Za-z]\)?[.,):]?|\(?[IVXivx]+\)?[.,):]?)(?=\s|<br\s*\/?>|$)/g;
+    const allMarkers = Array.from(text.matchAll(markerPattern));
+    const romanValues = { I: 1, V: 5, X: 10 };
+    const getMarkerInfo = (marker) => {
+        const value = marker.replace(/[().,:]/g, "");
+        if (/^\d+$/.test(value)) {
+            return { family: "numeric", value: Number(value), caseKey: "" };
+        }
+        if (/^[IVX]+$/i.test(value)) {
+            const upper = value.toUpperCase();
+            const number = upper.split("").reduce((total, numeral, index, numerals) => {
+                const current = romanValues[numeral];
+                const next = romanValues[numerals[index + 1]] || 0;
+                return total + (current < next ? -current : current);
+            }, 0);
+            return { family: "roman", value: number, caseKey: value === value.toUpperCase() ? "upper" : "lower" };
+        }
+        return { family: "letter", value: value.toUpperCase().charCodeAt(0) - 64, caseKey: value === value.toUpperCase() ? "upper" : "lower" };
+    };
+    const isCanonicalStart = (info) => (info.family === "numeric" && info.value === 1)
+        || (info.family === "letter" && info.value === 1)
+        || (info.family === "roman" && info.value === 1);
+    const sequences = [];
+    allMarkers.forEach((marker, startIndex) => {
+        const firstInfo = getMarkerInfo(marker[1]);
+        if (!isCanonicalStart(firstInfo) || marker.index === 0 || !text.slice(0, marker.index).trim()) {
+            return;
+        }
+        const sequence = [marker];
+        for (let index = startIndex + 1; index < allMarkers.length; index += 1) {
+            const previousInfo = getMarkerInfo(sequence[sequence.length - 1][1]);
+            const nextInfo = getMarkerInfo(allMarkers[index][1]);
+            if (nextInfo.family !== firstInfo.family || nextInfo.caseKey !== firstInfo.caseKey
+                || nextInfo.value !== previousInfo.value + 1) {
+                break;
+            }
+            sequence.push(allMarkers[index]);
+        }
+        if (sequence.length >= 2) {
+            sequences.push(sequence);
+        }
+    });
+    const markers = sequences.sort((first, second) => second.length - first.length)[0];
+    if (!markers) {
+        return null;
+    }
+
+    return {
+        stem: text.slice(0, markers[0].index).trim(),
+        statements: markers.map((marker, index) => ({
+            marker: marker[1],
+            text: text.slice(marker.index + marker[1].length, markers[index + 1]?.index ?? text.length)
+                .replace(/^(?:\s|<br\s*\/?>)+/i, "")
+                .trim()
+        }))
+    };
+}
+
+function renderStatementQuestion(parsed) {
+    return `
+        <div class="question-statement statement-question">
+            <p>${parsed.stem}</p>
+            ${parsed.statements.map((statement) => `<p class="statement-item">${statement.marker} ${statement.text}</p>`).join("")}
+        </div>
+    `;
+}
+
+function getRenderedQuestionText(question, parsedMatchList) {
+    const text = String(question?.q || "");
+    if (parsedMatchList) {
+        return parsedMatchList.prompt;
+    }
+
+    if (!isMatchListQuestion(question)) {
         return text;
     }
 
-    return text.replace(/(?:\s|<br\s*\/?>)*(?:Code\s*:?\s*){1,2}(?:\s|<br\s*\/?>)*A(?:\s|<br\s*\/?>)+B(?:\s|<br\s*\/?>)+C(?:\s|<br\s*\/?>)+D\s*$/i, "").trim();
+    // Keep the question text when matching data is incomplete, but hide only a trailing extracted code block.
+    return text.replace(/(?:<br\s*\/?>(?:\s*)|\r?\n|\s)+Code\s*:?\s*(?:Code\s*)?(?:<br\s*\/?>(?:\s*)|\r?\n|\s)+A(?:[.)])?(?:<br\s*\/?>(?:\s*)|\r?\n|\s)+B(?:[.)])?(?:<br\s*\/?>(?:\s*)|\r?\n|\s)+C(?:[.)])?(?:<br\s*\/?>(?:\s*)|\r?\n|\s)+D(?:[.)])?\s*$/i, "").trim();
 }
 
 function showQuestion() {
@@ -433,22 +608,37 @@ function showQuestion() {
     }
 
     const isMarkedReview = Boolean(markedForReview[currentQuestion]);
-    const isMatchList = isMatchListQuestion(q);
-    const renderedQuestionText = getRenderedQuestionText(q, isMatchList);
+    const parsedMatchList = parseMatchListQuestion(q);
+    const isMatchList = Boolean(parsedMatchList);
+    const parsedStatementQuestion = isMatchList ? null : parseStatementQuestion(q);
+
+    // [MATCH-LIST-RENDERER-DIAGNOSTIC] Question rendering started
+    if (q.q && q.q.includes("Major States of Deccan")) {
+        console.log("[MATCH-LIST-RENDERER-V3] Processing Deccan Question");
+        console.log("[MATCH-LIST-RENDERER-V3] isMatchList detected:", isMatchList);
+        console.log("[MATCH-LIST-RENDERER-V3] parsedMatchList:", parsedMatchList);
+        console.log("[MATCH-LIST-RENDERER-V3] question.q preview:", q.q.substring(0, 200));
+        console.log("[MATCH-LIST-RENDERER-V3] question.options:", q.options);
+    }
+
+    const renderedQuestionText = getRenderedQuestionText(q, parsedMatchList);
+    const questionContent = parsedStatementQuestion
+        ? renderStatementQuestion(parsedStatementQuestion)
+        : `<div class="question-statement"><p>${renderedQuestionText}</p></div>`;
     let html = `
         <div class="question-header">
             <h3>Question ${currentQuestion + 1}</h3>
         </div>
-        <div class="question-statement">
-            <p>${renderedQuestionText}</p>
-        </div>
+        ${isMatchList && parsedMatchList ? `${renderedQuestionText ? `<div class="question-statement"><p>${renderedQuestionText}</p></div>` : ""}${renderMatchListTable(parsedMatchList)}` : questionContent}
     `;
 
     q.options.forEach((option, index) => {
+        const optionText = String(option);
+        const optionLabel = /^[A-D](?:[.)])\s+/i.test(optionText) ? "" : `${String.fromCharCode(65 + index)}. `;
         html += `
             <label class="option-wrap">
                 <input type="radio" name="answer" value="${index}" />
-                <span>${isMatchList ? `${String.fromCharCode(65 + index)}. ` : ""}${option}</span>
+                <span>${isMatchList ? optionLabel : ""}${option}</span>
             </label>
         `;
     });
