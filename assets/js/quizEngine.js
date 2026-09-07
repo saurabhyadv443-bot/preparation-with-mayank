@@ -42,6 +42,8 @@ let remainingTime = 0;
 let paused = false;
 let currentSubjectKey = subject;
 let quizStartedAt = 0;
+let cachedProgressQuestions = null;
+let cachedProgressQuestionsJson = "";
 
 const timerNode = document.getElementById("timer");
 const pauseBtn = document.getElementById("pauseBtn");
@@ -401,7 +403,7 @@ function getQuizDuration() {
                 secondsPerQuestion: 40
             };
         } else {
-            const response = await fetch(`data/${resolveSubjectDataFile(subject)}?t=${Date.now()}`, { cache: 'no-store' });
+            const response = await fetch(`data/${resolveSubjectDataFile(subject)}`);
             if (!response.ok) throw new Error('Unable to load quiz data for the selected subject.');
             data = await response.json();
         }
@@ -1272,21 +1274,28 @@ function updatePalette() {
 }
 
 function saveProgress() {
-    const progress = {
+    if (cachedProgressQuestions !== questions) {
+        cachedProgressQuestions = questions;
+        cachedProgressQuestionsJson = JSON.stringify(questions);
+    }
+
+    const progressPrefix = JSON.stringify({
         subject,
         subjectKey: currentSubjectKey,
         chapter: currentChapter,
         currentQuestion,
         userAnswers,
-        markedForReview,
-        questions,
+        markedForReview
+    });
+    const progressSuffix = JSON.stringify({
         remainingTime,
         duration: getQuizMode() === "practice" ? Number(quizData.secondsPerQuestion) || 40 : getQuizDuration(),
         quizType: getQuizMode(),
         quizStartedAt,
         updatedAt: new Date().toISOString()
-    };
-    localStorage.setItem(getProgressKey(), JSON.stringify(progress));
+    });
+    const serializedProgress = `${progressPrefix.slice(0, -1)},"questions":${cachedProgressQuestionsJson},${progressSuffix.slice(1)}`;
+    localStorage.setItem(getProgressKey(), serializedProgress);
 }
 
 function toggleReviewMark(questionIndex) {
