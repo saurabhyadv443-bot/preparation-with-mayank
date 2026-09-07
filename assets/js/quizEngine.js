@@ -56,6 +56,7 @@ const chapterTitle = document.getElementById("chapterTitle");
 const paletteNode = document.getElementById("palette");
 const questionBox = document.getElementById("questionBox");
 const prevBtn = document.getElementById("prevBtn");
+const clearSelectionBtn = document.getElementById("clearSelectionBtn");
 const nextBtn = document.getElementById("nextBtn");
 const submitBtn = document.getElementById("submitBtn");
 const markReviewBtn = document.getElementById("markReviewBtn");
@@ -160,6 +161,184 @@ function saveAttempt(result) {
     history[result.quizId] = retained.map((item, index) => ({ ...item, attempt: index + 1 }));
     localStorage.setItem("quiz_attempt_history", JSON.stringify(history));
 }
+/* Accidental Match List parser fragment removed below.
+            const rawText = String(question.q || "");
+            const text = rawText.replace(/(?:\s|<br\s*\/?>)+Codes?\s*:?\s*(?:Code\s*:?\s*)?(?:(?:\s|<br\s*\/?>)+[A-D](?:[.)])?){2,}\s*$/i, "").trim();
+            const markerPattern = /(?<![A-Za-z0-9])(\(\d{1,2}\)|\d{1,2}[.):]?|\([A-Za-z]\)|[A-Za-z][.):]?|\([IVXivx]+\)|[IVXivx]+[.):]?)(?=\s|<br\s*\/?>|$)/g;
+            const headerPattern = /((?:List|Column)\s*[-–—]?\s*(?:I|II|1|2|A|B)\b(?:\s*\([^)]*\))?)/gi;
+            const headers = Array.from(text.matchAll(headerPattern));
+            const romanValues = { I: 1, V: 5, X: 10 };
+            const questionNumber = text.match(/^\s*\d{1,3}[.)]?\s+/);
+            const tokens = Array.from(text.matchAll(markerPattern)).filter((token) => {
+                const before = text.slice(Math.max(0, token.index - 12), token.index);
+                return !(questionNumber && token.index < questionNumber[0].length)
+                    && !/(?:List|Column)\s*[-–—]?\s*$/i.test(before);
+            });
+            const markerInfo = (marker) => {
+                const value = marker.replace(/[().,:]/g, "");
+                if (/^\d+$/.test(value)) {
+                    return [{ family: "numeric", value: Number(value), caseKey: "" }];
+                }
+                if (/^[IVX]+$/i.test(value)) {
+                    const upper = value.toUpperCase();
+                    const number = upper.split("").reduce((total, numeral, index, numerals) => {
+                        const current = romanValues[numeral];
+                        const next = romanValues[numerals[index + 1]] || 0;
+                        return total + (current < next ? -current : current);
+                    }, 0);
+                    const roman = { family: "roman", value: number, caseKey: value === upper ? "upper" : "lower" };
+                    return value.length === 1 ? [roman, { family: "letter", value: upper.charCodeAt(0) - 64, caseKey: value === upper ? "upper" : "lower" }] : [roman];
+                }
+                return [{ family: "letter", value: value.toUpperCase().charCodeAt(0) - 64, caseKey: value === value.toUpperCase() ? "upper" : "lower" }];
+            };
+            const buildSequences = () => {
+                const sequences = [];
+                tokens.forEach((startToken, startIndex) => {
+                    markerInfo(startToken[1]).forEach((firstInfo) => {
+                        if (firstInfo.value !== 1 || startToken.index === 0 || !text.slice(0, startToken.index).trim()) {
+                            return;
+                        }
+                        const sequence = [{ token: startToken, info: firstInfo }];
+                        let nextValue = 2;
+                        for (let index = startIndex + 1; index < tokens.length; index += 1) {
+                            const candidates = markerInfo(tokens[index][1]);
+                            const next = candidates.find((candidate) => candidate.family === firstInfo.family
+                                && candidate.caseKey === firstInfo.caseKey && candidate.value === nextValue);
+                            if (next) {
+                                sequence.push({ token: tokens[index], info: next });
+                                nextValue += 1;
+                            }
+                        }
+                        if (sequence.length >= 2) {
+                            sequences.push(sequence);
+                        }
+                    });
+                });
+                return sequences.sort((first, second) => second.length - first.length);
+            };
+            const sequences = buildSequences();
+            const headerOne = headers.find((header) => /\b(?:List|Column)\s*[-–—]?\s*(?:I|1|A)\b/i.test(header[0]));
+            const headerTwo = headers.find((header) => /\b(?:List|Column)\s*[-–—]?\s*(?:II|2|B)\b/i.test(header[0]) && header.index > headerOne?.index);
+            const hasHeaders = Boolean(headerOne && headerTwo);
+            const pairs = [];
+            for (let first = 0; first < sequences.length; first += 1) {
+                for (let second = first + 1; second < sequences.length; second += 1) {
+                    const left = sequences[first];
+                    const right = sequences[second];
+                    if (left.some((entry) => right.some((other) => entry.token.index === other.token.index))) {
+                        continue;
+                    }
+                    const distinctFamilies = left[0].info.family !== right[0].info.family || left[0].info.caseKey !== right[0].info.caseKey;
+                    if (!distinctFamilies && !hasHeaders) {
+                        continue;
+                    }
+                    const confidence = Math.min(left.length, right.length) * 10 + (hasHeaders ? 5 : 0) + (distinctFamilies ? 3 : 0);
+                    pairs.push({ left, right, confidence });
+                }
+            }
+            if (!pairs.length || (!hasHeaders && !/\b(?:match|matching|pairs?)\b/i.test(text))) {
+                return null;
+            }
+            const selected = pairs.sort((first, second) => second.confidence - first.confidence)[0];
+            let left = selected.left;
+            let right = selected.right;
+            if (left[0].token.index > right[0].token.index) {
+                [left, right] = [right, left];
+            }
+            const grouped = left[left.length - 1].token.index < right[0].token.index;
+            const extractGrouped = (sequence, endIndex) => sequence.map((entry, index) => ({
+                marker: entry.token[1],
+                text: text.slice(entry.token.index + entry.token[1].length, sequence[index + 1]?.token.index ?? endIndex).replace(/^(?:\s|<br\s*\/?>)+/i, "").trim()
+            }));
+            const leftEntries = grouped ? extractGrouped(left, right[0].token.index) : null;
+            const rightEntries = grouped ? extractGrouped(right, text.length) : null;
+            const rows = [];
+            const rowCount = Math.max(left.length, right.length);
+            for (let index = 0; index < rowCount; index += 1) {
+                const leftEntry = grouped ? leftEntries?.[index] : left[index] ? {
+                    marker: left[index].token[1],
+                    text: text.slice(left[index].token.index + left[index].token[1].length, right[index]?.token.index ?? left[index + 1]?.token.index ?? text.length).replace(/^(?:\s|<br\s*\/?>)+/i, "").trim()
+                } : null;
+                const rightEntry = grouped ? rightEntries?.[index] : right[index] ? {
+                    marker: right[index].token[1],
+                    text: text.slice(right[index].token.index + right[index].token[1].length, left[index + 1]?.token.index ?? text.length).replace(/^(?:\s|<br\s*\/?>)+/i, "").trim()
+                } : null;
+                if (leftEntry || rightEntry) {
+                    rows.push({ left: leftEntry ? `${leftEntry.marker} ${leftEntry.text}` : "", right: rightEntry ? `${rightEntry.marker} ${rightEntry.text}` : "" });
+                }
+            }
+            if (!rows.some((row) => row.left && row.right)) {
+                return null;
+            }
+            return {
+                prompt: text.slice(0, Math.min(left[0].token.index, right[0].token.index)).trim(),
+                listOneHeader: headerOne?.[1] || "List-I",
+                listTwoHeader: headerTwo?.[1] || "List-II",
+                rows
+            };
+    const history = getAttemptHistory();
+    const completedAt = result.completedAt;
+    const completedDate = new Date(completedAt);
+    const savedQuestions = getSavedQuestions();
+    const isSaved = (index) => savedQuestions.some((item) =>
+        item.subjectKey === result.subjectKey && item.chapter === result.chapter && item.questionIndex === index
+    );
+    const questionIds = {};
+    const answers = {};
+    const questionStatus = {};
+    const correctAnswers = {};
+    const saved = [];
+    result.questions.forEach((question, index) => {
+        const questionId = question.id ?? question.qid ?? question.questionId ?? index;
+        const key = String(questionId);
+        const selected = result.userAnswers[index];
+        questionIds[key] = index;
+        answers[key] = selected == null ? null : selected;
+        correctAnswers[key] = question.answer;
+        questionStatus[key] = selected == null ? "unanswered" : selected === question.answer ? "correct" : "incorrect";
+        if (isSaved(index)) saved.push(index);
+    });
+    const attempt = {
+        date: completedDate.toLocaleDateString(),
+        time: completedDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        total: result.total,
+        attempted: result.attempted,
+        correct: result.correct,
+        incorrect: result.wrong,
+        wrong: result.wrong,
+        unanswered: result.skipped,
+        skipped: result.skipped,
+        score: result.finalScore,
+        finalScore: result.finalScore,
+        percentage: result.percentage,
+        accuracy: result.accuracy,
+        time_taken: result.timeTaken,
+        timeTaken: result.timeTaken,
+        answers,
+        question_status: questionStatus,
+        correct_answers: correctAnswers,
+        question_ids: questionIds,
+        saved,
+        subject: result.subject,
+        subjectKey: result.subjectKey,
+        chapter: result.chapter,
+        quizType: result.quizType,
+        quizId: result.quizId,
+        duration: result.duration,
+        quizUrl: result.quizUrl,
+        questions: result.questions,
+        userAnswers: result.userAnswers,
+        markedForReview: result.markedForReview,
+        markedReview: result.markedReview,
+        completedAt,
+        attempt: 0
+    };
+    const retained = Array.isArray(history[result.quizId]) ? history[result.quizId].slice(-4) : [];
+    retained.push(attempt);
+    history[result.quizId] = retained.map((item, index) => ({ ...item, attempt: index + 1 }));
+    localStorage.setItem("quiz_attempt_history", JSON.stringify(history));
+}
+*/
 function getQuizDuration() {
     return Number(quizData.duration || quizData.totalTimeSeconds || quizData.durationSeconds || 7200);
 }
@@ -252,7 +431,9 @@ function getQuizDuration() {
             if (selectedChapterMatchesResume) {
                 selectedMode = savedProgress.quizType === 'study' ? 'study' : selectedMode;
                 currentChapter = savedProgress.chapter;
-                questions = Array.isArray(savedProgress.questions) ? savedProgress.questions : quizData.chapters[currentChapter] || [];
+                questions = Array.isArray(quizData.chapters?.[currentChapter])
+                    ? quizData.chapters[currentChapter]
+                    : Array.isArray(quizData[currentChapter]) ? quizData[currentChapter] : [];
                 currentQuestion = typeof savedProgress.currentQuestion === 'number' ? savedProgress.currentQuestion : 0;
                 userAnswers = Array.isArray(savedProgress.userAnswers) ? savedProgress.userAnswers : new Array(questions.length).fill(null);
                 markedForReview = Array.isArray(savedProgress.markedForReview) ? savedProgress.markedForReview : new Array(questions.length).fill(false);
@@ -279,7 +460,9 @@ function getQuizDuration() {
         } else if (savedProgress && savedProgress.subject === subject && savedProgress.chapter) {
             selectedMode = savedProgress.quizType === 'study' ? 'study' : selectedMode;
             currentChapter = savedProgress.chapter;
-            questions = Array.isArray(savedProgress.questions) ? savedProgress.questions : quizData.chapters[currentChapter] || [];
+            questions = Array.isArray(quizData.chapters?.[currentChapter])
+                ? quizData.chapters[currentChapter]
+                : Array.isArray(quizData[currentChapter]) ? quizData[currentChapter] : [];
             currentQuestion = typeof savedProgress.currentQuestion === 'number' ? savedProgress.currentQuestion : 0;
             userAnswers = Array.isArray(savedProgress.userAnswers) ? savedProgress.userAnswers : new Array(questions.length).fill(null);
             markedForReview = Array.isArray(savedProgress.markedForReview) ? savedProgress.markedForReview : new Array(questions.length).fill(false);
@@ -402,12 +585,8 @@ function startQuiz(chapter) {
 
 function isMatchListQuestion(question) {
     const text = String(question?.q || "");
-    const hasListHeaders = /\blist\s*[-–—]?\s*i\b/i.test(text)
-        && /\blist\s*[-–—]?\s*ii\b/i.test(text);
-    const hasColumnHeaders = /\bcolumn\s*[-–—]?\s*(?:i|a)\b/i.test(text)
-        && /\bcolumn\s*[-–—]?\s*(?:ii|b)\b/i.test(text);
-    const hasMatchWording = /\bmatch(?:\s+the)?\s+(?:following|list|lists|columns|pairs)\b/i.test(text);
-    return (hasListHeaders || hasColumnHeaders || hasMatchWording) && Array.isArray(question?.options);
+    return /\b(?:list|column)\s*[-–—]?\s*(?:i|ii|1|2|a|b)\b/i.test(text)
+        || /\b(?:match|matching|pairs?\s+are\s+correct(?:ly)?\s+matched|correctly\s+match)\b/i.test(text);
 }
 
 function parseMatchListQuestion(question) {
@@ -415,76 +594,120 @@ function parseMatchListQuestion(question) {
         return null;
     }
 
-    const text = String(question.q || "")
-        .replace(/<br\s*\/?>/gi, " ")
-        .replace(/\s+/g, " ")
-        .trim();
-
-    // Find headers - prefer those with parentheses (actual section headers)
-    const headerPattern = /((?:List|Column)\s*[-–—]?\s*(?:I|II|A|B)\b(?:\s*\([^)]*\))?)/gi;
+    const rawText = String(question.q || "");
+    const text = rawText.replace(/(?:\s|<br\s*\/?>)+Codes?\s*:?\s*(?:Code\s*:?\s*)?(?:(?:\s|<br\s*\/?>)+[A-D](?:[.)])?){2,}\s*$/i, "").trim();
+    const markerPattern = /(?<![A-Za-z0-9])(\(\d{1,2}\)|\d{1,2}[.):]?|\([A-Za-z]\)|[A-Za-z][.):]?|\([IVXivx]+\)|[IVXivx]+[.):]?)(?=\s|<br\s*\/?>|$)/g;
+    const headerPattern = /((?:List|Column)\s*[-–—]?\s*(?:I|II|1|2|A|B)\b(?:\s*\([^)]*\))?)/gi;
     const headers = Array.from(text.matchAll(headerPattern));
-
-    // Split headers into two groups: with and without parentheses
-    const headersWithParens = headers.filter((h) => /\([^)]*\)/.test(h[0]));
-    const headersWithoutParens = headers.filter((h) => !/\([^)]*\)/.test(h[0]));
-
-    // Try to find List-I and List-II, preferring those with parentheses
-    const allHeadersForSearch = headersWithParens.length > 0 ? headersWithParens : headers;
-
-    const listOneMatch = allHeadersForSearch.find((header) => /\b(?:List\s*[-–—]?\s*I|Column\s*[-–—]?\s*(?:I|A))\b/i.test(header[0]));
-    const listTwoMatch = allHeadersForSearch.find((header) => /\b(?:List\s*[-–—]?\s*II|Column\s*[-–—]?\s*(?:II|B))\b/i.test(header[0])
-        && header.index > listOneMatch?.index);
-    const firstMarkerMatch = text.match(/(?:^|\s)(\(?[A-Z]\)?[.)]?)(?=\s+)/i);
-    const hasExplicitHeaders = Boolean(listOneMatch && listTwoMatch && listTwoMatch.index > listOneMatch.index);
-    if (!hasExplicitHeaders && !firstMarkerMatch) {
-        return null;
-    }
-
-    const entriesStart = hasExplicitHeaders ? listOneMatch.index + listOneMatch[0].length : firstMarkerMatch.index + firstMarkerMatch[0].length - firstMarkerMatch[1].length;
-    const afterHeaderText = text.slice(entriesStart);
-    const codeMatch = afterHeaderText.match(/\s+Codes?\s*:?/i);
-    const entriesText = (codeMatch ? afterHeaderText.slice(0, codeMatch.index) : afterHeaderText)
-        .replace(listTwoMatch?.[0] || "", " ");
-    const markerPattern = /(?:^|\s)(\(?[A-Z]\)?(?:[.)])?|\(?[IVX]+\)?(?:[.)])?|\(?\d{1,2}\)?(?:[.)])?)(?=\s+)/gi;
-    const markers = Array.from(entriesText.matchAll(markerPattern)).map((marker) => ({
-        marker: marker[1],
-        index: marker.index + marker[0].length - marker[1].length,
-        end: marker.index + marker[0].length
-    }));
-    const letterMarkers = markers.filter(({ marker }) => /^\(?[A-Z]\)?[.)]?$/i.test(marker));
-    const numberMarkers = markers.filter(({ marker }) => /^\(?\d{1,2}\)?[.)]?$/.test(marker) || /^\(?[ivx]+\)?[.)]?$/i.test(marker));
-    const extractEntries = (entryMarkers) => entryMarkers.map((marker) => ({
-        marker: marker.marker,
-        text: entriesText.slice(marker.end, markers.find((nextMarker) => nextMarker.index > marker.index)?.index ?? entriesText.length)
-            .trim()
-    }));
-    const letterEntries = extractEntries(letterMarkers);
-    const numberEntries = extractEntries(numberMarkers);
-    const lettersAreOrdered = letterEntries.length >= 2 && letterEntries.every((entry, index) =>
-        entry.marker.replace(/[^A-Z]/gi, "").toUpperCase().charCodeAt(0) === 65 + index);
     const romanValues = { I: 1, V: 5, X: 10 };
-    const romanToNumber = (value) => value.toUpperCase().replace(/[^IVX]/g, "").split("").reduce((total, numeral, index, numerals) => {
-        const current = romanValues[numeral];
-        const next = romanValues[numerals[index + 1]] || 0;
-        return total + (current < next ? -current : current);
-    }, 0);
-    const numbersAreOrdered = numberEntries.length >= 2 && numberEntries.every((entry, index) => {
-        const numericMarker = entry.marker.replace(/\D/g, "");
-        const value = numericMarker ? Number.parseInt(numericMarker, 10) : romanToNumber(entry.marker);
-        return value === index + 1;
+    const questionNumber = text.match(/^\s*\d{1,3}[.)]?\s+/);
+    const tokens = Array.from(text.matchAll(markerPattern)).filter((token) => {
+        const before = text.slice(Math.max(0, token.index - 12), token.index);
+        return !(questionNumber && token.index < questionNumber[0].length)
+            && !/(?:List|Column)\s*[-–—]?\s*$/i.test(before);
     });
-    if (!lettersAreOrdered || !numbersAreOrdered || letterEntries.length !== numberEntries.length) {
+    const markerInfo = (marker) => {
+        const value = marker.replace(/[().,:]/g, "");
+        if (/^\d+$/.test(value)) {
+            return [{ family: "numeric", value: Number(value), caseKey: "" }];
+        }
+        if (/^[IVX]+$/i.test(value)) {
+            const upper = value.toUpperCase();
+            const number = upper.split("").reduce((total, numeral, index, numerals) => {
+                const current = romanValues[numeral];
+                const next = romanValues[numerals[index + 1]] || 0;
+                return total + (current < next ? -current : current);
+            }, 0);
+            const roman = { family: "roman", value: number, caseKey: value === upper ? "upper" : "lower" };
+            return value.length === 1 ? [roman, { family: "letter", value: upper.charCodeAt(0) - 64, caseKey: value === upper ? "upper" : "lower" }] : [roman];
+        }
+        return [{ family: "letter", value: value.toUpperCase().charCodeAt(0) - 64, caseKey: value === value.toUpperCase() ? "upper" : "lower" }];
+    };
+    const sequences = [];
+    tokens.forEach((startToken, startIndex) => {
+        markerInfo(startToken[1]).forEach((firstInfo) => {
+            if (firstInfo.value !== 1 || startToken.index === 0 || !text.slice(0, startToken.index).trim()) {
+                return;
+            }
+            const sequence = [{ token: startToken, info: firstInfo }];
+            let nextValue = 2;
+            for (let index = startIndex + 1; index < tokens.length; index += 1) {
+                const nextInfo = markerInfo(tokens[index][1]).find((candidate) => candidate.family === firstInfo.family
+                    && candidate.caseKey === firstInfo.caseKey && candidate.value === nextValue);
+                if (nextInfo) {
+                    sequence.push({ token: tokens[index], info: nextInfo });
+                    nextValue += 1;
+                }
+            }
+            if (sequence.length >= 2) {
+                sequences.push(sequence);
+            }
+        });
+    });
+    const uniqueSequences = [];
+    sequences.sort((first, second) => second.length - first.length).forEach((sequence) => {
+        const key = `${sequence[0].token.index}:${sequence[0].info.family}:${sequence[0].info.caseKey}`;
+        if (!uniqueSequences.some((existing) => `${existing[0].token.index}:${existing[0].info.family}:${existing[0].info.caseKey}` === key)) {
+            uniqueSequences.push(sequence);
+        }
+    });
+    const headerOneMatches = headers.filter((header) => /\b(?:List|Column)\s*[-–—]?\s*(?:I|1|A)\b/i.test(header[0]));
+    const headerOne = headerOneMatches[headerOneMatches.length - 1];
+    const headerTwo = headers.find((header) => /\b(?:List|Column)\s*[-–—]?\s*(?:II|2|B)\b/i.test(header[0]) && header.index > headerOne?.index);
+    const hasHeaders = Boolean(headerOne && headerTwo);
+    const pairs = [];
+    for (let first = 0; first < uniqueSequences.length; first += 1) {
+        for (let second = first + 1; second < uniqueSequences.length; second += 1) {
+            const left = uniqueSequences[first];
+            const right = uniqueSequences[second];
+            if (left.some((entry) => right.some((other) => entry.token.index === other.token.index))) {
+                continue;
+            }
+            const distinctFamilies = left[0].info.family !== right[0].info.family || left[0].info.caseKey !== right[0].info.caseKey;
+            if (!distinctFamilies && !hasHeaders) {
+                continue;
+            }
+            pairs.push({ left, right, confidence: Math.min(left.length, right.length) * 10 + (hasHeaders ? 5 : 0) + (distinctFamilies ? 3 : 0) });
+        }
+    }
+    if (!pairs.length || (!hasHeaders && !/\b(?:match|matching|pairs?)\b/i.test(text))) {
         return null;
     }
-
+    const selected = pairs.sort((first, second) => second.confidence - first.confidence)[0];
+    let left = selected.left;
+    let right = selected.right;
+    if (left[0].token.index > right[0].token.index) {
+        [left, right] = [right, left];
+    }
+    const grouped = left[left.length - 1].token.index < right[0].token.index;
+    const cleanText = (value) => value.replace(/^(?:\s|<br\s*\/?>)+/i, "").trim();
+    const rows = [];
+    const rowCount = Math.max(left.length, right.length);
+    for (let index = 0; index < rowCount; index += 1) {
+        const leftEntry = left[index] ? {
+            marker: left[index].token[1],
+            text: cleanText(text.slice(left[index].token.index + left[index].token[1].length, grouped ? left[index + 1]?.token.index ?? right[0]?.token.index ?? text.length : right[index]?.token.index ?? left[index + 1]?.token.index ?? text.length))
+        } : null;
+        const rightEntry = right[index] ? {
+            marker: right[index].token[1],
+            text: cleanText(text.slice(right[index].token.index + right[index].token[1].length, grouped ? right[index + 1]?.token.index ?? text.length : left[index + 1]?.token.index ?? text.length))
+        } : null;
+        if (leftEntry || rightEntry) {
+            rows.push({
+                left: leftEntry ? `${leftEntry.marker} ${leftEntry.text}` : "",
+                right: rightEntry ? `${rightEntry.marker} ${rightEntry.text}` : ""
+            });
+        }
+    }
+    if (!rows.some((row) => row.left && row.right)) {
+        return null;
+    }
+    const firstItemIndex = Math.min(left[0].token.index, right[0].token.index);
     return {
-        prompt: text.slice(0, entriesStart).trim(),
-        listOneHeader: listOneMatch?.[1] || "",
-        listTwoHeader: listTwoMatch?.[1] || "",
-        rows: letterEntries.map((letterEntry, index) => ({
-            left: `${letterEntry.marker} ${letterEntry.text}`,
-            right: `${numberEntries[index].marker} ${numberEntries[index].text}`
-        }))
+        prompt: text.slice(0, hasHeaders ? headerOne.index : firstItemIndex).trim(),
+        listOneHeader: headerOne?.[1] || "List-I",
+        listTwoHeader: headerTwo?.[1] || "List-II",
+        rows
     };
 }
 
@@ -520,8 +743,45 @@ function parseStatementQuestion(question) {
     }
 
     const text = String(question?.q || "");
+    const assertionMarker = /Assertion\s*\(A\)\s*:/gi;
+    const reasonMarker = /Reason\s*\(R\)\s*:/gi;
+    const assertionMatches = Array.from(text.matchAll(assertionMarker));
+    const reasonMatches = Array.from(text.matchAll(reasonMarker));
+    let assertionMatch = null;
+    let reasonMatch = null;
+    for (let index = assertionMatches.length - 1; index >= 0; index -= 1) {
+        const candidateReason = reasonMatches.find((match) => match.index > assertionMatches[index].index);
+        if (candidateReason) {
+            assertionMatch = assertionMatches[index];
+            reasonMatch = candidateReason;
+            break;
+        }
+    }
+    if (assertionMatch && reasonMatch && assertionMatch.index < reasonMatch.index) {
+        const instructionPattern = /\bChoose\s+the\s+correct\s+answer\b[\s\S]*$/i;
+        const assertionText = text.slice(assertionMatch.index + assertionMatch[0].length, reasonMatch.index).trim();
+        const reasonStart = reasonMatch.index + reasonMatch[0].length;
+        const reasonAndInstruction = text.slice(reasonStart);
+        const instructionMatch = instructionPattern.exec(reasonAndInstruction);
+        const reasonText = (instructionMatch ? reasonAndInstruction.slice(0, instructionMatch.index) : reasonAndInstruction).trim();
+        return {
+            stem: text.slice(0, assertionMatch.index).trim(),
+            statements: [
+                { marker: "Assertion (A):", text: assertionText },
+                { marker: "Reason (R):", text: reasonText }
+            ],
+            finalInstruction: instructionMatch ? instructionMatch[0].trim() : ""
+        };
+    }
     const markerPattern = /(?<![A-Za-z0-9])(\(?\d{1,2}\)?[.,):]?|\(?[A-Za-z]\)?[.,):]?|\(?[IVXivx]+\)?[.,):]?)(?=\s|<br\s*\/?>|$)/g;
-    const allMarkers = Array.from(text.matchAll(markerPattern));
+    const allMarkers = Array.from(text.matchAll(markerPattern)).filter((marker) => {
+        const value = marker[1].replace(/[().,:]/g, "");
+        if (!/^\d+$/.test(value)) {
+            return true;
+        }
+        const before = text.slice(0, marker.index);
+        return !/(?:january|february|march|april|may|june|july|august|september|october|november|december|article|stage|section|chapter|question)\s*$/i.test(before);
+    });
     const romanValues = { I: 1, V: 5, X: 10 };
     const getMarkerInfo = (marker) => {
         const value = marker.replace(/[().,:]/g, "");
@@ -554,7 +814,7 @@ function parseStatementQuestion(question) {
             const nextInfo = getMarkerInfo(allMarkers[index][1]);
             if (nextInfo.family !== firstInfo.family || nextInfo.caseKey !== firstInfo.caseKey
                 || nextInfo.value !== previousInfo.value + 1) {
-                break;
+                continue;
             }
             sequence.push(allMarkers[index]);
         }
@@ -567,14 +827,34 @@ function parseStatementQuestion(question) {
         return null;
     }
 
+    const statements = markers.map((marker, index) => ({
+        marker: marker[1],
+        text: text.slice(marker.index + marker[1].length, markers[index + 1]?.index ?? text.length)
+            .replace(/^(?:\s|<br\s*\/?>)+/i, "")
+            .trim()
+    }));
+    const lastStatement = statements[statements.length - 1];
+    const questionEnd = Math.max(
+        lastStatement.text.lastIndexOf("?"),
+        lastStatement.text.lastIndexOf("؟"),
+        lastStatement.text.lastIndexOf(":")
+    );
+    let finalInstruction = "";
+    if (questionEnd > 0) {
+        const boundary = Math.max(
+            lastStatement.text.lastIndexOf(".", questionEnd - 1),
+            lastStatement.text.lastIndexOf("!", questionEnd - 1)
+        );
+        if (boundary >= 0) {
+            finalInstruction = lastStatement.text.slice(boundary + 1).trim();
+            lastStatement.text = lastStatement.text.slice(0, boundary + 1).trim();
+        }
+    }
+
     return {
         stem: text.slice(0, markers[0].index).trim(),
-        statements: markers.map((marker, index) => ({
-            marker: marker[1],
-            text: text.slice(marker.index + marker[1].length, markers[index + 1]?.index ?? text.length)
-                .replace(/^(?:\s|<br\s*\/?>)+/i, "")
-                .trim()
-        }))
+        statements,
+        finalInstruction
     };
 }
 
@@ -583,6 +863,7 @@ function renderStatementQuestion(parsed) {
         <div class="question-statement statement-question">
             <p>${parsed.stem}</p>
             ${parsed.statements.map((statement) => `<p class="statement-item">${statement.marker} ${statement.text}</p>`).join("")}
+            ${parsed.finalInstruction ? `<p class="statement-instruction">${parsed.finalInstruction}</p>` : ""}
         </div>
     `;
 }
@@ -608,9 +889,10 @@ function showQuestion() {
     }
 
     const isMarkedReview = Boolean(markedForReview[currentQuestion]);
-    const parsedMatchList = parseMatchListQuestion(q);
+    const isMatchListCandidate = isMatchListQuestion(q);
+    const parsedMatchList = isMatchListCandidate ? parseMatchListQuestion(q) : null;
     const isMatchList = Boolean(parsedMatchList);
-    const parsedStatementQuestion = isMatchList ? null : parseStatementQuestion(q);
+    const parsedStatementQuestion = isMatchListCandidate ? null : parseStatementQuestion(q);
 
     // [MATCH-LIST-RENDERER-DIAGNOSTIC] Question rendering started
     if (q.q && q.q.includes("Major States of Deccan")) {
@@ -671,12 +953,17 @@ function showQuestion() {
                 }
             });
         });
-    } else if (getQuizMode() === "mock") {
+    } else {
         const answerInputs = document.querySelectorAll('input[name="answer"]');
         answerInputs.forEach((input) => {
             input.addEventListener("change", () => {
-                paused = false;
-                pauseBtn.innerHTML = "⏸ Pause";
+                userAnswers[currentQuestion] = Number.parseInt(input.value, 10);
+                saveProgress();
+                updatePalette();
+                if (getQuizMode() === "mock") {
+                    paused = false;
+                    pauseBtn.innerHTML = "⏸ Pause";
+                }
             });
         });
     }
@@ -809,7 +1096,6 @@ if (prevBtn) {
             return;
         }
 
-        saveCurrentAnswer();
         currentQuestion -= 1;
         showQuestion();
     };
@@ -817,11 +1103,55 @@ if (prevBtn) {
 
 if (nextBtn) {
     nextBtn.onclick = function () {
-        saveCurrentAnswer();
         currentQuestion += 1;
         showQuestion();
     };
 }
+
+if (clearSelectionBtn) {
+    clearSelectionBtn.onclick = function () {
+        userAnswers[currentQuestion] = null;
+        saveProgress();
+        updatePalette();
+        showQuestion();
+    };
+}
+
+document.addEventListener("keydown", (event) => {
+    if (event.target instanceof Element && event.target.closest("input:not([type=\"radio\"]), textarea, select, [contenteditable=\"true\"], [role=\"textbox\"]")) {
+        return;
+    }
+    if (submitModal && submitModal.style.display !== "none") {
+        return;
+    }
+
+    const key = event.key.toLowerCase();
+    const isSpace = event.key === " " || event.key === "Spacebar" || event.key === "Space";
+    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        event.preventDefault();
+        const button = event.key === "ArrowLeft" ? prevBtn : nextBtn;
+        if (!button || button.disabled) {
+            return;
+        }
+        button.click();
+        return;
+    }
+
+    if (isSpace || key === "e") {
+        const button = isSpace ? pauseBtn : exitBtn;
+        if (!button || button.disabled || button.hidden || button.getClientRects().length === 0) {
+            return;
+        }
+        event.preventDefault();
+        button.click();
+        return;
+    }
+
+    if (key === "b") {
+        event.preventDefault();
+        history.back();
+    }
+});
 
 if (submitBtn) {
     submitBtn.onclick = function () {
