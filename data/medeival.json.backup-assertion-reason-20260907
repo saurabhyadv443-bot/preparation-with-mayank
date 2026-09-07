@@ -5063,7 +5063,7 @@
       },
       {
         "id": 5,
-        "q": "Given below are two statements one is labelled as Assertion (A) and the other as Reason (R).\n\nAssertion (A): The territories of the Sultanate could be broadly divided into two parts – the Khalsa and the Jagirs.\n\nReason (R): The Jagirs comprised of the land under the control of the State.\n\nSelect the correct answer from the code given below :\nCode :",
+        "q": "Given below are two statements one is labelled as Assertion (A) and the other as Reason (R).\n Assertion (A) The territories of the Sultanate could be broadly divided into two parts – the Khalsa and the Jagirs.\n Reason (R): The Jagirs comprised of the land under the control of the State.\n Select the correct answer from the code given below :\n Code :",
         "options": [
           "Both (A) and (R) are true, but (R) is not the correct explanation of (A).",
           "(A) is false, but (R) is true.",
