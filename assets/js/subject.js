@@ -119,7 +119,7 @@ async function loadOriginalCurrentAffairsQuestions() {
     const entries = Object.entries(manifest || {});
     const groups = await Promise.all(entries.map(async ([subjectKey, meta]) => {
         try {
-            const response = await fetch(`data/${meta.file}?t=${Date.now()}`, { cache: "no-store" });
+            const response = await fetch(`data/${meta.file}`);
             if (!response.ok) return [];
             const data = await response.json();
             const containers = data.chapters || data["TEST NUMBER"] || {};
