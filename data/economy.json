@@ -68,6 +68,84 @@
           "questionId": null,
           "questionIndex": 79
         }
+      },
+      {
+        "q": "76. Consider the following statements— 1. Inflation benefits debtors. 2. Inflation benefits bondholders.",
+        "options": [
+          "Only 1",
+          "Only 2",
+          "Both 1 and 2",
+          "Neither 1 nor 2"
+        ],
+        "answer": 0,
+        "explanation": "1. Statement 1 is correct: Inflation benefits debtors (borrowers) because they repay their loans with money that has less purchasing power than the money they originally borrowed.\n\n2. Statement 2 is incorrect: Inflation harms bondholders (lenders/creditors) because they receive fixed coupon payments and principal repayments in the future, the real purchasing power of which is eroded by rising price levels.",
+        "quizMeta": {
+          "classifications": {
+            "E": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 75,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 75
+        }
+      },
+      {
+        "q": "77. Inflation can best be described as—",
+        "options": [
+          "High prices",
+          "A rise in the price index",
+          "An increase in the purchasing power of money",
+          "A rise in the prices of specific goods"
+        ],
+        "answer": 1,
+        "explanation": "Inflation refers to an increase in the general price level of goods and services in an economy. It is best expressed by an increase in the price index. Due to inflation, the purchasing power of money decreases, meaning that fewer goods and services can be purchased with the same amount of money than before. Therefore, the correct answer is (b), an increase in the price index.",
+        "quizMeta": {
+          "classifications": {
+            "E": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 76,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 76
+        }
+      },
+      {
+        "q": "79. Foreign exchange that tends to migrate rapidly is called—",
+        "options": [
+          "Hot money",
+          "Gold currency",
+          "Easy money",
+          "Hard currency"
+        ],
+        "answer": 0,
+        "explanation": "Hot money refers to short-term foreign capital or funds that move rapidly from one country to another in search of higher returns, higher interest rates, favourable exchange rates, or the possibility of speculative gains.",
+        "quizMeta": {
+          "classifications": {
+            "E": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 78,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 78
+        }
       }
     ]
   }

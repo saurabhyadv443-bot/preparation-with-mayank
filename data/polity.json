@@ -19,33 +19,6 @@
     ],
     "Important Questions": [
       {
-        "q": "1. Where was Mahatma Gandhi arrested during the Quit India Movement?",
-        "options": [
-          "In Bombay",
-          "In Madras",
-          "In Calcutta",
-          "In New Delhi"
-        ],
-        "answer": 1,
-        "explanation": "After the resolution of the Quit India Movement was passed, Gandhiji was arrested in Bombay on 9 August, 1942. After that, he was kept under detention at the Aga Khan Palace in Poona (Pune). api-base-probe recovery-probe1",
-        "quizMeta": {
-          "classifications": {
-            "P": true,
-            "E": true
-          }
-        },
-        "_pyqSubjectKey": "mock",
-        "_pyqChapter": "Set 1",
-        "_pyqQuestionId": null,
-        "_pyqQuestionIndex": 0,
-        "_source": {
-          "sourceSubjectKey": "mock",
-          "chapter": "Set 1",
-          "questionId": null,
-          "questionIndex": 0
-        }
-      },
-      {
         "q": "5. The term of office of the Comptroller and Auditor-General of India is—",
         "options": [
           "4 years",
@@ -288,7 +261,7 @@
           "Gujarat > Karnataka > Odisha > Kerala"
         ],
         "answer": 2,
-        "explanation": "1 | Karnataka | 12\n2 | Gujarat | 11\n3 | Odisha | 10\n4 | Kerala | 9",
+        "explanation": "Karnataka | 12\nGujarat | 11\nOdisha | 10\nKerala | 9",
         "quizMeta": {
           "classifications": {
             "P": true
@@ -340,7 +313,7 @@
           "Prohibition of slaughter of milch and draught cattle - Article 48"
         ],
         "answer": 0,
-        "explanation": "All four pairs are constitutionally correct under Part IV (Directive Principles of State Policy) of the Constitution of India:\n1. A. Equal justice and free legal aid — Article 39A: Correct. Inserted by the 42nd Amendment Act, 1976, it directs the State to provide free legal aid by suitable legislation or schemes to ensure justice is not denied due to economic or other disabilities.\n\n2. B. Right to public assistance — Article 41: Correct. It provides for securing the right to work, to education, and to public assistance in cases of unemployment, old age, sickness, and disablement.  \n\n3. C. Promotion of cottage industries in rural areas — Article 43: Correct. Article 43 directs the State to secure a living wage and decent standard of life for workers, and specifically states that the State shall endeavour to \"promote cottage industries on an individual or co-operative basis in rural areas\".  \n\n4. D. Prohibition of slaughter of milch and draught cattle — Article 48: Correct. Article 48 directs the State to organize agriculture and animal husbandry on modern and scientific lines and specifically take steps for \"prohibiting the slaughter, of cows and calves and other milch and draught cattle\".  \n\n\n",
+        "explanation": "A | Equal justice and free legal aid | Article 39A | (Added by 42nd Amendment, 1976)\nB | Right to public assistance (in unemployment, old age, sickness, disablement) | Article 41 | \nC | Promotion of cottage industries in rural areas | Article 43 | (Gandhian Principle)\nD | Prohibition of slaughter of milch and draught cattle | Article 48 | (Under organisation of agriculture & animal husbandry)",
         "quizMeta": {
           "classifications": {
             "P": true
@@ -392,7 +365,7 @@
           "The President can make laws relating to that State."
         ],
         "answer": 1,
-        "explanation": "The effect of the exercise of powers by the President under Article 356 of the Constitution in relation to a particular State is as follows— (1) The President may assume to himself all or any of the functions of the government of that State and all or any of the powers vested in or exercisable by the Governor or any authority or body in the State; (2) The President may declare that the powers of the Legislature of the State shall be exercisable by or under the authority of Parliament. It should be noted that when President’s Rule is imposed under Article 356, the State Legislative Assembly is not automatically suspended; rather, the President may, if he so wishes, dissolve it or place it under suspended animation. It is noteworthy that Article 19 is automatically suspended in a State during a Proclamation of Emergency issued under Article 352 of the Constitution on the grounds of war or external aggression, and not under a Proclamation issued under Article 356.\n1. Article 356(1)(b) Mandate: Under Article 356(1)(b), when President's Rule is proclaimed in a State, the President may declare that \"the powers of the Legislature of the State shall be exercisable by or under the authority of Parliament.\"\n\n2. Why A is incorrect: The Legislative Assembly is not automatically dissolved; it is usually initially kept in suspended animation and may only be dissolved after Parliament approves the proclamation (as established in the landmark S.R. Bommai case, 1994).\n\n3. Why C is incorrect: Fundamental rights under Article 19 are only subject to automatic suspension under Article 358 during a National Emergency (Article 352) declared on the grounds of war or external aggression, not during President's Rule (Article 356).\n\n4. Why D is incorrect: The President does not directly make ordinary state laws under Article 356; rather, Parliament exercises legislative powers or, under Article 357(1)(a), Parliament may confer that power on the President (or delegate it further). Therefore, Option B directly quotes the constitutional effect under Article 356(1)(b).",
+        "explanation": "",
         "quizMeta": {
           "classifications": {
             "P": true
@@ -407,6 +380,188 @@
           "chapter": "Set 6",
           "questionId": null,
           "questionIndex": 108
+        }
+      },
+      {
+        "q": "3. Which of the following Indian States has the largest number of members in its State Legislative Assembly?",
+        "options": [
+          "Arunachal Pradesh",
+          "Himachal Pradesh",
+          "Manipur",
+          "Meghalaya"
+        ],
+        "answer": 1,
+        "explanation": "Himachal Pradesh | 68\nArunachal Pradesh | 60\nManipur | 60\nMeghalaya | 60",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 2,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 2
+        }
+      },
+      {
+        "q": "4. For the first time, an MP/MLA was disqualified from membership on the ground that he remained absent for sixty consecutive days from sittings of the House without its permission:",
+        "options": [
+          "of the Rajya Sabha",
+          "of the Lok Sabha",
+          "of the Punjab Legislative Assembly",
+          "of the Rajasthan Legislative Assembly"
+        ],
+        "answer": 1,
+        "explanation": "Key Facts:\n1. Constitutional Provision: Under Article 101(4) of the Constitution of India, if a member of either House of Parliament is absent from all meetings for a period of 60 days without permission of the House, the House may declare their seat vacant.\n\n2. The First Instance: For the first time in Parliament's history, the Lok Sabha exercised this power in December 1956 to declare the seat of Shri Shib Narayan Singh Mahapatra (an MP from Sundargarh, Odisha) vacant due to continuous unauthorized absence exceeding 60 days.\n\n3. In the Rajya Sabha, such action was taken much later in 2000, when the seat of Barjinder Singh Hamdard was declared vacant.  ",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 3,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 3
+        }
+      },
+      {
+        "q": "6. Consider the following statements— 1. The Chairman and the Deputy Chairman of the Rajya Sabha are not members of that House. 2. While the nominated members of both Houses of Parliament have no right to vote in the election of the President, they have the right to vote in the election of the Vice-President.",
+        "options": [
+          "Only 1",
+          "Only 2",
+          "Both 1 and 2",
+          "Neither 1 nor 2"
+        ],
+        "answer": 1,
+        "explanation": "1. Statement 1 is incorrect: While the Chairman of the Rajya Sabha (the Vice-President of India) is not a member of the House, the Deputy Chairman is chosen from among the sitting members of the Rajya Sabha (Article 89(2)).\n\n2. Statement 2 is correct: Nominated members of both the Lok Sabha and Rajya Sabha do not participate in the Presidential election (Article 54), but they are entitled to vote in the Vice-Presidential election, whose electoral college consists of all members of both Houses (Article 66(1)).",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 5,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 5
+        }
+      },
+      {
+        "q": "8. The Supreme Court hears cases in New Delhi, but it may also hear cases at any other place—",
+        "options": [
+          "with the approval of the President",
+          "if the judges of the Supreme Court decide this by a majority",
+          "with the approval of Parliament",
+          "on the request of the State Legislative Assembly"
+        ],
+        "answer": 0,
+        "explanation": "1. Article 130 of the Constitution: Specifies that the Supreme Court shall sit in Delhi or in such other place or places as the Chief Justice of India may, with the approval of the President, from time to time, appoint.\n\n2. The power to decide an alternative seat lies with the Chief Justice of India, but it requires the prior approval of the President.",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 7,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 7
+        }
+      },
+      {
+        "q": "10. Which one of the following is not a federal feature of the Constitution of India?",
+        "options": [
+          "Division of powers between the Centre and the States",
+          "A fully written Constitution",
+          "Single citizenship",
+          "Independent judiciary"
+        ],
+        "answer": 2,
+        "explanation": "Single citizenship is not a federal feature of the Constitution of India. The Indian Constitution contains both unitary and federal features. The federal features of the Indian Constitution include a written Constitution, a rigid Constitution, distribution of powers between the Centre and the States, supremacy and independence of the judiciary, a bicameral legislature, etc.",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 9,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 9
+        }
+      },
+      {
+        "q": "13. Which of the following are the Financial Committees of the Indian Parliament? (A) Estimates Committee (B) Public Accounts Committee (C) Committee on Public Undertakings (D) Joint Committee on Salaries and Allowances",
+        "options": [
+          "(A), (C) and (D)",
+          "(A), (B) and (D)",
+          "(A), (B) and (C)",
+          "(B), (C) and (D)"
+        ],
+        "answer": 2,
+        "explanation": "5 11.5 27 23 Pulse II Therefore, the required ratio = 27 :",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 12,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 12
+        }
+      },
+      {
+        "q": "17. If a Member of Parliament is elected to the Legislature of a State, within how many days must he resign from the State Legislature, otherwise his membership of Parliament will become invalid?",
+        "options": [
+          "10 days",
+          "14 days",
+          "30 days",
+          "None of the above"
+        ],
+        "answer": 1,
+        "explanation": "Article 101(2) of the Constitution is related to simultaneous membership of a House of Parliament and a House of a State Legislature. According to Rule 2 of the Prohibition of Simultaneous Membership Rules, 1950, if a Member of Parliament is elected to a House of a State Legislature, he has to resign his seat in the State Legislature within 14 days from the later of the two dates of publication of the declaration of his election in the Gazette of India or in the Gazette of the concerned State. If he does not do so, his seat in Parliament will become vacant. Therefore, the correct answer is 14 days.",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 16,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 16
         }
       }
     ]

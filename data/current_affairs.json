@@ -1447,7 +1447,7 @@
           "Only 4"
         ],
         "answer": 1,
-        "explanation": "The PM-SETU Scheme is related to making Industrial Training Institutes modern and industry oriented. It is implemented under the Ministry of Skill Development and Entrepreneurship. Therefore, only statement 2 is correct.",
+        "explanation": "Key Details of the PM-SETU Scheme:\n1. Full Form: Pradhan Mantri Skilling and Employability Transformation through Upgraded ITIs (PM-SETU).  \n\n2. Implementing Ministry: It is implemented solely under the Ministry of Skill Development and Entrepreneurship (MSDE), specifically through the Directorate General of Training (DGT).  \n\n3. Objective: Modernizing 1,000 Government Industrial Training Institutes (ITIs) using a hub-and-spoke model to align vocational training with evolving industry requirements and enhance youth employability.  ",
         "quizMeta": {
           "classifications": {
             "CA": true
@@ -2092,6 +2092,1371 @@
           "chapter": "Set 6",
           "questionId": null,
           "questionIndex": 137
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 98
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::98",
+      "question": {
+        "q": "99. The Kalpong Hydroelectric Project is located in—",
+        "options": [
+          "Andaman and Nicobar Islands",
+          "Arunachal Pradesh",
+          "Meghalaya",
+          "Sikkim"
+        ],
+        "answer": 0,
+        "explanation": "The Kalpong Hydroelectric Project is located on the Kalpong River in the Andaman and Nicobar Islands. It is the first hydroelectric project in the Andaman and Nicobar Islands.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 98,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 98
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 104
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::104",
+      "question": {
+        "q": "105. Where did Prime Minister Narendra Modi inaugurate the ‘Samrat Samprati Sangrahalay’ dedicated to the Mauryan ruler Samprati?",
+        "options": [
+          "Patna, Bihar",
+          "Ujjain, Madhya Pradesh",
+          "Gandhinagar, Gujarat",
+          "Varanasi, Uttar Pradesh"
+        ],
+        "answer": 2,
+        "explanation": "On 31 March 2026, on the occasion of Bhagwan Mahavir Jayanti, Prime Minister Narendra Modi inaugurated the ‘Samrat Samprati Museum’ at Koba Tirth in Gandhinagar, Gujarat. This museum is located within the premises of the Mahavir Jain Aradhana Kendra. Samrat Samprati was the grandson of Emperor Ashoka and is remembered in Jain tradition for non-violence and the promotion and propagation of Jainism. This museum showcases the historical, cultural and spiritual heritage of Jainism.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 104,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 104
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 105
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::105",
+      "question": {
+        "q": "106. Who has been reappointed by Lok Sabha Speaker Om Birla as the Chairperson of the Public Accounts Committee (PAC)... for 2026–27?",
+        "options": [
+          "K.C. Venugopal",
+          "Baijayant Panda",
+          "Faggan Singh Kulaste",
+          "Harivansh"
+        ],
+        "answer": 0,
+        "explanation": "Lok Sabha Speaker Om Birla has reappointed senior Congress MP K.C. Venugopal as the Chairperson of Parliament’s Public Accounts Committee (PAC) for 2026–27. The tenure of this committee is from 1 May 2026 to 30 April 2027. The Public Accounts Committee was formed in 1921 and is one of the oldest and most important financial committees of Parliament. As per rules, it has 22 members—15 from Lok Sabha and 7 from Rajya Sabha.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 105,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 105
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 106
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::106",
+      "question": {
+        "q": "107. Burra Vamsi Rama Mohan has been appointed as the Chairman and Managing Director (CMD) of which of the following Maharatna companies?",
+        "options": [
+          "NTPC Limited",
+          "ONGC",
+          "Power Grid Corporation of India Limited",
+          "Coal India Limited"
+        ],
+        "answer": 2,
+        "explanation": "Burra Vamsi Rama Mohan assumed charge as the Chairman and Managing Director (CMD) of Power Grid Corporation of India Limited (POWERGRID) with effect from 1 April 2026. His tenure will continue till 31 July 2030, i.e. the date of his superannuation, or until further orders—whichever is earlier. He replaced Dr. Ravindra Kumar Tyagi, who was relieved from the post of CMD on 31 March 2026 due to superannuation. POWERGRID is a Schedule ‘A’ Maharatna Central Public Sector Enterprise under the Ministry of Power.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 106,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 106
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 111
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::111",
+      "question": {
+        "q": "112. Who has achieved the distinction of becoming the first Indian woman to reach Everest Base Camp (EBC) by bicycle?",
+        "options": [
+          "Divya Singh",
+          "Arunima Sinha",
+          "Shivangi Pathak",
+          "Kaamya Karthikeyan"
+        ],
+        "answer": 0,
+        "explanation": "Divya Singh of Gorakhpur, Uttar Pradesh, became the first Indian woman to cycle to Everest Base Camp. According to available reports, she started the expedition from Kathmandu on 16 March 2026 and hoisted the tricolour at Everest Base Camp, at an altitude of about 5,364 metres, on 24 March",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 111,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 111
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 114
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::114",
+      "question": {
+        "q": "115. India has recently withdrawn its proposal to host the United Nations Climate Change Conference (COP-33), scheduled for 2028. At which COP session, and where, had Prime Minister Modi made this proposal?",
+        "options": [
+          "COP-26 (2021), Glasgow",
+          "COP-27 (2022), Sharm El-Sheikh",
+          "COP-28 (2023), United Arab Emirates",
+          "COP-29 (2024), Baku"
+        ],
+        "answer": 2,
+        "explanation": "India withdrew its bid to host COP-33 of the UNFCCC, scheduled for 2028. Prime Minister Narendra Modi had proposed hosting the COP-33 summit in India in 2028 during the high-level segment of COP-28 held in Dubai, United Arab Emirates, on December 1, 2023.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 114,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 114
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 117
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::117",
+      "question": {
+        "q": "118. Where was the India–Egypt Joint Special Forces Exercise ‘Cyclone-IV’ held in April 2026?",
+        "options": [
+          "Anshas, Egypt",
+          "Jodhpur, India",
+          "Alexandria, Egypt",
+          "Umroi, Meghalaya"
+        ],
+        "answer": 0,
+        "explanation": "An Indian Army contingent, comprising 25 personnel from Special Forces units, participated in the fourth edition of the India-Egypt Joint Special Forces Exercise ‘Cyclone-IV’. The exercise was held at Anshas, Egypt, from April 9 to 17, 2026. Its objective was to exchange best practices in special operations, strengthen joint mission planning capability and improve interoperability between the Special Forces of the two countries.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 117,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 117
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 120
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::120",
+      "question": {
+        "q": "121. Which city became the first Municipal Corporation in the United States to host a life-size statue of Swami Vivekananda?",
+        "options": [
+          "New York",
+          "Seattle",
+          "Chicago",
+          "San Francisco"
+        ],
+        "answer": 1,
+        "explanation": "The city of Seattle in the United States became the first city government in the U.S. to install a life-size statue of Swami Vivekananda. This life-size bronze statue was jointly unveiled on April 11, 2026, by Seattle Mayor Katie Wilson and the Consul General of India in Seattle. The statue has been installed at the iconic Westlake Square Park in downtown Seattle, which records more than 400,000 daily visits.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 120,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 120
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 124
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::124",
+      "question": {
+        "q": "125. Recently, legendary playback singer Asha Bhosle passed away. In which year was she honoured with the country’s second-highest civilian award, the ‘Padma Vibhushan’?",
+        "options": [
+          "2000",
+          "2008",
+          "2011",
+          "2015"
+        ],
+        "answer": 1,
+        "explanation": "Legendary playback singer Asha Bhosle passed away in Mumbai on April 12, 2026, at the age of 92. She began her singing career in 1943 and, in a career spanning more than eight decades, lent her voice to more than 12,000 songs in over 20 Indian languages. She was honoured with the Dadasaheb Phalke Award for the year 2000 and with the Padma Vibhushan by the Government of India in 2008. The Padma Vibhushan is the country’s second-highest civilian honour after the Bharat Ratna.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 124,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 124
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 130
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::130",
+      "question": {
+        "q": "131. According to the ‘World Economic Outlook’ report released by the International Monetary Fund (IMF) in April 2026, what GDP growth rate has been projected for India for FY 2027 (2026–27)?",
+        "options": [
+          "6.1%",
+          "6.4%",
+          "6.5%",
+          "7.0%"
+        ],
+        "answer": 2,
+        "explanation": "In April 2026, the IMF released the World Economic Outlook report titled “Global Economy in the Shadow of War”. In this report, India’s real GDP growth rate for FY2026-27 is estimated at",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 130,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 130
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 132
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::132",
+      "question": {
+        "q": "133. Who has become the first Indian woman chess player to win the title of the ‘FIDE Women’s Candidates Tournament 2026’ held in Cyprus?",
+        "options": [
+          "Koneru Humpy",
+          "R. Vaishali",
+          "Harika Dronavalli",
+          "Tania Sachdev"
+        ],
+        "answer": 1,
+        "explanation": "On 15 April 2026, Indian Grandmaster R. Vaishali won the FIDE Women’s Candidates Tournament 2026 in Cyprus by defeating Kateryna Lagno in the final, 14th round. She became the first Indian female chess player to win this title.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 132,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 132
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 107
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::107",
+      "question": {
+        "q": "108. Who has been honoured with the ‘Vishwa Ayurveda Ratna’ award for 2026 at a ceremony held at UNESCO House?",
+        "options": [
+          "Acharya Balkrishna",
+          "Baba Ramdev",
+          "Vaidya Rajesh Kotecha",
+          "Dr. Pratap Chauhan"
+        ],
+        "answer": 0,
+        "explanation": "Acharya Balkrishna, associated with Patanjali, was honoured with the ‘Vishwa Ayurveda Ratna’ award in 2026. This honour was given to him for his contribution to the global promotion of Ayurveda and the preservation and promotion of the Indian knowledge tradition. This award was presented under the ‘Earth Awards & High-Impact Sustainability Dialogue 2026’ organized by the Net Green Foundation. The event was held on 30 March 2026 at UNESCO House in New Delhi.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 107,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 107
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 108
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::108",
+      "question": {
+        "q": "109. Who is the author of the recently released book ‘Sab Par Ram Tapasvi Raja’?",
+        "options": [
+          "Ajay Kumar Bhalla",
+          "Ashutosh Agnihotri",
+          "Anuj Dhar",
+          "Alok Chakrawal"
+        ],
+        "answer": 1,
+        "explanation": "The author of the book ‘Sab Par Ram Tapasvi Raja’ is Ashutosh Agnihotri. He is an Additional Secretary in the Ministry of Environment, Forest and Climate Change. This book was released on 4 April 2026 in New Delhi by the Governor of Manipur, Ajay Kumar Bhalla. The book presents the characters and episodes of the Ramayana/Ram Katha in a poetic and dialogue-based style.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 108,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 108
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 129
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::129",
+      "question": {
+        "q": "130. Indian athlete Sawan Barwal broke Shivnath Singh’s 48-year-old national record by clocking 2 hours 11 minutes 58 seconds at the Rotterdam Marathon 2026. In which year did Shivnath Singh set this record?",
+        "options": [
+          "1971",
+          "1978",
+          "1982",
+          "1985"
+        ],
+        "answer": 1,
+        "explanation": "Indian long-distance runner Sawan Barwal set a new Indian national record in the men’s marathon by clocking 2 hours, 11 minutes and 58 seconds at the NN Marathon Rotterdam held in the Netherlands on 12 April 2026. He broke Shivnath Singh’s old national record of 2 hours and 12 minutes. Shivnath Singh had set this record on 28 May 1978 in Jalandhar. Sawan Barwal finished 20th overall in this marathon. Therefore, the correct answer is option (b) i.e. 1978.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 129,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 129
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 133
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::133",
+      "question": {
+        "q": "134. Who won the historic first gold medal for India at the 15th ‘European Girls’ Mathematical Olympiad’ (EGMO 2026), held in Bordeaux, France?",
+        "options": [
+          "Shreya Shantanu Mundhada",
+          "Sanjana Philo Chacko",
+          "Shivani Bharath Kumar",
+          "Ananya Ganguly"
+        ],
+        "answer": 0,
+        "explanation": "India achieved historic success at the 15th European Girls’ Mathematical Olympiad (EGMO) 2026, held in Bordeaux, France, from 9 to 15 April 2026. Shreya Shantanu Mundhada from Mumbai, Maharashtra, won the gold medal, securing India’s first-ever gold medal at the EGMO. In addition, Sanjana Philo Chacko won a silver medal and Shivani Barath Kumar won a bronze medal. On the basis of this performance, India ranked sixth overall among 67 participating countries/teams. 12 Skeâerke=âle 72JeeR mebÙegòeâ (ØeejbefYekeâ) ØeefleÙeesefielee hejer#ee रफ कार्य हेतु",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 133,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 133
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 80
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::80",
+      "question": {
+        "q": "81. With reference to schemes related to rural development in the Union Budget 2026–27, consider the following statements— 1. ₹54,916.70 crore allocated to PMAY-Gramin. 2. ₹30,000 crore to MGNREGS. 3. ₹19,000 crore to PMGSY.",
+        "options": [
+          "Only 1 and 2",
+          "Only 2 and 3",
+          "Only 1 and 3",
+          "1, 2 and 3"
+        ],
+        "answer": 3,
+        "explanation": "Statement 1 is correct, because in the Union Budget 2026 27, about ₹54,916.70 crore has been allocated for the Pradhan Mantri Awaas Yojana-Gramin. Statement 2 is correct, because a provision of ₹30,000 crore has been made under the Mahatma Gandhi National Rural Employment Guarantee Scheme. Statement 3 is also correct, because ₹19,000 crore has been allocated for the Pradhan Mantri Gram Sadak Yojana. Therefore, all three statements are correct. Hence, the correct answer is (d).",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 80,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 80
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 81
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::81",
+      "question": {
+        "q": "82. In January 2026, Justice Shri Sangam Kumar Sahoo took the oath as the 47th Chief Justice of the Patna High Court. Which Governor of Bihar administered the oath...?",
+        "options": [
+          "Rajendra Vishwanath Arlekar",
+          "Arif Mohammed Khan",
+          "Phagu Chauhan",
+          "Satya Pal Malik"
+        ],
+        "answer": 1,
+        "explanation": "Justice Sangam Kumar Sahoo took the oath as the Chief Justice of the Patna High Court on January 7, 2026. He was administered the oath by the then Governor of Bihar, Arif Mohammad Khan, at Rajendra Mandap in Bihar Lok Bhavan, Patna. Earlier, he was a judge of the Orissa High Court.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 81,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 81
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 87
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::87",
+      "question": {
+        "q": "88. Which part of Bihar remained unaffected by the Revolt of 1857? (i) Danapur (ii) Patna (iii) Arrah (iv) Muzaffarpur (v) Munger",
+        "options": [
+          "(iv) and (v)",
+          "Only (v)",
+          "Only (iv)",
+          "(iii), (iv) and (v)"
+        ],
+        "answer": 1,
+        "explanation": "During the Revolt of 1857, Arrah, Danapur, Gaya, Patna, Muzaffarpur, and Shahabad were the major centres of revolt in Bihar, while the Munger region remained unaffected by this revolt.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 87,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 87
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 103
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::103",
+      "question": {
+        "q": "104. Consider the following statements regarding the Khelo India Tribal Games 2026: 1. The main event of this competition was held in Raipur, Chhattisgarh. 2. Maharashtra secured the first position in the medal tally.",
+        "options": [
+          "Only 1",
+          "Only 2",
+          "Both 1 and 2",
+          "Neither 1 nor 2"
+        ],
+        "answer": 0,
+        "explanation": "The Khelo India Tribal Games 2026 were held in Chhattisgarh from 25 March to 3 April 2026. Raipur was its main venue, while the official venues also included Jagdalpur and Surguja along with Raipur. Therefore, statement 1 is correct. Karnataka ranked first with 23 gold, 8 silver and 7 bronze medals. Odisha stood second with 21 gold, 15 silver and 21 bronze medals, while Jharkhand ranked third with 16 gold, 8 silver and 11 bronze medals. Maharashtra ranked fourth with 6 gold, 10 silver and 4 bronze medals. Therefore, statement 2 is incorrect.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 103,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 103
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 102
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::102",
+      "question": {
+        "q": "103. Recently, Uchral Nyam-Osor has been appointed as the new Prime Minister of which country?",
+        "options": [
+          "Uzbekistan",
+          "Mongolia",
+          "Kazakhstan",
+          "Vietnam"
+        ],
+        "answer": 1,
+        "explanation": "Uchral Nyam-Osor was appointed Prime Minister by Mongolia’s Parliament, the State Great Khural, on 30 March 2026. Of the 107 lawmakers who took part in the voting, 88 voted in his favour, while 19 voted against him. He became the 35th Prime Minister of Mongolia and replaced Gombojavyn Zandanshatar.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 102,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 102
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 110
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::110",
+      "question": {
+        "q": "111. Who has Yamaha Music India appointed as its new brand ambassador to promote musical excellence and education?",
+        "options": [
+          "Arijit Singh",
+          "A.R. Rahman",
+          "Shankar Mahadevan",
+          "Jubin Nautiyal"
+        ],
+        "answer": 1,
+        "explanation": "Yamaha Music India has appointed Academy Award winning music composer A.R. Rahman as its brand ambassador. The objective of this partnership is to expand the reach of music in India, encourage structured music education and inspire the next generation of musicians. Therefore, the correct answer is (c). Earlier, India had hosted COP 8 in New Delhi from October 23 to November 1, 2002.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 110,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 110
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 112
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::112",
+      "question": {
+        "q": "113. Who is the painter of the artwork ‘Yashoda and Krishna’, which recently set the record as the most expensive Indian oil painting after being sold for ₹167.2 crore?",
+        "options": [
+          "M.F. Husain",
+          "Raja Ravi Varma",
+          "Amrita Sher-Gil",
+          "Nandalal Bose"
+        ],
+        "answer": 1,
+        "explanation": "The famous Indian painter Raja Ravi Varma’s work ‘Yashoda and Krishna’ was sold for ₹167.20 crore, including the buyer’s premium, at Saffronart’s Spring Live Auction. It was purchased by Dr. Cyrus S. Poonawalla, founder of the Serum Institute of India. It became the highest-value South Asian painting ever sold at auction. It surpassed the earlier record of M.F. Husain’s ‘Untitled (Gram Yatra)’, which had sold for around ₹118–119 crore. Raja Ravi Varma is famous for depicting Indian mythological themes with European academic realism.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 112,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 112
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 113
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::113",
+      "question": {
+        "q": "114. Who has created history by becoming the first openly LGBTQ+ member of the Rajya Sabha in the history of the Indian Parliament?",
+        "options": [
+          "Menaka Guruswamy",
+          "Arundhati Katju",
+          "Laxmi Narayan Tripathi",
+          "Sultan Admay"
+        ],
+        "answer": 0,
+        "explanation": "Senior Advocate Menaka Guruswamy of the Supreme Court took oath on April 6, 2026, as a newly elected Rajya Sabha member from West Bengal representing the All India Trinamool Congress (AITC/ TMC). She is considered India’s first openly LGBTQ+ Member of Parliament. TMC had nominated her as its candidate for the 2026 Rajya Sabha election. Menaka Guruswamy is known for her key role in the legal battle in the 2018 Navtej Singh Johar v. Union of India case, in which the part of Section 377 that criminalised consensual same-sex relations between adults was declared unconstitutional.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 113,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 113
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 115
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::115",
+      "question": {
+        "q": "116. With reference to World Homoeopathy Day 2026, consider the following statements: 1. Observed every year on 10 April on the birth anniversary of Dr. Samuel Hahnemann. 2. The theme is 'Harmony through Homoeopathy: Healing Beyond Boundaries'.",
+        "options": [
+          "Only 1",
+          "Only 2",
+          "Both 1 and 2",
+          "Neither 1 nor 2"
+        ],
+        "answer": 2,
+        "explanation": "World Homoeopathy Day is observed every year on April 10, the birth anniversary of Dr. Samuel Hahnemann, the founder of homoeopathy. In an international conference context, the 2026 theme was stated as “Harmony through Homoeopathy: Healing Beyond Borders”. Therefore, both statements are correct.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 115,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 115
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 116
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::116",
+      "question": {
+        "q": "117. Recently, which rescue operation was carried out by the Trishakti Corps of the Indian Army to save tourists stranded due to a landslide in North Sikkim?",
+        "options": [
+          "Operation Ganga",
+          "Operation Him Setu",
+          "Operation Devi Shakti",
+          "Operation Madad"
+        ],
+        "answer": 1,
+        "explanation": "The Trishakti Corps of the Indian Army launched “Operation Him Setu” to safely evacuate tourists stranded due to a landslide between Lachen and Chungthang in North Sikkim. Under this operation, road connectivity was restored and people were safely evacuated in coordination with the Border Roads Organisation, the civil administration and local authorities.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 116,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 116
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 118
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::118",
+      "question": {
+        "q": "119. Where is the world’s first integrated global university for wildlife conservation and veterinary sciences being established under the ‘Vantara’ initiative?",
+        "options": [
+          "Dehradun, Uttarakhand",
+          "Jamnagar, Gujarat",
+          "Wayanad, Kerala",
+          "Kuno, Madhya Pradesh"
+        ],
+        "answer": 1,
+        "explanation": "Under the Vantara initiative, the establishment of Vantara University has been announced in Jamnagar, Gujarat. It will be the world’s first integrated global university dedicated to wildlife conservation and veterinary sciences. Its objective is to make India a global hub for wildlife and veterinary education and to prepare trained experts in conservation, animal welfare and ecosystem health.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 118,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 118
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 119
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::119",
+      "question": {
+        "q": "120. Which FMCG brand became India’s first to achieve an annual turnover of ₹1 lakh crore in the financial year 2025–26?",
+        "options": [
+          "Patanjali Ayurved",
+          "Hindustan Unilever Limited (HUL)",
+          "Amul (AMUL)",
+          "ITC Limited"
+        ],
+        "answer": 2,
+        "explanation": "In the financial year 2025-26, the Amul brand achieved an annual brand turnover of more than ₹1 lakh crore. With this achievement, Amul became India’s first FMCG brand to cross ₹1 trillion in annual brand turnover. The Amul brand is marketed by the Gujarat Co operative Milk Marketing Federation (GCMMF), which is India’s largest FMCG organisation by value.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 119,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 119
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 121
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::121",
+      "question": {
+        "q": "122. Recently, Kurdish politician Nizar Amedi was elected the new President of which country?",
+        "options": [
+          "Syria",
+          "Iraq",
+          "Iran",
+          "Lebanon"
+        ],
+        "answer": 1,
+        "explanation": "On April 11, 2026, the Iraqi Parliament elected Kurdish politician Nizar Amedi as the country’s new President. He is a former environment minister of Iraq. Under Iraq’s political tradition of power-sharing, the President is generally from the Kurdish community, the Prime Minister from the Shiite community and the Speaker of Parliament from the Sunni community.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 121,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 121
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 122
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::122",
+      "question": {
+        "q": "123. Who among the following has been selected for the prestigious ‘Lata Deenanath Mangeshkar Award’ for 2026?",
+        "options": [
+          "Kumar Sanu",
+          "Kailash Satyarthi",
+          "A.R. Rahman",
+          "Ratan Tata"
+        ],
+        "answer": 1,
+        "explanation": "Nobel Peace Prize laureate and renowned child rights activist Kailash Satyarthi was honoured with the prestigious ‘Lata Deenanath Mangeshkar Award’ for",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 122,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 122
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 123
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::123",
+      "question": {
+        "q": "124. Susan Coyle has been appointed as the first woman Chief of Army in the 125-year military history of which country?",
+        "options": [
+          "Britain",
+          "Canada",
+          "Australia",
+          "New Zealand"
+        ],
+        "answer": 2,
+        "explanation": "On April 13, 2026, the Australian Government announced the appointment of Lieutenant General Susan Coyle as the next Chief of Army. This appointment will be effective from July 2026. She will be the first woman in the 125 year history of the Australian Army to hold this post.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 123,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 123
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 125
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::125",
+      "question": {
+        "q": "126. What is the total length and construction cost of the ‘Delhi–Dehradun Economic Corridor’, recently dedicated to the nation?",
+        "options": [
+          "250 km, ₹15,000 crore",
+          "213 km, over ₹12,000 crore",
+          "180 km, ₹10,000 crore",
+          "300 km, ₹18,000 crore"
+        ],
+        "answer": 1,
+        "explanation": "Prime Minister Narendra Modi inaugurated the 213-km-long, six-lane, access-controlled Delhi Dehradun Economic Corridor in Dehradun on April 14, 2026. It has been developed at a cost of more than ₹12,000 crore. This corridor passes through Delhi, Uttar Pradesh and Uttarakhand and will reduce the travel time between Delhi and Dehradun from more than 6 hours to about 2.5 hours. From an environmental point of view, it includes features such as a nearly 12-km-long elevated wildlife corridor, animal passes, elephant underpasses and a tunnel near the Daat Kali Temple. Therefore, the correct answer option is (b).",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 125,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 125
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 126
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::126",
+      "question": {
+        "q": "127. Major General Roman Gofman has recently been appointed as the new Director of the renowned intelligence agency ‘Mossad’ of which country?",
+        "options": [
+          "Russia",
+          "Israel",
+          "Germany",
+          "France"
+        ],
+        "answer": 1,
+        "explanation": "Explanation: Major General Roman Gofman was appointed the new director of Israel’s intelligence agency Mossad. On 2 June 2026, he assumed office as the 14th director of Mossad, replacing David Barnea. Before his appointment, he was the military secretary to Israeli Prime Minister Benjamin Netanyahu.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 126,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 126
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 127
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::127",
+      "question": {
+        "q": "128. With reference to the Wisden Cricketers’ Almanack 2026 awards, which of the following pairs is not correctly matched?",
+        "options": [
+          "Leading Women’s Cricketer – Deepti Sharma",
+          "Leading Men’s Cricketer – Mitchell Starc",
+          "Wisden Trophy (Edgbaston Test) – Shubman Gill",
+          "The only Indian among the Five Cricketers of the Year – Ravindra Jadeja"
+        ],
+        "answer": 3,
+        "explanation": "In the Wisden Cricketers’ Almanack 2026, based on performances in 2025, Australia’s Mitchell Starc was named the Leading Men’s Cricketer in the World, while India’s Deepti Sharma was named the Leading Women’s Cricketer in the World. The Five Cricketers of the Year included four Indian players—Shubman Gill, Ravindra Jadeja, Rishabh Pant and Mohammed Siraj—along with England’s Haseeb Hameed. Therefore, the matching “Only Indian in the Five Cricketers of the Year – Ravindra Jadeja” is incorrect. Shubman Gill also won the Wisden Trophy for his exceptional performance of 269 and 161 runs, a total of 430 runs, in the Edgbaston Test. Wisden is often called the “Bible of Cricket.”",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 127,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 127
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 128
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::128",
+      "question": {
+        "q": "129. Which port, operated by Adani Ports, has become India’s largest automobile export hub by exporting 6,008 cars in a single vessel?",
+        "options": [
+          "Jawaharlal Nehru Port (JNPT)",
+          "Mundra Port, Gujarat",
+          "Kandla (Deendayal) Port",
+          "Paradip Port"
+        ],
+        "answer": 1,
+        "explanation": "Mundra Port in Gujarat, operated by Adani Ports and Special Economic Zone Limited, became India’s leading automobile export hub after achieving the milestone of exporting 6,008 cars on a single vessel. This achievement was made possible through Mundra Port’s Roll-on/Roll-off (Ro-Ro) facility, which makes the loading and unloading of vehicles onto and off ships more efficient.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 128,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 128
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "Set 5",
+        "questionId": null,
+        "questionIndex": 131
+      },
+      "sourceIdentity": "mock::mock.json::Set 5::131",
+      "question": {
+        "q": "132. Consider the following statements in the context of the political history of Bihar: 1. Samrat Choudhary took oath as the 24th Chief Minister of Bihar. 2. He is the first leader of the Bharatiya Janata Party (BJP) to assume charge as the Chief Minister of Bihar.",
+        "options": [
+          "Only 1",
+          "Only 2",
+          "Both 1 and 2",
+          "Neither 1 nor 2"
+        ],
+        "answer": 2,
+        "explanation": "On 15 April 2026, BJP leader Samrat Choudhary was sworn in as the Chief Minister of Bihar. He is the 24th Chief Minister of the state. He is the first leader of the Bharatiya Janata Party to hold the post of Chief Minister of Bihar. Governor Lieutenant General (Retd.) Syed Ata Hasnain administered the oath of office and secrecy to him. He replaced former Chief Minister Nitish Kumar, who had resigned from the post after being elected to the Rajya Sabha. Vijay Kumar Choudhary and Bijendra Prasad Yadav were also appointed Deputy Chief Ministers. Hence, both statements are true.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 131,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 131
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "BPSC KGS Set 1",
+        "questionId": null,
+        "questionIndex": 0
+      },
+      "sourceIdentity": "mock::mock.json::BPSC KGS Set 1::",
+      "question": {
+        "q": "1. The world's first cryo-born baby corals were recently planted in:",
+        "options": [
+          "Maldives Coral Reefs",
+          "Red  Sea Reefs",
+          "Lakshadweep Reefs",
+          "Great Barrier Reef"
+        ],
+        "answer": 3,
+        "explanation": "In a world-first announced in 2025, the world’s first cryo-born baby corals were settled on the Great Barrier Reef in Australia. Reproductive biologists from Taronga Conservation Society Australia, working with the Australian Institute of Marine Science, fertilised fresh coral eggs (collected during the October spawning) using cryopreserved coral sperm from the Taronga CryoDiversity Bank, the world’s largest frozen repository of living coral cells. The resulting larvae were grown at the National Sea Simulator and then deployed in specially designed “coral cradles” on the Reef. The aim is to enable large-scale planting of heat- tolerant corals to help reefs withstand climate change and bleaching.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "BPSC KGS Set 1",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 0,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "BPSC KGS Set 1",
+          "questionId": null,
+          "questionIndex": 0
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "BPSC KGS Set 1",
+        "questionId": null,
+        "questionIndex": 1
+      },
+      "sourceIdentity": "mock::mock.json::BPSC KGS Set 1::1",
+      "question": {
+        "q": "2. \"Global Cybersecurity Outlook\" is published by which one of the following organisations?",
+        "options": [
+          "World Economic Forum",
+          "World Bank",
+          "International Telecommunication Union",
+          "INTERPOL"
+        ],
+        "answer": 0,
+        "explanation": "The “Global Cybersecurity Outlook” is a flagship annual publication of the World Economic Forum (WEF), produced in collaboration with Accenture. It is released every January ahead of the annual Davos meeting and examines the cybersecurity trends, threats, and priorities expected to affect economies and societies in the year ahead. The most recent edition, Global Cybersecurity Outlook 2026 (now in its fifth year), focused on AI acceleration, geopolitical fragmentation, and widening cyber inequity.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "BPSC KGS Set 1",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 1,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "BPSC KGS Set 1",
+          "questionId": null,
+          "questionIndex": 1
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "BPSC KGS Set 1",
+        "questionId": null,
+        "questionIndex": 2
+      },
+      "sourceIdentity": "mock::mock.json::BPSC KGS Set 1::2",
+      "question": {
+        "q": "3. Norovirus, recently seen in the news due to a surge in cases in several countries, differs from \nmany bacterial food-borne infections because:",
+        "options": [
+          "It spreads only through contaminated seafood.",
+          "It can spread efficiently through person-to-person contact.",
+          "It primarily affects the  respiratory tract.",
+          "It is transmitted only by mosquitoes."
+        ],
+        "answer": 1,
+        "explanation": "Norovirus is the world’s most common cause of acute gastroenteritis and is distinguished from most bacterial foodborne pathogens (such as Salmonella, Campylobacter, and Clostridium perfringens) precisely by its remarkably efficient person-to- person transmissibility. Ingesting as few as 18 viral particles is enough to cause infection. Transmission occurs through the faecal-oral route, by contact with contaminated surfaces, through contaminated food or water, and even via aerosolised vomit particles. This is why Norovirus outbreaks spread so rapidly in closed settings such as cruise ships, hospitals, schools, and care homes in ways that most bacterial foodborne infections do not.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "BPSC KGS Set 1",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 2,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "BPSC KGS Set 1",
+          "questionId": null,
+          "questionIndex": 2
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "BPSC KGS Set 1",
+        "questionId": null,
+        "questionIndex": 3
+      },
+      "sourceIdentity": "mock::mock.json::BPSC KGS Set 1::3",
+      "question": {
+        "q": "4. With reference to the International Organisation for Mediation (IOMed), recently seen in the \nnews, consider the following statements: \n1. It is the world's first intergovernmental organisation dedicated exclusively to the peaceful \nsettlement of international disputes through mediation. \n2. The Convention on the Establishment of IOMed was signed in Taipei in 2025. \n3. The Convention entered into force only after being ratified by all signatory States. \n4. IOMed seeks to complement existing international litigation and arbitration mechanisms. \nWhich of the statements given above are correct?",
+        "options": [
+          "Only 1 and 2",
+          "Only 2, 3 and 4",
+          "Only 1  and 4",
+          "1, 2, 3 and 4"
+        ],
+        "answer": 2,
+        "explanation": "Statement 1 is correct: IOMed is formally described as the world’s first intergovernmental legal organisation dedicated exclusively to the resolution of international disputes through mediation. This was confirmed in the official Convention text and repeatedly stated by the Chinese Foreign Ministry, the Hong Kong SAR government, and the IOMed’s own website at the time of the signing ceremony. Statement 2 is incorrect: The Convention on the Establishment of IOMed was signed on 30 May 2025 in Hong Kong, not Taipei. The signing ceremony was held at the Grand Hyatt Hong Kong, with 33 founding signatory states participating. IOMed is also headquartered in Hong Kong. Statement 3 is incorrect: The Convention does not require ratification by all signatory states to enter into force. It enters into force following ratification, acceptance, or approval by at least three signatories, making the threshold far lower than universal ratification. Statement 4 is correct: IOMed is designed to offer mediation as an additional and distinct pathway alongside existing international mechanisms. It explicitly positions itself as implementing Article 33 of the UN Charter, which lists mediation as one among several peaceful means of settling disputes (alongside arbitration, judicial settlement, and others). Rather than displacing bodies such as the ICJ or ICSID arbitration, it provides a complementary party-driven, consent-based alternative.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "BPSC KGS Set 1",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 3,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "BPSC KGS Set 1",
+          "questionId": null,
+          "questionIndex": 3
         }
       }
     }

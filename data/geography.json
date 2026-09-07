@@ -3506,7 +3506,7 @@
       },
       {
         "id": 152,
-        "q": "Assertion : Wind do not flow in straight line.\n Reason : Wind deflection occur due to rotation of earth on its axis.\n Option–",
+        "q": "Assertion (A): Wind do not flow in straight line.\n\nReason (R): Wind deflection occur due to rotation of earth on its axis.\n\nOption–",
         "options": [
           "Assertion and Reason both are correct and reason is the correct explanation of assertion.",
           "Assertion and reason both are correct and reason is not correct explanation of assertion.",
@@ -5728,7 +5728,7 @@
       },
       {
         "id": 336,
-        "q": "Assertion A: The exogenic geomorphic processes vary from region to region.\n Reason R: There are different climatic regions owing to thermal gradients.\n Select the correct option from the given alternatives",
+        "q": "Assertion (A): The exogenic geomorphic processes vary from region to region.\n\nReason (R): There are different climatic regions owing to thermal gradients.\n\nSelect the correct option from the given alternatives",
         "options": [
           "Both A and R are true and R explains A",
           "Both A and R are true and R does not explains A",
@@ -11732,7 +11732,7 @@
       },
       {
         "id": 183,
-        "q": "",
+        "q": "Which type of volcanic eruption is the most explosive?",
         "options": [
           "Surtseyan",
           "Plinian",
@@ -13575,7 +13575,7 @@
       },
       {
         "id": 336,
-        "q": "Assertion A: The exogenic geomorphic processes vary from region to region.\n Reason R: There are different climatic regions owing to thermal gradients.\n Select the correct option from the given alternatives",
+        "q": "Assertion (A): The exogenic geomorphic processes vary from region to region.\n\nReason (R): There are different climatic regions owing to thermal gradients.\n\nSelect the correct option from the given alternatives",
         "options": [
           "Both A and R are true and R explains A",
           "Both A and R are true and R does not explains A",
@@ -21192,7 +21192,7 @@
       },
       {
         "id": 970,
-        "q": "Two statements are given below, one labeled Assertion (A) and the other Reason (R). Choose the correct answer from the codes below:\n (A): Eskers are formed due to depositional activity of wind.\n (R): Eskers are formed due to glacio-fluvial deposits.\n Codes:",
+        "q": "Two statements are given below, one labeled Assertion (A) and the other Reason (R). Choose the correct answer from the codes below:\n\nAssertion (A): Eskers are formed due to depositional activity of wind.\n\nReason (R): Eskers are formed due to glacio-fluvial deposits.\n\nCodes:",
         "options": [
           "Both (A) and (R) are true, and (R) is the correct explanation of (A).",
           "Both (A) and (R) are true, but (R) is not the correct explanation of (A).",
@@ -24475,7 +24475,9 @@
         "q": "Which atmospheric layer is known as the hottest layer?",
         "options": [
           "Troposphere",
-          "Stratosphere"
+          "Stratosphere",
+          "Mesosphere",
+          "Thermosphere"
         ],
         "answer": 3,
         "explanation": "The thermosphere is the hottest layer of the \natmosphere, where temperatures can exceed 1,500°C \ndue to the absorption of solar radiation."
@@ -24485,7 +24487,9 @@
         "q": "In which layer of the atmosphere do meteors burn up?",
         "options": [
           "Troposphere",
-          "Stratosphere"
+          "Stratosphere",
+          "Mesosphere",
+          "Thermosphere"
         ],
         "answer": 2,
         "explanation": "Meteors burn up in the mesosphere, which \nextends from 50 to 85 km above the Earth. The friction \nbetween meteors and air molecules causes them to heat \nup and disintegrate."
@@ -25129,7 +25133,7 @@
       },
       {
         "id": 232,
-        "q": "Given below are two statements: one is labeled as Assertion A and the other is labeled as Reason R Assertion (A) : During an equinox the length of daylight is 12 hours everywhere on Earth Reasons (R): On equinox the circle of illumination passes directly through the poles dividing the latitudes in half In the light of the above statements, choose the most appropriate answer from the options given below",
+        "q": "Given below are two statements: one is labeled as Assertion (A) and the other is labeled as Reason (R)\n\nAssertion (A): During an equinox the length of daylight is 12 hours everywhere on Earth\n\nReason (R): On equinox the circle of illumination passes directly through the poles dividing the latitudes in half\n\nIn the light of the above statements, choose the most appropriate answer from the options given below",
         "options": [
           "Both (A) and (R) are correct and R is the correct explanation of A",
           "Both (A) and (R) are correct but R is NOT the correct explanation of A",
@@ -25490,7 +25494,9 @@
         "q": "What comes immediately before evaporation in the water cycle?",
         "options": [
           "Cloud",
-          "Precipitation"
+          "Precipitation",
+          "Collection",
+          "Condensation"
         ],
         "answer": 2,
         "explanation": "The cyclic movement of water from the ocean \nsurface to the atmosphere, from the atmosphere to the \nland surface (continental part), and from the land \nsurface back to the ocean is called the water cycle. The \nsequence of actions in the water cycle is as follows: \nevaporation, transpiration, precipitation, infiltration, and \nsurface runoff. It is evident that \"heat\" comes \nimmediately before evaporation in the water cycle."
@@ -29132,11 +29138,12 @@
       },
       {
         "id": 566,
-        "q": "Match List-I with List-II : List-I (Local Wind) List-II (Country) A Khamsin 1 North America B Harmattan 2 Southern Europe C Mistral 3 Northern Egypt D Chinook 4 Northern Africa Codes:- A B C D",
+        "q": "Match List-I with List-II :\n\nList-I (Local Wind)\nList-II (Country)\n\nA. Khamsin\nB. Harmattan\nC. Mistral\nD. Chinook\n\n1. North America\n2. Southern Europe\n3. Northern Egypt\n4. Northern Africa\n\nCodes:\nA B C D",
         "options": [
           "3 1 2 4",
           "2 3 4 1",
-          "1 4 3 2"
+          "1 4 3 2",
+          "3 4 2 1"
         ],
         "answer": 3,
         "explanation": "The correct match is: \nKhamsin – Northern Egypt \nHarmattan – Northern Africa \nMistral – Southern Europe \nChinook – North America"
@@ -29806,7 +29813,9 @@
         "q": "The surface circulation of ocean water is driven by:",
         "options": [
           "Resistance forces",
-          "Tidal forces"
+          "Tidal forces",
+          "Gravitational force",
+          "Blowing wind"
         ],
         "answer": 3,
         "explanation": "Strong winds moving over the ocean push \nsurface waters, generating ocean currents."
@@ -29816,7 +29825,9 @@
         "q": "Westerlies and trade winds are examples of which type of winds?",
         "options": [
           "Mesoscale",
-          "Toposcale"
+          "Toposcale",
+          "Macroscale",
+          "Microscale"
         ],
         "answer": 2,
         "explanation": "Trade winds are consistent winds blowing \nfrom the Subtropical High-Pressure Belt toward the \nEquatorial Low-Pressure Belt. \n• Westerlies flow between the Subtropical High (30°-35°) \nand the Subpolar Low (60°-65°) in both hemispheres."
@@ -35226,7 +35237,8 @@
         "options": [
           "Folding",
           "Faulting",
-          "Accumulation of debris(d) Plate displacement"
+          "Accumulation of debris",
+          "Plate displacement"
         ],
         "answer": 3,
         "explanation": "From the perspective of plate tectonics, the \nAtlantic Ocean is divided into two parts. Due to the \nwestward movement of the American Plate, the \nconstructive plate boundaries allow magma to emerge \nfrom the asthenosphere, leading to the formation of the \nMid-Atlantic Ridge."
@@ -35617,7 +35629,9 @@
         "q": "The typical depth range of abyssal plains is:",
         "options": [
           "1000 - 6000 meters",
-          "2000 - 6000 meters"
+          "2000 - 6000 meters",
+          "3000 - 6000 meters",
+          "4000 - 6000 meters"
         ],
         "answer": 2,
         "explanation": "Abyssal plains are typically 3,000 - 6,000 \nmeters deep and cover approximately 75.9% of the \nglobal ocean floor. However, this percentage varies: \nPacific Ocean - 80.3% \nIndian Ocean - 80.1% \nAtlantic Ocean - 54.9%"
@@ -36131,10 +36145,12 @@
       },
       {
         "id": 264,
-        "q": "Which of the following data are sources of proxy data for climate change studies? (A) Historical documents (B) Sea floor sediments (C) Satellite data (D) Fossil pollen.Choose the correct answer from the options given below:",
+        "q": "Which of the following data are sources of proxy data for climate change studies? (A) Historical documents (B) Sea floor sediments (C) Satellite data (D) Fossil pollen. Choose the correct answer from the options given below:",
         "options": [
-          "A and C Only (c) A, B and D Only",
-          "B and C Only (d) C and D Only"
+          "A and C Only",
+          "B and C Only",
+          "A, B and D Only",
+          "C and D Only"
         ],
         "answer": 2,
         "explanation": "Proxy data are indirect sources used to study \npast climate conditions before the advent of modern \ninstruments. \nAmong the given options: \n(A) Historical documents \n(B) Sea floor sediments \n(D) Fossil Pollen \nHowever, satellite data (c) are not proxy data they are \ndirect measurements of the earth's climate and are only \navailable from the late 20th century onward. \nThus, the correct answer is (c), (A, B and D)."
@@ -36227,10 +36243,10 @@
         "id": 272,
         "q": "The evaporation process in ocean water is affected by: (a) Salinity (b) Latitude (c) Weather (d) Wind Choose the most appropriate answer: (a) Only (a) and (b) (b) Only (b) and (c) (c) Only (b), (c), and (d) (d) All",
         "options": [
-          ",",
-          ",",
-          ", and",
-          ""
+          "Only (a) and (b)",
+          "Only (b) and (c)",
+          "Only (b), (c), and (d)",
+          "All"
         ],
         "answer": 3,
         "explanation": "All (a), (b), (c), and (d) \nEvaporation in oceans, seas, and lakes is influenced by \nsalinity, rainfall, solar radiation, latitude, wind, and \nocean currents."
@@ -36250,8 +36266,10 @@
         "id": 274,
         "q": "In which of the following water bodies is the lowest salinity found?",
         "options": [
-          "Great Salt Lake (c) Van Lake",
-          "Dead Sea (d) Karabugas Bay"
+          "Great Salt Lake",
+          "Van Lake",
+          "Dead Sea",
+          "Karabugas Bay"
         ],
         "answer": 3,
         "explanation": "Karabugas Bay has the lowest salinity, with a \nsalinity level of 17‰. The Great Salt Lake in the United \nStates has a salinity of 220‰, the Dead Sea has 238‰, \nand Turkey’s Van Lake has 330‰. The average salinity \nof oceans is 35‰. Near the equator, salinity is around \n34.85‰, while the highest salinity (36‰) is found \nbetween 20°-40° North latitude."
@@ -36272,10 +36290,12 @@
         "id": 276,
         "q": "Which of the following factors does NOT control ocean salinity?",
         "options": [
-          "Precipitation (c) Coastal structure",
-          "Evaporation (d) River discharge"
+          "Precipitation",
+          "Coastal structure",
+          "Evaporation",
+          "River discharge"
         ],
-        "answer": 2,
+        "answer": 1,
         "explanation": "Coastal structure does not control ocean \nsalinity. Factors affecting ocean salinity include \nprecipitation, evaporation, river inflow, air pressure, \nwind direction, and ocean currents. The main source of \nocean salinity is the Earth's crust, from where minerals \nand salts are transported into the ocean through \nweathering and erosion."
       },
       {
@@ -40588,8 +40608,10 @@
         "id": 79,
         "q": "Which of the following are ecological hotspots of the world? (a) Western Ghats (b) Queensland (c) Both",
         "options": [
-          "and",
-          "(d) None of these"
+          "Western Ghats",
+          "Queensland",
+          "Both",
+          "None of these"
         ],
         "answer": 2,
         "explanation": "Both the western Ghats in India and \nQueensland in Australia are recognized as ecological \nhotspots, meaning they contain a high concentration of \nbiodiversity and are threatened by habitat loss."
@@ -44109,8 +44131,10 @@
         "id": 371,
         "q": "A tree in a tropical deciduous forest sheds its leaves because of – (a) Lack of moisture (b) Temperature below 6°C (c) Both (a) and (b) (d) Neither",
         "options": [
-          "nor",
-          ""
+          "Lack of moisture",
+          "Temperature below 6°C",
+          "Both (a) and (b)",
+          "Neither"
         ],
         "answer": 0,
         "explanation": "Tropical deciduous forests receive less than \n150 cm of rainfall, and the temperature fluctuation \nexceeds 18°C. Due to low rainfall and high \ntemperatures, the humidity is reduced, causing plants to \nshed their leaves to conserve water."
@@ -49255,8 +49279,10 @@
         "id": 369,
         "q": "Who among the following believed in environmental determinism? (a) C. Darwin (b) Humboldt (c) Ratzel (d) Semple (e) Blache Select the correct answer from the options below: (a) Only (a), (c), and (d) (b) Only (a), (b), and (d) (c) Only",
         "options": [
-          "and",
-          ""
+          "Only (a), (c), and (d)",
+          "Only (a), (b), and (e)",
+          "Only (a) and (b)",
+          "Only (a) and (e)"
         ],
         "answer": 0,
         "explanation": "According to determinist scholars, all human \nactivities are controlled by the natural environment and \nshould be analyzed in this context. Friedrich Ratzel is \nconsidered the founder of determinism in human \ngeography. Other proponents include Ellen Churchill \nSemple (USA), Ellsworth Huntington, and Charles \nDarwin."
@@ -53287,8 +53313,10 @@
         "id": 704,
         "q": "The aging of the population is a result of: (a) Declining death rate (b) Declining birth rate (c) Both",
         "options": [
-          "and",
-          "(d) None of the above"
+          "Declining death rate",
+          "Declining birth rate",
+          "Both",
+          "None of the above"
         ],
         "answer": 2,
         "explanation": "In the third stage of the demographic \ntransition theory, both birth and death rates decrease \nsignificantly. The birth rate ranges from 20 to 30 per \nthousand, and the death rate from 10 to 15 per \nthousand. This stage indicates slow population growth. \nIt is observed in countries like India, Eastern Europe, \nand Central Asia."
@@ -57956,7 +57984,7 @@
       },
       {
         "id": 1095,
-        "q": "",
+        "q": "Which one of the following Models is explained by the given figure below?",
         "options": [
           "Weber’s Model",
           "Central Place Model",
@@ -58860,8 +58888,10 @@
         "id": 1172,
         "q": "Read the following statements and choose the correct answer from the given codes: (a) Perspective planning can also be called long term planning. (b) Perspective planning is designed for a period of 20-25 years. (c) Perspective planning lacks flexibility. (d) Perspective planning ensures spatial integration of plans at different hierarchical levels. (a) Only (a) is correct. (b) (a) and (b) are correct. (c) (a), (b), and (c) are correct. (d)",
         "options": [
-          ",",
-          ", and (d) are correct."
+          "Only (a) is correct.",
+          "(a) and (b) are correct.",
+          "(a), (b), and (c) are correct.",
+          "(a), (b), and (d) are correct."
         ],
         "answer": 3,
         "explanation": "Perspective planning is also called long-term \nplanning. Based on time duration, plans can be short\nterm or long-term, ranging from one-year, five-year, or \nseven-year plans."
@@ -61176,7 +61206,7 @@
       },
       {
         "id": 85,
-        "q": "Given below are two statements: One is labelled as Assertion A and the other is labelled as Reason R. Assertion A: Increasing complexity and diversity of economic activity encourages unevenness of population distribution. Reason B: Increasing government control over economic activity emerged as a significant factor affecting population patterns. In the light of the above statements, choose the most appropriate answer from the options given below:",
+        "q": "Given below are two statements: One is labelled as Assertion (A) and the other is labelled as Reason (R).\n\nAssertion (A): Increasing complexity and diversity of economic activity encourages unevenness of population distribution.\n\nReason (R): Increasing government control over economic activity emerged as a significant factor affecting population patterns.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
         "options": [
           "Both A and R are correct and R is the correct explanation of A.",
           "Both A and R are correct but R is not the correct explanation of A.",
@@ -63995,9 +64025,10 @@
         "id": 319,
         "q": "Match cropping season with the crops: a Kharif i Fodder b Rabi ii Cotton c Zaid iii Mustard (a) (a)-(iii), (b)-(i), (c)-(ii) (b) (a)-(ii), (b)-(i), (c)-(iii) (c) (a)-(iii), (b)-(ii), (c)-(i) (d)",
         "options": [
-          "-(ii),",
-          "-(iii),",
-          "-(i)"
+          "(a) (a)-(iii), (b)-(i), (c)-(ii)",
+          "(b) (a)-(ii), (b)-(i), (c)-(iii)",
+          "(c) (a)-(iii), (b)-(ii), (c)-(i)",
+          "(d) (a)-(ii), (b)-(iii), (c)-(i)"
         ],
         "answer": 3,
         "explanation": "Kharif - Cotton \n Rabi - Mustard \n Zaid - Fodder"
@@ -66489,8 +66520,10 @@
         "id": 526,
         "q": "In most of the world's commercial livestock farming areas: (a) Sheep and goats are raised in large numbers (b) Cattle and oxen are raised in large numbers (c) Both (a) and (b) (d) Neither",
         "options": [
-          "nor",
-          ""
+          "Sheep and goats are raised in large numbers",
+          "Cattle and oxen are raised in large numbers",
+          "Both (a) and (b)",
+          "Neither"
         ],
         "answer": 2,
         "explanation": "Commercial livestock farming is common in \ndry and semi-arid regions, especially where European \nsettlers migrated. In North and South America, cattle \nand oxen dominate, while in Australia and New \nZealand, sheep and goats are more common."
@@ -85729,7 +85762,8 @@
         "options": [
           "Alpine grasslands",
           "Coniferous forests",
-          "High altitude meadows(d) Temperate forests"
+          "High altitude meadows",
+          "Temperate forests"
         ],
         "answer": 3,
         "explanation": "Temperate forests are the predominant \nvegetation type in the vale of Kashmir."
@@ -86442,14 +86476,14 @@
       },
       {
         "id": 1055,
-        "q": "",
+        "q": "In soil horizon, 'C' layer represents ______.",
         "options": [
-          "Consolidated rock",
           "Weathered parent material",
           "Organic debris",
-          "Maximum silicate soil material"
+          "Consolidated rock",
+          "Maximum silicate clay material"
         ],
-        "answer": 1,
+        "answer": 0,
         "explanation": "Soil is formed by the disintegration and \ndecomposition of rocks. According to J.S. Joffe, soil is \na natural entity composed of minerals, organic matter, \nand organisms, with different horizons of varying \nthickness. \n● The lowest layer, formed by weathered parent \nmaterial, is known as the Regolith. \n● This layer consists of loose and unstructured \nmaterials, also called the subsoil layer. \n● It lacks the characteristics of the A2, A3, or B₂ \nhorizons and is strongly influenced by the properties \nof the underlying parent rock."
       },
       {
@@ -88062,8 +88096,10 @@
         "id": 1190,
         "q": "Which one of the following sets of letters has been used by Koppen for middle latitude cold desert climate ?",
         "options": [
-          "BSh (c) BWk",
-          "BWh (d) BSk"
+          "BSh",
+          "BWh",
+          "BWk",
+          "BSk"
         ],
         "answer": 2,
         "explanation": "BWk has been used by koppen for middle \nlatitude cold desert climate. \nBSh classification stands for semi-arid (steppe) \nclimate with hot temperatures. \nBWh stands for arid climate with hot temperatures. \nBSk stands for semi arid (steppe) climate with cold \ntemperatures."
@@ -90481,14 +90517,14 @@
       },
       {
         "id": 1392,
-        "q": "",
+        "q": "Match the following and choose the correct option from those given below:\n\nShifting Cultivation — State\n\nA. Jhum\nB. Podu\nC. Ponam\nD. Dahiya",
         "options": [
-          "Podu",
-          "Jhum",
-          "Dahiya",
-          "Ponam"
+          "(iii), (i), (iv), (ii)",
+          "(ii), (iii), (iv), (i)",
+          "(iii), (iv), (ii), (i)",
+          "(iv), (ii), (i), (iii)"
         ],
-        "answer": 1,
+        "answer": 2,
         "explanation": "Jhum cultivation is a form of shifting \nagriculture, where land is abandoned after its fertility \ndepletes. In Andhra Pradesh and Odisha, it is called \nPodu, while in Assam, Tripura, Nagaland, Arunachal \nPradesh, and Mizoram, it is called Jhum. In Kerala, \nshifting cultivation is known as Ponam."
       },
       {
@@ -98335,7 +98371,7 @@
       },
       {
         "id": 2045,
-        "q": "Two statements are given below, one is Assertion (A) and the other is Reason (R). Choose the correct answer from the codes given below: (A) India's population growth rate has decreased. (R) India has not made proper planning for the population.",
+        "q": "Two statements are given below, one is Assertion (A) and the other is Reason (R).\n\nAssertion (A): India's population growth rate has decreased.\n\nReason (R): India has not made proper planning for the population.\n\nChoose the correct answer from the codes given below:",
         "options": [
           "Both (A) and (R) are correct, and (R) is the correct explanation of (A).",
           "Both (A) and (R) are correct, but (R) is not the correct explanation of (A).",
@@ -98359,7 +98395,7 @@
       },
       {
         "id": 2047,
-        "q": "Two statements are given below, one is called the Assertion (A) and the other is called the Reason (R). Choose the correct answer from the options provided: (A) The fertility transition in India has been rapid.(R) The literacy transition in India has been slow.",
+        "q": "Two statements are given below, one is called the Assertion (A) and the other is called the Reason (R).\n\nAssertion (A): The fertility transition in India has been rapid.\n\nReason (R): The literacy transition in India has been slow.\n\nChoose the correct answer from the options provided:",
         "options": [
           "Both (A) and (R) are correct, and (R) is the correct explanation of (A).",
           "Both (A) and (R) are correct, but (R) is not the correct explanation of (A).",
@@ -106222,7 +106258,7 @@
       },
       {
         "id": 463,
-        "q": "Below are two statements, one is Assertion (A) and the other is Reason (R). Choose the correct answer using the code below: (A) India follows a federal system of governance where power is clearly divided between the center and the states. (R) Federalism in India can be seen as a process influenced by its vast diversity. Codes:-",
+        "q": "Below are two statements, one is Assertion (A) and the other is Reason (R).\n\nAssertion (A): India follows a federal system of governance where power is clearly divided between the center and the states.\n\nReason (R): Federalism in India can be seen as a process influenced by its vast diversity.\n\nCodes:-",
         "options": [
           "Both (A) and (R) are correct, and (R) correctly explains (A).",
           "Both (A) and (R) are correct, but (R) does not correctly explain (A).",
@@ -106767,6 +106803,32 @@
           "chapter": "Set 6",
           "questionId": null,
           "questionIndex": 85
+        }
+      },
+      {
+        "q": "98. Match List-I with List-II: (A) Graphite (B) Lead (C) Salt (D) Iron Ore | 1. Bellary 2. Didwana 3. Rampa 4. Zawar",
+        "options": [
+          "3 4 2 1",
+          "1 4 2 3",
+          "3 1 4 2",
+          "2 3 1 4"
+        ],
+        "answer": 0,
+        "explanation": "The correct matching of the given minerals and their mining areas is as follows Graphite – Rampa (Andhra Pradesh) Lead – Zawar region (Rajasthan) Salt – Didwana (Rajasthan) Iron ore – Bellary (Karnataka) Therefore, option (a) is correctly matched.",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "Set 5",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 97,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "Set 5",
+          "questionId": null,
+          "questionIndex": 97
         }
       }
     ]
