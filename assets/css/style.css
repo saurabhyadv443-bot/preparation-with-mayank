@@ -1172,7 +1172,9 @@ body.text-selection-locked.highlighter-selection-active .saved-question-item > d
 .review-page .explanation-box blockquote,
 .review-page .explanation-box td,
 .review-page .explanation-box th {
-    color: #526273;
+    font-family: Georgia, "Times New Roman", serif;
+    color: #111111;
+    font-weight: 500;
 }
 
 .review-highlight {
