@@ -17,6 +17,31 @@ function escapeHtml(value) {
         .replace(/'/g, "&#39;");
 }
 
+const QUIZ_JSON_CACHE = new Map();
+
+function loadJson(url, options = {}) {
+    const cacheKey = String(url);
+    const cached = QUIZ_JSON_CACHE.get(cacheKey);
+    if (cached) {
+        return cached;
+    }
+
+    const pending = fetch(cacheKey, options)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`Unable to load JSON: ${cacheKey}`);
+            }
+            return response.json();
+        })
+        .catch((error) => {
+            QUIZ_JSON_CACHE.delete(cacheKey);
+            throw error;
+        });
+
+    QUIZ_JSON_CACHE.set(cacheKey, pending);
+    return pending;
+}
+
 const TEXT_SELECTION_PREFERENCE_KEY = "portalTextSelectionLocked";
 
 function setTextSelectionPreference(locked) {
@@ -75,6 +100,7 @@ const QUIZ_PENDING_CHANGES_KEY = "quizPendingChanges";
 const QUIZ_PENDING_BATCHES_KEY = "quizPendingChangeBatches";
 const QUIZ_PENDING_BATCHES_VERSION = 1;
 const QUIZ_PENDING_BATCH_HISTORY_LIMIT = 5;
+let quizPendingStateCache = null;
 const QUIZ_PENDING_SOURCE_FILES = {
     ancient: "ancient.json",
     medieval: "medeival.json",
@@ -109,6 +135,7 @@ function quizPendingReadJson(key, fallback) {
 }
 
 function quizPendingWriteState(state) {
+    quizPendingStateCache = state;
     localStorage.setItem(QUIZ_PENDING_BATCHES_KEY, JSON.stringify(state));
     localStorage.setItem(QUIZ_PENDING_CHANGES_KEY, JSON.stringify(state.changes));
 }
@@ -120,6 +147,7 @@ function quizPendingNormalizeChange(change, index, nextChangeId) {
 }
 
 function quizPendingReadState() {
+    if (quizPendingStateCache) return quizPendingStateCache;
     const stored = quizPendingReadJson(QUIZ_PENDING_BATCHES_KEY, null);
     if (stored && stored.version === QUIZ_PENDING_BATCHES_VERSION && Array.isArray(stored.changes) && Array.isArray(stored.batches)) {
         return {
@@ -143,6 +171,12 @@ function quizPendingReadState() {
     quizPendingWriteState(state);
     return state;
 }
+
+window.addEventListener("storage", (event) => {
+    if (event.key === QUIZ_PENDING_BATCHES_KEY || event.key === QUIZ_PENDING_CHANGES_KEY) {
+        quizPendingStateCache = null;
+    }
+});
 
 function getQuizPendingChanges() {
     return quizPendingReadState().changes;
