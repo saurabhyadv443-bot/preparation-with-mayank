@@ -10,9 +10,7 @@ let selectedSubject = subject;
 async function loadSubjectManifest() {
     if (SUBJECT_MANIFEST) return SUBJECT_MANIFEST;
     try {
-        const resp = await fetch('data/subjects.json');
-        if (!resp.ok) throw new Error('manifest missing');
-        const j = await resp.json();
+        const j = await loadJson('data/subjects.json');
         if (!j || !Array.isArray(j.subjects)) throw new Error('invalid manifest');
         subjects = j.subjects;
         console.log("Subjects loaded:", subjects);
@@ -375,9 +373,7 @@ function getQuizDuration() {
             await Promise.all(Object.keys(ids).map(async (subjectKey) => {
                 const file = `${subjectKey}.json`;
                 try {
-                    const resp = await fetch(`data/${file}`);
-                    if (!resp.ok) return;
-                    const j = await resp.json();
+                    const j = await loadJson(`data/${file}`);
                     const chapters = j.chapters || {};
                     Object.keys(ids[subjectKey] || {}).forEach((chapterName) => {
                         const indices = ids[subjectKey][chapterName] || [];
@@ -405,9 +401,7 @@ function getQuizDuration() {
                 secondsPerQuestion: 40
             };
         } else {
-            const response = await fetch(`data/${resolveSubjectDataFile(subject)}`);
-            if (!response.ok) throw new Error('Unable to load quiz data for the selected subject.');
-            data = await response.json();
+            data = await loadJson(`data/${resolveSubjectDataFile(subject)}`);
         }
 
         quizData = data;
@@ -599,9 +593,13 @@ function parseMatchListQuestion(question) {
     }
 
     const rawText = String(question.q || "");
-    const text = rawText.replace(/(?:\s|<br\s*\/?>)+Codes?\s*:?\s*(?:Code\s*:?\s*)?(?:(?:\s|<br\s*\/?>)+[A-D](?:[.)])?){2,}\s*$/i, "").trim();
+    const text = rawText
+        .replace(/\s*\|\s*/g, "\n")
+        .replace(/[■○●]/g, " ")
+        .replace(/(?:\s|<br\s*\/?>)+Codes?\s*:?\s*(?:Code\s*:?\s*)?(?:(?:\s|<br\s*\/?>)+[A-D](?:[.)])?){2,}\s*$/i, "")
+        .trim();
     const markerPattern = /(?<![A-Za-z0-9])(\(\d{1,2}\)|\d{1,2}[.):]?|\([A-Za-z]\)|[A-Za-z][.):]?|\([IVXivx]+\)|[IVXivx]+[.):]?)(?=\s|<br\s*\/?>|$)/g;
-    const headerPattern = /((?:List|Column)\s*[-–—]?\s*(?:I|II|1|2|A|B)\b(?:\s*\([^)]*\))?)/gi;
+    const headerPattern = /((?:List|Column)\s*[-–—]?\s*(?:II|I|2|1|A|B)\b(?:\s*\([^)]*\))?)/gi;
     const headers = Array.from(text.matchAll(headerPattern));
     const romanValues = { I: 1, V: 5, X: 10 };
     const questionNumber = text.match(/^\s*\d{1,3}[.)]?\s+/);
@@ -655,10 +653,13 @@ function parseMatchListQuestion(question) {
             uniqueSequences.push(sequence);
         }
     });
-    const headerOneMatches = headers.filter((header) => /\b(?:List|Column)\s*[-–—]?\s*(?:I|1|A)\b/i.test(header[0]));
-    const headerOne = headerOneMatches[headerOneMatches.length - 1];
-    const headerTwo = headers.find((header) => /\b(?:List|Column)\s*[-–—]?\s*(?:II|2|B)\b/i.test(header[0]) && header.index > headerOne?.index);
+    const headerOneMatches = headers.filter((header) => /\b(?:List|Column)\s*[-–—]?\s*(?:I(?!I)|1|A)\b/i.test(header[0]));
+    const headerTwoMatches = headers.filter((header) => /\b(?:List|Column)\s*[-–—]?\s*(?:II|2|B)\b/i.test(header[0]));
+    const headerTwo = headerTwoMatches[headerTwoMatches.length - 1];
+    const headerOne = headerOneMatches.filter((header) => header.index < (headerTwo?.index ?? Number.POSITIVE_INFINITY)).pop();
     const hasHeaders = Boolean(headerOne && headerTwo);
+    const codeStart = hasHeaders ? text.slice(headerTwo.index + headerTwo[0].length).search(/\b(?:select|choose|code|codes|options?)\b/i) : -1;
+    const listTwoEnd = hasHeaders && codeStart >= 0 ? headerTwo.index + headerTwo[0].length + codeStart : text.length;
     const pairs = [];
     for (let first = 0; first < uniqueSequences.length; first += 1) {
         for (let second = first + 1; second < uniqueSequences.length; second += 1) {
@@ -672,6 +673,19 @@ function parseMatchListQuestion(question) {
                 continue;
             }
             pairs.push({ left, right, confidence: Math.min(left.length, right.length) * 10 + (hasHeaders ? 5 : 0) + (distinctFamilies ? 3 : 0) });
+        }
+    }
+    if (!pairs.length && hasHeaders) {
+        const leftTokens = tokens.filter((token) => token.index > headerOne.index + headerOne[0].length && token.index < headerTwo.index)
+            .filter((token) => markerInfo(token[1])[0]?.family === "letter");
+        const rightTokens = tokens.filter((token) => token.index > headerTwo.index + headerTwo[0].length && token.index < listTwoEnd)
+            .filter((token) => ["numeric", "roman"].includes(markerInfo(token[1])[0]?.family));
+        if (leftTokens.length >= 2 && rightTokens.length >= 2) {
+            pairs.push({
+                left: leftTokens.map((token, index) => ({ token, info: { family: "letter", value: index + 1, caseKey: "upper" } })),
+                right: rightTokens.map((token, index) => ({ token, info: { family: "numeric", value: index + 1, caseKey: "" } })),
+                confidence: Math.min(leftTokens.length, rightTokens.length) * 10 + 5
+            });
         }
     }
     if (!pairs.length || (!hasHeaders && !/\b(?:match|matching|pairs?)\b/i.test(text))) {
@@ -690,16 +704,16 @@ function parseMatchListQuestion(question) {
     for (let index = 0; index < rowCount; index += 1) {
         const leftEntry = left[index] ? {
             marker: left[index].token[1],
-            text: cleanText(text.slice(left[index].token.index + left[index].token[1].length, grouped ? left[index + 1]?.token.index ?? right[0]?.token.index ?? text.length : right[index]?.token.index ?? left[index + 1]?.token.index ?? text.length))
+            text: cleanText(text.slice(left[index].token.index + left[index].token[1].length, grouped ? left[index + 1]?.token.index ?? (hasHeaders && headerTwo.index > left[index].token.index ? headerTwo.index : right[0]?.token.index ?? text.length) : right[index]?.token.index ?? left[index + 1]?.token.index ?? text.length))
         } : null;
         const rightEntry = right[index] ? {
             marker: right[index].token[1],
-            text: cleanText(text.slice(right[index].token.index + right[index].token[1].length, grouped ? right[index + 1]?.token.index ?? text.length : left[index + 1]?.token.index ?? text.length))
+            text: cleanText(text.slice(right[index].token.index + right[index].token[1].length, grouped ? right[index + 1]?.token.index ?? listTwoEnd : left[index + 1]?.token.index ?? text.length))
         } : null;
         if (leftEntry || rightEntry) {
             rows.push({
-                left: leftEntry ? `${leftEntry.marker} ${leftEntry.text}` : "",
-                right: rightEntry ? `${rightEntry.marker} ${rightEntry.text}` : ""
+                left: leftEntry ? `${String.fromCharCode(65 + index)}. ${leftEntry.text}` : "",
+                right: rightEntry ? `${index + 1}. ${rightEntry.text}` : ""
             });
         }
     }
@@ -713,32 +727,6 @@ function parseMatchListQuestion(question) {
         listTwoHeader: headerTwo?.[1] || "List-II",
         rows
     };
-}
-
-function renderMatchListTable(parsed) {
-    if (!parsed) {
-        return "";
-    }
-
-    const escape = (value) => String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/\"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-    const rows = parsed.rows.map((row) => `
-        <div class="match-list-row" role="row">
-            <div class="match-list-cell match-list-left" role="cell">${escape(row.left)}</div>
-            <div class="match-list-cell match-list-right" role="cell">${escape(row.right)}</div>
-        </div>
-    `).join("");
-    return `
-        <div class="match-list-table" role="table" aria-label="${escape(parsed.listOneHeader)} and ${escape(parsed.listTwoHeader)}">
-            <div class="match-list-header match-list-left" role="columnheader">${escape(parsed.listOneHeader)}</div>
-            <div class="match-list-header match-list-right" role="columnheader">${escape(parsed.listTwoHeader)}</div>
-            ${rows}
-        </div>
-    `;
 }
 
 function parseStatementQuestion(question) {
@@ -862,30 +850,6 @@ function parseStatementQuestion(question) {
     };
 }
 
-function renderStatementQuestion(parsed) {
-    return `
-        <div class="question-statement statement-question">
-            <p>${parsed.stem}</p>
-            ${parsed.statements.map((statement) => `<p class="statement-item">${statement.marker} ${statement.text}</p>`).join("")}
-            ${parsed.finalInstruction ? `<p class="statement-instruction">${parsed.finalInstruction}</p>` : ""}
-        </div>
-    `;
-}
-
-function getRenderedQuestionText(question, parsedMatchList) {
-    const text = String(question?.q || "");
-    if (parsedMatchList) {
-        return parsedMatchList.prompt;
-    }
-
-    if (!isMatchListQuestion(question)) {
-        return text;
-    }
-
-    // Keep the question text when matching data is incomplete, but hide only a trailing extracted code block.
-    return text.replace(/(?:<br\s*\/?>(?:\s*)|\r?\n|\s)+Code\s*:?\s*(?:Code\s*)?(?:<br\s*\/?>(?:\s*)|\r?\n|\s)+A(?:[.)])?(?:<br\s*\/?>(?:\s*)|\r?\n|\s)+B(?:[.)])?(?:<br\s*\/?>(?:\s*)|\r?\n|\s)+C(?:[.)])?(?:<br\s*\/?>(?:\s*)|\r?\n|\s)+D(?:[.)])?\s*$/i, "").trim();
-}
-
 function showQuestion() {
     const q = questions[currentQuestion];
     if (!q) {
@@ -893,43 +857,10 @@ function showQuestion() {
     }
 
     const isMarkedReview = Boolean(markedForReview[currentQuestion]);
-    const isMatchListCandidate = isMatchListQuestion(q);
-    const parsedMatchList = isMatchListCandidate ? parseMatchListQuestion(q) : null;
-    const isMatchList = Boolean(parsedMatchList);
-    const parsedStatementQuestion = isMatchListCandidate ? null : parseStatementQuestion(q);
-
-    // [MATCH-LIST-RENDERER-DIAGNOSTIC] Question rendering started
-    if (q.q && q.q.includes("Major States of Deccan")) {
-        console.log("[MATCH-LIST-RENDERER-V3] Processing Deccan Question");
-        console.log("[MATCH-LIST-RENDERER-V3] isMatchList detected:", isMatchList);
-        console.log("[MATCH-LIST-RENDERER-V3] parsedMatchList:", parsedMatchList);
-        console.log("[MATCH-LIST-RENDERER-V3] question.q preview:", q.q.substring(0, 200));
-        console.log("[MATCH-LIST-RENDERER-V3] question.options:", q.options);
-    }
-
-    const renderedQuestionText = getRenderedQuestionText(q, parsedMatchList);
-    const questionContent = parsedStatementQuestion
-        ? renderStatementQuestion(parsedStatementQuestion)
-        : `<div class="question-statement"><p>${renderedQuestionText}</p></div>`;
-    let html = `
-        <div class="question-header">
-            <h3>Question ${currentQuestion + 1}</h3>
-        </div>
-        ${isMatchList && parsedMatchList ? `${renderedQuestionText ? `<div class="question-statement"><p>${renderedQuestionText}</p></div>` : ""}${renderMatchListTable(parsedMatchList)}` : questionContent}
-    `;
-
-    q.options.forEach((option, index) => {
-        const optionText = String(option);
-        const optionLabel = /^[A-D](?:[.)])\s+/i.test(optionText) ? "" : `${String.fromCharCode(65 + index)}. `;
-        html += `
-            <label class="option-wrap">
-                <input type="radio" name="answer" value="${index}" />
-                <span>${isMatchList ? optionLabel : ""}${option}</span>
-            </label>
-        `;
+    questionBox.innerHTML = window.QuestionRenderer.renderQuestion(q, currentQuestion + 1, {
+        interactive: true,
+        selectedIndex: userAnswers[currentQuestion]
     });
-
-    questionBox.innerHTML = html;
 
     const feedbackHtml = isStudyMode() ? renderStudyFeedback(q) : "";
     if (isStudyMode()) {

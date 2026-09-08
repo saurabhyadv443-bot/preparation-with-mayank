@@ -97,6 +97,7 @@ if (returnUrl) {
 let activeQuestionIndex = 0;
 let activeFilter = "all";
 let activeSearchQuery = "";
+let searchRenderFrame = null;
 let editingExplanationIndex = null;
 let editingAnswerIndex = null;
 let persistentSubjectClassifications = {};
@@ -105,6 +106,7 @@ let persistentCurrentAffairsClassifications = {};
 let serverClassificationStore = {};
 let savedQuestionsCache = [];
 let savedQuestionsLoaded = false;
+let classificationStoreCache = null;
 window.reviewResultQuestions = result && Array.isArray(result.questions) ? result.questions : [];
 
 function persistentClassificationIdentity(question, index) {
@@ -760,14 +762,17 @@ const CLASSIFICATION_LABELS = {
 };
 
 function getClassificationStore() {
+    if (classificationStoreCache) return classificationStoreCache;
     try {
-        return JSON.parse(localStorage.getItem("questionClassifications") || "{}");
+        classificationStoreCache = JSON.parse(localStorage.getItem("questionClassifications") || "{}");
     } catch (error) {
-        return {};
+        classificationStoreCache = {};
     }
+    return classificationStoreCache;
 }
 
 function saveClassificationStore(store) {
+    classificationStoreCache = store;
     try {
         localStorage.setItem("questionClassifications", JSON.stringify(store));
     } catch (error) {
@@ -1127,7 +1132,10 @@ function renderQuestions() {
             ? window.ExplanationRenderer.renderExplanationDocument(explanationDocument, question.explanation || "")
             : (question.explanation ? `<p>${escapeHtml(String(question.explanation))}</p>` : "");
         const explanationText = (window.ExplanationRenderer && window.ExplanationRenderer.getPlainTextFromExplanation(explanationDocument)) || (question.explanation ? String(question.explanation).trim() : "");
-        const questionText = highlightText(question.q, activeSearchQuery);
+        const sharedQuestionHtml = window.QuestionRenderer.renderQuestion(question, index + 1, {
+            interactive: false,
+            selectedIndex: selected
+        });
         const saved = isSavedQuestion(index);
         const classifications = getQuestionClassifications(index);
         const applicableClassificationTags = getApplicableClassificationTags();
@@ -1154,22 +1162,6 @@ function renderQuestions() {
                     </div>
                 </div>`
             : `<div class="correct-answer-box"><strong>Correct Answer:</strong> ${correctAnswerText} <button type="button" class="btn-edit-answer" onclick="startEditingAnswer(${index})" aria-label="Edit correct answer" title="Edit correct answer">✎</button></div>`;
-        const optionsHtml = question.options.map((option, optionIndex) => {
-            const isCorrect = optionIndex === question.answer;
-            const isSelected = optionIndex === selected;
-            const classes = ["review-option"];
-            if (isCorrect) classes.push("correct-option");
-            if (isSelected) classes.push("selected-option");
-            return `
-                <li class="${classes.join(" ")}">
-                    <span class="option-label">${String.fromCharCode(65 + optionIndex)}.</span>
-                    <span>${highlightText(option, activeSearchQuery)}</span>
-                    ${isSelected && !isCorrect ? "<strong class=\"option-tag\">Your choice</strong>" : ""}
-                    ${isCorrect ? "<strong class=\"option-tag correct\">Correct answer</strong>" : ""}
-                </li>
-            `;
-        }).join("");
-
         // Build explanation section with edit capability
         let explanationSectionHtml = "";
         if (editingExplanationIndex === index) {
@@ -1210,7 +1202,6 @@ function renderQuestions() {
         return `
             <div class="review-item question-card${visible ? "" : " hidden-question"}" data-question-index="${index}">
                 <div class="review-card-header">
-                    <h3>Q${index + 1}. ${questionText}</h3>
                     <div class="review-card-actions">
                         ${isMockReviewContext() ? `<button type="button" class="save-question-btn${saved ? " saved" : ""}" onclick="toggleSavedQuestion(${index}, event)">${saved ? "★" : "S"}</button>` : ""}
                         ${classificationButtonsHtml}
@@ -1218,7 +1209,7 @@ function renderQuestions() {
                         <span class="review-status-pill ${status}">${status === "correct" ? "Correct" : status === "incorrect" ? "Incorrect" : "Not Attempted"}</span>
                     </div>
                 </div>
-                <ul class="review-options">${optionsHtml}</ul>
+                ${sharedQuestionHtml}
                 <p><strong>Your Answer:</strong> ${selectedAnswerText}</p>
                 ${answerSectionHtml}
                 ${explanationSectionHtml}
@@ -1370,10 +1361,14 @@ filterButtons.forEach((btn) => {
 if (searchInput) {
     searchInput.addEventListener("input", (event) => {
         activeSearchQuery = normalizeSearchQuery(event.target.value);
-        renderQuestions();
-        renderQuickNavigation();
-        updateResultCount();
-        updateActiveQuestion();
+        if (searchRenderFrame !== null) cancelAnimationFrame(searchRenderFrame);
+        searchRenderFrame = requestAnimationFrame(() => {
+            searchRenderFrame = null;
+            renderQuestions();
+            renderQuickNavigation();
+            updateResultCount();
+            updateActiveQuestion();
+        });
     });
 }
 
