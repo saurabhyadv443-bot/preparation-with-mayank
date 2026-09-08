@@ -170,9 +170,8 @@
         const leadingQuestion = text.match(/^\s*\d{1,3}[.)]?\s+/);
         const tokens = Array.from(text.matchAll(markerPattern))
             .filter((token) => !(leadingQuestion && token.index < leadingQuestion[0].length))
-            .filter((token) => !/^(?:List|Column)\s*[-–—]?\s*$/i.test(text.slice(Math.max(0, token.index - 12), token.index)))
-            .filter((token) => !/\b[A-Ea-e][.)]\s*$/.test(text.slice(Math.max(0, token.index - 8), token.index))
-                || !/^[A-Ea-e][.)]\s+[A-Z][a-z]/.test(text.slice(token.index, token.index + 14)))
+            .filter((token) => !/(?:List|Column)\s*[-–—]?\s*$/i.test(text.slice(Math.max(0, token.index - 20), token.index)))
+            .filter((token) => !/\b[A-Ea-e][.)-]\s*$/.test(text.slice(Math.max(0, token.index - 8), token.index)))
             .map((token) => ({ token, info: markerInfo(token[1]) }));
         const sequenceFrom = (available, family) => {
             const result = [];
@@ -245,7 +244,9 @@
         }
         if (!left || left.length < 2 || !right || right.length < 2) return null;
         const grouped = left[left.length - 1].token.index < right[0].token.index;
-        const leftBoundary = grouped ? (hasHeaders ? headerTwo.index : right[0].token.index) : text.length;
+        const leftBoundary = grouped
+            ? (hasHeaders && headerTwo.index > left[left.length - 1].token.index ? headerTwo.index : right[0].token.index)
+            : text.length;
         const rightBoundary = hasHeaders ? rightEnd : text.length;
         const rows = [];
         for (let index = 0; index < Math.max(left.length, right.length); index += 1) {
