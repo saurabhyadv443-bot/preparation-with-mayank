@@ -45,9 +45,7 @@ function hasCompletedMockAttempt(targetName) {
 
 async function getSubjectMetaMap() {
     try {
-        const resp = await fetch('data/subjects.json');
-        if (!resp.ok) throw new Error('manifest');
-        const j = await resp.json();
+        const j = await loadJson('data/subjects.json');
         if (!j || !Array.isArray(j.subjects)) throw new Error('invalid');
         return j.subjects.reduce((acc,s)=>{ acc[s.id]=s; return acc; }, {});
     } catch (e) {
@@ -116,9 +114,7 @@ function getOriginalClassifiedQuestions(data, sourceSubjectKey, tag) {
 
 async function loadOriginalCurrentAffairsQuestions() {
     try {
-        const response = await fetch("data/current_affairs.json");
-        if (!response.ok) throw new Error("current affairs data missing");
-        const data = await response.json();
+        const data = await loadJson("data/current_affairs.json");
         const entries = Array.isArray(data?.questions) ? data.questions : [];
         originalCurrentAffairsQuestions = entries
             .map((entry, index) => {
@@ -233,8 +229,7 @@ function buildImportantQuestionsForSubject(subjectKey) {
 async function loadMockCollectionData() {
     if (mockCollectionData) return;
     try {
-        const response = await fetch("data/mock.json");
-        if (response.ok) mockCollectionData = await response.json();
+        mockCollectionData = await loadJson("data/mock.json");
     } catch (error) {
         mockCollectionData = null;
     }
@@ -416,9 +411,7 @@ async function loadSubjectContent() {
     const fileName = (meta && meta[subject] && meta[subject].file) || `${subject}.json`;
 
     try {
-        const resp = await fetch(`data/${fileName}`);
-        if (!resp.ok) throw new Error('data missing');
-        const data = await resp.json();
+        const data = await loadJson(`data/${fileName}`);
         subjectData = data;
         if (selectedChapter === "Important Questions") {
             await loadMockCollectionData();

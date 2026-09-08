@@ -250,9 +250,15 @@ body.entry-locked {
 }
 
 .quiz-layout {
+    position: relative;
     display: grid;
     grid-template-columns: minmax(0, 3fr) minmax(280px, 1fr);
     gap: 24px;
+}
+
+.quiz-layout.palette-collapsed {
+    grid-template-columns: minmax(0, 1fr) 0;
+    gap: 0;
 }
 
 .collection-quiz-layout {
@@ -274,6 +280,37 @@ body.entry-locked {
     height: fit-content;
     position: sticky;
     top: 20px;
+}
+
+.palette-toggle {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 40;
+    width: 42px;
+    height: 48px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px 0 0 10px;
+    background: #ffffff;
+    color: #123b70;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 800;
+    box-shadow: -4px 6px 16px rgba(15, 23, 42, 0.12);
+}
+
+.quiz-layout.palette-collapsed .palette-panel {
+    min-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(100%);
+}
+
+.palette-panel {
+    transition: transform 0.22s ease, opacity 0.22s ease;
 }
 
 #chapterTitle,
@@ -680,6 +717,35 @@ body.entry-locked {
         flex-wrap: nowrap;
         overflow-x: auto;
         padding-bottom: 3px;
+    }
+
+    .quiz-layout {
+        display: block;
+    }
+
+    .quiz-main {
+        width: 100%;
+    }
+
+    .palette-panel {
+        position: fixed;
+        top: 88px;
+        right: 0;
+        z-index: 30;
+        width: min(86vw, 320px);
+        max-height: calc(100vh - 104px);
+        overflow-y: auto;
+        transform: translateX(0);
+    }
+
+    .palette-toggle {
+        position: absolute;
+        top: 16px;
+        right: 0;
+    }
+
+    .palette-panel #palettePanelContent {
+        min-width: 0;
     }
 }
 
@@ -1993,6 +2059,18 @@ html[data-theme="dark"] .match-list-header {
     color: #f1f5f9;
 }
 
+html[data-theme="dark"] .shared-question-renderer,
+html[data-theme="dark"] .shared-question-renderer .question-header,
+html[data-theme="dark"] .shared-question-renderer .question-header h3,
+html[data-theme="dark"] .shared-question-renderer .question-statement,
+html[data-theme="dark"] .shared-question-renderer .shared-option,
+html[data-theme="dark"] .shared-question-renderer .option-label,
+html[data-theme="dark"] .shared-question-renderer .option-text,
+html[data-theme="dark"] .shared-question-renderer .match-list-cell,
+html[data-theme="dark"] .shared-question-renderer .match-list-header {
+    color: #f1f5f9 !important;
+}
+
 html[data-theme="dark"] .quiz-main .navigation,
 html[data-theme="dark"] .quiz-main .submit-footer {
     background: #1c232d !important;
@@ -2103,4 +2181,40 @@ html[data-theme="dark"] #chapterList .chapterBtn:focus-visible,
 html[data-theme="dark"] .chapter-list .chapterBtn:focus-visible {
     outline: 3px solid #8ec5ff;
     outline-offset: 2px;
+}
+
+/* Final dark-mode Match List readability fix */
+html[data-theme="dark"] .shared-question-renderer .match-list-table,
+html[data-theme="dark"] .shared-question-renderer .match-list-cell {
+    background: #252e39 !important;
+    color: #f8fafc !important;
+    border-color: rgba(148, 163, 184, 0.5) !important;
+}
+
+html[data-theme="dark"] .shared-question-renderer .match-list-header {
+    background: #304052 !important;
+    color: #ffffff !important;
+    border-color: rgba(148, 163, 184, 0.5) !important;
+}
+
+html[data-theme="dark"] .shared-question-renderer .match-list-cell *,
+html[data-theme="dark"] .shared-question-renderer .match-list-header * {
+    color: inherit !important;
+}
+
+html[data-theme="dark"] .shared-question-renderer .shared-options,
+html[data-theme="dark"] .shared-question-renderer .shared-option,
+html[data-theme="dark"] .shared-question-renderer .option-label,
+html[data-theme="dark"] .shared-question-renderer .option-text {
+    color: #f8fafc !important;
+}
+
+html[data-theme="dark"] .shared-question-renderer .shared-option {
+    background: #252e39 !important;
+    border-color: rgba(148, 163, 184, 0.5) !important;
+}
+
+html[data-theme="dark"] .shared-question-renderer .shared-option:hover {
+    background: #30465d !important;
+    color: #ffffff !important;
 }

@@ -5,16 +5,20 @@
     let button = null;
     let observer = null;
     let applying = false;
+    let highlightsCache = null;
 
     function readHighlights() {
+        if (highlightsCache) return highlightsCache;
         try {
-            return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+            highlightsCache = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
         } catch (error) {
-            return {};
+            highlightsCache = {};
         }
+        return highlightsCache;
     }
 
     function writeHighlights(highlights) {
+        highlightsCache = highlights;
         try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(highlights));
         } catch (error) {
@@ -187,6 +191,9 @@
     function init() {
         if (initialized) return;
         initialized = true;
+        global.addEventListener("storage", (event) => {
+            if (event.key === STORAGE_KEY) highlightsCache = null;
+        });
         const toolbar = findToolbar();
         button = document.createElement("button");
         button.type = "button";

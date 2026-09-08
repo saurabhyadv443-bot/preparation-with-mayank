@@ -10,9 +10,7 @@
     async function discoverFiles(){
         // Read the structured manifest `data/subjects.json` and return file names.
         try {
-            const resp = await fetch('data/subjects.json');
-            if (!resp.ok) throw new Error('subject manifest not found');
-            const j = await resp.json();
+            const j = await loadJson('data/subjects.json');
             if (!j || !Array.isArray(j.subjects)) throw new Error('invalid manifest');
             return j.subjects.map(s => s.file).filter(Boolean);
         } catch (e) {
@@ -31,9 +29,7 @@
         await Promise.all(files.map(async (file)=>{
             if (!file.toLowerCase().endsWith('.json')) return;
             try{
-                const resp = await fetch(`data/${file}`);
-                if (!resp.ok) return;
-                const j = await resp.json();
+                const j = await loadJson(`data/${file}`);
                 const subject = j.subject || getSlug(file);
                 Object.keys(j.chapters||{}).forEach(ch=>{
                     const qs = Array.isArray(j.chapters[ch]) ? j.chapters[ch] : [];

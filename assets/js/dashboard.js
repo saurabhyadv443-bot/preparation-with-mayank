@@ -69,9 +69,7 @@ function getSubjectIcon(subjectKey) {
 
 async function fetchSubjectManifest() {
     try {
-        const response = await fetch("data/subjects.json");
-        if (!response.ok) throw new Error("Subject manifest not found");
-        const json = await response.json();
+        const json = await loadJson("data/subjects.json");
         if (!json || !Array.isArray(json.subjects)) throw new Error("Invalid manifest format");
         return json.subjects;
     } catch (error) {

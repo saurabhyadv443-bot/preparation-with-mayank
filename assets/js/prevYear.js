@@ -10,9 +10,7 @@ function parseJsonFilenamesFromDirectoryIndex(htmlText) {
 
 async function fetchDataFilenames() {
     try {
-        const resp = await fetch('data/subjects.json');
-        if (!resp.ok) return [];
-        const j = await resp.json();
+        const j = await loadJson('data/subjects.json');
         if (!j || !Array.isArray(j.subjects)) return [];
         return j.subjects.map(s => s.file).filter(f => f && f.toLowerCase() !== 'mock.json');
     } catch (e) {
@@ -24,9 +22,7 @@ async function loadAllData(files) {
     const all = [];
     await Promise.all(files.map(async (file) => {
         try {
-            const r = await fetch(`data/${file}`);
-            if (!r.ok) return;
-            const j = await r.json();
+            const j = await loadJson(`data/${file}`);
             all.push({ file, json: j });
         } catch (e) {
             // skip

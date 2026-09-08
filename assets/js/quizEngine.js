@@ -56,6 +56,9 @@ const chapterSection = document.getElementById("chapterSection");
 const quizSection = document.getElementById("quizSection");
 const chapterTitle = document.getElementById("chapterTitle");
 const paletteNode = document.getElementById("palette");
+const palettePanel = document.querySelector(".palette-panel");
+const paletteToggle = document.getElementById("paletteToggle");
+const quizLayout = document.querySelector(".quiz-layout");
 const questionBox = document.getElementById("questionBox");
 const prevBtn = document.getElementById("prevBtn");
 const clearSelectionBtn = document.getElementById("clearSelectionBtn");
@@ -66,6 +69,22 @@ const submitModal = document.getElementById("submitConfirmModal");
 const cancelSubmitBtn = document.getElementById("cancelSubmitBtn");
 const confirmSubmitBtn = document.getElementById("confirmSubmitBtn");
 const topbarKicker = document.querySelector(".topbar-kicker");
+
+if (paletteToggle && palettePanel && quizLayout) {
+    const mobilePalette = window.matchMedia("(max-width: 640px)");
+    const setPaletteState = (open) => {
+        quizLayout.classList.toggle("palette-collapsed", !open);
+        paletteToggle.setAttribute("aria-expanded", String(open));
+        paletteToggle.setAttribute("aria-label", `${open ? "Close" : "Open"} question palette`);
+        paletteToggle.setAttribute("title", `${open ? "Close" : "Open"} question palette`);
+        paletteToggle.textContent = open ? "❯" : "❮";
+    };
+    setPaletteState(!mobilePalette.matches);
+    paletteToggle.addEventListener("click", () => {
+        setPaletteState(quizLayout.classList.contains("palette-collapsed"));
+    });
+    mobilePalette.addEventListener("change", (event) => setPaletteState(!event.matches));
+}
 
 function safeParseStoredValue(key, fallback = []) {
     try {

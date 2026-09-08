@@ -5,16 +5,14 @@
 
     // read manifest
     async function readManifest(){
-        try{ const r = await fetch('data/subjects.json'); if(!r.ok) return null; const j = await r.json(); return j && Array.isArray(j.subjects) ? j.subjects : null; } catch(e){ return null; }
+        try{ const j = await loadJson('data/subjects.json'); return j && Array.isArray(j.subjects) ? j.subjects : null; } catch(e){ return null; }
     }
 
     let savedQuestions = [];
 
     async function loadSavedQuestionsFromServer() {
         try {
-            const response = await fetch('data/mock.json');
-            if (!response.ok) return;
-            const data = await response.json();
+                const data = await loadJson('data/mock.json');
             const groups = data['TEST NUMBER'] || {};
             savedQuestions = Object.entries(groups).flatMap(([chapter, questions]) => Array.isArray(questions)
                 ? questions.map((question, questionIndex) => {
@@ -43,9 +41,7 @@
         const sub = subjectMap[subjectId];
         const file = sub ? sub.file : `${subjectId}.json`;
         try{
-            const r = await fetch(`data/${file}`);
-            if(!r.ok) return [];
-            const j = await r.json();
+            const j = await loadJson(`data/${file}`);
             const ch = j.chapters && j.chapters[chapterName] || [];
             return Array.isArray(ch) ? ch.slice(0, limit || ch.length) : [];
         }catch(e){ return []; }

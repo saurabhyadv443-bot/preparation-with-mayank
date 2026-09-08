@@ -136,6 +136,34 @@ function renderSingleResult(result) {
 
 // Performance dashboard rendering
 let charts = {};
+const externalLibraryPromises = new Map();
+
+function loadExternalLibrary(key, src, ready) {
+    if (ready()) return Promise.resolve();
+    if (externalLibraryPromises.has(key)) return externalLibraryPromises.get(key);
+
+    const promise = new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.onload = () => ready() ? resolve() : reject(new Error(`${key} did not initialize`));
+        script.onerror = () => reject(new Error(`Unable to load ${key}`));
+        document.head.appendChild(script);
+    }).catch((error) => {
+        externalLibraryPromises.delete(key);
+        throw error;
+    });
+
+    externalLibraryPromises.set(key, promise);
+    return promise;
+}
+
+function ensureChartJs() {
+    return loadExternalLibrary("chart.js", "https://cdn.jsdelivr.net/npm/chart.js", () => typeof window.Chart === "function");
+}
+
+function ensureJsPdf() {
+    return loadExternalLibrary("jspdf", "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js", () => Boolean(window.jspdf?.jsPDF));
+}
 
 function computeAggregates(history) {
     const agg = {
@@ -188,9 +216,16 @@ function computeAggregates(history) {
     return agg;
 }
 
-function renderPerformance(history) {
+async function renderPerformance(history) {
     const container = document.getElementById("performanceDashboard");
     if (!container) return;
+
+    try {
+        await ensureChartJs();
+    } catch (error) {
+        console.error(error);
+        return;
+    }
 
     const aggregates = computeAggregates(history);
     document.getElementById("totalTests").innerText = aggregates.totalTests;
@@ -278,6 +313,7 @@ function exportCsv(history) {
 
 async function exportPdf(history) {
     try {
+        await ensureJsPdf();
         const { jsPDF } = window.jspdf || {};
         if (!jsPDF) {
             alert("PDF export requires jsPDF to be available.");
