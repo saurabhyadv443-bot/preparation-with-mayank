@@ -30,6 +30,68 @@
         return cleanText(value).replace(leadingNumber, "").trim();
     }
 
+    function formatEmbeddedOptions(value, options) {
+        const text = cleanText(value);
+        if (Array.isArray(options) && options.length) {
+            return { text, formatted: false };
+        }
+        if (!text || /\n/.test(text) || /\b(?:list|column|match|matching|assertion|reason|code|codes)\b/i.test(text)) {
+            return { text, formatted: false };
+        }
+
+        if (/\b\d{1,2}\.\s+\d{1,2}\.\s+\d{4}\.?\b/.test(text)) {
+            return { text, formatted: false };
+        }
+
+        const markerPattern = /(?:^|\s)((?:\([1-4]\))|(?:[A-Da-d]\s*[.)-])|(?:[1-4]\s*[.)-])|(?:[A-Da-d](?=\s*$)))(?=\s|$)/g;
+        const matches = Array.from(text.matchAll(markerPattern)).map((match) => ({
+            marker: match[1].trim(),
+            value: /^[A-Da-d]/.test(match[1]) ? match[1].charAt(0).toUpperCase() : Number(match[1].replace(/[()\s.)-]/g, "")),
+            family: /^[A-Da-d]/.test(match[1]) ? "letter" : "number",
+            index: match.index + match[0].indexOf(match[1])
+        }));
+        let sequence = null;
+        for (let startIndex = 0; startIndex < matches.length; startIndex += 1) {
+            const start = matches[startIndex];
+            const expected = start.family === "letter" ? "A" : 1;
+            if (start.value !== expected) continue;
+            const found = [];
+            for (let index = startIndex; index < matches.length && found.length < 4; index += 1) {
+                const item = matches[index];
+                const expectedValue = start.family === "letter"
+                    ? String.fromCharCode("A".charCodeAt(0) + found.length)
+                    : found.length + 1;
+                if (item.family !== start.family || item.value !== expectedValue) break;
+                found.push(item);
+            }
+            if (found.length >= 2) {
+                sequence = found;
+                break;
+            }
+        }
+        if (!sequence) return { text, formatted: false };
+        if (sequence.length === 2 && sequence[0].family === "letter"
+            && text.slice(0, sequence[0].index).trim()
+            && !/\b(?:choose|correct|following|select|option|order|statement)\b/i.test(text.slice(0, sequence[0].index))) {
+            return { text, formatted: false };
+        }
+        if (sequence.length === 2 && sequence[0].family === "number"
+            && !sequence[0].marker.startsWith("(")
+            && !/\b(?:choose|correct|following|select|option|order|statement)\b/i.test(text)) {
+            return { text, formatted: false };
+        }
+
+        const selected = sequence;
+        const first = selected[0];
+        const prefix = text.slice(0, first.index).trimEnd();
+        const parts = selected.map((item, index) => {
+            const next = selected[index + 1];
+            const end = next ? next.index : text.length;
+            return `${item.marker} ${text.slice(item.index + item.marker.length, end).trim()}`.trim();
+        });
+        return { text: [prefix, ...parts].filter(Boolean).join("\n"), formatted: true };
+    }
+
     function isMatchListQuestion(question) {
         const text = String(question?.q || "");
         return /\b(?:list|column)\s*[-–—]?\s*(?:i|ii|1|2|a|b)\b/i.test(text)
@@ -133,10 +195,16 @@
         const normalizedQuestion = { ...question, q: normalizeQuestionText(question?.q, questionNumber) };
         const parsedMatchList = parseMatchListQuestion(normalizedQuestion);
         const parsedStatement = parsedMatchList ? null : parseStatementQuestion(normalizedQuestion);
-        const prompt = parsedMatchList?.prompt || cleanText(normalizedQuestion.q || "");
+        const formattedPrompt = parsedMatchList || parsedStatement
+            ? { text: parsedMatchList?.prompt || cleanText(normalizedQuestion.q || ""), formatted: false }
+            : formatEmbeddedOptions(normalizedQuestion.q, normalizedQuestion.options);
+        const prompt = formattedPrompt.text;
+        const promptHtml = formattedPrompt.formatted
+            ? escapeHtml(prompt).replace(/\r?\n/g, "<br>")
+            : escapeHtml(prompt);
         const questionContent = parsedStatement
             ? `<div class="question-statement statement-question"><p>${escapeHtml(parsedStatement.stem)}</p>${parsedStatement.statements.map((item) => `<p class="statement-item">${escapeHtml(item.marker)} ${escapeHtml(item.text)}</p>`).join("")}${parsedStatement.finalInstruction ? `<p class="statement-instruction">${escapeHtml(parsedStatement.finalInstruction)}</p>` : ""}</div>`
-            : `<div class="question-statement"><p>${escapeHtml(prompt)}</p></div>`;
+            : `<div class="question-statement"><p>${promptHtml}</p></div>`;
         const table = parsedMatchList ? `<div class="match-list-table" role="table" aria-label="${escapeHtml(parsedMatchList.listOneHeader)} and ${escapeHtml(parsedMatchList.listTwoHeader)}"><div class="match-list-header match-list-left" role="columnheader">${escapeHtml(parsedMatchList.listOneHeader)}</div><div class="match-list-header match-list-right" role="columnheader">${escapeHtml(parsedMatchList.listTwoHeader)}</div>${parsedMatchList.rows.map((row) => `<div class="match-list-row" role="row"><div class="match-list-cell match-list-left" role="cell">${escapeHtml(row.left)}</div><div class="match-list-cell match-list-right" role="cell">${escapeHtml(row.right)}</div></div>`).join("")}</div>` : "";
         const selectedIndex = settings.selectedIndex;
         const options = (question?.options || []).map((option, index) => {
@@ -148,5 +216,5 @@
         return `<div class="shared-question-renderer"><div class="question-header"><h3>Question ${questionNumber}</h3></div>${parsedMatchList ? `${questionContent}${table}` : questionContent}<div class="shared-options">${options}</div></div>`;
     }
 
-    window.QuestionRenderer = { cleanText, normalizeQuestionText, isMatchListQuestion, parseMatchListQuestion, renderQuestion };
+    window.QuestionRenderer = { cleanText, normalizeQuestionText, formatEmbeddedOptions, isMatchListQuestion, parseMatchListQuestion, renderQuestion };
 }());
