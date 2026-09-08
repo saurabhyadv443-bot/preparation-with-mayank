@@ -20,6 +20,16 @@
             .trim();
     }
 
+    function normalizeQuestionText(value, questionNumber) {
+        const number = Number(questionNumber);
+        if (!Number.isInteger(number) || number < 1) {
+            return cleanText(value);
+        }
+        const escapedNumber = String(number).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const leadingNumber = new RegExp(`^\\s*(?:Question\\s*)?${escapedNumber}(?:\\s*[:.)-])\\s+`, "i");
+        return cleanText(value).replace(leadingNumber, "").trim();
+    }
+
     function isMatchListQuestion(question) {
         const text = String(question?.q || "");
         return /\b(?:list|column)\s*[-–—]?\s*(?:i|ii|1|2|a|b)\b/i.test(text)
@@ -120,9 +130,10 @@
     }
 
     function renderQuestion(question, questionNumber, settings = {}) {
-        const parsedMatchList = parseMatchListQuestion(question);
-        const parsedStatement = parsedMatchList ? null : parseStatementQuestion(question);
-        const prompt = parsedMatchList?.prompt || cleanText(question?.q || "");
+        const normalizedQuestion = { ...question, q: normalizeQuestionText(question?.q, questionNumber) };
+        const parsedMatchList = parseMatchListQuestion(normalizedQuestion);
+        const parsedStatement = parsedMatchList ? null : parseStatementQuestion(normalizedQuestion);
+        const prompt = parsedMatchList?.prompt || cleanText(normalizedQuestion.q || "");
         const questionContent = parsedStatement
             ? `<div class="question-statement statement-question"><p>${escapeHtml(parsedStatement.stem)}</p>${parsedStatement.statements.map((item) => `<p class="statement-item">${escapeHtml(item.marker)} ${escapeHtml(item.text)}</p>`).join("")}${parsedStatement.finalInstruction ? `<p class="statement-instruction">${escapeHtml(parsedStatement.finalInstruction)}</p>` : ""}</div>`
             : `<div class="question-statement"><p>${escapeHtml(prompt)}</p></div>`;
@@ -137,5 +148,5 @@
         return `<div class="shared-question-renderer"><div class="question-header"><h3>Question ${questionNumber}</h3></div>${parsedMatchList ? `${questionContent}${table}` : questionContent}<div class="shared-options">${options}</div></div>`;
     }
 
-    window.QuestionRenderer = { cleanText, isMatchListQuestion, parseMatchListQuestion, renderQuestion };
+    window.QuestionRenderer = { cleanText, normalizeQuestionText, isMatchListQuestion, parseMatchListQuestion, renderQuestion };
 }());
