@@ -4016,17 +4016,27 @@ html[data-theme="dark"] .review-page .shared-question-renderer .question-stateme
 html[data-theme="dark"] .review-page .shared-question-renderer .shared-option,
 html[data-theme="dark"] .review-page .shared-question-renderer .option-label,
 html[data-theme="dark"] .review-page .shared-question-renderer .option-text,
+html[data-theme="dark"] .review-page .shared-question-renderer .match-list-table,
+html[data-theme="dark"] .review-page .shared-question-renderer .match-list-header,
 html[data-theme="dark"] .review-page .shared-question-renderer .match-list-cell {
     color: #f1f5f9 !important;
 }
 
+html[data-theme="dark"] .review-page .shared-question-renderer .match-list-table,
+html[data-theme="dark"] .review-page .shared-question-renderer .match-list-cell {
+    background: #252e39 !important;
+    border-color: rgba(148, 163, 184, 0.5) !important;
+}
+
 html[data-theme="dark"] .review-page .shared-question-renderer .match-list-header {
-    color: #f1f5f9 !important;
+    background: #304052 !important;
+    color: #ffffff !important;
+    border-color: rgba(148, 163, 184, 0.5) !important;
 }
 
 html[data-theme="dark"] .review-page .shared-question-renderer .shared-option {
-    background: #252e39;
-    border-color: rgba(148, 163, 184, 0.48);
+    background: #252e39 !important;
+    border-color: rgba(148, 163, 184, 0.5) !important;
 }
 
 html[data-theme="dark"] .review-page .review-option.correct-option .option-label,
