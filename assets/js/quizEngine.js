@@ -43,6 +43,9 @@ let quizStartedAt = 0;
 let cachedProgressQuestions = null;
 let cachedProgressQuestionsJson = "";
 let progressSaveTimeout = null;
+let liveAnswerEditing = false;
+let liveExplanationEditing = false;
+let liveEditingQuestionIndex = null;
 const PROGRESS_SAVE_INTERVAL_MS = 5000;
 
 const timerNode = document.getElementById("timer");
@@ -56,9 +59,6 @@ const chapterSection = document.getElementById("chapterSection");
 const quizSection = document.getElementById("quizSection");
 const chapterTitle = document.getElementById("chapterTitle");
 const paletteNode = document.getElementById("palette");
-const palettePanel = document.querySelector(".palette-panel");
-const paletteToggle = document.getElementById("paletteToggle");
-const quizLayout = document.querySelector(".quiz-layout");
 const questionBox = document.getElementById("questionBox");
 const prevBtn = document.getElementById("prevBtn");
 const clearSelectionBtn = document.getElementById("clearSelectionBtn");
@@ -69,22 +69,6 @@ const submitModal = document.getElementById("submitConfirmModal");
 const cancelSubmitBtn = document.getElementById("cancelSubmitBtn");
 const confirmSubmitBtn = document.getElementById("confirmSubmitBtn");
 const topbarKicker = document.querySelector(".topbar-kicker");
-
-if (paletteToggle && palettePanel && quizLayout) {
-    const mobilePalette = window.matchMedia("(max-width: 640px)");
-    const setPaletteState = (open) => {
-        quizLayout.classList.toggle("palette-collapsed", !open);
-        paletteToggle.setAttribute("aria-expanded", String(open));
-        paletteToggle.setAttribute("aria-label", `${open ? "Close" : "Open"} question palette`);
-        paletteToggle.setAttribute("title", `${open ? "Close" : "Open"} question palette`);
-        paletteToggle.textContent = open ? "❯" : "❮";
-    };
-    setPaletteState(!mobilePalette.matches);
-    paletteToggle.addEventListener("click", () => {
-        setPaletteState(quizLayout.classList.contains("palette-collapsed"));
-    });
-    mobilePalette.addEventListener("change", (event) => setPaletteState(!event.matches));
-}
 
 function safeParseStoredValue(key, fallback = []) {
     try {
@@ -100,6 +84,13 @@ function getQuizMode() {
     if (quizData.quizType === "mock") return "mock";
     if (subject === "mock" || quizData.subject === "Mock Test" || quizData.totalTimeSeconds || quizData.duration) return "mock";
     return quizData.quizType || "practice";
+}
+
+function shouldShowSubjectImmediateFeedback() {
+    const mockSubjectMatch = String(subject || "").trim().toLowerCase() === "mock";
+    const mockQuizDataMatch = String(quizData?.subject || "").trim().toLowerCase() === "mock test";
+    const mockModeMatch = getQuizMode() === "mock";
+    return !(mockSubjectMatch || mockQuizDataMatch || mockModeMatch);
 }
 
 function isStudyMode() {
@@ -881,45 +872,42 @@ function showQuestion() {
         selectedIndex: userAnswers[currentQuestion]
     });
 
-    const feedbackHtml = isStudyMode() ? renderStudyFeedback(q) : "";
-    if (isStudyMode()) {
+    const hasAnswer = userAnswers[currentQuestion] != null;
+    const feedbackHtml = hasAnswer ? renderStudyFeedback(q) : "";
+    if (feedbackHtml) {
         questionBox.insertAdjacentHTML("beforeend", feedbackHtml);
     }
 
-    if (userAnswers[currentQuestion] != null) {
+    if (hasAnswer) {
         const selected = document.querySelector(`input[value="${userAnswers[currentQuestion]}"]`);
         if (selected) {
             selected.checked = true;
         }
     }
 
-    if (isStudyMode()) {
-        const answerInputs = document.querySelectorAll('input[name="answer"]');
-        const hasAnswer = userAnswers[currentQuestion] != null;
-        answerInputs.forEach((input) => {
-            input.disabled = hasAnswer;
-            input.addEventListener("change", () => {
-                if (!hasAnswer) {
-                    userAnswers[currentQuestion] = Number.parseInt(input.value, 10);
-                    saveProgress();
-                    updatePalette();
-                    showQuestion();
-                }
-            });
+    const answerInputs = document.querySelectorAll('input[name="answer"]');
+    answerInputs.forEach((input) => {
+        input.disabled = hasAnswer;
+        input.addEventListener("change", () => {
+            if (hasAnswer) {
+                return;
+            }
+            userAnswers[currentQuestion] = Number.parseInt(input.value, 10);
+            saveProgress();
+            updatePalette();
+            if (getQuizMode() === "practice") {
+                paused = true;
+                pauseBtn.innerHTML = "▶ Resume";
+            } else if (getQuizMode() === "mock") {
+                paused = false;
+                pauseBtn.innerHTML = "⏸ Pause";
+            }
+            showQuestion();
         });
-    } else {
-        const answerInputs = document.querySelectorAll('input[name="answer"]');
-        answerInputs.forEach((input) => {
-            input.addEventListener("change", () => {
-                userAnswers[currentQuestion] = Number.parseInt(input.value, 10);
-                saveProgress();
-                updatePalette();
-                if (getQuizMode() === "mock") {
-                    paused = false;
-                    pauseBtn.innerHTML = "⏸ Pause";
-                }
-            });
-        });
+    });
+
+    if (liveExplanationEditing) {
+        requestAnimationFrame(() => attachLiveExplanationEditorToolbarHandlers());
     }
 
     progressText.innerHTML = `Question ${currentQuestion + 1} of ${questions.length}`;
@@ -937,7 +925,13 @@ function showQuestion() {
     }
 
     if (getQuizMode() === "practice") {
-        startQuestionTimer();
+        if (userAnswers[currentQuestion] != null) {
+            paused = true;
+            pauseBtn.innerHTML = "▶ Resume";
+            updateTimer();
+        } else {
+            startQuestionTimer();
+        }
     } else {
         updateTimer();
     }
@@ -1160,23 +1154,197 @@ function saveCurrentAnswer() {
     saveProgress();
 }
 
+function renderLiveAnswerEditor(question) {
+    return `
+        <div class="answer-editor-section">
+            <strong>Edit Correct Answer</strong>
+            <div class="answer-editor-options">
+                ${question.options.map((option, optionIndex) => `
+                    <label>
+                        <input type="radio" name="liveCorrectAnswer-${currentQuestion}" value="${optionIndex}"${optionIndex === question.answer ? " checked" : ""}>
+                        ${String.fromCharCode(65 + optionIndex)}. ${escapeHtml(option)}
+                    </label>
+                `).join("")}
+            </div>
+            <div class="answer-editor-actions">
+                <button type="button" class="btn btn-primary btn-small" onclick="saveEditedLiveAnswer()">Save</button>
+                <button type="button" class="btn btn-tertiary btn-small" onclick="cancelEditingLiveAnswer()">Cancel</button>
+            </div>
+        </div>
+    `;
+}
+
+function renderLiveExplanationEditor(question) {
+    const explanationText = question.explanation || "";
+    return `
+        <div class="explanation-editor-section">
+            <div class="explanation-editor-header">
+                <h4>📝 Edit Explanation</h4>
+            </div>
+            <div class="explanation-editor-toolbar">
+                <button type="button" class="btn btn-secondary btn-small" data-editor-command="bold" data-editor-target-id="liveExplanationInput-${currentQuestion}"><strong>B</strong></button>
+                <button type="button" class="btn btn-secondary btn-small" data-editor-command="italic" data-editor-target-id="liveExplanationInput-${currentQuestion}"><em>I</em></button>
+                <button type="button" class="btn btn-secondary btn-small" data-editor-command="underline" data-editor-target-id="liveExplanationInput-${currentQuestion}"><u>U</u></button>
+                <button type="button" class="btn btn-secondary btn-small" data-editor-command="strikeThrough" data-editor-target-id="liveExplanationInput-${currentQuestion}">S</button>
+                <button type="button" class="btn btn-secondary btn-small" data-editor-command="h2" data-editor-target-id="liveExplanationInput-${currentQuestion}">H2</button>
+                <button type="button" class="btn btn-secondary btn-small" data-editor-command="h3" data-editor-target-id="liveExplanationInput-${currentQuestion}">H3</button>
+                <button type="button" class="btn btn-secondary btn-small" data-editor-command="p" data-editor-target-id="liveExplanationInput-${currentQuestion}">P</button>
+                <button type="button" class="btn btn-secondary btn-small" data-editor-command="blockquote" data-editor-target-id="liveExplanationInput-${currentQuestion}">Quote</button>
+                <button type="button" class="btn btn-secondary btn-small" data-editor-command="ul" data-editor-target-id="liveExplanationInput-${currentQuestion}">• List</button>
+                <button type="button" class="btn btn-secondary btn-small" data-editor-command="ol" data-editor-target-id="liveExplanationInput-${currentQuestion}">1. List</button>
+            </div>
+            <div id="liveExplanationInput-${currentQuestion}" class="explanation-input rich-editor" contenteditable="true" spellcheck="true">${escapeHtml(explanationText)}</div>
+            <div class="explanation-editor-actions">
+                <button type="button" onclick="saveEditedLiveExplanation()" class="btn-save-explanation">💾 Save Explanation</button>
+                <button type="button" onclick="cancelEditingLiveExplanation()" class="btn-cancel-explanation">✕ Cancel</button>
+            </div>
+        </div>
+    `;
+}
+
+function attachLiveExplanationEditorToolbarHandlers() {
+    const editorButtons = document.querySelectorAll("[data-editor-command]");
+    editorButtons.forEach((button) => {
+        button.onclick = () => {
+            const command = button.dataset.editorCommand;
+            const editor = document.getElementById(button.dataset.editorTargetId);
+            if (!editor) {
+                return;
+            }
+            editor.focus();
+            if (command === "h2") {
+                document.execCommand("formatBlock", false, "h2");
+                return;
+            }
+            if (command === "h3") {
+                document.execCommand("formatBlock", false, "h3");
+                return;
+            }
+            if (command === "p") {
+                document.execCommand("formatBlock", false, "p");
+                return;
+            }
+            if (command === "blockquote") {
+                document.execCommand("formatBlock", false, "blockquote");
+                return;
+            }
+            if (command === "ul") {
+                document.execCommand("insertUnorderedList");
+                return;
+            }
+            if (command === "ol") {
+                document.execCommand("insertOrderedList");
+                return;
+            }
+            document.execCommand(command, false, null);
+        };
+    });
+}
+
+function startEditingLiveAnswer() {
+    liveAnswerEditing = true;
+    liveExplanationEditing = false;
+    showQuestion();
+}
+
+function cancelEditingLiveAnswer() {
+    liveAnswerEditing = false;
+    showQuestion();
+}
+
+function saveEditedLiveAnswer() {
+    const question = questions[currentQuestion];
+    const selectedAnswer = document.querySelector(`input[name="liveCorrectAnswer-${currentQuestion}"]:checked`);
+    if (!selectedAnswer || !question) {
+        return;
+    }
+
+    const nextAnswer = Number(selectedAnswer.value);
+    question.answer = nextAnswer;
+    queueQuizPendingChange({
+        operationType: "edit-question",
+        ...quizPendingQuestionSource(question, currentSubjectKey, currentChapter, currentQuestion),
+        field: "answer",
+        value: nextAnswer
+    });
+    saveProgress();
+    liveAnswerEditing = false;
+    showQuestion();
+}
+
+function startEditingLiveExplanation() {
+    liveExplanationEditing = true;
+    liveAnswerEditing = false;
+    showQuestion();
+}
+
+function cancelEditingLiveExplanation() {
+    liveExplanationEditing = false;
+    showQuestion();
+}
+
+function saveEditedLiveExplanation() {
+    const editor = document.getElementById(`liveExplanationInput-${currentQuestion}`);
+    const question = questions[currentQuestion];
+    if (!editor || !question) {
+        return;
+    }
+
+    const plainText = editor.textContent.trim();
+    question.explanation = plainText;
+    question.explanationDocument = window.ExplanationRenderer && typeof window.ExplanationRenderer.normalizeExplanationDocument === "function"
+        ? window.ExplanationRenderer.normalizeExplanationDocument(plainText)
+        : { type: "document", blocks: plainText ? [{ type: "paragraph", content: [plainText] }] : [] };
+    queueQuizPendingChange({
+        operationType: "edit-question",
+        ...quizPendingQuestionSource(question, currentSubjectKey, currentChapter, currentQuestion),
+        field: "explanation",
+        value: plainText
+    });
+    saveProgress();
+    liveExplanationEditing = false;
+    showQuestion();
+}
+
 function renderStudyFeedback(question) {
+    if (!shouldShowSubjectImmediateFeedback()) {
+        return "";
+    }
+
     const selected = userAnswers[currentQuestion];
     if (selected == null) {
         return "";
     }
-    const status = selected === question.answer ? "Correct" : "Incorrect";
-    const statusClass = selected === question.answer ? "study-status-correct" : "study-status-incorrect";
-    const selectedText = escapeHtml(question.options[selected]);
-    const explanationText = question.explanation && String(question.explanation).trim() ? escapeHtml(question.explanation) : "Explanation is currently unavailable for this question.";
+    const isCorrect = selected === question.answer;
+    const status = isCorrect ? "Correct" : "Incorrect";
+    const selectedText = escapeHtml(question.options[selected] || "");
+    const correctAnswerText = escapeHtml(question.options[question.answer] || "");
+    const explanationDocument = question.explanationDocument || question.explanation || "";
+    const explanationHtml = window.ExplanationRenderer
+        ? window.ExplanationRenderer.renderExplanationDocument(explanationDocument, question.explanation || "")
+        : (question.explanation ? `<p>${escapeHtml(String(question.explanation))}</p>` : "");
+
+    const answerView = liveAnswerEditing
+        ? renderLiveAnswerEditor(question)
+        : `<div class="correct-answer-box">
+            <strong>Correct Answer:</strong> ${correctAnswerText}
+            <button type="button" class="btn-edit-answer" onclick="startEditingLiveAnswer()" aria-label="Edit correct answer" title="Edit correct answer">✎</button>
+        </div>`;
+
+    const explanationView = liveExplanationEditing
+        ? renderLiveExplanationEditor(question)
+        : `<div class="explanation-box${explanationHtml ? "" : " missing"}">
+            <strong>Explanation:</strong>
+            ${explanationHtml || "Explanation is currently unavailable for this question."}
+            <button type="button" class="btn-edit-explanation" onclick="startEditingLiveExplanation()" aria-label="Edit explanation" title="Edit explanation">✎</button>
+        </div>`;
+
     return `
         <div class="study-feedback">
-            <div class="study-status ${statusClass}">✔ ${status} answer</div>
-            <p class="study-detail">You selected <strong>${selectedText}</strong>. ${status === "Correct" ? "This choice is right." : "This choice is incorrect."}</p>
-            <div class="study-explanation">
-                <strong>Explanation:</strong>
-                <p>${explanationText}</p>
-            </div>
+            <p><strong>Your answer:</strong> ${selectedText}</p>
+            <p><strong>Status:</strong> <span class="${isCorrect ? "review-correct" : "review-wrong"}">${status}</span></p>
+            ${answerView}
+            ${explanationView}
         </div>
     `;
 }

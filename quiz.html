@@ -54,17 +54,17 @@
                     </div>
                 </div>
 
-                <button id="paletteToggle" class="palette-toggle" type="button" aria-expanded="true" aria-controls="palettePanelContent" aria-label="Close question palette" title="Close question palette">❯</button>
-                <aside class="palette-panel panel">
+                <aside class="palette-panel panel" id="palettePanel">
+                    <button id="paletteToggle" class="palette-toggle" type="button" aria-expanded="true" aria-controls="palettePanelContent" aria-label="Collapse question palette" title="Collapse question palette">❯</button>
                     <div id="palettePanelContent">
-                    <h3>Question Palette</h3>
-                    <div id="palette" class="palette-grid"></div>
-                    <hr />
-                    <p><span class="answered-box"></span> Answered</p>
-                    <p><span class="current-box"></span> Current</p>
-                    <p><span class="notanswered-box"></span> Not Answered</p>
-                    <p><span class="review-box"></span> Marked for Review</p>
-                    <p><span class="answered-review-box"></span> Answered + Review</p>
+                        <h3>Question Palette</h3>
+                        <div id="palette" class="palette-grid"></div>
+                        <hr />
+                        <p><span class="answered-box"></span> Answered</p>
+                        <p><span class="current-box"></span> Current</p>
+                        <p><span class="notanswered-box"></span> Not Answered</p>
+                        <p><span class="review-box"></span> Marked for Review</p>
+                        <p><span class="answered-review-box"></span> Answered + Review</p>
                     </div>
                 </aside>
             </div>
@@ -89,6 +89,30 @@
     </div>
 
     <script src="assets/js/questionRenderer.js?v=20260908-1"></script>
+    <script src="assets/js/explanationRenderer.js"></script>
     <script src="assets/js/quizEngine.js?v=20260803-1"></script>
+    <script>
+        (() => {
+            const layout = document.querySelector(".quiz-layout");
+            const toggle = document.getElementById("paletteToggle");
+            if (!layout || !toggle) {
+                return;
+            }
+
+            const syncPaletteState = () => {
+                const collapsed = layout.classList.contains("palette-collapsed");
+                toggle.setAttribute("aria-expanded", String(!collapsed));
+                toggle.setAttribute("aria-label", collapsed ? "Open question palette" : "Collapse question palette");
+                toggle.setAttribute("title", collapsed ? "Open question palette" : "Collapse question palette");
+                toggle.textContent = collapsed ? "❮" : "❯";
+            };
+
+            syncPaletteState();
+            toggle.addEventListener("click", () => {
+                layout.classList.toggle("palette-collapsed");
+                syncPaletteState();
+            });
+        })();
+    </script>
 </body>
 </html>

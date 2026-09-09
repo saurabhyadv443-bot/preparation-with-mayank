@@ -5,7 +5,7 @@
  * - Adds a splash redirect for index.html only after entry access is granted
  */
 (function(){
-    const ENTRY_PASSWORD = 'Saurabh7752';
+    const ENTRY_PASSWORD = '9793';
     const ENTRY_SESSION_KEY = 'quizEntryAuthenticated';
 
     function isEntryAuthenticated(){
