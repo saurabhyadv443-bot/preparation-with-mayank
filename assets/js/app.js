@@ -100,7 +100,14 @@ const QUIZ_PENDING_CHANGES_KEY = "quizPendingChanges";
 const QUIZ_PENDING_BATCHES_KEY = "quizPendingChangeBatches";
 const QUIZ_PENDING_BATCHES_VERSION = 1;
 const QUIZ_PENDING_BATCH_HISTORY_LIMIT = 5;
+const QUIZ_PENDING_DB_NAME = "bpscQuizPendingChanges";
+const QUIZ_PENDING_DB_VERSION = 1;
+const QUIZ_PENDING_DB_STORE = "state";
+const QUIZ_PENDING_DB_RECORD = "pending";
 let quizPendingStateCache = null;
+let quizPendingStoragePromise = null;
+let quizPendingStorageReady = false;
+let quizPendingStateRevision = 0;
 const QUIZ_PENDING_SOURCE_FILES = {
     ancient: "ancient.json",
     medieval: "medeival.json",
@@ -134,20 +141,21 @@ function quizPendingReadJson(key, fallback) {
     }
 }
 
-function quizPendingWriteState(state) {
-    quizPendingStateCache = state;
-    localStorage.setItem(QUIZ_PENDING_BATCHES_KEY, JSON.stringify(state));
-    localStorage.setItem(QUIZ_PENDING_CHANGES_KEY, JSON.stringify(state.changes));
+function quizPendingOperationKey(change) {
+    return change.operationKey || `${change.operationType}::${change.field || change.tag || ""}::${quizPendingIdentity(change)}`;
 }
 
-function quizPendingNormalizeChange(change, index, nextChangeId) {
-    const normalized = { ...change };
-    if (!normalized.pendingChangeId) normalized.pendingChangeId = `legacy-${Date.now()}-${index}-${nextChangeId}`;
-    return normalized;
+function quizPendingCreateState(changes, batches = []) {
+    return {
+        version: QUIZ_PENDING_BATCHES_VERSION,
+        nextBatchId: 1,
+        nextChangeId: changes.length + 1,
+        changes,
+        batches
+    };
 }
 
-function quizPendingReadState() {
-    if (quizPendingStateCache) return quizPendingStateCache;
+function quizPendingReadLegacyState() {
     const stored = quizPendingReadJson(QUIZ_PENDING_BATCHES_KEY, null);
     if (stored && stored.version === QUIZ_PENDING_BATCHES_VERSION && Array.isArray(stored.changes) && Array.isArray(stored.batches)) {
         return {
@@ -158,22 +166,258 @@ function quizPendingReadState() {
             batches: stored.batches
         };
     }
-
     const legacy = quizPendingReadJson(QUIZ_PENDING_CHANGES_KEY, []);
     const changes = (Array.isArray(legacy) ? legacy : []).map((change, index) => quizPendingNormalizeChange(change, index, index + 1));
-    const state = {
-        version: QUIZ_PENDING_BATCHES_VERSION,
-        nextBatchId: 1,
-        nextChangeId: changes.length + 1,
-        changes,
-        batches: []
+    return quizPendingCreateState(changes);
+}
+
+function quizPendingAddMissingUnsyncedChanges(state) {
+    const knownKeys = new Set(state.changes.map((change) => quizPendingOperationKey(change)));
+    state.batches.filter((batch) => batch.status !== "synced").forEach((batch) => {
+        (Array.isArray(batch.changes) ? batch.changes : []).forEach((change) => {
+            const operationKey = quizPendingOperationKey(change);
+            if (knownKeys.has(operationKey)) return;
+            state.changes.push({ ...change });
+            knownKeys.add(operationKey);
+        });
+    });
+    return state;
+}
+
+function quizPendingChangeRecency(change) {
+    const timestamp = Date.parse(change.timestamp || "");
+    const pendingChangeId = String(change.pendingChangeId || "");
+    const numericParts = pendingChangeId.match(/(?:change|legacy)-(?:(\d+).*)?$/);
+    return {
+        timestamp: Number.isFinite(timestamp) ? timestamp : null,
+        sequence: numericParts && numericParts[1] ? Number(numericParts[1]) : null
     };
-    quizPendingWriteState(state);
+}
+
+function quizPendingIsNewerChange(candidate, current) {
+    const candidateRecency = quizPendingChangeRecency(candidate);
+    const currentRecency = quizPendingChangeRecency(current);
+    if (candidateRecency.timestamp !== null || currentRecency.timestamp !== null) {
+        if (candidateRecency.timestamp === null) return false;
+        if (currentRecency.timestamp === null) return true;
+        if (candidateRecency.timestamp !== currentRecency.timestamp) return candidateRecency.timestamp > currentRecency.timestamp;
+    }
+    if (candidateRecency.sequence !== null || currentRecency.sequence !== null) {
+        if (candidateRecency.sequence === null) return false;
+        if (currentRecency.sequence === null) return true;
+        if (candidateRecency.sequence !== currentRecency.sequence) return candidateRecency.sequence > currentRecency.sequence;
+    }
+    return true;
+}
+
+function quizPendingMergeStates(primary, secondary) {
+    const mergedChanges = new Map();
+    [...primary.changes, ...secondary.changes].forEach((change) => {
+        const key = quizPendingOperationKey(change);
+        const existing = mergedChanges.get(key);
+        if (!existing || quizPendingIsNewerChange(change, existing)) mergedChanges.set(key, { ...change });
+    });
+    const batches = new Map();
+    [...primary.batches, ...secondary.batches].forEach((batch) => batches.set(Number(batch.batchId), { ...batch }));
+    return {
+        version: QUIZ_PENDING_BATCHES_VERSION,
+        nextBatchId: Math.max(Number(primary.nextBatchId) || 1, Number(secondary.nextBatchId) || 1),
+        nextChangeId: Math.max(Number(primary.nextChangeId) || 1, Number(secondary.nextChangeId) || 1),
+        changes: [...mergedChanges.values()],
+        batches: [...batches.values()]
+    };
+}
+
+function quizPendingCompactState(state) {
+    const latestChanges = new Map();
+    state.changes.forEach((change) => latestChanges.set(quizPendingOperationKey(change), change));
+    state.changes = [...latestChanges.values()];
+    const latestChangeIds = new Map(state.changes.map((change) => [quizPendingOperationKey(change), change.pendingChangeId]));
+    state.batches = state.batches
+        .map((batch) => {
+            if (batch.status === "synced") return batch;
+            const changes = (Array.isArray(batch.changes) ? batch.changes : [])
+                .filter((change) => latestChangeIds.get(quizPendingOperationKey(change)) === change.pendingChangeId);
+            return { ...batch, changes };
+        })
+        .filter((batch) => batch.status === "synced" || batch.changes.length);
+    return state;
+}
+
+function quizPendingStateHasChanges(state, expectedState) {
+    const actualChanges = new Map(state.changes.map((change) => [quizPendingOperationKey(change), change]));
+    return expectedState.changes.every((expectedChange) => {
+        const actualChange = actualChanges.get(quizPendingOperationKey(expectedChange));
+        return actualChange && (actualChange.pendingChangeId === expectedChange.pendingChangeId || quizPendingIsNewerChange(actualChange, expectedChange));
+    });
+}
+
+function quizPendingOpenDatabase() {
+    if (!window.indexedDB) return Promise.reject(new Error("IndexedDB is unavailable."));
+    return new Promise((resolve, reject) => {
+        const request = window.indexedDB.open(QUIZ_PENDING_DB_NAME, QUIZ_PENDING_DB_VERSION);
+        request.onupgradeneeded = () => request.result.createObjectStore(QUIZ_PENDING_DB_STORE);
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error || new Error("Unable to open pending changes database."));
+        request.onblocked = () => reject(new Error("Pending changes database is blocked."));
+    });
+}
+
+function quizPendingReadDatabase(database) {
+    return new Promise((resolve, reject) => {
+        const transaction = database.transaction(QUIZ_PENDING_DB_STORE, "readonly");
+        const request = transaction.objectStore(QUIZ_PENDING_DB_STORE).get(QUIZ_PENDING_DB_RECORD);
+        request.onsuccess = () => resolve(request.result || null);
+        request.onerror = () => reject(request.error || new Error("Unable to read pending changes database."));
+    });
+}
+
+function quizPendingWriteDatabase(database, state) {
+    return new Promise((resolve, reject) => {
+        const transaction = database.transaction(QUIZ_PENDING_DB_STORE, "readwrite");
+        transaction.objectStore(QUIZ_PENDING_DB_STORE).put(state, QUIZ_PENDING_DB_RECORD);
+        transaction.oncomplete = resolve;
+        transaction.onerror = () => reject(transaction.error || new Error("Unable to write pending changes database."));
+        transaction.onabort = () => reject(transaction.error || new Error("Pending changes database write was aborted."));
+    });
+}
+
+function quizPendingMergeAndWriteDatabase(database, state) {
+    return new Promise((resolve, reject) => {
+        const transaction = database.transaction(QUIZ_PENDING_DB_STORE, "readwrite");
+        const store = transaction.objectStore(QUIZ_PENDING_DB_STORE);
+        const readRequest = store.get(QUIZ_PENDING_DB_RECORD);
+        let finalState = state;
+        readRequest.onsuccess = () => {
+            const currentState = readRequest.result;
+            if (currentState && currentState.version === QUIZ_PENDING_BATCHES_VERSION) {
+                finalState = quizPendingCompactState(quizPendingAddMissingUnsyncedChanges(quizPendingMergeStates(currentState, state)));
+            }
+            store.put(finalState, QUIZ_PENDING_DB_RECORD);
+        };
+        readRequest.onerror = () => transaction.abort();
+        transaction.oncomplete = () => resolve(finalState);
+        transaction.onerror = () => reject(transaction.error || new Error("Unable to merge pending changes database state."));
+        transaction.onabort = () => reject(transaction.error || new Error("Pending changes database merge was aborted."));
+    });
+}
+
+function quizPendingRestoreLegacyStorage(state) {
+    let previousBatches = null;
+    let previousChanges = null;
+    try {
+        previousBatches = localStorage.getItem(QUIZ_PENDING_BATCHES_KEY);
+        previousChanges = localStorage.getItem(QUIZ_PENDING_CHANGES_KEY);
+        localStorage.setItem(QUIZ_PENDING_BATCHES_KEY, JSON.stringify(state));
+        localStorage.setItem(QUIZ_PENDING_CHANGES_KEY, JSON.stringify(state.changes));
+        return true;
+    } catch (error) {
+        try {
+            if (previousBatches === null) localStorage.removeItem(QUIZ_PENDING_BATCHES_KEY);
+            else localStorage.setItem(QUIZ_PENDING_BATCHES_KEY, previousBatches);
+            if (previousChanges === null) localStorage.removeItem(QUIZ_PENDING_CHANGES_KEY);
+            else localStorage.setItem(QUIZ_PENDING_CHANGES_KEY, previousChanges);
+        } catch (restoreError) {
+            console.warn("Unable to restore the previous localStorage pending-change state.", restoreError);
+        }
+        console.warn("Unable to preserve a localStorage fallback for pending quiz changes.", error);
+        return false;
+    }
+}
+
+function quizPendingRemoveLegacyStorage(state) {
+    const batches = localStorage.getItem(QUIZ_PENDING_BATCHES_KEY);
+    const changes = localStorage.getItem(QUIZ_PENDING_CHANGES_KEY);
+    try {
+        localStorage.removeItem(QUIZ_PENDING_BATCHES_KEY);
+        localStorage.removeItem(QUIZ_PENDING_CHANGES_KEY);
+    } catch (error) {
+        if (batches !== null) localStorage.setItem(QUIZ_PENDING_BATCHES_KEY, batches);
+        if (changes !== null) localStorage.setItem(QUIZ_PENDING_CHANGES_KEY, changes);
+        throw error;
+    }
+}
+
+async function quizPendingInitializeStorage() {
+    const legacyState = quizPendingCompactState(quizPendingAddMissingUnsyncedChanges(quizPendingReadLegacyState()));
+    const startingRevision = quizPendingStateRevision;
+    let database;
+    try {
+        database = await quizPendingOpenDatabase();
+        const storedState = await quizPendingReadDatabase(database);
+        let state = storedState && storedState.version === QUIZ_PENDING_BATCHES_VERSION
+            ? quizPendingMergeStates(storedState, legacyState)
+            : legacyState;
+        if (quizPendingStateRevision !== startingRevision) {
+            state = quizPendingStateCache;
+        }
+        state = quizPendingCompactState(quizPendingAddMissingUnsyncedChanges(state));
+        const latestBeforeWrite = await quizPendingReadDatabase(database);
+        if (latestBeforeWrite && latestBeforeWrite.version === QUIZ_PENDING_BATCHES_VERSION) {
+            state = quizPendingCompactState(quizPendingAddMissingUnsyncedChanges(quizPendingMergeStates(latestBeforeWrite, state)));
+        }
+        await quizPendingMergeAndWriteDatabase(database, state);
+        const verifiedState = await quizPendingReadDatabase(database);
+        if (!verifiedState || !quizPendingStateHasChanges(verifiedState, state)) throw new Error("Pending changes database verification failed.");
+        quizPendingStateCache = verifiedState;
+        quizPendingStorageReady = true;
+        quizPendingRemoveLegacyStorage(verifiedState);
+    } catch (error) {
+        quizPendingStorageReady = false;
+        const fallbackState = quizPendingStateCache || legacyState;
+        quizPendingStateCache = quizPendingCompactState(quizPendingAddMissingUnsyncedChanges(fallbackState));
+        quizPendingRestoreLegacyStorage(quizPendingStateCache);
+        console.warn("Using localStorage fallback for pending quiz changes.", error);
+    } finally {
+        if (database) database.close();
+    }
+    return quizPendingStateCache;
+}
+
+function quizPendingPersistState(state, revision) {
+    const snapshot = JSON.parse(JSON.stringify(state));
+    if (!quizPendingStoragePromise) quizPendingStoragePromise = quizPendingInitializeStorage();
+    quizPendingStoragePromise = quizPendingStoragePromise.then(async () => {
+        if (!quizPendingStorageReady) return;
+        const database = await quizPendingOpenDatabase();
+        try {
+            await quizPendingWriteDatabase(database, snapshot);
+        } finally {
+            database.close();
+        }
+    }).catch((error) => {
+        quizPendingStorageReady = false;
+        const fallbackState = revision === quizPendingStateRevision ? snapshot : quizPendingStateCache;
+        quizPendingRestoreLegacyStorage(fallbackState);
+        console.warn("Unable to persist pending quiz changes in IndexedDB; localStorage fallback retained.", error);
+    });
+}
+
+function quizPendingWriteState(state) {
+    const compactedState = quizPendingCompactState(state);
+    quizPendingStateCache = compactedState;
+    quizPendingStateRevision += 1;
+    if (quizPendingStorageReady) quizPendingPersistState(compactedState, quizPendingStateRevision);
+    else quizPendingRestoreLegacyStorage(compactedState);
+}
+
+function quizPendingNormalizeChange(change, index, nextChangeId) {
+    const normalized = { ...change };
+    if (!normalized.pendingChangeId) normalized.pendingChangeId = `legacy-${Date.now()}-${index}-${nextChangeId}`;
+    normalized.operationKey = quizPendingOperationKey(normalized);
+    return normalized;
+}
+
+function quizPendingReadState() {
+    if (quizPendingStateCache) return quizPendingStateCache;
+    const state = quizPendingCompactState(quizPendingAddMissingUnsyncedChanges(quizPendingReadLegacyState()));
+    quizPendingStateCache = state;
+    if (!quizPendingStoragePromise) quizPendingStoragePromise = quizPendingInitializeStorage();
     return state;
 }
 
 window.addEventListener("storage", (event) => {
-    if (event.key === QUIZ_PENDING_BATCHES_KEY || event.key === QUIZ_PENDING_CHANGES_KEY) {
+    if (!quizPendingStorageReady && (event.key === QUIZ_PENDING_BATCHES_KEY || event.key === QUIZ_PENDING_CHANGES_KEY)) {
         quizPendingStateCache = null;
     }
 });
@@ -195,7 +439,7 @@ function queueQuizPendingChange(change) {
         timestamp: change.timestamp || new Date().toISOString(),
         active: change.active !== false
     };
-    const operationKey = `${normalized.operationType}::${normalized.field || normalized.tag || ""}::${quizPendingIdentity(normalized)}`;
+    const operationKey = quizPendingOperationKey(normalized);
     const existingIndex = changes.findIndex((item) => item.operationKey === operationKey);
     normalized.operationKey = operationKey;
     const existing = existingIndex >= 0 ? changes[existingIndex] : null;
