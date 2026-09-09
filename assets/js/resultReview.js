@@ -696,6 +696,96 @@ async function saveEditedExplanation(questionIndex) {
     }
 }
 
+function recalculateReviewResult() {
+    const questions = Array.isArray(result.questions) ? result.questions : [];
+    const userAnswers = Array.isArray(result.userAnswers) ? result.userAnswers : [];
+    let correct = 0;
+    let wrong = 0;
+    let skipped = 0;
+
+    questions.forEach((question, index) => {
+        const selected = userAnswers[index];
+        if (selected == null) {
+            skipped += 1;
+        } else if (selected === question.answer) {
+            correct += 1;
+        } else {
+            wrong += 1;
+        }
+    });
+
+    const total = questions.length;
+    const accuracy = total ? Math.round((correct / total) * 100) : 0;
+    const isMock = isMockReviewContext();
+    const finalScore = isMock ? correct - wrong / 3 : correct;
+    result.total = total;
+    result.correct = correct;
+    result.wrong = wrong;
+    result.skipped = skipped;
+    result.attempted = correct + wrong;
+    result.accuracy = accuracy;
+    result.percentage = accuracy;
+    result.score = correct;
+    result.finalScore = finalScore;
+    result.positiveMarks = isMock ? finalScore : correct;
+    result.negativeMarks = isMock ? wrong / 3 : 0;
+}
+
+function persistRecalculatedAttempt() {
+    if (!result.quizId || !result.completedAt) {
+        return;
+    }
+
+    let history;
+    try {
+        history = JSON.parse(localStorage.getItem("quiz_attempt_history") || "{}");
+    } catch (error) {
+        history = {};
+    }
+    const records = Array.isArray(history[result.quizId]) ? history[result.quizId] : [];
+    const recordIndex = records.findIndex((item) =>
+        item && item.completedAt === result.completedAt &&
+        (!isHistoricalReview || item.attempt === historicalAttemptNumber)
+    );
+    if (recordIndex < 0) {
+        return;
+    }
+
+    const record = records[recordIndex];
+    const answers = {};
+    const questionStatus = {};
+    const correctAnswers = {};
+    result.questions.forEach((question, index) => {
+        const questionId = question.id ?? question.qid ?? question.questionId ?? index;
+        const key = String(questionId);
+        const selected = result.userAnswers[index];
+        answers[key] = selected == null ? null : selected;
+        correctAnswers[key] = question.answer;
+        questionStatus[key] = selected == null ? "unanswered" : selected === question.answer ? "correct" : "incorrect";
+    });
+    Object.assign(record, {
+        total: result.total,
+        attempted: result.attempted,
+        correct: result.correct,
+        incorrect: result.wrong,
+        wrong: result.wrong,
+        unanswered: result.skipped,
+        skipped: result.skipped,
+        score: result.finalScore,
+        finalScore: result.finalScore,
+        percentage: result.percentage,
+        accuracy: result.accuracy,
+        answers,
+        question_status: questionStatus,
+        correct_answers: correctAnswers,
+        questions: result.questions,
+        userAnswers: result.userAnswers
+    });
+    history[result.quizId] = records;
+    localStorage.setItem("quiz_attempt_history", JSON.stringify(history));
+    Object.assign(attemptHistory, history);
+}
+
 function startEditingAnswer(questionIndex) {
     editingAnswerIndex = questionIndex;
     renderQuestions();
@@ -715,9 +805,22 @@ async function saveEditedAnswer(questionIndex) {
     try {
         const savedQuestion = await requestReviewQuestion(questionIndex, "answer", Number(selectedAnswer.value));
         result.questions[questionIndex].answer = savedQuestion.answer;
+        recalculateReviewResult();
         localStorage.setItem(resultKey, JSON.stringify(result));
+        persistRecalculatedAttempt();
         editingAnswerIndex = null;
-        replaceAnswerView(questionIndex);
+        if (reviewSubtitle) {
+            const chapterLabel = result.chapter && result.chapter.trim() ? result.chapter : "Full Length Test";
+            reviewSubtitle.innerText = `${chapterLabel} • Accuracy ${result.accuracy}%`;
+        }
+        renderSummary();
+        renderTestHistory();
+        renderQuestions();
+        renderPalette();
+        updateFilterButtons();
+        renderQuickNavigation();
+        updateActiveQuestion();
+        updateResultCount();
         window.alert("Correct answer saved successfully.");
     } catch (error) {
         window.alert(error.message);
