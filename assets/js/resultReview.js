@@ -690,7 +690,6 @@ async function saveEditedExplanation(questionIndex) {
         localStorage.setItem(resultKey, JSON.stringify(result));
         editingExplanationIndex = null;
         replaceExplanationView(questionIndex);
-        window.alert("Explanation saved successfully.");
     } catch (error) {
         window.alert(error.message);
     }
@@ -821,7 +820,6 @@ async function saveEditedAnswer(questionIndex) {
         renderQuickNavigation();
         updateActiveQuestion();
         updateResultCount();
-        window.alert("Correct answer saved successfully.");
     } catch (error) {
         window.alert(error.message);
     }
