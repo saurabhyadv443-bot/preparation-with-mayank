@@ -8,6 +8,16 @@ let serverImportantQuestions = {};
 let serverCurrentAffairsQuestions = null;
 let originalCurrentAffairsQuestions = [];
 let mockCollectionData = null;
+let subjectPageRendered = false;
+let subjectPendingStorageRefresh = false;
+
+window.addEventListener("quizPendingStorageReady", () => {
+    if (!subjectPageRendered) {
+        subjectPendingStorageRefresh = true;
+        return;
+    }
+    loadSubjectContent();
+});
 
 function subjectApiUrl(path) {
     return quizApiUrl(path);
@@ -512,5 +522,7 @@ function renderMockSets(setNames) {
 
     const selectedChapter = new URLSearchParams(window.location.search).get("chapter");
     if (selectedChapter === "Important Questions" || subject === "current_affairs") await storagePromise;
-    loadSubjectContent();
+    await loadSubjectContent();
+    subjectPageRendered = true;
+    if (subjectPendingStorageRefresh) await loadSubjectContent();
 })();

@@ -671,7 +671,17 @@ function replaceAnswerView(questionIndex) {
 async function loadPersistedReviewQuestions() {
     result.questions.forEach((question, index) => {
         const source = quizPendingQuestionSource(question, result.subjectKey, result.chapter, index);
-        applyQuizPendingChanges(question, source);
+        const pendingChanges = applyQuizPendingChanges(question, source);
+        const pendingExplanation = [...pendingChanges].reverse().find((change) => (
+            change.operationType === "edit-question" &&
+            change.field === "explanation" &&
+            change.active !== false
+        ));
+        if (pendingExplanation) {
+            question.explanationDocument = window.ExplanationRenderer
+                ? window.ExplanationRenderer.normalizeExplanationDocument(pendingExplanation.value)
+                : { type: "document", blocks: [{ type: "paragraph", content: [String(pendingExplanation.value ?? "")] }] };
+        }
     });
 }
 
@@ -1392,6 +1402,27 @@ function applyHighlightsToAllQuestions() {
     });
 }
 
+let reviewPageRendered = false;
+let reviewPendingStorageRefresh = false;
+
+async function refreshPendingReviewState() {
+    await loadPersistedReviewQuestions();
+    renderQuestions();
+    applyHighlightsToAllQuestions();
+    renderSavedQuestions();
+    updateActiveQuestion();
+    updateResultCount();
+}
+
+window.addEventListener("quizPendingStorageReady", () => {
+    if (!result) return;
+    if (!reviewPageRendered) {
+        reviewPendingStorageRefresh = true;
+        return;
+    }
+    refreshPendingReviewState();
+});
+
 if (!result) {
     window.location.href = "index.html";
 } else {
@@ -1412,6 +1443,8 @@ if (!result) {
         renderSavedQuestions();
         updateActiveQuestion();
         updateResultCount();
+        reviewPageRendered = true;
+        if (reviewPendingStorageRefresh) refreshPendingReviewState();
     });
 }
 

@@ -371,6 +371,8 @@ async function quizPendingInitializeStorage() {
     } finally {
         if (database) database.close();
     }
+    window.dispatchEvent(new CustomEvent("quizPendingStorageReady"));
+    window.dispatchEvent(new CustomEvent("quizPendingBatchesChanged"));
     return quizPendingStateCache;
 }
 
@@ -568,4 +570,6 @@ function markQuizPendingBatchSynced(batchId) {
 function getQuizPendingBatches() {
     return quizPendingReadState().batches;
 }
+
+if (!quizPendingStoragePromise) quizPendingStoragePromise = quizPendingInitializeStorage();
 

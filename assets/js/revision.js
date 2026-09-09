@@ -9,6 +9,17 @@
     }
 
     let savedQuestions = [];
+    let revisionPageRendered = false;
+    let revisionPendingStorageRefresh = false;
+
+    window.addEventListener("quizPendingStorageReady", async () => {
+        if (!revisionPageRendered) {
+            revisionPendingStorageRefresh = true;
+            return;
+        }
+        await loadSavedQuestionsFromServer();
+        renderSavedLibrary();
+    });
 
     async function loadSavedQuestionsFromServer() {
         try {
@@ -246,6 +257,11 @@
 
     updateSavedLibraryFilters();
     renderSavedLibrary();
+    revisionPageRendered = true;
+    if (revisionPendingStorageRefresh) {
+        await loadSavedQuestionsFromServer();
+        renderSavedLibrary();
+    }
     [savedLibrarySearch, savedLibrarySubject, savedLibraryChapter].forEach((node) => node?.addEventListener('input', () => {
         savedLibraryLevel = 'subjects';
         savedLibrarySubjectValue = savedLibrarySubject?.value || '';
