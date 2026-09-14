@@ -440,6 +440,9 @@ function getQuizDuration() {
                 selectedMode = savedProgress.quizType === 'study' ? 'study' : selectedMode;
                 currentChapter = savedProgress.chapter;
                 questions = getChapterQuestions(currentChapter);
+                if (!questions.length && Array.isArray(savedProgress.questions)) {
+                    questions = savedProgress.questions;
+                }
                 currentQuestion = typeof savedProgress.currentQuestion === 'number' ? savedProgress.currentQuestion : 0;
                 userAnswers = Array.isArray(savedProgress.userAnswers) ? savedProgress.userAnswers : new Array(questions.length).fill(null);
                 markedForReview = Array.isArray(savedProgress.markedForReview) ? savedProgress.markedForReview : new Array(questions.length).fill(false);
@@ -467,6 +470,9 @@ function getQuizDuration() {
             selectedMode = savedProgress.quizType === 'study' ? 'study' : selectedMode;
             currentChapter = savedProgress.chapter;
             questions = getChapterQuestions(currentChapter);
+            if (!questions.length && Array.isArray(savedProgress.questions)) {
+                questions = savedProgress.questions;
+            }
             currentQuestion = typeof savedProgress.currentQuestion === 'number' ? savedProgress.currentQuestion : 0;
             userAnswers = Array.isArray(savedProgress.userAnswers) ? savedProgress.userAnswers : new Array(questions.length).fill(null);
             markedForReview = Array.isArray(savedProgress.markedForReview) ? savedProgress.markedForReview : new Array(questions.length).fill(false);
@@ -1401,28 +1407,20 @@ function saveProgress() {
         progressSaveTimeout = null;
     }
 
-    if (cachedProgressQuestions !== questions) {
-        cachedProgressQuestions = questions;
-        cachedProgressQuestionsJson = JSON.stringify(questions);
-    }
-
-    const progressPrefix = JSON.stringify({
+    const progress = {
         subject,
         subjectKey: currentSubjectKey,
         chapter: currentChapter,
         currentQuestion,
         userAnswers,
-        markedForReview
-    });
-    const progressSuffix = JSON.stringify({
+        markedForReview,
         remainingTime,
         duration: getQuizMode() === "practice" ? Number(quizData.secondsPerQuestion) || 40 : getQuizDuration(),
         quizType: getQuizMode(),
         quizStartedAt,
         updatedAt: new Date().toISOString()
-    });
-    const serializedProgress = `${progressPrefix.slice(0, -1)},"questions":${cachedProgressQuestionsJson},${progressSuffix.slice(1)}`;
-    localStorage.setItem(getProgressKey(), serializedProgress);
+    };
+    localStorage.setItem(getProgressKey(), JSON.stringify(progress));
 }
 
 function scheduleProgressSave() {
