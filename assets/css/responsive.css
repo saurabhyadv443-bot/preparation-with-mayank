@@ -1,0 +1,386 @@
+/* Shared responsive corrections for the active portal stylesheets. */
+
+html,
+body {
+	max-width: 100%;
+	overflow-x: hidden;
+}
+
+img,
+svg,
+canvas,
+video {
+	max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+	max-width: 100%;
+}
+
+.header,
+.topbar,
+.logo-wrap,
+.top-nav,
+.top-right,
+.section-heading,
+.dashboard-heading-row,
+.review-header,
+.result-buttons,
+.modal-actions,
+.navigation,
+.explanation-editor-actions,
+.saved-library-header,
+.saved-library-tools,
+.saved-question-item {
+	min-width: 0;
+}
+
+.top-nav,
+.result-buttons,
+.modal-actions {
+	flex-wrap: wrap;
+}
+
+.brand-title,
+.brand-subtitle,
+.section-heading h1,
+.section-heading h2,
+.section-heading h3,
+.card h3,
+.dashboard-card h2,
+.panel h1,
+.panel h2,
+.panel h3,
+.panel h4,
+.review-item,
+.question-card,
+.explanation-box,
+.explanation-editor-section,
+.collection-quiz-explanation,
+.saved-question-item,
+.metric-row,
+.topic-stats,
+.search-highlight {
+	overflow-wrap: anywhere;
+	word-break: break-word;
+}
+
+.rich-table-wrapper,
+.progress-table-wrapper,
+.table-wrapper {
+	max-width: 100%;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 767px) {
+	.header,
+	.topbar {
+		align-items: stretch;
+		flex-direction: column;
+		gap: 10px;
+		padding: 10px max(12px, env(safe-area-inset-left)) 10px max(12px, env(safe-area-inset-right));
+	}
+
+	.logo-wrap,
+	.top-nav,
+	.top-right {
+		width: 100%;
+	}
+
+	.logo-wrap {
+		align-items: flex-start;
+		flex-wrap: wrap;
+		gap: 8px 10px;
+	}
+
+	.top-nav,
+	.top-right {
+		justify-content: flex-start;
+		gap: 6px;
+		flex-wrap: wrap;
+	}
+
+	.top-nav a,
+	.top-right > *,
+	.result-buttons > *,
+	.modal-actions > * {
+		min-width: 0;
+		max-width: 100%;
+	}
+
+	.page-section,
+	.subject-shell,
+	.result-shell,
+	.dashboard-shell,
+	.review-container,
+	.result-review-page {
+		width: 100%;
+		padding: 16px 12px calc(28px + env(safe-area-inset-bottom));
+	}
+
+	.hero,
+	.result-hero,
+	.review-header,
+	.dashboard-heading-row,
+	.section-heading,
+	.filter-top-row {
+		align-items: stretch;
+		flex-direction: column;
+	}
+
+	.grid-2,
+	.stats-grid,
+	.result-summary-grid,
+	.result-review-page .result-summary-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.card,
+	.dashboard-card,
+	.panel,
+	.review-item,
+	.glass-card {
+		min-width: 0;
+		padding: 14px;
+	}
+
+	.btn,
+	.result-buttons .btn,
+	.result-buttons a,
+	.modal-actions button,
+	.explanation-editor-actions button {
+		min-height: 40px;
+	}
+
+	.result-buttons,
+	.modal-actions,
+	.review-actions,
+	.review-reattempt-actions,
+	.explanation-editor-actions {
+		align-items: stretch;
+		flex-direction: column;
+	}
+
+	.result-buttons > *,
+	.modal-actions > *,
+	.review-reattempt-actions .btn,
+	.explanation-editor-actions button {
+		width: 100%;
+		text-align: center;
+	}
+
+	.search-control,
+	.saved-library-tools {
+		align-items: stretch;
+		flex-direction: column;
+	}
+
+	.saved-library-tools .search-input,
+	.saved-library-tools select,
+	.saved-open-button {
+		width: 100%;
+	}
+
+	.metric-row {
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	.metric-row span,
+	.metric-row strong {
+		min-width: 0;
+	}
+
+	.metric-row strong {
+		text-align: right;
+	}
+
+	.progress-table {
+		min-width: 620px;
+	}
+
+	.explanation-input,
+	.explanation-editor-section textarea,
+	textarea {
+		width: 100%;
+		max-width: 100%;
+	}
+}
+
+@media (max-width: 767px) {
+	.quiz-layout {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 10px;
+	}
+
+	.container {
+		width: 100%;
+		padding: 12px 10px calc(180px + env(safe-area-inset-bottom));
+	}
+
+	#chapterSection,
+	.quiz-main,
+	.palette-panel,
+	#questionBox {
+		min-width: 0;
+		border-radius: 10px;
+	}
+
+	#chapterSection,
+	.quiz-main,
+	.palette-panel {
+		padding: 12px;
+	}
+
+	#chapterList {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 8px;
+	}
+
+	.chapterBtn {
+		min-height: 42px;
+		text-align: left;
+		overflow-wrap: anywhere;
+	}
+
+	.topbar > div:first-child,
+	.top-right {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	.topbar h1 {
+		max-width: 100%;
+	}
+
+	.top-right {
+		justify-content: center;
+	}
+
+	#timer,
+	#pauseBtn,
+	#exitBtn,
+	#logoutBtn {
+		flex: 1 1 auto;
+	}
+
+	.palette-panel {
+		position: static;
+		height: auto;
+		max-width: 100%;
+		overflow: hidden;
+	}
+
+	#palettePanelContent {
+		min-width: 0;
+	}
+
+	#palette,
+	#questionPalette {
+		max-width: 100%;
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		padding-bottom: 4px;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.palette-panel p {
+		white-space: normal;
+	}
+
+	#questionBox {
+		padding: 10px;
+	}
+
+	.question-header,
+	.question-topline {
+		align-items: flex-start;
+		flex-wrap: wrap;
+		white-space: normal;
+	}
+
+	.question-statement,
+	.option-text,
+	.explanation-box,
+	.collection-quiz-explanation,
+	.match-list-cell {
+		overflow-wrap: anywhere;
+		word-break: break-word;
+	}
+
+	.shared-options {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 8px;
+	}
+
+	.option-wrap {
+		padding: 10px;
+	}
+
+	.quiz-main .navigation {
+		left: 10px;
+		right: 10px;
+		bottom: calc(58px + env(safe-area-inset-bottom));
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		max-width: calc(100% - 20px);
+	}
+
+	.quiz-main .submit-footer {
+		left: 10px;
+		right: 10px;
+		bottom: env(safe-area-inset-bottom);
+		width: auto;
+	}
+
+	.quiz-main .material-submit-btn {
+		min-height: 42px;
+	}
+
+	.quiz-main {
+		padding-bottom: calc(160px + env(safe-area-inset-bottom));
+	}
+
+	.collection-quiz-columns {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
+
+@media (max-width: 380px) {
+	.top-right > * {
+		font-size: 0.68rem;
+		padding-inline: 6px;
+	}
+
+	.palette-btn {
+		flex-basis: 32px;
+		width: 32px;
+		min-height: 32px;
+	}
+
+	.quiz-main .navigation {
+		gap: 3px;
+	}
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+	.header,
+	.topbar {
+		padding-block: 6px;
+	}
+
+	.container {
+		padding-top: 8px;
+	}
+
+	.quiz-main {
+		padding-bottom: calc(122px + env(safe-area-inset-bottom));
+	}
+
+	.quiz-main .navigation {
+		bottom: calc(50px + env(safe-area-inset-bottom));
+	}
+}
