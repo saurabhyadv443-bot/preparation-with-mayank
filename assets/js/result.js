@@ -4,7 +4,7 @@
 */
 
 const rawResult = localStorage.getItem("quizResult");
-const latestResult = rawResult ? JSON.parse(rawResult) : null;
+let latestResult = rawResult ? JSON.parse(rawResult) : null;
 const historyKey = "quizResults";
 
 function safeParse(jsonString, fallback = null) {
@@ -20,7 +20,7 @@ function readHistory() {
 }
 
 function readCompletedAttempts() {
-    const attemptHistory = safeParse(localStorage.getItem("quiz_attempt_history"), {});
+    const attemptHistory = window.quizAttemptHistoryStore?.getHistorySync() || safeParse(localStorage.getItem("quiz_attempt_history"), {});
     return Object.values(attemptHistory || {})
         .filter((records) => Array.isArray(records))
         .flat()
@@ -352,17 +352,17 @@ function resetStatistics() {
     renderPerformance([]);
 }
 
-// Initialize view logic
-appendLatestToHistory();
-const history = readHistory();
+function initializeResultPage() {
+    appendLatestToHistory();
+    const history = readHistory();
 
 // If there is no latestResult (navigated from Dashboard), show performance view
-const perfContainer = document.getElementById('performanceDashboard');
-const singleResultPresent = !!latestResult;
-if (!singleResultPresent && perfContainer) {
+    const perfContainer = document.getElementById('performanceDashboard');
+    const singleResultPresent = !!latestResult;
+    if (!singleResultPresent && perfContainer) {
     perfContainer.style.display = 'block';
     renderPerformance(readCompletedAttempts());
-} else {
+    } else {
     // render single result as before and wire 'View Performance' button
     renderSingleResult(latestResult);
     const viewPerfBtn = document.getElementById('viewLatestResultBtn');
@@ -375,6 +375,16 @@ if (!singleResultPresent && perfContainer) {
             }
         };
     }
+    }
+}
+
+if (window.quizAttemptHistoryStore) {
+    window.quizAttemptHistoryStore.getResult("quizResult").then((storedResult) => {
+        if (storedResult) latestResult = storedResult;
+        initializeResultPage();
+    });
+} else {
+    initializeResultPage();
 }
 
 // Wire export/reset buttons

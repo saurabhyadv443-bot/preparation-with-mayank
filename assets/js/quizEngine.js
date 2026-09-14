@@ -107,11 +107,11 @@ function getResultKey() {
 function getQuizId() {
     return [subject, currentChapter || "all", getQuizMode()].join("::");
 }
-function getAttemptHistory() {
-    return safeParseStoredValue("quiz_attempt_history", {});
-}
-function saveAttempt(result) {
-    const history = getAttemptHistory();
+async function saveAttempt(result) {
+    const attemptHistoryStore = window.quizAttemptHistoryStore;
+    const history = attemptHistoryStore
+        ? await attemptHistoryStore.getHistory()
+        : safeParseStoredValue("quiz_attempt_history", {});
     const completedAt = result.completedAt;
     const completedDate = new Date(completedAt);
     const savedQuestions = getSavedQuestions();
@@ -171,7 +171,11 @@ function saveAttempt(result) {
     const retained = Array.isArray(history[result.quizId]) ? history[result.quizId].slice(-4) : [];
     retained.push(attempt);
     history[result.quizId] = retained.map((item, index) => ({ ...item, attempt: index + 1 }));
-    localStorage.setItem("quiz_attempt_history", JSON.stringify(history));
+    if (attemptHistoryStore) {
+        await attemptHistoryStore.putAttempt(result.quizId, history[result.quizId][history[result.quizId].length - 1]);
+    } else {
+        localStorage.setItem("quiz_attempt_history", JSON.stringify(history));
+    }
 }
 /* Accidental Match List parser fragment removed below.
             const rawText = String(question.q || "");
@@ -348,7 +352,7 @@ function saveAttempt(result) {
     const retained = Array.isArray(history[result.quizId]) ? history[result.quizId].slice(-4) : [];
     retained.push(attempt);
     history[result.quizId] = retained.map((item, index) => ({ ...item, attempt: index + 1 }));
-    localStorage.setItem("quiz_attempt_history", JSON.stringify(history));
+    // History persistence is handled by quizAttemptHistoryStore.
 }
 */
 function getQuizDuration() {
@@ -1446,7 +1450,7 @@ function toggleReviewMark(questionIndex) {
     updatePalette();
 }
 
-function finishQuiz(timeout = false) {
+async function finishQuiz(timeout = false) {
     clearInterval(timer);
     timer = null;
     saveCurrentAnswer();
@@ -1515,8 +1519,12 @@ function finishQuiz(timeout = false) {
         completedAt: new Date().toISOString()
     };
 
-    localStorage.setItem(getResultKey(), JSON.stringify(result));
-    saveAttempt(result);
+    if (window.quizAttemptHistoryStore) {
+        await window.quizAttemptHistoryStore.putResult(getResultKey(), result);
+    } else {
+        localStorage.setItem(getResultKey(), JSON.stringify(result));
+    }
+    await saveAttempt(result);
     localStorage.removeItem(getProgressKey());
     const resultUrl = isStudyMode() ? "result-review.html?mode=study" : "result-review.html";
     window.location.href = resultUrl;

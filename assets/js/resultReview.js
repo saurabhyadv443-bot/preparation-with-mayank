@@ -4,13 +4,13 @@ const resultKey = reviewMode === "study" ? "quizResult_study" : "quizResult";
 const historicalAttemptNumber = Number(urlParams.get("attempt"));
 const historicalQuizId = urlParams.get("quizId");
 const isHistoricalReview = Boolean(historicalQuizId && historicalAttemptNumber);
-const attemptHistory = (() => {
+let attemptHistory = (() => {
     try { return JSON.parse(localStorage.getItem("quiz_attempt_history") || "{}"); } catch (error) { return {}; }
 })();
-const historicalAttempt = isHistoricalReview
+let historicalAttempt = isHistoricalReview
     ? (attemptHistory[historicalQuizId] || []).find((item) => item.attempt === historicalAttemptNumber)
     : null;
-const rawResult = localStorage.getItem(resultKey) || localStorage.getItem("quizResult");
+let rawResult = localStorage.getItem(resultKey) || localStorage.getItem("quizResult");
 let savedReviewFocus = null;
 try {
     savedReviewFocus = JSON.parse(sessionStorage.getItem("savedReviewFocus") || "null");
@@ -24,7 +24,7 @@ const classifiedReviewPayload = (() => {
         return null;
     }
 })();
-const result = isHistoricalReview
+let result = isHistoricalReview
     ? historicalAttempt
     : (rawResult
         ? JSON.parse(rawResult)
@@ -57,7 +57,7 @@ const result = isHistoricalReview
                     userAnswers: Array.isArray(classifiedReviewPayload.questions) ? new Array(classifiedReviewPayload.questions.length).fill(null) : []
                 }
                 : null)));
-const isPostSubmitReview = Boolean(rawResult && !isHistoricalReview && !savedReviewFocus && !classifiedReviewPayload);
+let isPostSubmitReview = Boolean(rawResult && !isHistoricalReview && !savedReviewFocus && !classifiedReviewPayload);
 const savedReviewQuestionIndex = savedReviewFocus ? Number(savedReviewFocus.questionIndex || 0) : null;
 if (savedReviewFocus) {
     sessionStorage.removeItem("savedReviewFocus");
@@ -697,7 +697,7 @@ async function saveEditedExplanation(questionIndex) {
         const savedQuestion = await requestReviewQuestion(questionIndex, "explanation", plainText);
         result.questions[questionIndex].explanationDocument = explanationDocument;
         result.questions[questionIndex].explanation = savedQuestion.explanation;
-        localStorage.setItem(resultKey, JSON.stringify(result));
+        await window.quizAttemptHistoryStore.putResult(resultKey, result);
         editingExplanationIndex = null;
         replaceExplanationView(questionIndex);
     } catch (error) {
@@ -740,17 +740,16 @@ function recalculateReviewResult() {
     result.negativeMarks = isMock ? wrong / 3 : 0;
 }
 
-function persistRecalculatedAttempt() {
+async function persistRecalculatedAttempt() {
     if (!result.quizId || !result.completedAt) {
         return;
     }
 
-    let history;
-    try {
-        history = JSON.parse(localStorage.getItem("quiz_attempt_history") || "{}");
-    } catch (error) {
-        history = {};
-    }
+    const history = window.quizAttemptHistoryStore
+        ? await window.quizAttemptHistoryStore.getHistory()
+        : (() => {
+            try { return JSON.parse(localStorage.getItem("quiz_attempt_history") || "{}"); } catch (error) { return {}; }
+        })();
     const records = Array.isArray(history[result.quizId]) ? history[result.quizId] : [];
     const recordIndex = records.findIndex((item) =>
         item && item.completedAt === result.completedAt &&
@@ -790,9 +789,25 @@ function persistRecalculatedAttempt() {
         questions: result.questions,
         userAnswers: result.userAnswers
     });
-    history[result.quizId] = records;
-    localStorage.setItem("quiz_attempt_history", JSON.stringify(history));
-    Object.assign(attemptHistory, history);
+    await window.quizAttemptHistoryStore.updateAttempt(result.quizId, record.attempt, {
+        total: result.total,
+        attempted: result.attempted,
+        correct: result.correct,
+        incorrect: result.wrong,
+        wrong: result.wrong,
+        unanswered: result.skipped,
+        skipped: result.skipped,
+        score: result.finalScore,
+        finalScore: result.finalScore,
+        percentage: result.percentage,
+        accuracy: result.accuracy,
+        answers,
+        question_status: questionStatus,
+        correct_answers: correctAnswers,
+        questions: result.questions,
+        userAnswers: result.userAnswers
+    });
+    attemptHistory[result.quizId] = (await window.quizAttemptHistoryStore.getHistory())[result.quizId] || [];
 }
 
 function startEditingAnswer(questionIndex) {
@@ -815,8 +830,8 @@ async function saveEditedAnswer(questionIndex) {
         const savedQuestion = await requestReviewQuestion(questionIndex, "answer", Number(selectedAnswer.value));
         result.questions[questionIndex].answer = savedQuestion.answer;
         recalculateReviewResult();
-        localStorage.setItem(resultKey, JSON.stringify(result));
-        persistRecalculatedAttempt();
+        await window.quizAttemptHistoryStore.putResult(resultKey, result);
+        await persistRecalculatedAttempt();
         editingAnswerIndex = null;
         if (reviewSubtitle) {
             const chapterLabel = result.chapter && result.chapter.trim() ? result.chapter : "Full Length Test";
@@ -1423,14 +1438,42 @@ window.addEventListener("quizPendingStorageReady", () => {
     refreshPendingReviewState();
 });
 
-if (!result) {
+if (!result && !isHistoricalReview && !window.quizAttemptHistoryStore) {
     window.location.href = "index.html";
 } else {
-    Promise.all([
-        loadPersistedReviewQuestions(),
-        loadPersistentSubjectClassifications(),
-        loadSavedQuestionsFromServer()
-    ]).finally(() => {
+    (async () => {
+        if (window.quizAttemptHistoryStore) {
+            const [storedResult, history] = await Promise.all([
+                window.quizAttemptHistoryStore.getResult(resultKey),
+                window.quizAttemptHistoryStore.getHistory()
+            ]);
+            if (storedResult) {
+                rawResult = JSON.stringify(storedResult);
+                if (!isHistoricalReview) {
+                    result = storedResult;
+                    isPostSubmitReview = true;
+                }
+            }
+            attemptHistory = history;
+            historicalAttempt = isHistoricalReview
+                ? (attemptHistory[historicalQuizId] || []).find((item) => item.attempt === historicalAttemptNumber)
+                : null;
+            if (isHistoricalReview) result = historicalAttempt;
+        }
+        window.reviewResultQuestions = result && Array.isArray(result.questions) ? result.questions : [];
+        if (!result) {
+            window.location.href = "index.html";
+            return;
+        }
+        await Promise.all([
+            loadPersistedReviewQuestions(),
+            loadPersistentSubjectClassifications(),
+            loadSavedQuestionsFromServer()
+        ]);
+        if (!result) {
+            window.location.href = "index.html";
+            return;
+        }
         reviewSubject.innerText = result.subject || "Quiz Review";
         const chapterLabel = result.chapter && result.chapter.trim() ? result.chapter : "Full Length Test";
         reviewSubtitle.innerText = `${chapterLabel} • Accuracy ${result.accuracy}%`;
@@ -1445,7 +1488,7 @@ if (!result) {
         updateResultCount();
         reviewPageRendered = true;
         if (reviewPendingStorageRefresh) refreshPendingReviewState();
-    });
+    })();
 }
 
 if (savedQuestionsToggle) {
