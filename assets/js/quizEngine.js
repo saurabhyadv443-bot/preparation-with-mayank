@@ -493,6 +493,7 @@ function getQuizDuration() {
             createPalette();
         }
     } catch (err) {
+        console.error("Unable to load quiz data.", { error: err, subject, chapter: selectedChapterFromQuery, mode: selectedMode });
         alert('Unable to load quiz data for the selected subject.');
     }
 })();
