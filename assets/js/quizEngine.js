@@ -1022,7 +1022,7 @@ function updateTimer() {
     timerNode.innerHTML = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
     timerNode.classList.toggle("timer-warning", isLowWarning && !isCritical);
     timerNode.classList.toggle("timer-critical", isCritical);
-    timerNode.classList.toggle("timer-blink", blinkState);
+    timerNode.classList.toggle("timer-blink", getQuizMode() === "mock" && blinkState);
 }
 
 pauseBtn.onclick = function () {
