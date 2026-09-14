@@ -439,9 +439,7 @@ function getQuizDuration() {
             if (selectedChapterMatchesResume) {
                 selectedMode = savedProgress.quizType === 'study' ? 'study' : selectedMode;
                 currentChapter = savedProgress.chapter;
-                questions = Array.isArray(quizData.chapters?.[currentChapter])
-                    ? quizData.chapters[currentChapter]
-                    : Array.isArray(quizData[currentChapter]) ? quizData[currentChapter] : [];
+                questions = getChapterQuestions(currentChapter);
                 currentQuestion = typeof savedProgress.currentQuestion === 'number' ? savedProgress.currentQuestion : 0;
                 userAnswers = Array.isArray(savedProgress.userAnswers) ? savedProgress.userAnswers : new Array(questions.length).fill(null);
                 markedForReview = Array.isArray(savedProgress.markedForReview) ? savedProgress.markedForReview : new Array(questions.length).fill(false);
@@ -468,9 +466,7 @@ function getQuizDuration() {
         } else if (savedProgress && savedProgress.subject === subject && savedProgress.chapter) {
             selectedMode = savedProgress.quizType === 'study' ? 'study' : selectedMode;
             currentChapter = savedProgress.chapter;
-            questions = Array.isArray(quizData.chapters?.[currentChapter])
-                ? quizData.chapters[currentChapter]
-                : Array.isArray(quizData[currentChapter]) ? quizData[currentChapter] : [];
+            questions = getChapterQuestions(currentChapter);
             currentQuestion = typeof savedProgress.currentQuestion === 'number' ? savedProgress.currentQuestion : 0;
             userAnswers = Array.isArray(savedProgress.userAnswers) ? savedProgress.userAnswers : new Array(questions.length).fill(null);
             markedForReview = Array.isArray(savedProgress.markedForReview) ? savedProgress.markedForReview : new Array(questions.length).fill(false);
@@ -497,6 +493,29 @@ function getQuizDuration() {
         alert('Unable to load quiz data for the selected subject.');
     }
 })();
+
+function getChapterQuestions(chapter) {
+    const chapterMap = quizData && quizData.chapters ? quizData.chapters : {};
+    if (Object.keys(chapterMap).length > 0) {
+        return Array.isArray(chapterMap[chapter]) ? chapterMap[chapter] : [];
+    }
+    if (quizData && quizData.subject === 'Mock Test') {
+        const mockGroups = Object.keys(quizData).filter((key) => !['subject', 'quizType', 'totalTimeSeconds', 'secondsPerQuestion', 'duration', 'durationSeconds', 'chapters'].includes(key));
+        const flattened = mockGroups.reduce((acc, key) => {
+            const value = quizData[key];
+            if (Array.isArray(value)) {
+                acc[key] = value;
+            } else if (value && typeof value === 'object') {
+                Object.keys(value).forEach((subKey) => {
+                    acc[subKey] = value[subKey];
+                });
+            }
+            return acc;
+        }, {});
+        return Array.isArray(flattened[chapter]) ? flattened[chapter] : [];
+    }
+    return [];
+}
 
 function loadChapters() {
     if (!chapterList) {
@@ -547,25 +566,7 @@ function filterChapters(term) {
 
 function startQuiz(chapter) {
     currentChapter = chapter;
-    const chapterMap = quizData && quizData.chapters ? quizData.chapters : {};
-    let chapterQuestions = [];
-    if (Object.keys(chapterMap).length > 0) {
-        chapterQuestions = Array.isArray(chapterMap[chapter]) ? chapterMap[chapter] : [];
-    } else if (quizData && quizData.subject === 'Mock Test') {
-        const mockGroups = Object.keys(quizData).filter((key) => !['subject', 'quizType', 'totalTimeSeconds', 'secondsPerQuestion', 'duration', 'durationSeconds', 'chapters'].includes(key));
-        const flattened = mockGroups.reduce((acc, key) => {
-            const value = quizData[key];
-            if (Array.isArray(value)) {
-                acc[key] = value;
-            } else if (value && typeof value === 'object') {
-                Object.keys(value).forEach((subKey) => {
-                    acc[subKey] = value[subKey];
-                });
-            }
-            return acc;
-        }, {});
-        chapterQuestions = Array.isArray(flattened[chapter]) ? flattened[chapter] : [];
-    }
+    const chapterQuestions = getChapterQuestions(chapter);
     questions = chapterQuestions;
     currentQuestion = 0;
     userAnswers = new Array(questions.length).fill(null);
