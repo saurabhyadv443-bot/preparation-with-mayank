@@ -125,6 +125,11 @@ function renderTestHistory() {
     if (!testHistory || !result || !result.quizId) return;
     const isMockResult = String(result.subjectKey || "").toLowerCase() === "mock"
         || String(result.quizId || "").toLowerCase().startsWith("mock::");
+    if (isHistoricalReview && isMockResult) {
+        testHistory.closest(".test-history-panel")?.setAttribute("hidden", "");
+        document.querySelector('.review-reattempt-actions a[href="#testHistory"]')?.setAttribute("hidden", "");
+        return;
+    }
     const historyEntries = isMockResult
         ? Object.entries(attemptHistory)
             .filter(([quizId, attempts]) => quizId.toLowerCase().startsWith("mock::") && Array.isArray(attempts) && attempts.length)
