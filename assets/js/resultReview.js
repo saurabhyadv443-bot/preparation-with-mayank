@@ -123,19 +123,33 @@ async function loadSavedQuestionsFromServer() {
 
 function renderTestHistory() {
     if (!testHistory || !result || !result.quizId) return;
-    const records = Array.isArray(attemptHistory[result.quizId]) ? attemptHistory[result.quizId] : [];
-    if (historyCount) historyCount.innerText = `${records.length} of 5 attempts`;
-    testHistory.innerHTML = records.length ? records.slice().reverse().map((item) => `
-        <article class="test-history-item${isHistoricalReview && item.attempt === historicalAttemptNumber ? " current-history-item" : ""}">
+    const isMockResult = String(result.subjectKey || "").toLowerCase() === "mock"
+        || String(result.quizId || "").toLowerCase().startsWith("mock::");
+    const historyEntries = isMockResult
+        ? Object.entries(attemptHistory)
+            .filter(([quizId, attempts]) => quizId.toLowerCase().startsWith("mock::") && Array.isArray(attempts) && attempts.length)
+            .map(([quizId, attempts]) => ({
+                quizId,
+                item: attempts.slice().sort((left, right) => {
+                    const rightTime = new Date(right.completedAt || 0).getTime();
+                    const leftTime = new Date(left.completedAt || 0).getTime();
+                    return (rightTime - leftTime) || (Number(right.attempt) - Number(left.attempt));
+                })[0]
+            }))
+            .filter((entry) => entry.item)
+        : (Array.isArray(attemptHistory[result.quizId]) ? attemptHistory[result.quizId].slice().reverse().map((item) => ({ quizId: result.quizId, item })) : []);
+    if (historyCount) historyCount.innerText = isMockResult ? `${historyEntries.length} Mock Test sets` : `${historyEntries.length} of 5 attempts`;
+    testHistory.innerHTML = historyEntries.length ? historyEntries.map(({ quizId, item }) => `
+        <article class="test-history-item${isHistoricalReview && quizId === historicalQuizId && item.attempt === historicalAttemptNumber ? " current-history-item" : ""}">
             <div>
-                <strong>Attempt ${item.attempt}</strong>
+                <strong>${isMockResult ? escapeHtml(item.chapter || quizId.replace(/^mock::/, "")) : `Attempt ${item.attempt}`}</strong>
                 <span>${escapeHtml(item.date || new Date(item.completedAt).toLocaleDateString())} • ${escapeHtml(item.time || new Date(item.completedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }))}</span>
                 <span>${item.correct || 0} Correct | ${item.wrong || item.incorrect || 0} Incorrect | ${item.skipped || item.unanswered || 0} Unanswered</span>
             </div>
             <div class="test-history-score">
                 <strong>Score: ${item.finalScore ?? item.score ?? 0} / ${item.total || 0}</strong>
                 <span>Percentage: ${item.percentage ?? item.accuracy ?? 0}%</span>
-                ${isHistoricalReview && item.attempt === historicalAttemptNumber ? "<span class=\"history-readonly-label\">Read-only review</span>" : `<a class="btn btn-secondary btn-small" href="result-review.html?historical=1&quizId=${encodeURIComponent(result.quizId)}&attempt=${item.attempt}">View Attempt</a>`}
+                ${isHistoricalReview && quizId === historicalQuizId && item.attempt === historicalAttemptNumber ? "<span class=\"history-readonly-label\">Read-only review</span>" : `<a class="btn btn-secondary btn-small" href="result-review.html?historical=1&quizId=${encodeURIComponent(quizId)}&attempt=${item.attempt}">View Attempt</a>`}
             </div>
         </article>
     `).join("") : "<p class=\"history-empty\">No submitted attempts yet.</p>";
