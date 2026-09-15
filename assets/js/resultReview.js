@@ -125,20 +125,10 @@ function renderTestHistory() {
     if (!testHistory || !result || !result.quizId) return;
     const isMockResult = String(result.subjectKey || "").toLowerCase() === "mock"
         || String(result.quizId || "").toLowerCase().startsWith("mock::");
-    const historyEntries = isMockResult && !isHistoricalReview
-        ? Object.entries(attemptHistory)
-            .filter(([quizId, attempts]) => quizId.toLowerCase().startsWith("mock::") && Array.isArray(attempts) && attempts.length)
-            .map(([quizId, attempts]) => ({
-                quizId,
-                item: attempts.slice().sort((left, right) => {
-                    const rightTime = new Date(right.completedAt || 0).getTime();
-                    const leftTime = new Date(left.completedAt || 0).getTime();
-                    return (rightTime - leftTime) || (Number(right.attempt) - Number(left.attempt));
-                })[0]
-            }))
-            .filter((entry) => entry.item)
-        : (Array.isArray(attemptHistory[result.quizId]) ? attemptHistory[result.quizId].slice().reverse().map((item) => ({ quizId: result.quizId, item })) : []);
-    if (historyCount) historyCount.innerText = isMockResult && !isHistoricalReview ? `${historyEntries.length} Mock Test sets` : `${historyEntries.length} of 5 attempts`;
+    const historyEntries = Array.isArray(attemptHistory[result.quizId])
+        ? attemptHistory[result.quizId].slice().reverse().map((item) => ({ quizId: result.quizId, item }))
+        : [];
+    if (historyCount) historyCount.innerText = isMockResult && !isHistoricalReview ? `${historyEntries.length} Mock Test attempts` : `${historyEntries.length} of 5 attempts`;
     testHistory.innerHTML = historyEntries.length ? historyEntries.map(({ quizId, item }) => `
         <article class="test-history-item${isHistoricalReview && quizId === historicalQuizId && item.attempt === historicalAttemptNumber ? " current-history-item" : ""}">
             <div>
