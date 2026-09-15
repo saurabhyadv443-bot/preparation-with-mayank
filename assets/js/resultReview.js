@@ -125,12 +125,7 @@ function renderTestHistory() {
     if (!testHistory || !result || !result.quizId) return;
     const isMockResult = String(result.subjectKey || "").toLowerCase() === "mock"
         || String(result.quizId || "").toLowerCase().startsWith("mock::");
-    if (isHistoricalReview && isMockResult) {
-        testHistory.closest(".test-history-panel")?.setAttribute("hidden", "");
-        document.querySelector('.review-reattempt-actions a[href="#testHistory"]')?.setAttribute("hidden", "");
-        return;
-    }
-    const historyEntries = isMockResult
+    const historyEntries = isMockResult && !isHistoricalReview
         ? Object.entries(attemptHistory)
             .filter(([quizId, attempts]) => quizId.toLowerCase().startsWith("mock::") && Array.isArray(attempts) && attempts.length)
             .map(([quizId, attempts]) => ({
@@ -143,11 +138,11 @@ function renderTestHistory() {
             }))
             .filter((entry) => entry.item)
         : (Array.isArray(attemptHistory[result.quizId]) ? attemptHistory[result.quizId].slice().reverse().map((item) => ({ quizId: result.quizId, item })) : []);
-    if (historyCount) historyCount.innerText = isMockResult ? `${historyEntries.length} Mock Test sets` : `${historyEntries.length} of 5 attempts`;
+    if (historyCount) historyCount.innerText = isMockResult && !isHistoricalReview ? `${historyEntries.length} Mock Test sets` : `${historyEntries.length} of 5 attempts`;
     testHistory.innerHTML = historyEntries.length ? historyEntries.map(({ quizId, item }) => `
         <article class="test-history-item${isHistoricalReview && quizId === historicalQuizId && item.attempt === historicalAttemptNumber ? " current-history-item" : ""}">
             <div>
-                <strong>${isMockResult ? escapeHtml(item.chapter || quizId.replace(/^mock::/, "")) : `Attempt ${item.attempt}`}</strong>
+                <strong>${isMockResult && !isHistoricalReview ? escapeHtml(item.chapter || quizId.replace(/^mock::/, "")) : `Attempt ${item.attempt}`}</strong>
                 <span>${escapeHtml(item.date || new Date(item.completedAt).toLocaleDateString())} • ${escapeHtml(item.time || new Date(item.completedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }))}</span>
                 <span>${item.correct || 0} Correct | ${item.wrong || item.incorrect || 0} Incorrect | ${item.skipped || item.unanswered || 0} Unanswered</span>
             </div>
