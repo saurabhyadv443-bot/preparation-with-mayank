@@ -48,7 +48,7 @@ function hasCompletedMockAttempt(targetName) {
         return false;
     }
 
-    const history = safeParseStoredValue("quiz_attempt_history", {});
+    const history = window.quizAttemptHistoryStore?.getHistorySync() || safeParseStoredValue("quiz_attempt_history", {});
     const quizId = [subject, targetName, "mock"].join("::");
     return Array.isArray(history[quizId]) && history[quizId].length > 0;
 }
@@ -147,7 +147,7 @@ async function loadOriginalCurrentAffairsQuestions() {
 function getAttemptedReviewSections() {
     if (!reviewSubjects.has(subject)) return [];
 
-    const history = safeParseStoredValue("quiz_attempt_history", {});
+    const history = window.quizAttemptHistoryStore?.getHistorySync() || safeParseStoredValue("quiz_attempt_history", {});
     const grouped = new Map();
     Object.entries(history || {}).forEach(([historyQuizId, records]) => {
         if (!Array.isArray(records)) return;
@@ -521,6 +521,10 @@ function renderMockSets(setNames) {
     }
 
     const selectedChapter = new URLSearchParams(window.location.search).get("chapter");
+    const isReviewView = new URLSearchParams(window.location.search).get("review") === "1";
+    if (subject === "mock" && isReviewView && window.quizAttemptHistoryStore) {
+        await window.quizAttemptHistoryStore.getHistory();
+    }
     if (selectedChapter === "Important Questions" || subject === "current_affairs") await storagePromise;
     await loadSubjectContent();
     subjectPageRendered = true;
