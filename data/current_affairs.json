@@ -3459,6 +3459,3367 @@
           "questionIndex": 3
         }
       }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 16",
+        "questionId": null,
+        "questionIndex": 10
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 16::10",
+      "question": {
+        "q": "11. With reference to recent GI (Geographical Indication) tags,  consider the following statements: <br>1. Banaras Metal Repousse Craft received a GI tag and belongs to Uttar Pradesh. <br>2. GI tags are administered under the World Intellectual Property Organization directly, with  no domestic legislation. <br>Which of the statements given above is/are correct?",
+        "options": [
+          "Only 2",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 1"
+        ],
+        "answer": 3,
+        "explanation": "1. Statement 1 is correct: Banaras Metal Repousse Craft is a traditional handcrafted metal art form from Varanasi (Kashi), Uttar Pradesh, where designs are hammered and punched onto sheet metal from the reverse side to create raised reliefs. It is a registered Geographical Indication from Uttar Pradesh.  \n2. Statement 2 is incorrect: In India, Geographical Indications are administered domestically under the Geographical Indications of Goods (Registration and Protection) Act, 1999, which came into force in September 2003. While the World Intellectual Property Organization (WIPO) and the WTO's TRIPS Agreement define international frameworks, registration and administration in India are governed entirely by domestic legislation through the Geographical Indications Registry (under the Controller General of Patents, Designs and Trade Marks, Ministry of Commerce and Industry) located in Chennai.  \nCorrect Answer: D. Only 1",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 16",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 10,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 16",
+          "questionId": null,
+          "questionIndex": 10
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 16",
+        "questionId": null,
+        "questionIndex": 52
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 16::52",
+      "question": {
+        "q": "53. With reference to Climate Finance, consider the following  statements: <br>1. The Loss and Damage Fund was operationalised following decisions at COP27 and COP28. <br>2. The Green Climate Fund is the largest dedicated multilateral climate fund, headquartered <br>in South Korea. <br>Which of the statements given above is/are not correct?",
+        "options": [
+          "Only 2",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 1"
+        ],
+        "answer": 1,
+        "explanation": "Correct Answer: B. Neither 1 nor 2\n(Note: The question asks which of the statements is/are not correct.)\n1. Statement 1 is correct: An agreement to establish the Loss and Damage Fund was reached at COP27 (Sharm El-Sheikh, 2022), and it was formally operationalised on the opening day of COP28 (Dubai, 2023).\n2. Statement 2 is correct: The Green Climate Fund (GCF), established under the UNFCCC framework in 2010, is the world's largest dedicated multilateral climate fund assisting developing countries. Its permanent headquarters is located in Songdo, Incheon, South Korea.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          },
+          "saved": true
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 16",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 52,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 16",
+          "questionId": null,
+          "questionIndex": 52
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 16",
+        "questionId": null,
+        "questionIndex": 109
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 16::109",
+      "question": {
+        "q": "110. With reference to Uttar Pradesh's One District One Product <br>(ODOP) and MSME ecosystem, which of the following statements is/are not correct? <br>1. ODOP was first launched as a flagship scheme of Uttar Pradesh before being adapted at  the national level. <br>2. The scheme aims to preserve and promote traditional crafts, skills and products unique to  each district. <br>Select the correct answer:",
+        "options": [
+          "Only 2",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 1"
+        ],
+        "answer": 1,
+        "explanation": "Correct Answer: B. Neither 1 nor 2\n(Note: The question asks which of the statements is/are not correct.)\nStatement 1 is correct: The One District One Product (ODOP) scheme was first introduced by the Government of Uttar Pradesh in January 2018 as a state flagship initiative. Following its success in revitalizing local manufacturing and exports, the concept was adopted at the national level by the Central Government (under the Ministry of Commerce & Industry and Ministry of Food Processing Industries). \n\n\n\n\n\nStatement 2 is correct: The primary objective of the ODOP initiative is to preserve, develop, and promote indigenous crafts, traditional artisanal skills, and specialized agricultural or manufacturing products that are native and unique to each specific district (e.g., Chikankari from Lucknow, Brassware from Moradabad, Perfumes from Kannauj).",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 16",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 109,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 16",
+          "questionId": null,
+          "questionIndex": 109
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 16",
+        "questionId": null,
+        "questionIndex": 136
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 16::136",
+      "question": {
+        "q": "137. With reference to the recently tested 'Tactical Advanced Range <br>Augmentation (TARA)' glide weapon system, consider the following  statements: <br>1. It is a missile system developed in collaboration with a foreign partner to ensure  high-speed target acquisition. <br>2. It converts conventional unguided bombs into precision-guided smart weapons using  wings and guidance systems. <br>3. It has a range of over 200 km. <br>Which of the statements given above is/are correct?",
+        "options": [
+          "1 and 2 only",
+          "2 only",
+          "2 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 1,
+        "explanation": "Statement 1 is incorrect: TARA is not a missile and was not developed with a foreign partner. It is an indigenously developed modular glide kit (designed by DRDO's Research Centre Imarat, Hyderabad, in collaboration with the Indian Air Force) that turns gravity bombs into stand-off precision glide weapons.  Statement 2 is correct: TARA is a Range Extension Kit (REK) fitted with fold-out wings, control surfaces, and precision navigation/guidance units that converts legacy, conventional unguided bombs into precision-guided smart munitions.  Statement 3 is incorrect: The system provides a stand-off glide range of approximately 150 km to 180 km (depending on the release altitude and aircraft speed), not over 200 km",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 16",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 136,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 16",
+          "questionId": null,
+          "questionIndex": 136
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 16",
+        "questionId": null,
+        "questionIndex": 61
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 16::61",
+      "question": {
+        "q": "62. Arrange the following Indian space missions in chronological  order of their launch: <br>1. Mangalyaan (Mars Orbiter Mission) <br>2. Chandrayaan-1 <br>3. Aditya-L1 <br>4. Chandrayaan-3 <br>Select the correct answer by using the code given below:",
+        "options": [
+          "2, 1, 4, 3",
+          "1, 2, 4, 3",
+          "2, 1, 3, 4",
+          "2, 4, 1, 3"
+        ],
+        "answer": 0,
+        "explanation": "Correct Answer: A. 2, 1, 4, 3\n1. Chandrayaan-1: Launched on October 22, 2008, via PSLV-C11 from Sriharikota.\n2. Mangalyaan (Mars Orbiter Mission - MOM): Launched on November 5, 2013, onboard PSLV-C25.\n3. Chandrayaan-3: Launched on July 14, 2023, using LVM3-M4.\n4. Aditya-L1: Launched on September 2, 2023, via PSLV-C57 to study the Sun from the Sun-Earth Lagrangian point (L1).\nChronological order of launch: 2 → 1 → 4 → 3",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 16",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 61,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 16",
+          "questionId": null,
+          "questionIndex": 61
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 16",
+        "questionId": null,
+        "questionIndex": 74
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 16::74",
+      "question": {
+        "q": "75. Consider the following statements regarding the United Nations <br>Security Council: <br>1. It has five permanent members with veto power. <br>2. Non-permanent members are elected for a two-year term by the General Assembly. <br>3. A resolution requires an affirmative vote of at least twelve of its fifteen members. <br>Which of the statements given above are correct?",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "1 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 0,
+        "explanation": "Correct Answer: A. 1 and 2 only\n1. Statement 1 is correct: Under Article 23 and Article 27 of the UN Charter, the United Nations Security Council (UNSC) has five permanent members (China, France, the Russian Federation, the United Kingdom, and the United States), commonly referred to as the P5, each possessing the power of veto.\n2. Statement 2 is correct: The UNSC has 10 non-permanent members elected by a two-thirds majority of the UN General Assembly for two-year terms, with five members retiring each year. They are not eligible for immediate re-election.\n3. Statement 3 is incorrect: Under Article 27(3) of the UN Charter, decisions on substantive matters require an affirmative vote of nine members (not twelve), including the concurring votes of the permanent members (or at least the absence of a negative vote/veto by a permanent member). Decisions on procedural matters also require an affirmative vote of nine members.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 16",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 74,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 16",
+          "questionId": null,
+          "questionIndex": 74
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 16",
+        "questionId": null,
+        "questionIndex": 106
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 16::106",
+      "question": {
+        "q": "107. With reference to the 'Startup India' initiative, which of the  following statements is/are correct? <br>1. It provides recognised startups with tax exemption benefits for a specified period. <br>2. The Fund of Funds for Startups is managed directly by the Ministry of Corporate Affairs. <br>Select the correct answer by using the code given below:",
+        "options": [
+          "Only 1",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 2"
+        ],
+        "answer": 0,
+        "explanation": "Correct Answer: A. Only 1\n1. Statement 1 is correct: Under Section 80-IAC of the Income Tax Act, eligible DPIIT-recognised startups (certified by the Inter-Ministerial Board) are provided a 100% tax exemption on profits for any consecutive 3 years out of their first 10 years from incorporation.  \n2. Statement 2 is incorrect: The Fund of Funds for Startups (FFS), established with a corpus of ₹10,000 crore under the Startup India initiative, is managed and operated by the Small Industries Development Bank of India (SIDBI), not the Ministry of Corporate Affairs. The overall policy oversight rests with the Department for Promotion of Industry and Internal Trade (DPIIT) under the Ministry of Commerce and Industry.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 16",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 106,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 16",
+          "questionId": null,
+          "questionIndex": 106
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 16",
+        "questionId": null,
+        "questionIndex": 110
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 16::110",
+      "question": {
+        "q": "111. Which of the following statements regarding India's Blue <br>Economy Policy Framework are correct? <br>1. It seeks to promote sustainable exploitation of coastal and marine resources. <br>2. Deep Ocean Mission is administered under the Ministry of Environment, Forest and Climate Change. <br>3. The Sagarmala Programme is a component explicitly listed under the Blue Economy  pillars. <br>4. India's Blue Economy framework does not consider offshore wind energy as a thematic  area. <br>Select the correct answer using the code given below:",
+        "options": [
+          "1 and 3 only",
+          "1 and 4 only",
+          "2, 3 and 4 only",
+          "1, 2 and 3 only"
+        ],
+        "answer": 0,
+        "explanation": "1. Statement 1 is correct: The Blue Economy Policy Framework prioritizes the sustainable utilization of coastal and marine resources to drive economic growth while preserving ocean and coastal ecosystem health.  \n2. Statement 2 is incorrect: The Deep Ocean Mission is an initiative implemented and administered under the Ministry of Earth Sciences (MoES), not the Ministry of Environment, Forest and Climate Change (MoEFCC).\n3. Statement 3 is correct: The Sagarmala Programme (focused on port modernization, coastal shipping, connectivity, and coastal community development) is a core component explicitly incorporated under the framework's pillar on Logistics, infrastructure, and shipping.  \n4. Statement 4 is incorrect: Offshore renewable energy—explicitly including offshore wind, tidal, and wave energy—is a recognized thematic priority area under the pillar covering Coastal and deep-sea mining, and offshore energy.  \nCorrect Answer: A. 1 and 3 only",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 16",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 110,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 16",
+          "questionId": null,
+          "questionIndex": 110
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 6
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::6",
+      "question": {
+        "q": "7. With reference to the 'Navayug Palika Yojana', which of the  following statements is/are correct? <br>1. It targets urban local bodies across district headquarters that fall outside the state's 17  major municipal corporations. <br>2. It is entirely funded through central government grants under the Smart Cities Mission. <br>Select the correct answer from the code given below:",
+        "options": [
+          "Only 2",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 1"
+        ],
+        "answer": 3,
+        "explanation": "Statement 1 is correct as it specifically targets municipal councils and nagar panchayats at district headquarters not covered by major municipal corporations. Statement 2 is incorrect as it is a state-driven planned scheme, not an exclusive 100% Smart Cities central grant.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 6,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 6
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 13
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::13",
+      "question": {
+        "q": "14. Given below are two statements, one labelled as Assertion (A) and the other as Reason (R): <br>Assertion (A): 'Mission Shakti' is a Uttar Pradesh government initiative focused on women's  safety, empowerment and health. Reason (R): Its latest phase (5.0) has been rolled out only at  the national level and has no state-specific implementation. <br>Select the correct answer using the code given below: Code:",
+        "options": [
+          "Both (A) and (R) are true, but (R) is not the correct explanation of (A)",
+          "(A) is false, but (R) is true",
+          "(A) is true, but (R) is false",
+          "Both (A) and (R) are true and (R) is the correct explanation of (A)"
+        ],
+        "answer": 2,
+        "explanation": "Assertion (A) is correct. Reason (R) is false because Mission Shakti in UP is implemented aggressively across districts and police commissionerates with specific state-level phases.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 13,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 13
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 124
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::124",
+      "question": {
+        "q": "125. Consider the following statements : <br>1. Jannik Sinner won the Miami Open 2026. <br>2. He defeated Jiri Lehecka in the final. <br>3. He won this tournament on a clay court. <br>Which of the above statements is/are correct?",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "1 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 0,
+        "explanation": "Statements 1 and 2 correctly reflect the tournament outcomes. Statement 3 is incorrect because the Miami Open is held at the Hard Rock Stadium on outdoor hard courts, not clay.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 124,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 124
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 125
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::125",
+      "question": {
+        "q": "126. With reference to the tribal communities affected by the Great Nicobar Project, consider the following statements: <br>1. The Shompen tribe is classified as a Particularly Vulnerable Tribal Group (PVTG). <br>2. The Nicobarese tribe is a nomadic hunter-gatherer community. <br>3. Both tribes are protected under the provisions of the Forest Rights Act, 2006. <br>Which of the statements given above is/are correct?",
+        "options": [
+          "1 and 2 only",
+          "1 and 3 only",
+          "2 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 1,
+        "explanation": "Statements 1 and 3 are correct. Statement 2 is incorrect because the Nicobarese are settled, coastal horticulturalist and fishing communities, unlike the interior forest-dwelling Shompen.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 125,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 125
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 130
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::130",
+      "question": {
+        "q": "131. Mission MITRA, recently seen in the news, is primarily associated  with:",
+        "options": [
+          "Studying human behaviour and team dynamics in simulated space conditions for future human space missions.",
+          "Mapping space debris in Low Earth Orbit using advanced satellites.",
+          "Developing reusable launch vehicles for India's space programme.",
+          "Testing anti-satellite (ASAT) defence capabilities."
+        ],
+        "answer": 0,
+        "explanation": "Mission MITRA focuses on analog space habitat simulations to analyze psychological stress, behavioral dynamics, and crew isolation for human spaceflight missions.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 130,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 130
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 133
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::133",
+      "question": {
+        "q": "134. Consider the following statements regarding the World Bank's \"India Development Update\" (April 2026): <br>1. India's GDP growth for FY27 is projected at 6.6%. <br>2. The estimate for FY27 is higher than FY26 growth projection. <br>Which of the above statements is/are correct?",
+        "options": [
+          "Only 1",
+          "Only 2",
+          "Both 1 and 2",
+          "Neither 1 nor 2"
+        ],
+        "answer": 0,
+        "explanation": "Statement 1 is correct. Statement 2 is incorrect because growth was projected to moderate slightly or remain flat compared to the FY26 cyclical peak estimate.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 133,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 133
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 134
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::134",
+      "question": {
+        "q": "135. According to the United Nations Development Programme (UNDP) report titled \"Military Escalation in the Middle East: Impact on Human Development\", the conflict could push approximately how  many people in India below the poverty line?",
+        "options": [
+          "1 million",
+          "2.5 million",
+          "5 million",
+          "10 million"
+        ],
+        "answer": 2,
+        "explanation": "The UNDP vulnerability assessment estimated that severe energy price shocks and remittance disruptions could push approximately 5 million vulnerable people below the national poverty line.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 134,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 134
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 137
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::137",
+      "question": {
+        "q": "138. The Multi-Lane Free Flow (MLFF) tolling system uses which of  the following technologies for electronic toll collection?",
+        "options": [
+          "FASTag (RFID) and Automatic Number Plate Recognition (ANPR)",
+          "Satellite imaging and LiDAR only",
+          "GPS receivers installed in every vehicle only",
+          "Biometric authentication of drivers"
+        ],
+        "answer": 0,
+        "explanation": "MLFF barrierless tolling combines RFID overhead gantries (reading FASTag) with high-definition Automatic Number Plate Recognition (ANPR) cameras to deduct tolls without vehicles stopping.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 137,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 137
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 138
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::138",
+      "question": {
+        "q": "139. In FY 2025-26, which country emerged as India's largest trading  partner in terms of total merchandise trade?",
+        "options": [
+          "United States",
+          "China",
+          "United Arab Emirates",
+          "Russia"
+        ],
+        "answer": 0,
+        "explanation": "The United States continues to be India's top trading partner in terms of combined bilateral two-way merchandise trade value.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 138,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 138
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 141
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::141",
+      "question": {
+        "q": "142. With reference to India's first Petroglyph Conservation Park,  consider the following statements: <br>1. It is being established in Leh, Ladakh. <br>2. It is located on the banks of the Zanskar River. <br>3. It aims to conserve ancient rock carvings from multiple sites. <br>Which of the statements given above is/are correct?",
+        "options": [
+          "1 and 2 only",
+          "1 and 3 only",
+          "2 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 1,
+        "explanation": "Statements 1 and 3 are correct. Statement 2 is incorrect because the petroglyph clusters are primarily situated along the main Indus River valley corridor rather than the Zanskar riverbanks.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 141,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 141
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 127
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::127",
+      "question": {
+        "q": "128. With reference to the Ganga Water Treaty, consider the following  statements: <br>1. It was signed for a duration of 30 years. <br>2. It deals with sharing of Teesta river waters. <br>3. It is set to expire in 2027. <br>Which of the statements given above is/are correct?",
+        "options": [
+          "1 only",
+          "2 only",
+          "1 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 0,
+        "explanation": "Analysis of the Statements:\n1. Statement 1 is correct: The Ganga Water Treaty was signed on December 12, 1996, by Indian Prime Minister H. D. Deve Gowda and Bangladeshi Prime Minister Sheikh Hasina for a fixed period of 30 years (renewable by mutual consent).  \n2. Statement 2 is incorrect: The treaty governs the sharing of the Ganga (Padma in Bangladesh) river waters downstream of the Farakka Barrage. It does not cover the Teesta river, for which a separate water-sharing agreement has long been under bilateral discussion.  \n3. Statement 3 is incorrect: Since it was signed on December 12, 1996, for a 30-year duration, the treaty is set to expire on December 12, 2026 (not 2027).",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 127,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 127
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 140
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::140",
+      "question": {
+        "q": "141. During the Austrian Chancellor's visit to India in April 2026, India  and Austria signed a Letter of Intent (LoI) to establish a-",
+        "options": [
+          "Joint Working Group on Counter-Terrorism",
+          "Free Trade Agreement Negotiation Committee",
+          "Joint Commission on Nuclear Cooperation",
+          "Bilateral Maritime Security Task Force"
+        ],
+        "answer": 0,
+        "explanation": "The bilateral negotiations led to an LoI institutionalizing a dedicated Joint Working Group on Counter-Terrorism to enhance intelligence sharing and mutual legal assistance.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 140,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 140
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 142
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::142",
+      "question": {
+        "q": "143. Consider the following river basins: <br>1. Brahmaputra <br>2. Barak <br>3. Teesta <br>4. Godavari <br>Which of the above are priority basins under the RBM Scheme?",
+        "options": [
+          "1 and 2 only",
+          "1, 3 and 4 only",
+          "1, 2 and 3 only",
+          "1, 2, 3 and 4"
+        ],
+        "answer": 2,
+        "explanation": "The priority classification under the special River Basin Management (RBM) scheme focuses on transboundary northeastern river basins: Brahmaputra, Barak, and Teesta.The River Basin Management (RBM) Scheme is a Central Sector Scheme administered by the Ministry of Jal Shakti.\nPriority Basins: The scheme strategically focuses on underdeveloped, water-rich, and ecologically critical transboundary/Himalayan river basins. The designated priority basins under the scheme are Brahmaputra Basin Barak Basin Teesta Basin Indus Basin (Jammu & Kashmir and Ladakh)",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 142,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 142
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 143
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::143",
+      "question": {
+        "q": "144. The recently discovered snake species Calamaria garoensis  belongs to which group of snakes?",
+        "options": [
+          "Reed snakes",
+          "Pit vipers",
+          "Kraits",
+          "Sea snakes"
+        ],
+        "answer": 0,
+        "explanation": "The genus *Calamaria* comprises dwarf, fossorial, non-venomous colubrid snakes commonly referred to as reed snakes.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 143,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 143
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 146
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::146",
+      "question": {
+        "q": "147. The Gauhati High Court recently prohibited the conduct of which  traditional event in Assam?",
+        "options": [
+          "Moh-Juj (buffalo fights)",
+          "Jallikattu",
+          "Kambala",
+          "Rekla Race"
+        ],
+        "answer": 0,
+        "explanation": "The Gauhati High Court intervened to prohibit Moh-Juj (traditional buffalo fighting organized during Magh Bihu) citing cruelty provisions under the Prevention of Cruelty to Animals Act, 1960.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 146,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 146
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 2
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::2",
+      "question": {
+        "q": "3. Given below are two statements, one labelled as Assertion (A) and the other as Reason (R): <br>Assertion (A): India and Seychelles launched the 'Ocean of Opportunity' initiative during a 2026 State Visit. Reason (R): The initiative aims to strengthen maritime security, blue-economy  cooperation and digital connectivity in the Indian Ocean Region. <br>Select the correct answer using the code given below: Code:",
+        "options": [
+          "Both (A) and (R) are true, but (R) is not the correct explanation of (A)",
+          "(A) is false, but (R) is true",
+          "(A) is true, but (R) is false",
+          "Both (A) and (R) are true and (R) is the correct explanation of (A)"
+        ],
+        "answer": 3,
+        "explanation": "Both statements are true and Reason (R) provides the core strategic purpose and objective behind the bilateral initiative launched between India and Seychelles.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 2,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 2
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 10
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::10",
+      "question": {
+        "q": "11. With reference to global military exercises, which of the following  statements is/are correct? <br>1. 'Valiant Shield' and 'Resolute Dragon' are among the joint military exercises conducted by  the United States with its allies. <br>2. Such exercises typically aim to enhance interoperability among participating armed  forces. <br>3. India is a mandatory permanent participant in all US-led multinational exercises  worldwide. <br>Select the correct answer from the code given below:",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "1 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 0,
+        "explanation": "Statements 1 and 2 are correct. Statement 3 is incorrect as India participates selectively based on sovereign strategic autonomy and foreign policy priorities, not under mandatory participation.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 10,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 10
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 27
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::27",
+      "question": {
+        "q": "28. Which of the following pairs (System - Purpose) is/are correctly  matched? <br>1. Netra AEW&C - Airborne surveillance and early warning <br>2. AIR SUVIDHA - Health/travel screening portal <br>3. Aadhaar - Biometric ID usable only for banking transactions <br>4. UPI - Real-time interbank payment system <br>Select the correct answer from the code given below:",
+        "options": [
+          "1, 2 and 4 only",
+          "1 and 3 only",
+          "2, 3 and 4 only",
+          "1, 2, 3 and 4"
+        ],
+        "answer": 0,
+        "explanation": "Pairs 1, 2, and 4 are correct. Pair 3 is incorrect because Aadhaar is a universal biometric identification document serving as proof of identity and residence across a broad range of government and non-government services, not restricted solely to banking.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 27,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 27
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 31
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::31",
+      "question": {
+        "q": "32. Given below are two statements, one labelled as Assertion (A) and the other as Reason (R): <br>Assertion (A): The 'Netra' Airborne Early Warning and Control (AEW&C) system is indigenously developed for the Indian Air Force. Reason (R): It is designed to detect and track aircraft and provide airborne surveillance beyond the range of ground-based radar. <br>Select the correct answer using the code given below: Code:",
+        "options": [
+          "Both (A) and (R) are true, but (R) is not the correct explanation of (A)",
+          "(A) is false, but (R) is true",
+          "(A) is true, but (R) is false",
+          "Both (A) and (R) are true and (R) is the correct explanation of (A)"
+        ],
+        "answer": 3,
+        "explanation": "Both statements are correct and (R) accurately explains the operational capability and purpose for which DRDO developed the Netra AEW&C system for the IAF.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 31,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 31
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 35
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::35",
+      "question": {
+        "q": "36. 'The India Semiconductor Mission' primarily aims to:",
+        "options": [
+          "Promote India as a global hub for electronics manufacturing and semiconductor fabrication",
+          "Regulate telecom spectrum auctions",
+          "Manage India's satellite launch vehicles",
+          "Oversee food safety standards"
+        ],
+        "answer": 0,
+        "explanation": "The India Semiconductor Mission (ISM) was established under Digital India Corporation to catalyze the domestic semiconductor and display manufacturing ecosystem.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 35,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 35
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 44
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::44",
+      "question": {
+        "q": "45. Deepfake technology poses a governance challenge primarily  because it:",
+        "options": [
+          "Requires expensive supercomputers unavailable to the public",
+          "Uses AI to create highly realistic but fabricated audio-visual content that can spread misinformation",
+          "Only affects text-based communication",
+          "Cannot be detected by any technology"
+        ],
+        "answer": 1,
+        "explanation": "Deepfake technology leverages deep learning artificial neural networks (GANs) to generate convincingly realistic synthetic media, making it a potent tool for digital impersonation and misinformation.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 44,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 44
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 46
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::46",
+      "question": {
+        "q": "47. With reference to the Index of Services Production (ISP), which of  the following statements is/are correct? <br>1. It functions as the services-sector counterpart to the Index of Industrial Production (IIP). <br>2. It fully includes the informal sector and unincorporated service enterprises from its very  first release. <br>Select the correct answer from the code given below:",
+        "options": [
+          "Only 2",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 1"
+        ],
+        "answer": 3,
+        "explanation": "Statement 1 is correct. Statement 2 is incorrect because high-frequency indices initially draw data from formal and organized corporate reporting channels, given the data-collection lags inherent to unorganized informal units.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 46,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 46
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 60
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::60",
+      "question": {
+        "q": "61. Which Indian chess Grandmaster won the FIDE Women's Candidates Tournament 2026?",
+        "options": [
+          "Koneru Humpy",
+          "R. Vaishali",
+          "D. Harika",
+          "Tania Sachdev"
+        ],
+        "answer": 1,
+        "explanation": "R. Vaishali represents India at the elite Candidates level alongside Koneru Humpy, earning top competitive honors in international FIDE events.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 60,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 60
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 66
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::66",
+      "question": {
+        "q": "67. With reference to 5G technology which of the following statements is/are correct? <br>1. It offers significantly higher data speeds and lower latency compared to 4G networks. <br>2. It relies partly on higher-frequency millimeter-wave spectrum bands for high-speed  short-range connectivity. <br>3. 5G networks are entirely incompatible with existing 4G infrastructure and require  complete replacement. <br>Select the correct answer from the code given below:",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "1 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 0,
+        "explanation": "Statements 1 and 2 are correct. Statement 3 is incorrect because 5G Non-Standalone (NSA) architectures deploy 5G New Radio (NR) carriers anchored over existing 4G LTE core networks.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 66,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 66
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 74
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::74",
+      "question": {
+        "q": "75. Civil-society movements like the 'Flamingo Revolution' in Albania  primarily highlight the tension between:",
+        "options": [
+          "Environmental/ecological protection and large-scale commercial development",
+          "Federal and state government powers",
+          "Religious institutions and the judiciary",
+          "Trade unions and central banks"
+        ],
+        "answer": 0,
+        "explanation": "The movement centers around safeguarding the delicate ecosystem of the Vjosa-Narta Protected Area (a crucial migratory stopover for flamingos) against the environmental impact of large infrastructure projects such as the Vlora International Airport.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 74,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 74
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 120
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::120",
+      "question": {
+        "q": "121. Consider the following statements with reference to the 'Pride of Hills' Scheme: <br>1. It provides special development assistance for hill states. <br>2. It is part of special assistance to states for capital investment. <br>3. Its main objective is to increase revenue expenditure. <br>Which of the above statements is/are correct?",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "1 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 0,
+        "explanation": "Statements 1 and 2 are correct. Statement 3 is incorrect because special assistance windows are targeted specifically toward asset-creating capital expenditure (Capex), not revenue expenditure.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 120,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 120
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 121
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::121",
+      "question": {
+        "q": "122. Consider the following statements: <br>1. Exercise 'Dweep Shakti' is a tri-service military exercise. <br>2. It includes amphibious operations. <br>Which of the above statements is/are correct?",
+        "options": [
+          "Only 1",
+          "Only 2",
+          "Both 1 and 2",
+          "Neither 1 nor 2"
+        ],
+        "answer": 2,
+        "explanation": "Both statements are correct. 'Dweep Shakti' integrates joint operational capabilities across the Army, Navy, and Air Force with amphibious assault landings on island territories.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 121,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 121
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 123
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::123",
+      "question": {
+        "q": "124. Consider the following statements : <br>1. The PM E-DRIVE Scheme promotes the purchase of electric vehicles. <br>2. Under this scheme, subsidy is given to consumers in the form of an upfront discount. <br>Which of the above statements is/are correct?",
+        "options": [
+          "Only 1",
+          "Only 2",
+          "Both 1 and 2",
+          "Neither 1 nor 2"
+        ],
+        "answer": 2,
+        "explanation": "Both statements are correct. The PM Electric Drive Revolution in Innovative Vehicle Enhancement (PM E-DRIVE) scheme incentivizes electric 2-wheelers, 3-wheelers, e-ambulances, and e-buses through upfront demand-incentive purchase discounts.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 123,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 123
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 126
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::126",
+      "question": {
+        "q": "127. INS Taragiri, recently commissioned, belongs to which class of  warships?",
+        "options": [
+          "Kolkata-class destroyers",
+          "Shivalik-class frigates",
+          "Project 17A Nilgiri-class frigates",
+          "Talwar-class frigates"
+        ],
+        "answer": 2,
+        "explanation": "INS Taragiri is an advanced stealth guided-missile frigate constructed under the Project 17A Nilgiri-class program by Mazagon Dock Shipbuilders Limited (MDL).",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 126,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 126
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 128
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::128",
+      "question": {
+        "q": "129. Tar balls are best described as:",
+        "options": [
+          "Sticky lumps of weathered crude oil formed in seawater after oil spills.",
+          "Naturally occurring spherical rocks found on the ocean floor.",
+          "Floating masses of marine algae formed during harmful algal blooms.",
+          "Solidified volcanic lava fragments deposited along coastlines."
+        ],
+        "answer": 0,
+        "explanation": "Tar balls are dark-colored, sticky remnants formed when crude oil washes around in the ocean and undergoes natural weathering, evaporation, and emulsification.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 128,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 128
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 131
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::131",
+      "question": {
+        "q": "132. With reference to the recent report by the World Inequality Lab,  consider the following statements: <br>1. The top 10% of rural households own more than 40% of total land. <br>2. The top 1% owns less than 10% of total land. <br>3. Nearly half of rural households in India are landless. <br>Which of the statements given above is/are correct?",
+        "options": [
+          "1 and 2 only",
+          "1 and 3 only",
+          "2 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 1,
+        "explanation": "Statements 1 and 3 are correct according to the wealth and asset distribution findings. Statement 2 is incorrect because the richest 1% holds a disproportionately larger share exceeding this threshold.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 131,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 131
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 135
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::135",
+      "question": {
+        "q": "136. Amaravati Quantum Valley (AQV), inaugurated recently, has been  established with the primary objective of:",
+        "options": [
+          "Developing a comprehensive quantum computing ecosystem through collaboration among academia, industry, startups, and global technology partners.",
+          "Establishing India's first nuclear fusion research centre.",
+          "Manufacturing semiconductor chips exclusively for defence applications.",
+          "Creating a national satellite launch facility for private space companies."
+        ],
+        "answer": 0,
+        "explanation": "The Amaravati Quantum Valley is planned as a specialized technological cluster dedicated to quantum research, algorithms, cryptography, hardware R&D, and startup incubation.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 135,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 135
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 132
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::132",
+      "question": {
+        "q": "133. India recently achieved which of the following milestones in the  renewable energy sector?",
+        "options": [
+          "India became the third-largest country in the world in installed renewable energy capacity.",
+          "India became the second-largest country in the world in installed renewable energy capacity.",
+          "India became the largest producer of renewable energy globally.",
+          "India achieved 100% electricity generation from renewable energy sources."
+        ],
+        "answer": 0,
+        "explanation": "With rapid expansion in solar and wind installations, India has emerged as the world's 3rd largest nation in terms of total installed renewable energy capacity, behind only China and the USA.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 132,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 132
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 136
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::136",
+      "question": {
+        "q": "137. In the context of environmental aspects of the Delhi-Dehradun Economic Corridor, consider the following statements: <br>1. A special corridor has been constructed for wildlife. <br>2. The objective of the project is only economic development. <br>3. This project reflects the principles of sustainable development. <br>Which of the above statements is/are correct?",
+        "options": [
+          "1 and 3 only",
+          "2 and 3 only",
+          "1 and 2 only",
+          "1, 2 and 3"
+        ],
+        "answer": 0,
+        "explanation": "Statements 1 and 3 are correct; the corridor features Asia's longest elevated wildlife corridor (12 km) over the Rajaji National Park eco-sensitive zone. Statement 2 is incorrect as the project balances economic logistics with wildlife mitigation.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 136,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 136
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 139
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::139",
+      "question": {
+        "q": "140. The proposed Universal Kill Switch seeks to strengthen which  aspect of India's digital financial ecosystem?",
+        "options": [
+          "Cybersecurity and fraud prevention",
+          "Credit appraisal of borrowers",
+          "Foreign exchange management",
+          "Priority sector lending"
+        ],
+        "answer": 0,
+        "explanation": "The Universal Kill Switch enables consumers to immediately freeze all digital banking, UPI handles, and cards through a single emergency command upon suspecting cyber fraud.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 139,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 139
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 15",
+        "questionId": null,
+        "questionIndex": 147
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 15::147",
+      "question": {
+        "q": "148. Consider the following statements with reference to SIPRI 2025 Report: <br>1. India, in the year 2025, with a defence expenditure of approximately 92 billion dollars, is  the fifth largest defence spender in the world. <br>2. In recent years, a continuous decline has been recorded in global military expenditure. <br>3. Increasing global defence expenditure indicates a \"global arms race.\" <br>4. India's defence expenditure is linked to its regional security challenges and strategic  priorities. <br>Which of the above statements is/are correct?",
+        "options": [
+          "1 and 2 only",
+          "1, 3 and 4 only",
+          "1, 2 and 4 only",
+          "1, 2, 3 and 4"
+        ],
+        "answer": 1,
+        "explanation": "Statements 1, 3, and 4 are correct. Statement 2 is incorrect because global military expenditure reported by SIPRI has grown continuously to historic highs driven by geopolitical conflicts.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 147,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 147
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 14",
+        "questionId": null,
+        "questionIndex": 45
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 14::45",
+      "question": {
+        "q": "46. Consider the following statements regarding 'e-NAM': <br>1. It is an electronic National Agriculture Market portal. <br>2. It networks existing APMC mandis across states. <br>3. It is implemented by the Small Farmers' Agribusiness Consortium. <br>Which of the above statements is/are correct?",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "1 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 3,
+        "explanation": "All three statements are correct. e-NAM is a pan-India electronic trading portal integrating physical APMC mandis, implemented by the Small Farmers' Agribusiness Consortium (SFAC).",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 45,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 45
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 14",
+        "questionId": null,
+        "questionIndex": 64
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 14::64",
+      "question": {
+        "q": "65. World Wildlife Crime Report is published by:",
+        "options": [
+          "Birdlife International",
+          "United Nations Office on Drugs and Crime (UNODC)",
+          "IUCN",
+          "Wildlife Crime Control Bureau"
+        ],
+        "answer": 1,
+        "explanation": "The World Wildlife Crime Report is published by the United Nations Office on Drugs and Crime (UNODC).",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 64,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 64
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 14",
+        "questionId": null,
+        "questionIndex": 99
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 14::99",
+      "question": {
+        "q": "100. With reference to the 'eShram portal', consider the following  statements: <br>1. It is a national database of unorganised workers. <br>2. It is maintained by the Ministry of Labour and Employment. <br>Which of the above statements is/are correct?",
+        "options": [
+          "Only 2",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 1"
+        ],
+        "answer": 2,
+        "explanation": "Both statements are correct. The Ministry of Labour and Employment launched eShram to build a centralized national database of unorganized and migrant workers mapped with universal account numbers.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 99,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 99
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 14",
+        "questionId": null,
+        "questionIndex": 128
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 14::128",
+      "question": {
+        "q": "129. A recent study published in Geophysical Research Letters  highlighted the acceleration of global warming. Consider the following  statements: <br>1. The global temperature rise increased from about 0.2^\\circ\\text{C} per decade (1970-2015) to about 0.35^\\circ\\text{C} per decade after 2015. <br>2. Scientists removed the influence of El Niño, volcanic eruptions, and solar radiation  changes to identify the long-term warming trend. <br>3. Aerosols increase global warming because they trap heat like greenhouse gases. <br>4. According to research, Weakening carbon sinks such as forests and oceans can  contribute to faster global warming. <br>Which of the statements given above are correct?",
+        "options": [
+          "1 and 2 only",
+          "1, 3 and 4 only",
+          "1, 2 and 4 only",
+          "1, 2, 3 and 4"
+        ],
+        "answer": 2,
+        "explanation": "Statements 1, 2, and 4 are correct. Statement 3 is incorrect because sulfate and light-colored aerosols reflect incoming solar radiation, causing a net cooling effect (dimming) rather than trapping heat like greenhouse gases.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 128,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 128
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 14",
+        "questionId": null,
+        "questionIndex": 129
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 14::129",
+      "question": {
+        "q": "130. With reference to the Strait of Hormuz, consider the following  statements: <br>1. It lies between Iran and Oman and connects the Persian Gulf with the Gulf of Oman. <br>2. Nearly 20% of global oil trade passes through this maritime route. <br>3. The strait is controlled entirely by the Organization of the Petroleum Exporting Countries (OPEC). <br>Which of the statements given above are correct?",
+        "options": [
+          "1 and 2 only",
+          "1 and 3 only",
+          "2 and 3 only",
+          "1, 2, and 3"
+        ],
+        "answer": 0,
+        "explanation": "Statements 1 and 2 are correct. Statement 3 is incorrect because OPEC is an intergovernmental oil exporter cartel, not a sovereign naval or littoral administration governing international navigation straits.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 129,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 129
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 14",
+        "questionId": null,
+        "questionIndex": 135
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 14::135",
+      "question": {
+        "q": "136. Consider the following statements regarding the Sahitya Akademi Award: <br>1. This award is given for outstanding literary works in 24 languages of India. <br>2. This award is directly conferred by the Ministry of Culture, Government of India. <br>3. This award is given every year on the recommendation of a jury selected by the Sahitya Akademi. <br>Which of the above statements is/are correct?",
+        "options": [
+          "1 and 3 only",
+          "2 and 3 only",
+          "Only 1",
+          "1, 2, and 3"
+        ],
+        "answer": 0,
+        "explanation": "Statements 1 and 3 are correct (22 Eighth Schedule languages plus English and Rajasthani). Statement 2 is incorrect because the award is conferred autonomously by the Sahitya Akademi, India's National Academy of Letters.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 135,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 135
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 14",
+        "questionId": null,
+        "questionIndex": 136
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 14::136",
+      "question": {
+        "q": "137. Consider the following statements regarding the 98th Academy Awards (Oscars 2026): <br>1. \"One Battle After Another\" won the Best Picture award. <br>2. Michael B. Jordan received the Best Actor award for the film \"Sinners\". <br>3. Jessie Buckley received the Best Actress award for the film \"Hamnet\". <br>Which of the above statements is/are correct?",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "1, 2 and 3",
+          "Only 1"
+        ],
+        "answer": 1,
+        "explanation": "Statements 2 and 3 align with acting honors, whereas Best Picture honours did not go to the title in Statement 1.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 136,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 136
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 14",
+        "questionId": null,
+        "questionIndex": 141
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 14::141",
+      "question": {
+        "q": "142. With reference to the 2026 Laureus World Sports Awards, which  of the following statements is/are not correct? <br>1. The ceremony was held in Madrid, Spain. <br>2. Novak Djokovic won the World Sportsman of the Year award. <br>Select the correct answer using the code given below:",
+        "options": [
+          "Only 2",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 1"
+        ],
+        "answer": 1,
+        "explanation": "Both statements are correct facts regarding the event and laureates; therefore, 'Neither 1 nor 2' is the correct choice for which statement is NOT correct.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 141,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 141
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 14",
+        "questionId": null,
+        "questionIndex": 145
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 14::145",
+      "question": {
+        "q": "146. The theme of the International Day of Forests 2026 is:",
+        "options": [
+          "Forests and Climate Change",
+          "Forests and Economies",
+          "Forests and Livelihoods: Sustaining People and Planet",
+          "Forests and Biodiversity Conservation"
+        ],
+        "answer": 1,
+        "explanation": "The annual UN International Day of Forests theme explores forest integration with sustainable green economies and socio-environmental prosperity.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 145,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 145
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 14",
+        "questionId": null,
+        "questionIndex": 147
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 14::147",
+      "question": {
+        "q": "148. What is the main theme of the United Nations World Water Development Report 2026?",
+        "options": [
+          "Water and Climate Change",
+          "Water and Energy",
+          "Water and Gender Equality",
+          "Water and Agriculture"
+        ],
+        "answer": 3,
+        "explanation": "The UN World Water Development Report focuses on strategic interlinkages such as water security in agriculture and sustainable food supply chains.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 147,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 147
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 14",
+        "questionId": null,
+        "questionIndex": 132
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 14::132",
+      "question": {
+        "q": "133. Sharavathi Valley Lion-tailed Macaque (LTM) Sanctuary, Consider  the following statements regarding Eco-Sensitive Zones: <br>1. It is a buffer zone around protected areas. <br>2. Its objective is to completely prohibit development activities. <br>3. Its objective is to establish a balance between environment and development. <br>Which of the above statements is/are correct?",
+        "options": [
+          "1 and 2 only",
+          "Only 1 and 3",
+          "2 and 3 only",
+          "1, 2, and 3"
+        ],
+        "answer": 1,
+        "explanation": "Statements 1 and 3 are correct. Statement 2 is incorrect because ESZs regulate and promote sustainable developmental activities rather than imposing a blanket prohibition on all activities.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 132,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 132
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 14",
+        "questionId": null,
+        "questionIndex": 139
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 14::139",
+      "question": {
+        "q": "140. Consider the following statements regarding the Masi Magam  festival: <br>1. It is celebrated on the Amavasya (new moon day) of the Tamil month 'Masi'. <br>2. Ritual bathing in the sea or other water bodies holds special significance. <br>3. It is associated with the Irular tribe of Tamil Nadu. <br>Which of the above statements is/are correct?",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "Only 1 and 3",
+          "1, 2 and 3"
+        ],
+        "answer": 1,
+        "explanation": "Statements 2 and 3 are correct. Statement 1 is incorrect because Masi Magam occurs on the Purnima (full moon day) coinciding with the Magha asterism, not on Amavasya.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 139,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 139
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 14",
+        "questionId": null,
+        "questionIndex": 140
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 14::140",
+      "question": {
+        "q": "141. Consider the following statements regarding the Trincomalee Energy Project: <br>1. It is related to developing an energy hub in Sri Lanka. <br>2. It involves the participation of India and the United Arab Emirates. <br>3. Its objective is only renewable energy production. <br>Which of the above statements is/are correct?",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "Only 1 and 3",
+          "1, 2, and 3"
+        ],
+        "answer": 0,
+        "explanation": "Statements 1 and 2 are correct. Statement 3 is incorrect because the Trincomalee project encompasses fuel storage tank farm development, LNG logistics, pipeline connectivity, and port development in addition to clean energy.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 140,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 140
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 14",
+        "questionId": null,
+        "questionIndex": 142
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 14::142",
+      "question": {
+        "q": "143. Which of the following statements regarding the 2026 Laureus Awards is/are not correct? <br>1. Lando Norris won the Breakthrough of the Year award. <br>2. Rory McIlroy won the Comeback of the Year award. <br>3. An Indian athlete won the World Sportsman of the Year award. <br>Select the correct answer using the code given below:",
+        "options": [
+          "1 only",
+          "3 only",
+          "1 and 2 only",
+          "2 and 3 only"
+        ],
+        "answer": 1,
+        "explanation": "Statement 3 is incorrect (and hence the correct answer) because no Indian athlete has won the Laureus World Sportsman of the Year award.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 142,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 142
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 14",
+        "questionId": null,
+        "questionIndex": 144
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 14::144",
+      "question": {
+        "q": "145. Which of the following pairs of book and author is/are correctly  matched? <br>1. The Correspondent - Virginia Evans <br>2. Python's Kiss - Louise Erdrich <br>3. The Night We Met - Abby Jimenez <br>Select the correct answer using the code given below:",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "1 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 2,
+        "explanation": "Pairs 1 and 3 are correctly matched with their respective authors. Pair 2 is incorrectly attributed.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 144,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 144
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 14",
+        "questionId": null,
+        "questionIndex": 148
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 14::148",
+      "question": {
+        "q": "149. Exercise \"Amogh Jwala\" was conducted by which Command of  the Indian Army?",
+        "options": [
+          "Northern Command",
+          "Eastern Command",
+          "Southern Command",
+          "Central Command"
+        ],
+        "answer": 2,
+        "explanation": "Exercise 'Amogh Jwala' was conducted by the Southern Command of the Indian Army to validate integrated operational readiness and weapon delivery systems in desert/semi-arid terrain.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 148,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 148
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 40
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::40",
+      "question": {
+        "q": "41. 'Operation Greens', launched by the Government of India, was initially associated with which set of commodities?",
+        "options": [
+          "Sugarcane, cotton and jute",
+          "Wheat, rice and pulses",
+          "Tomato, Onion and Potato (TOP)",
+          "Milk, eggs and meat"
+        ],
+        "answer": 2,
+        "explanation": "Operation Greens was launched in the 2018-19 budget on the lines of 'Operation Flood' to stabilize supplies and prices of Tomato, Onion, and Potato (TOP) crops.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 40,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 40
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 56
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::56",
+      "question": {
+        "q": "57. 'Edge computing' refers to:",
+        "options": [
+          "Encrypting data only at the network boundary",
+          "Processing data closer to the source/device rather than a centralised cloud",
+          "Storing all data on a single central cloud server",
+          "Using satellites for all computation"
+        ],
+        "answer": 1,
+        "explanation": "Edge computing processes and analyzes data near the physical periphery of the network (near the IoT device or user) to minimize latency, reduce bandwidth use, and enable real-time response.Edge computing is a distributed computing paradigm that brings computation and data storage closer to the physical location where it is needed, rather than relying entirely on a centralized cloud data center or a distant server.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 56,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 56
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 60
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::60",
+      "question": {
+        "q": "61. With reference to Geographical Indication (GI) tags, consider the  following statements: <br>1. The GI Registry is located in Chennai. <br>2. Uttar Pradesh has the highest number of GI-tagged products among Indian States. <br>Select the correct answer using the code given below:",
+        "options": [
+          "Only 2",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 1"
+        ],
+        "answer": 2,
+        "explanation": "Both statements are correct. The Geographical Indications Registry is headquartered in Chennai. Uttar Pradesh has emerged as the state with the highest cumulative number of registered GI goods in India.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 60,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 60
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 73
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::73",
+      "question": {
+        "q": "74. Consider the following statements regarding Uttar Pradesh: <br>1. Uttar Pradesh is among the leading States in foodgrain production in India. <br>2. The State has set a vision target of becoming a one-trillion-dollar economy. <br>3. Uttar Pradesh has the second-highest number of Ramsar sites among Indian States. <br>Select the correct answer using the code given below:",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "1 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 3,
+        "explanation": "All three statements are correct. Uttar Pradesh is the top foodgrain producer in India, has set an official target of achieving a $1 trillion Gross State Domestic Product, and ranks second nationwide in Ramsar site count (behind Tamil Nadu).",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 73,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 73
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 91
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::91",
+      "question": {
+        "q": "92. Which of the following sectoral trends highlighted in the Economic Survey 2025-26 reflects India's structural transformation? <br>1. Horticulture production surpassing foodgrain production <br>2. Manufacturing growth supported by PLI schemes and semiconductor initiatives <br>3. Services sector accounting for over half of GDP and majority of FDI inflows <br>Select the correct answer using the code below:",
+        "options": [
+          "1 and 2 only",
+          "1 and 3 only",
+          "2 and 3 only",
+          "1, 2, and 3"
+        ],
+        "answer": 3,
+        "explanation": "All three statements reflect structural economic shifts documented in official economic surveys: crop diversification toward horticulture, high-tech manufacturing expansion via PLI/ISM, and services-led GDP and FDI primacy.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 91,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 91
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 92
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::92",
+      "question": {
+        "q": "93. With reference to the Union Budget 2026-27, consider the  following statements: <br>1. The fiscal deficit for FY 2026-27 is projected at 4.3% of GDP. <br>2. The debt-to-GDP ratio is estimated to increase compared to Revised Estimates of 2025-26. <br>3. Gross market borrowings are estimated at Rs. 17.2 lakh crore. <br>Which of the statements given above are correct?",
+        "options": [
+          "1 and 2 only",
+          "1 and 3 only",
+          "2 and 3 only",
+          "1, 2, and 3"
+        ],
+        "answer": 1,
+        "explanation": "Statements 1 and 3 are correct fiscal targets under the consolidation roadmap. Statement 2 is incorrect because the medium-term consolidation trajectory aims to stabilize and decrease the central debt-to-GDP ratio.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 92,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 92
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 94
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::94",
+      "question": {
+        "q": "95. The Income Tax Act, 2025 announced in Budget 2026-27 aims to: <br>1. Replace the six-decade-old Income Tax Act <br>2. Reduce litigation and compliance burden <br>3. Change existing income tax slabs substantially <br>Which of the above statements are correct?",
+        "options": [
+          "1 and 2 only",
+          "2 only",
+          "2 and 3 only",
+          "1, 2, and 3"
+        ],
+        "answer": 0,
+        "explanation": "Statements 1 and 2 are correct as the comprehensive direct tax code overhaul aims to replace the 1961 Act with simplified language and dispute minimization. It is not designed to disrupt tax slabs substantially.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 94,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 94
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 96
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::96",
+      "question": {
+        "q": "97. The New START Treaty is considered significant because it is:",
+        "options": [
+          "The first nuclear treaty signed by NATO countries",
+          "The only treaty regulating tactical nuclear weapons globally",
+          "The last remaining nuclear arms control treaty between the United States and Russia",
+          "A treaty banning all nuclear weapons worldwide"
+        ],
+        "answer": 2,
+        "explanation": "The New Strategic Arms Reduction Treaty (New START), signed in 2010, is the final remaining bilateral strategic nuclear arms reduction pact capping deployed intercontinental nuclear warheads between the US and Russia.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 96,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 96
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 97
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::97",
+      "question": {
+        "q": "98. With reference to the recent WHO-IARC global analysis on cancer,  consider the following statements: <br>1. About 37% of new cancer cases globally are linked to preventable causes. <br>2. Nearly four in ten cancer cases in India are potentially preventable. <br>3. Preventable cancers account for a higher proportion among women than men in India. <br>Which of the statements given above is/are correct?",
+        "options": [
+          "1 and 2 only",
+          "2 only",
+          "2 and 3 only",
+          "1, 2, and 3"
+        ],
+        "answer": 0,
+        "explanation": "Statements 1 and 2 are correct. Statement 3 is incorrect because preventable cancer incidence linked to tobacco, alcohol, and occupational exposures remains markedly higher among men than women in India.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 97,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 97
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 100
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::100",
+      "question": {
+        "q": "101. Which of the following countries are members of the Gulf Cooperation Council (GCC)? <br>1. Bahrain <br>2. Oman <br>3. Iran <br>4. Qatar <br>Select the correct answer using the code below:",
+        "options": [
+          "1 and 2 only",
+          "1, 3 and 4 only",
+          "1, 2 and 4 only",
+          "1, 2, 3 and 4"
+        ],
+        "answer": 2,
+        "explanation": "The GCC consists of six Arab nations: Bahrain, Kuwait, Oman, Qatar, Saudi Arabia, and the United Arab Emirates. Iran is not a member.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 100,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 100
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 103
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::103",
+      "question": {
+        "q": "104. With reference to the Corruption Perceptions Index (CPI),  consider the following statements: <br>1. It is released annually by Transparency International. <br>2. It measures actual corruption cases registered in each country. <br>3. It uses multiple independent data sources, including assessments from global institutions. <br>4. A higher CPI score indicates a higher level of perceived corruption. <br>Which of the statements given above are correct?",
+        "options": [
+          "1 and 2 only",
+          "1 and 3 only",
+          "1, 2 and 3 only",
+          "1, 2, 3 and 4"
+        ],
+        "answer": 1,
+        "explanation": "Statements 1 and 3 are correct. Statement 2 is incorrect because it measures 'perceived' public-sector corruption rather than registered criminal cases. Statement 4 is incorrect because a higher score (on a 0–100 scale) denotes a cleaner, less corrupt country.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 103,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 103
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 105
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::105",
+      "question": {
+        "q": "106. Which of the following pairs of Country and Fifth Generation Fighter are correctly matched? <br>1. United States - F-22, F-35 <br>2. China - J-20 <br>3. Russia - Su-57 <br>4. France - Rafale <br>Which of the pairs given above are correctly matched?",
+        "options": [
+          "1 and 2 only",
+          "1, 3 and 4 only",
+          "1, 2 and 3 only",
+          "1, 2, 3 and 4"
+        ],
+        "answer": 2,
+        "explanation": "Pairs 1, 2, and 3 are 5th-generation stealth fighters. Pair 4 is incorrect because the French Dassault Rafale is classified as a 4.5-generation multirole fighter, not a 5th-generation aircraft.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 105,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 105
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 107
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::107",
+      "question": {
+        "q": "108. With reference to the FATF February 2026 Plenary, which of the  following statements is/are NOT correct? <br>1. The FATF plenary outcomes were published on February 13, 2026. <br>2. Countries on the FATF grey list are subject to immediate financial sanctions by the UN Security Council. <br>Select the correct answer from the code given below:",
+        "options": [
+          "Only 2",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 1"
+        ],
+        "answer": 0,
+        "explanation": "Statement 2 is incorrect (and hence the correct option) because placement on the FATF 'grey list' (jurisdictions under increased monitoring) does not trigger automatic or mandatory UN Security Council economic sanctions.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 107,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 107
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 109
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::109",
+      "question": {
+        "q": "110. Which of the following statements about the IEA Electricity 2026 Report is/are NOT correct? <br>1. It is an annual analysis of global electricity systems and markets. <br>2. It tracks demand growth and transitions only up to the year 2028. <br>3. It was released by the International Energy Agency (IEA). <br>Select the correct answer from the code given below:",
+        "options": [
+          "1 only",
+          "2 only",
+          "1 and 3 only",
+          "2 and 3 only"
+        ],
+        "answer": 1,
+        "explanation": "Statement 2 is incorrect (making it the correct choice) because the International Energy Agency's Electricity series provides comprehensive medium- and long-term forecasts for electricity demand, renewables, and emissions well beyond 2028.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 109,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 109
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 139
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::139",
+      "question": {
+        "q": "140. The rare metal Vanadium has recently been discovered in which  state?",
+        "options": [
+          "Maharashtra",
+          "Jammu & Kashmir",
+          "Gujarat",
+          "Tamil Nadu"
+        ],
+        "answer": 2,
+        "explanation": "The Geological Survey of India (GSI) identified significant deposits of vanadium in titanomagnetite sands along the Gulf of Khambhat off the coast of Gujarat.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 139,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 139
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 61
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::61",
+      "question": {
+        "q": "62. The 'Global Stocktake' is a process associated with which international framework?",
+        "options": [
+          "The Convention on Biological Diversity",
+          "The World Trade Organization",
+          "The Paris Agreement under the UNFCCC",
+          "The Ramsar Convention"
+        ],
+        "answer": 2,
+        "explanation": "Mandated under Article 14 of the Paris Agreement, the Global Stocktake evaluates collective global progress towards achieving the agreement's climate goals every five years (first concluded at COP28 Dubai).",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 61,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 61
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 95
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::95",
+      "question": {
+        "q": "96. Reduction in Tax Collected at Source (TCS) to 2% under the Liberalised Remittance Scheme applies to: <br>1. Overseas tour packages <br>2. Education remittances <br>3. Medical remittances <br>4. Capital account investments abroad <br>Select the correct answer:",
+        "options": [
+          "1 and 2 only",
+          "1, 3 and 4 only",
+          "1, 2 and 3 only",
+          "1, 2, 3 and 4"
+        ],
+        "answer": 0,
+        "explanation": "Targeted rationalization of TCS relief under LRS was provided to curb upfront cash-flow friction on specific consumer outflows such as overseas tour packages and student remittances.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 95,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 95
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 99
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::99",
+      "question": {
+        "q": "100. With reference to the Minimum Support Price (MSP) for Minor Forest Produce (MFP), consider the following statements: <br>1. MSP for MFP is decided by the Ministry of Agriculture and Farmers' Welfare. <br>2. MSP for MFP aims to protect tribal gatherers from market price volatility. <br>3. Revision of MSP for MFP is mandatory every year. <br>Which of the statements given above is/are correct?",
+        "options": [
+          "1 and 2 only",
+          "2 only",
+          "2 and 3 only",
+          "1, 2, and 3"
+        ],
+        "answer": 1,
+        "explanation": "Statement 2 is correct. Statement 1 is incorrect because MSP for MFP is administered by the Ministry of Tribal Affairs (via TRIFED). Statement 3 is incorrect because pricing revisions are undertaken periodically (normally triennially), not mandatorily every year.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 99,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 99
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 101
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::101",
+      "question": {
+        "q": "102. Lyriothemis keralensis, recently discovered in Kerala, belongs to  which group of insects?",
+        "options": [
+          "Lepidoptera",
+          "Coleoptera",
+          "Odonata",
+          "Hymenoptera"
+        ],
+        "answer": 2,
+        "explanation": "Lyriothemis keralensis is a newly identified species of dragonfly belonging to the order Odonata and family Libellulidae.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 101,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 101
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 106
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::106",
+      "question": {
+        "q": "107. Match List-I with List-II and choose the correct answer with the help of given codes: <br> <br>List-I (Sporting Event) <br>List-II (Venue/Host) <br>A) Winter Olympics 2026 <br>1. Los Angeles, USA <br>B) Super Bowl LX <br>2. Milano-Cortina, Italy <br>List-I (Sporting Event) <br>List-II (Venue/Host) <br>C) NBA All-Star Game <br>3. Levi's Stadium, California <br>D) WTT Star Contender <br>4. Chennai, India <br>Code:",
+        "options": [
+          "A-2, B-4, C-1, D-3",
+          "A-2, B-4, C-3, D-1",
+          "A-2, B-1, C-4, D-3",
+          "A-4, B-3, C-2, D-1"
+        ],
+        "answer": 1,
+        "explanation": "Winter Olympics 2026 is hosted by Milano-Cortina (Italy), Super Bowl LX at Levi's Stadium (Santa Clara, California), Chennai hosts the table tennis WTT Star Contender in India, and the NBA All-Star Game is held in the US.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 106,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 106
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 108
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::108",
+      "question": {
+        "q": "109. Which of the following sporting events took place in India in February 2026? <br>1. Davis Cup Qualifiers (Bengaluru) <br>2. FIH Pro League Hockey matches (Rourkela) <br>3. NBA All-Star Game <br>Select the correct answer from the code given below:",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "1, 2 and 3",
+          "1 and 3 only"
+        ],
+        "answer": 0,
+        "explanation": "Events 1 and 2 were hosted in India (Davis Cup in Bengaluru and FIH Pro League at the Birsa Munda Hockey Stadium in Rourkela). The NBA All-Star Game is an annual event held in the United States.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 108,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 108
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 52
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::52",
+      "question": {
+        "q": "53. Consider the following statements regarding Artificial Intelligence: <br>1. 'Machine Learning' is a subset of Artificial Intelligence. <br>2. 'Deep Learning' uses artificial neural networks with multiple layers. <br>3. A 'Large Language Model' is trained predominantly on text data to predict sequences. <br>Select the correct answer using the code given below:",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "1 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 3,
+        "explanation": "All three statements are correct. ML is a subset of AI, Deep Learning is an advanced subset of ML utilizing multi-layered deep neural networks, and LLMs are deep transformer models trained on vast text corpora.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 52,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 52
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 53
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::53",
+      "question": {
+        "q": "54. 'Deepfakes' are most commonly created using which AI  technique?",
+        "options": [
+          "Quantum entanglement",
+          "Blockchain distributed ledgers",
+          "Edge computing",
+          "Generative Adversarial Networks (GANs)"
+        ],
+        "answer": 3,
+        "explanation": "Deepfakes rely heavily on Generative Adversarial Networks (GANs), in which two neural networks (a generator and a discriminator) compete to create highly convincing synthetic audiovisual media.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 53,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 53
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 57
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::57",
+      "question": {
+        "q": "58. Consider the following statements regarding the IMEC: <br>1. It comprises an Eastern Corridor connecting India to the Gulf and a Northern Corridor connecting the Gulf to Europe. <br>2. It is a part of the Partnership for Global Infrastructure and Investment (PGII). <br>3. China is a founding signatory of the IMEC MoU. <br>Select the correct answer using the code given below:",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "1 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 0,
+        "explanation": "Statements 1 and 2 are correct (unveiled during the 2023 G20 New Delhi Summit under the PGII umbrella). Statement 3 is incorrect because China is not part of IMEC.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 57,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 57
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 58
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::58",
+      "question": {
+        "q": "59. With reference to the National Green Hydrogen Mission, consider  the following statements: <br>1. It targets a green-hydrogen production capacity of about 5 million metric tonnes per annum by 2030. <br>2. The mission is implemented by the Ministry of New and Renewable Energy. <br>Select the correct answer using the code given below:",
+        "options": [
+          "Only 2",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 1"
+        ],
+        "answer": 2,
+        "explanation": "Both statements are correct. The mission targets an annual production of at least 5 MMT of green hydrogen by 2030, anchored by the Ministry of New and Renewable Energy (MNRE).",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 58,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 58
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 59
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::59",
+      "question": {
+        "q": "60. Given below are two statements, one labelled as Assertion (A) and the other as Reason (R). <br>Assertion (A): India has been actively promoting Digital Public Infrastructure (DPI) globally. Reason (R): India's UPI is a proprietary system owned and operated by a foreign corporation. <br>Select the correct answer using the code given below: Code:",
+        "options": [
+          "Both (A) and (R) are true, but (R) is not the correct explanation of (A)",
+          "(A) is false, but (R) is true",
+          "(A) is true, but (R) is false",
+          "Both (A) and (R) are true and (R) is the correct explanation of (A)"
+        ],
+        "answer": 2,
+        "explanation": "Assertion (A) is correct. Reason (R) is false because UPI is an indigenous digital public infrastructure developed and operated by the National Payments Corporation of India (NPCI), an Indian non-profit organization.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 59,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 59
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 62
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::62",
+      "question": {
+        "q": "63. Consider the following statements regarding Artificial Intelligence  governance: <br>1. India has participated in global deliberations on safe and trustworthy AI. <br>2. The Global Partnership on Artificial Intelligence (GPAI) is a multi-stakeholder initiative of which India is a member. <br>3. 'Algorithmic bias' is a concern addressed in AI-governance frameworks. <br>Select the correct answer using the code given below:",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "1 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 3,
+        "explanation": "All three statements are correct. India hosted the GPAI summit in New Delhi, has engaged with international AI safety conventions, and actively targets algorithmic bias and data ethics in AI governance.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 62,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 62
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 64
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::64",
+      "question": {
+        "q": "65. With reference to Quantum Key Distribution (QKD), consider the  following statements: <br>1. It uses the principles of quantum mechanics for secure communication. <br>2. Any attempt to eavesdrop disturbs the quantum states and can be detected. <br>Select the correct answer using the code given below:",
+        "options": [
+          "Only 2",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 1"
+        ],
+        "answer": 2,
+        "explanation": "Both statements are correct. QKD utilizes quantum principles (Heisenberg's Uncertainty Principle and No-Cloning Theorem), ensuring that any third-party interception alters the photon quantum states, exposing the eavesdropper.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 64,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 64
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 65
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::65",
+      "question": {
+        "q": "66. Consider the following statements regarding India's space-sector  reforms: <br>1. 'IN-SPACe' acts as a single-window agency to promote and authorise private space  activities. <br>2. 'NSIL' is the commercial arm of ISRO. <br>3. The Indian Space Policy 2023 encourages private participation. <br>Select the correct answer using the code given below:",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "1 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 3,
+        "explanation": "All three statements are correct. The Indian Space Policy 2023 formalized IN-SPACe as an autonomous single-window regulator for Non-Government Entities (NGEs) and designated NSIL as the primary commercial entity to commercialize ISRO technology.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 65,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 65
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 80
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::80",
+      "question": {
+        "q": "81. Consider the following statements regarding the United Nations Sustainable Development Goals (SDGs): <br>1. There are 17 Sustainable Development Goals adopted in 2015. <br>2. NITI Aayog publishes the SDG India Index. <br>3. The SDGs are legally binding on member states. <br>Select the correct answer using the code given below:",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "1 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 0,
+        "explanation": "Statements 1 and 2 are correct. Statement 3 is incorrect because the 2030 Agenda for Sustainable Development and its 17 goals are voluntary and non-legally binding.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 80,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 80
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 90
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::90",
+      "question": {
+        "q": "91. With reference to India's external sector in FY25-26, consider the  following statements: <br>1. India's services exports exceeded merchandise exports in growth momentum. <br>2. India emerged as the world's largest recipient of remittances. <br>3. Foreign exchange reserves provided import cover of less than six months. <br>Which of the statements given above are correct?",
+        "options": [
+          "1 and 2 only",
+          "2 only",
+          "2 and 3 only",
+          "1, 2, and 3"
+        ],
+        "answer": 0,
+        "explanation": "Statements 1 and 2 are correct. Statement 3 is incorrect because India's substantial foreign exchange reserves provided a robust import cover of over 10 to 11 months, well exceeding six months.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 90,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 90
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 93
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::93",
+      "question": {
+        "q": "94. The three \"Kartavyas\" articulated in Union Budget 2026-27 include: <br>1. Accelerating and sustaining economic growth <br>2. Ensuring cooperative federalism <br>3. Fulfilling aspirations and building capacities <br>4. Ensuring inclusive growth <br>Select the correct answer using the code below:",
+        "options": [
+          "1, 2 and 4 only",
+          "1, 3 and 4 only",
+          "1, 2 and 3 only",
+          "2, 3 and 4 only"
+        ],
+        "answer": 1,
+        "explanation": "The three overarching policy 'Kartavyas' (duties) comprise: sustaining and accelerating economic growth, fulfilling aspirations and building human capacities, and ensuring inclusive and sustainable development.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 93,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 93
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 98
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::98",
+      "question": {
+        "q": "99. In the context of digital platforms, the Supreme Court observed  that valid consent for sharing personal data must be:",
+        "options": [
+          "Mandatory and unconditional",
+          "Based on meaningful and informed choice",
+          "Controlled entirely by companies",
+          "Provided only in written form"
+        ],
+        "answer": 1,
+        "explanation": "The Supreme Court has consistently held (anchored in Justice K.S. Puttaswamy v. Union of India) that valid consent must be freely given, specific, informed, and based on a genuine, meaningful choice.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 98,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 98
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 102
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::102",
+      "question": {
+        "q": "103. With reference to India's performance in the Network Readiness Index (NRI) 2025, consider the following statements: <br>1. India ranked 45th among 127 economies. <br>2. India secured 1st rank globally in ICT services exports. <br>3. India ranked 3rd in income inequality. <br>Which of the statements given above are correct?",
+        "options": [
+          "1 and 2 only",
+          "1 and 3 only",
+          "2 and 3 only",
+          "1, 2, and 3"
+        ],
+        "answer": 0,
+        "explanation": "Statements 1 and 2 are correct, reflecting India's strong digital talent and top position in global ICT services exports. Statement 3 is factually incorrect regarding the index indicator.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 102,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 102
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 104
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::104",
+      "question": {
+        "q": "105. With reference to the National Biobank for Rare Lysosomal Storage Disorders (LSDs), consider the following statements: <br>1. It is India's first government-supported national biobank dedicated exclusively to LSDs. <br>2. It stores genomic DNA samples along with associated clinical data. <br>3. It covers patients from multiple states across India. <br>Which of the statements given above is/are correct?",
+        "options": [
+          "1 and 2 only",
+          "1 and 3 only",
+          "2 and 3 only",
+          "1, 2, and 3"
+        ],
+        "answer": 3,
+        "explanation": "All three statements are correct. Supported by the Department of Biotechnology, this specialized national biobank curates genetic specimens and comprehensive clinical phenotypes of patients with rare LSDs across Indian states.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 104,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 104
+        }
+      }
+    },
+    {
+      "source": {
+        "sourceSubjectKey": "mock",
+        "chapter": "UPPCS Set 13",
+        "questionId": null,
+        "questionIndex": 147
+      },
+      "sourceIdentity": "mock::mock.json::UPPCS Set 13::147",
+      "question": {
+        "q": "148. Which of the following is not included in the calculation of  national income?",
+        "options": [
+          "Broker's commission",
+          "Allowance paid to a Member of Parliament",
+          "Contribution to Provident Fund",
+          "Gifts received from abroad"
+        ],
+        "answer": 3,
+        "explanation": "Gifts and unilateral remittances received from abroad are transfer payments (unearned receipts with no corresponding production of goods or services) and are excluded from the calculation of National Income.",
+        "quizMeta": {
+          "classifications": {
+            "CA": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 147,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 147
+        }
+      }
     }
   ]
 }

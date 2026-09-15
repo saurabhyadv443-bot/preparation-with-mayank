@@ -146,6 +146,214 @@
           "questionId": null,
           "questionIndex": 78
         }
+      },
+      {
+        "q": "105. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R) : <br>Assertion (A): If the capital account is positive then it is a good sign for the economy of the  country. Reason (R): Positive capital account creates a future liability. <br>Select the correct answer using the codes given below : Code:",
+        "options": [
+          "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
+          "Both (A) and (R) are correct (R) is not the correct explanation of (A).",
+          "(A) is correct, (R) is wrong.",
+          "(A) is wrong (R) is correct."
+        ],
+        "answer": 3,
+        "explanation": "Assertion (A) is not inherently true because a positive capital account surplus often stems from heavy external debt borrowing, which builds future repayment liabilities and vulnerability, making Reason (R) correct while (A) is an economic overgeneralization.",
+        "quizMeta": {
+          "classifications": {
+            "E": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 104,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 104
+        }
+      },
+      {
+        "q": "40. A country's Current Account Deficit (CAD) widening despite a  stable trade deficit most likely indicates:",
+        "options": [
+          "A rise in net outflows on the invisibles account, such as investment income or transfers",
+          "An increase in foreign exchange reserves",
+          "A reduction in external commercial borrowings",
+          "An appreciation of the domestic currency"
+        ],
+        "answer": 0,
+        "explanation": "The Current Account comprises the merchandise trade balance plus net invisibles (services, income, and transfers). If the merchandise trade deficit remains stable while CAD widens, the net surplus on the invisibles balance has deteriorated due to higher net outflows.",
+        "quizMeta": {
+          "classifications": {
+            "E": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 39,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 39
+        }
+      },
+      {
+        "q": "48. The Statutory Liquidity Ratio (SLR) is maintained by banks in the  form of:",
+        "options": [
+          "Cash only",
+          "Gold, cash and approved government securities",
+          "Foreign exchange reserves",
+          "Fixed deposits with other banks"
+        ],
+        "answer": 1,
+        "explanation": "Under Section 24 of the Banking Regulation Act, 1949, commercial banks in India are required to maintain the SLR in the form of unencumbered liquid assets: physical cash, gold, and designated government securities.",
+        "quizMeta": {
+          "classifications": {
+            "E": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 47,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 47
+        }
+      },
+      {
+        "q": "43. Consider the following statements regarding the Balance of Payments (BoP): <br>1. The current account includes trade in goods and services. <br>2. The capital account records flows of investments and loans. <br>3. A deficit in the current account is always unsustainable. <br>Which of the above statements is/are correct?",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "1 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 0,
+        "explanation": "Statements 1 and 2 are correct. Statement 3 is incorrect because a moderate current account deficit can be sustainable if financed by stable, non-debt capital inflows (like long-term FDI).A Current Account Deficit (CAD) is not always unsustainable. For developing and emerging economies (like India), running a moderate CAD is often standard and healthy. It indicates that the country is investing more than its domestic savings by importing capital goods, intermediate inputs, and technology to build productive capacity. As long as the deficit is financed by stable, long-term capital inflows (such as non-debt-creating FDI) and remains within a manageable range (typically 2–2.5% of GDP for India), it remains fully sustainable.",
+        "quizMeta": {
+          "classifications": {
+            "E": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 42,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 42
+        }
+      },
+      {
+        "q": "67. Consider the following statements: <br>1. If exports are less than imports then the balance of trade is unfavourable. <br>2. Only visible items are included in the balance of trade. <br>Choose the correct statement(s):",
+        "options": [
+          "1 Only",
+          "2 Only",
+          "Both 1 and 2",
+          "Neither 1 nor 2"
+        ],
+        "answer": 2,
+        "explanation": "Both statements are correct. Balance of Trade (merchandise balance) covers only visible physical goods; when visible imports exceed exports, the trade balance is unfavourable (trade deficit).",
+        "quizMeta": {
+          "classifications": {
+            "E": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 66,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 66
+        }
+      },
+      {
+        "q": "79. Which of the following is the best system for measuring growth ?",
+        "options": [
+          "Gross National Product (GNP)",
+          "Gross Domestic Product (GDP)",
+          "Net National Product (NNP)",
+          "Net Domestic Product (NDP)"
+        ],
+        "answer": 1,
+        "explanation": "Real Gross Domestic Product (GDP) is universally accepted as the standard measure to gauge the pace of economic growth and output within a country's borders.",
+        "quizMeta": {
+          "classifications": {
+            "E": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 78,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 78
+        }
+      },
+      {
+        "q": "36. Given below are two statements, one labelled as Assertion (A) and the other as Reason (R). <br>Assertion (A): The Goods and Services Tax (GST) is a destination-based tax. Reason (R): GST subsumed several indirect taxes such as central excise duty and service tax. <br>Select the correct answer using the code given below: Code:",
+        "options": [
+          "Both (A) and (R) are true, but (R) is not the correct explanation of (A)",
+          "(A) is false, but (R) is true",
+          "(A) is true, but (R) is false",
+          "Both (A) and (R) are true and (R) is the correct explanation of (A)"
+        ],
+        "answer": 0,
+        "explanation": "Both statements are correct. However, GST is 'destination-based' because tax revenue accrues to the jurisdiction where goods/services are consumed, not because it subsumed prior indirect levies.A destination-based tax is a tax levied where the final consumption or sale of a good or service takes place, rather than where it was produced or manufactured.\nUnder this system:\n1. Tax Revenue Goes to the Consuming State: If a product is manufactured in Gujarat but bought and consumed by a customer in Delhi, the tax revenue on that final sale goes to Delhi (the destination), not Gujarat (the origin).\n2. Contrast with Origin-Based Taxes: Older systems like central excise duty were often origin-based, meaning taxes were collected by the state where the factory or production unit was located.\n3. Seamless Interstate Trade: For a federal nation like India, a destination-based tax (via mechanisms like IGST) prevents double taxation and ensures that tax collection aligns evenly with where consumer markets are actually concentrated",
+        "quizMeta": {
+          "classifications": {
+            "E": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 35,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 35
+        }
+      },
+      {
+        "q": "80. With reference to inflation, consider the following statements: <br>1. 'Cost-push inflation' arises due to an increase in the cost of production. <br>2. The Wholesale Price Index (WPI) in India includes the services sector. <br>Select the correct answer using the code given below:",
+        "options": [
+          "Only 2",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 1"
+        ],
+        "answer": 3,
+        "explanation": "Statement 1 is correct. Statement 2 is incorrect because the Wholesale Price Index (WPI) in India measures price movements of physical manufactured and primary goods only and completely excludes services.",
+        "quizMeta": {
+          "classifications": {
+            "E": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 79,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 79
+        }
       }
     ]
   }

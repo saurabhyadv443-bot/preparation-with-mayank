@@ -563,6 +563,292 @@
           "questionId": null,
           "questionIndex": 16
         }
+      },
+      {
+        "q": "21. Consider the following statements regarding the Right to Constitutional Remedies: <br>1. Article 32 empowers the Supreme Court to issue writs for enforcement of Fundamental <br>Rights. <br>2. This right can be suspended during a National Emergency except in respect of Articles 20  and<br>21. <br>Which of the statements given above is/are not correct?",
+        "options": [
+          "Only 2",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 1"
+        ],
+        "answer": 1,
+        "explanation": "1. Statement 1 is correct: Under Article 32 of the Indian Constitution, the Supreme Court is empowered to issue directions, orders, or writs (such as Habeas Corpus, Mandamus, Prohibition, Quo-Warranto, and Certiorari) for the enforcement of any of the Fundamental Rights conferred by Part III.\n2. Statement 2 is correct: Under Article 359, when a proclamation of National Emergency is in operation, the President may by order declare that the right to move any court for the enforcement of Fundamental Rights (including Article 32) shall remain suspended. However, following the 44th Constitutional Amendment Act, 1978, the President cannot suspend the right to move the court for the enforcement of rights guaranteed under Articles 20 and 21.\nSince the question asks which of the statements is/are not correct, and both statements are correct, the appropriate choice is Neither 1 nor 2.\nHere is the exact constitutional mechanism:\n1. The Rule: Under Article 359, the President can suspend the right to approach the court (via Article 32 or Article 226) for the enforcement of specified Fundamental Rights during a National Emergency.\n2. The Exception (44th Amendment Act, 1978): The 44th Amendment amended Article 359 to explicitly state that the President cannot suspend the right to move any court for the enforcement of:\nIn addition, under Article 358, only the six freedoms under Article 19 are automatically suspended, and even that only occurs if the emergency is declared on grounds of war or external aggression (not on the ground of armed rebellion). Articles 20 and 21 remain fully alive and judicially enforceable in all circumstances.",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 16",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 20,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 16",
+          "questionId": null,
+          "questionIndex": 20
+        }
+      },
+      {
+        "q": "35. Which of the following pairs of Mineral and their leading producer <br>State is/are correctly matched? <br>1. Bauxite - Odisha <br>2. Mica - Jharkhand <br>3. Manganese - Madhya Pradesh <br>4. Copper - Rajasthan <br>Select the correct answer by using the code given below:",
+        "options": [
+          "1 and 2 only",
+          "1, 3 and 4 only",
+          "2 and 3 only",
+          "1, 2, 3 and 4"
+        ],
+        "answer": 1,
+        "explanation": "explanation not available",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 16",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 34,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 16",
+          "questionId": null,
+          "questionIndex": 34
+        }
+      },
+      {
+        "q": "145. Which of the following provisions/mechanisms under the Indian <br>Constitution mandates a minimum number of judges to sit for  deciding cases involving the interpretation of the Constitution?",
+        "options": [
+          "Article 124(3)",
+          "Article 131",
+          "Article 145(3)",
+          "Article 143"
+        ],
+        "answer": 2,
+        "explanation": "Article 145(3) of the Constitution of India mandates that a minimum of five judges (known as a Constitution Bench) must sit to decide any case involving a substantial question of law as to the interpretation of the Constitution, or for hearing any reference made by the President under Article 143.\n1. Article 145(3): Specifically lays down: \"The minimum number of Judges who are to sit for the purpose of deciding any case involving a substantial question of law as to the interpretation of this Constitution or for the purpose of hearing any reference under Article 143 shall be five.\"\n2. Why the other options are incorrect:\n3. Article 124(3): Outlines the qualifications required for appointment as a Judge of the Supreme Court.\n4. Article 131: Deals with the original jurisdiction of the Supreme Court in federal disputes (between the Centre and states or among states).\n5. Article 143: Deals with the advisory jurisdiction (President's power to consult the Supreme Court), but the procedural mandate regarding bench size is located in Article 145(3).",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 16",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 144,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 16",
+          "questionId": null,
+          "questionIndex": 144
+        }
+      },
+      {
+        "q": "17. With reference to the Goods and Services Tax (GST) Council,  which of the following statements is/are correct? <br>1. It is a constitutional body established under Article 279-A. <br>2. Its decisions are taken by a simple majority of members present, with the Union having no  special weightage of votes. <br>Select the correct answer from the code given below:",
+        "options": [
+          "Only 2",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 1"
+        ],
+        "answer": 3,
+        "explanation": "Statement 1 is correct (Article 279A). Statement 2 is incorrect because decisions require a majority of not less than three-fourths of the weighted votes of members present and voting, where the Central Government holds one-third and the States collectively hold two-thirds weightage.",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 16,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 16
+        }
+      },
+      {
+        "q": "78. The State List includes: <br>1. Defence Industry <br>2. Tax on agricultural income <br>3. Opium cultivation <br>4. Tax related to mineral rights <br>5. Stock Exchange <br>Code:",
+        "options": [
+          "2, 3 and 4",
+          "3 and 4",
+          "2 and 4",
+          "2, 3, 4 and 5"
+        ],
+        "answer": 2,
+        "explanation": "Taxes on agricultural income (Entry 46) and taxes on mineral rights (Entry 50) belong to the State List (List II). Defence (Entry 1), cultivation/manufacture of opium (Entry 59), and stock exchanges (Entry 48) are in the Union List (List I).",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 77,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 77
+        }
+      },
+      {
+        "q": "130. Which of the following Fundamental Rights are directly violated in custodial deaths? <br>1. Article 20 <br>2. Article 21 <br>3. Article 22 <br>Select the correct answer by using the code given below :",
+        "options": [
+          "1 and 2 only",
+          "1 and 3 only",
+          "2 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 3,
+        "explanation": "Custodial violence and deaths infringe Article 21 (Right to life and human dignity), Article 22 (Protection against arbitrary arrest and detention procedures), and Article 20 (Protection against self-incrimination and cruel punishment).",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 129,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 129
+        }
+      },
+      {
+        "q": "60. With reference to the Anti-Defection Law (Tenth Schedule), which  of the following statements is/are correct? <br>1. It was added to the Constitution by the 52nd Amendment Act, 1985. <br>2. It provides for disqualification of members on the ground of defection, but does not apply  once a member is elected as Speaker or Chairman. <br>Select the correct answer from the code given below:",
+        "options": [
+          "Only 2",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 1"
+        ],
+        "answer": 2,
+        "explanation": "Both statements are correct. Paragraph 5 of the Tenth Schedule provides a special exemption from disqualification to a member elected as the Speaker or Deputy Speaker of Lok Sabha/Vidhan Sabha, or Chairman/Deputy Chairman of Rajya Sabha/Vidhan Parishad.",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 59,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 59
+        }
+      },
+      {
+        "q": "80. Consider the following statements regarding Governor : <br>1. He is appointed by the President. <br>2. Can postpone the death sentence under the state law. <br>Choose the correct statement(s) from the above :",
+        "options": [
+          "1 Only",
+          "2 Only",
+          "1 and 2 Both",
+          "Neither 1 nor 2"
+        ],
+        "answer": 2,
+        "explanation": "Both statements are correct. Under Article 155, the Governor is appointed by the President. Under Article 161, the Governor has the power to suspend, remit, or commute (postpone) a sentence of death under laws related to the executive power of the State.",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 79,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 79
+        }
+      },
+      {
+        "q": "20. With reference to the Anti-Defection Law, consider the following  statements: <br>1. It is contained in the Tenth Schedule of the Constitution. <br>2. The decision of the Presiding Officer on disqualification is subject to judicial review. <br>Select the correct answer using the code given below:",
+        "options": [
+          "Only 2",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 1"
+        ],
+        "answer": 2,
+        "explanation": "Both statements are correct. Added by the 52nd Amendment in 1985, the Tenth Schedule governs anti-defection. In Kihoto Hollohan (1992), the Supreme Court held that the Speaker's order is subject to judicial review.",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 19,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 19
+        }
+      },
+      {
+        "q": "121. In the context of Public Service Commission, match List-I with List-II and choose the correct answer with the help of given codes: <br> <br>List-I (Article) <br>List-II (Provision) <br>A) Art. 315 <br>1. Suspension of members <br>B) Art. 316 <br>2. Public Service Commission for the Union and  the States <br>C) Art. 317 <br>3. Terms of service of members <br>D) Art. 318 <br>4. Appointment and tenure of office of members <br>Code: <br>A B C D",
+        "options": [
+          "2 4 3 1",
+          "4 2 3 1",
+          "2 4 1 3",
+          "1 2 3 4"
+        ],
+        "answer": 2,
+        "explanation": "Article 315 provides for Public Service Commissions, Article 316 covers Appointment and term of office, Article 317 governs Removal and suspension, and Article 318 empowers the making of regulations on conditions of service.",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 120,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 120
+        }
+      },
+      {
+        "q": "146. Consider the following statements regarding 'Starred Questions'- <br>1. These are such questions, the answer of which is required by the member immediately. <br>2. Starred questions can be answered orally. <br>The correct statement is/are-",
+        "options": [
+          "1 Only",
+          "2 Only",
+          "Both 1 and 2",
+          "Neither 1 Nor 2"
+        ],
+        "answer": 1,
+        "explanation": "Statement 2 is correct because starred questions are distinguished by an asterisk and answered orally on the floor of the House, allowing supplementary questions. Statement 1 is incorrect because they require standard statutory advance notice (typically 10-15 days), not an immediate response.",
+        "quizMeta": {
+          "classifications": {
+            "P": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 145,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 145
+        }
       }
     ]
   }

@@ -106830,6 +106830,423 @@
           "questionId": null,
           "questionIndex": 97
         }
+      },
+      {
+        "q": "1. With reference to the Harappan Civilization, consider the following statements: <br>1. Lothal was primarily known for its dockyard and maritime trade facilities. <br>2. The Great Bath at Mohenjodaro was constructed using burnt bricks with a bitumen lining. <br>Which of the statements given above is/are correct?",
+        "options": [
+          "Only 2",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 1"
+        ],
+        "answer": 2,
+        "explanation": "\n",
+        "quizMeta": {
+          "classifications": {
+            "H": true,
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 16",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 0,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 16",
+          "questionId": null,
+          "questionIndex": 0
+        }
+      },
+      {
+        "q": "52. Consider the following statements regarding Biodiversity <br>Hotspots: <br>1. A region must have at least 1,500 species of vascular plants found nowhere else to  qualify as a hotspot. <br>2. It must have lost at least 30% of its original habitat. <br>3. India has four recognised biodiversity hotspots. <br>Which of the statements given above are correct?",
+        "options": [
+          "1 and 2 only",
+          "2 and 3 only",
+          "1 and 3 only",
+          "1, 2 and 3"
+        ],
+        "answer": 2,
+        "explanation": "Statement 1 is correct: According to Conservation International (Norman Myers' criteria), a region must contain at least 1,500 species of vascular plants as endemics (more than 0.5% of the world's total) to qualify as a biodiversity hotspot.Statement 2 is incorrect: A region must have lost at least 70% of its original primary native vegetation (i.e., it must have 30% or less of its original natural vegetation intact), not lost at least 30%.Statement 3 is correct: India hosts regions of four globally recognised biodiversity hotspots:The HimalayasThe Western Ghats (and Sri Lanka)Indo-Burma (covering parts of Northeast India)Sundaland (including the Nicobar Islands)",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 16",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 51,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 16",
+          "questionId": null,
+          "questionIndex": 51
+        }
+      },
+      {
+        "q": "73. Which of the following is the highest peak located entirely within India?",
+        "options": [
+          "K2",
+          "Kanchenjunga",
+          "Nanda Devi",
+          "Nanga Parbat"
+        ],
+        "answer": 2,
+        "explanation": "Nanda Devi (7,816 m) in Uttarakhand is the highest peak situated entirely within undisputed Indian territory. Kanchenjunga lies across the India-Nepal border, while K2 and Nanga Parbat lie in Pakistan-administered Kashmir.",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 72,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 72
+        }
+      },
+      {
+        "q": "95. The longest river of Asia is-",
+        "options": [
+          "Indus",
+          "Yangtze",
+          "Hwang Ho",
+          "Tsangpo"
+        ],
+        "answer": 1,
+        "explanation": "The Yangtze River (Chang Jiang) in China is the longest river in Asia and the third longest in the world, with a length of approximately 6,300 km.",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 94,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 94
+        }
+      },
+      {
+        "q": "113. Which of the following pairs is not correctly matched ? <br> <br>Rivers <br>Origin Place",
+        "options": [
+          "Danube Black Forest",
+          "Blue Nile Victoria Lake",
+          "Mississippi Itasca Lake",
+          "Yangtze Plateau of Tibet"
+        ],
+        "answer": 1,
+        "explanation": "The Blue Nile originates from Lake Tana in the Ethiopian Highlands. The White Nile originates from Lake Victoria.",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 112,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 112
+        }
+      },
+      {
+        "q": "114. Which of the following longitudes passes through mid of North American Continent?",
+        "options": [
+          "100^\\circ West Longitude",
+          "100^\\circ East Longitude",
+          "90^\\circ West Longitude",
+          "90^\\circ East Longitude"
+        ],
+        "answer": 0,
+        "explanation": "The 100th Meridian West (100° W) bisects the North American continent, historically demarcating the sub-humid eastern regions from the semi-arid Great Plains.",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 113,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 113
+        }
+      },
+      {
+        "q": "115. Which one of the following islands is smallest in area ?",
+        "options": [
+          "Greenland",
+          "New Guinea",
+          "Borneo",
+          "Madagascar"
+        ],
+        "answer": 3,
+        "explanation": "By land area: Greenland (~2,166,000 sq km) > New Guinea (~785,753 sq km) > Borneo (~743,330 sq km) > Madagascar (~587,041 sq km). Thus, Madagascar is the smallest among the four.",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 114,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 114
+        }
+      },
+      {
+        "q": "97. \"It is the largest lagoon and brackish water lake in India. Nalabana Island is situated in it. A large number of migratory birds come here  during the winter season.\" About whom the above statement has been said?",
+        "options": [
+          "Pulicat Lake",
+          "Chilika Lake",
+          "Sambhar Lake",
+          "Vembanad Lake"
+        ],
+        "answer": 1,
+        "explanation": "Chilika Lake in Odisha is Asia's largest brackish water lagoon. It hosts Nalabana Bird Sanctuary (Nalabana Island) under the Ramsar Convention.",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 96,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 96
+        }
+      },
+      {
+        "q": "104. Which of the following tribes is not native to the Andaman and Nicobar Islands of India?",
+        "options": [
+          "Halchu",
+          "Rengma",
+          "Onge",
+          "Shompen"
+        ],
+        "answer": 1,
+        "explanation": "The Rengmas are a Naga ethnic group native to Nagaland and Assam. Onge, Shompen, and Halchu (Nicobarese lineage) are native to Andaman and Nicobar.",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 15",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 103,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 15",
+          "questionId": null,
+          "questionIndex": 103
+        }
+      },
+      {
+        "q": "35. With reference to the drainage systems of India, consider the  following statements: <br>1. Most Himalayan rivers are antecedent in nature. <br>2. The Peninsular rivers generally flow in shallow valleys with graded profiles. <br>Which of the above statements is/are correct?",
+        "options": [
+          "Only 2",
+          "Neither 1 nor 2",
+          "Both 1 and 2",
+          "Only 1"
+        ],
+        "answer": 2,
+        "explanation": "Both statements are correct. Himalayan rivers such as the Indus, Sutlej, and Brahmaputra are older than the Himalayas (antecedent), while mature Peninsular rivers flow through shallow valleys with graded base levels.The Peninsular drainage system is geologically far older and more stable than the Himalayan system. Having experienced millions of years of continuous weathering and erosion, these rivers are in their mature/senile stage. They typically flow through broad, shallow valleys and have acquired graded profiles, having largely reached their base level of erosion.",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 34,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 34
+        }
+      },
+      {
+        "q": "70. Which one of the following pairs is not correctly matched? <br> <br>Centre of Fertilizer Industry <br>Location",
+        "options": [
+          "Sindri Bihar",
+          "Korba Chhattisgarh",
+          "Alwai Kerala",
+          "Namrup Assam"
+        ],
+        "answer": 0,
+        "explanation": "Sindri Fertilizer Plant is located in Dhanbad district, which is in the state of Jharkhand (post the bifurcation of Bihar in 2000).",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 14",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 69,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 14",
+          "questionId": null,
+          "questionIndex": 69
+        }
+      },
+      {
+        "q": "117. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): Winter rainfall in the plains of Northern India is caused by western disturbances. Reason (R): The Bay of Bengal branch of monsoon is more powerful than the Arabian Sea branch. <br>Select the correct answer using the codes given below: Code:",
+        "options": [
+          "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
+          "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+          "(A) is correct but (R) is incorrect.",
+          "(A) is incorrect but (R) is correct."
+        ],
+        "answer": 2,
+        "explanation": "Assertion (A) is correct. Reason (R) is incorrect because the Arabian Sea branch of the southwest monsoon is larger and approximately three times more powerful than the Bay of Bengal branch.",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 116,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 116
+        }
+      },
+      {
+        "q": "118. Which one of the following pairs is not correctly matched ?",
+        "options": [
+          "Yosemite - Norway",
+          "Angel - Venezuela",
+          "Ribbon - California",
+          "Tugela - South Africa"
+        ],
+        "answer": 0,
+        "explanation": "Yosemite Falls is located in Yosemite National Park, California, USA, not in Norway.",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 117,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 117
+        }
+      },
+      {
+        "q": "119. Which of the following canals is situated between the North Sea  and Amsterdam?",
+        "options": [
+          "Soo Canal",
+          "Kiel Canal",
+          "New Waterway Canal",
+          "Welland Canal"
+        ],
+        "answer": 2,
+        "explanation": "The North Sea Canal (Noordzeekanaal) / New Waterway network connects the Port of Amsterdam directly to the North Sea.",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 118,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 118
+        }
+      },
+      {
+        "q": "132. Which of the following statements are correct? <br>1. Alaska is the largest state of the United States of America in terms of area. <br>2. Rhode Island is the smallest state of the United States in terms of area. <br>3. The largest state of the United States in terms of population is California. <br>Code:",
+        "options": [
+          "1 and 2",
+          "1, 2 and 3",
+          "2 and 3",
+          "1 Only"
+        ],
+        "answer": 1,
+        "explanation": "All three statements are geographic facts: Alaska is the largest US state by land area, Rhode Island is the smallest, and California has the largest population (approaching 39 million).",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 131,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 131
+        }
+      },
+      {
+        "q": "135. Which of the following pairs is not correctly matched?",
+        "options": [
+          "Sabancaya - Peru",
+          "Mount Merapi - Indonesia",
+          "Mount Ulawun - Australia",
+          "Colima - Mexico"
+        ],
+        "answer": 2,
+        "explanation": "Mount Ulawun is one of the most active basaltic volcanoes in Papua New Guinea (Bismarck Archipelago), not in Australia.",
+        "quizMeta": {
+          "classifications": {
+            "G": true
+          }
+        },
+        "_pyqSubjectKey": "mock",
+        "_pyqChapter": "UPPCS Set 13",
+        "_pyqQuestionId": null,
+        "_pyqQuestionIndex": 134,
+        "_source": {
+          "sourceSubjectKey": "mock",
+          "chapter": "UPPCS Set 13",
+          "questionId": null,
+          "questionIndex": 134
+        }
       }
     ]
   }
