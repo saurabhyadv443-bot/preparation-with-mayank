@@ -43846,1129 +43846,942 @@
     ],
     "UPPCS Set 1": [
   {
-    "q": "1. With reference to the Indus Valley Civilization, consider the following statements: <br>1. Houses were generally built around a central courtyard. <br>2. Baked bricks were extensively used in construction. <br>Which of the statements given above is/are correct?",
+    "q": "1. Consider the following statements: <br>1. Out of the Mahajanapadas, only Ashmaka was situated in South India. <br>2. Kamboja was situated in the Uttarapatha. <br>3. The region of modern Bundelkhand was the Matsya Mahajanapada in ancient times. <br>Choose the correct statements using code given below:",
+    "options": [
+      "1 and 2",
+      "2 and 3",
+      "1 and 3",
+      "1, 2 and 3"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "2. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): The most significant evidence of Ashoka's Buddhist status is his minor rock edict from Bhabru. <br>Reason (R): In this edict, Ashoka explicitly salutes Buddha, Dhamma, and the Sangha. <br>Select the correct answer using the codes given below:",
+    "options": [
+      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
+      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+      "(A) is correct but (R) is incorrect.",
+      "(A) is incorrect but (R) is correct."
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "3. Consider the following statements: <br>1. During Iltutmish's regime, Pirthu's rebellion took place in Awadh. <br>2. Alauddin adopted a policy of \"Blood and Sword\" to deal with internal rebellion in the kingdom. <br>3. In the context of Ghiyasuddin Tughlaq, Nizamuddin Auliya had said that \"Delhi is still a long way off\" (Dilli abhi bahut dur hai). <br>Choose the incorrect statement(s):",
+    "options": [
+      "1 and 3",
+      "2 and 3",
+      "1 and 2",
+      "2 Only"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "4. Which of the following pairs is/are correctly matched? <br><br>Kingdom - State Emblem",
+    "options": [
+      "Chola - Tiger",
+      "Chera - Bow and Arrow",
+      "Pandya - Fish",
+      "All are correctly matched"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "5. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Major States of Deccan) <br>A) Bijapur <br>B) Ahmednagar <br>C) Golconda <br>D) Bidar <br><br>List-II (Founder) <br>1. Malik Ahmad <br>2. Yusuf Adil Khan <br>3. Amir Ali Barid <br>4. Quli Shah <br><br>Code: <br>A B C D",
+    "options": [
+      "2 1 4 3",
+      "4 1 3 2",
+      "3 2 1 4",
+      "3 1 2 4"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "6. Which of the following countries situated in the African continent is/are included in the Slave Coast? <br>1. Liberia <br>2. Togo <br>3. Benin <br>4. Nigeria <br>5. Sierra Leone <br>Select the correct answer using the code given below:",
+    "options": [
+      "1, 3, 4 and 5",
+      "1, 2, 3 and 4",
+      "2, 3 and 4",
+      "3, 4 and 5"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "7. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Mountain) <br>A) Ural Mountains <br>B) Sierra Nevada Mountains <br>C) Black Hills <br>D) Kilimanjaro <br><br>List-II (Type) <br>1. Volcanic Mountains <br>2. Dome shaped Mountains <br>3. Block Mountains <br>4. Fold Mountains <br><br>Code: <br>A B C D",
+    "options": [
+      "4 3 2 1",
+      "4 3 1 2",
+      "3 4 1 2",
+      "3 4 2 1"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "8. Consider the following: <br>1. Ken <br>2. Sindh <br>3. Chambal <br>4. Betwa <br>Select the correct order of the above rivers from west to east using the code:",
+    "options": [
+      "3, 2, 4, 1",
+      "3, 4, 2, 1",
+      "4, 3, 2, 1",
+      "4, 2, 3, 1"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "9. Consider the following statements: <br>1. Kerala is the largest producer of rubber in India. <br>2. The Indian Rubber Research Institute is situated in Kochi, Kerala. <br>Choose the correct statement(s):",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "Both 1 and 2",
+      "Neither 1 nor 2"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "10. Which one of the following rocks is not formed by the metamorphism of igneous rocks?",
+    "options": [
+      "Gneiss",
+      "Amphibolite",
+      "Schist",
+      "Quartzite"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "11. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Conference) <br>A) Helsinki Conference <br>B) Vienna Convention <br>C) Cancun Summit <br>D) Earth (Rio) Summit <br><br>List-II (Decision) <br>1. Protection of the marine environment <br>2. Establishment of the Green Climate Fund <br>3. Agenda 21 adopted <br>4. Protection of the ozone layer <br><br>Code: <br>A B C D",
+    "options": [
+      "1 2 3 4",
+      "1 4 2 3",
+      "3 1 2 4",
+      "3 4 2 1"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "12. Consider the following statements: <br>1. The Brahmaputra is called 'Jamuna' in Bangladesh. <br>2. The joint stream of the Brahmaputra and the Ganga is called 'Padma' in Bangladesh. <br>Choose the correct statement(s):",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "Both 1 and 2",
+      "Neither 1 nor 2"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "13. Which of the following is true about the Bhaja Caves in terms of musical history?",
+    "options": [
+      "They contain the earliest depictions of musical instruments like the Dholak and tabla in Indian art.",
+      "They house the earliest known musical notations in India.",
+      "The caves were used as a music school during the Satavahanas Period.",
+      "The carvings in these caves prove that tabla, a percussion instrument, was used in India for at least 2300 years."
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "14. Consider the following statement regarding Hydroponics: <br>1. It is a method of growing plants in soil based, nutrient rich agriculture fields. <br>2. It is suitable for urban and peri urban areas where the arable land is polluted. <br>Which of the statements given above is/are correct?",
     "options": [
       "Only 1",
       "Only 2",
       "Both 1 and 2",
-      "Neither 1 nor 2"
+      "None"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "15. In the context of the Constitution of India, the objective of 'justice - social, economic and political' is explicitly mentioned in:",
+    "options": [
+      "Both Preamble and Directive Principles of State Policy",
+      "Preamble only",
+      "Directive Principles of State Policy only",
+      "Neither Preamble nor Directive Principles of State Policy"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "16. Consider the following statements regarding the Kakatiya Dynasty: <br>1. The Ramappa temple was constructed in 1213 AD during the Kakatiya Empire's rule by Recharla Rudra. <br>2. A few copper-plate inscriptions of the Kakatiya family describe them as belonging to the Kshatriya (warrior) varna. <br>Select the answer using the code given below:",
+    "options": [
+      "1 only",
+      "2 only",
+      "Both 1 and 2",
+      "None"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "17. Which of the following rocks are intrusive igneous rock formations? <br>1. Laccoliths <br>2. Batholiths <br>3. Dykes <br>4. Caldera <br>5. Flood Basalt <br>Select the correct answer using codes given below:",
+    "options": [
+      "1, 2, 3 and 4",
+      "1, 2, 4 and 5",
+      "1, 2 and 3",
+      "1, 2, 3, 4 and 5"
     ],
     "answer": 2,
     "explanation": "explanation not available"
   },
   {
-    "q": "2. Arrange the following prehistoric ages in correct chronological order: <br>1. Chalcolithic Age <br>2. Neolithic Age <br>3. Paleolithic Age <br>4. Mesolithic Age <br>Options:",
+    "q": "18. Indian federalism is constitutionally asymmetric because of:",
     "options": [
-      "3, 4, 2, 1",
-      "3, 2, 4, 1",
-      "4, 3, 2, 1",
-      "2, 3, 4, 1"
+      "Existence of a State including its territorial integrity is in the hands of Parliament.",
+      "More important subjects are vested with the centre.",
+      "Differences in the way some States and other constituent units of the Indian Union relate to the Centre.",
+      "Presence of emergency provisions, which can turn our federal polity into a highly centralized system."
     ],
-    "answer": 0,
+    "answer": 2,
     "explanation": "explanation not available"
   },
   {
-    "q": "3. Match List-I with List-II: <br><br>List-I (Term) <br>A) Sabha <br>B) Samiti <br>C) Vis <br>D) Jana <br><br>List-II (Meaning) <br>1. Tribe <br>2. Assembly of elders <br>3. People <br>4. Popular assembly <br><br>Select the correct answer using the code given below:",
+    "q": "19. Consider the following statements regarding the achievements of Swarajist activity in the Legislative Councils: <br>1. They exposed the limitations of the Montagu-Chelmsford Reforms. <br>2. Vithalbhai Patel was elected as the Speaker of the Central Legislative Assembly. <br>Select the answer using code given below:",
     "options": [
-      "A-2, B-4, C-3, D-1",
-      "A-4, B-2, C-1, D-3",
-      "A-2, B-3, C-4, D-1",
-      "A-3, B-4, C-2, D-1"
+      "1 only",
+      "2 only",
+      "Both 1 and 2",
+      "None"
     ],
-    "answer": 0,
+    "answer": 2,
     "explanation": "explanation not available"
   },
   {
-    "q": "4. With reference to the development of ancient Indian towns, consider the following statements: <br>1. Towns developed mainly as administrative centres. <br>2. Craft production played an important role in urban growth. <br>Which of the statements given above is/are correct?",
+    "q": "20. Given are the Indian Rivers and corresponding National Parks- <br><br>River - National Park <br>1. Lohit - Orang National Park <br>2. Chambal - Rajaji National Park <br>3. Narmada - Kanha National Park <br>Which of the above are correctly matched?",
     "options": [
-      "Only 1",
       "Only 2",
-      "Both 1 and 2",
-      "Neither 1 nor 2"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "5. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): Alauddin Khalji introduced a market control policy. <br>Reason (R): The objective of this policy was to provide essential goods to the army at low prices. <br>Select the correct answer using the codes given below:",
-    "options": [
-      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
-      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
-      "(A) is correct but (R) is incorrect.",
-      "(A) is incorrect but (R) is correct."
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "6. Arrange the following events in correct chronological order: <br>1. Foundation of Din-i-Ilahi (1582 AD) <br>2. Reign of Alauddin Khalji (1296–1316 AD) <br>3. First Battle of Panipat (1526 AD) <br>4. Death of Humayun (1556 AD) <br>Code:",
-    "options": [
-      "2, 3, 1, 4",
-      "2, 3, 4, 1",
-      "3, 1, 2, 4",
-      "2, 1, 3, 4"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "7. With reference to Mughal emperor Jahangir, consider the following statements: <br>1. He introduced the 'Chain of Justice'. <br>2. He authored Ain-i-Akbari. <br>3. His reign is noted for development of painting. <br>Which of the statements given above is/are correct?",
-    "options": [
       "1 and 3",
-      "1 and 2",
-      "2 and 3",
-      "1, 2 and 3"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "8. With reference to the Mughal land revenue system, consider the following statements: <br>1. The Zabti system was based on land measurement. <br>2. Revenue assessment was based on long-term averages. <br>3. This system was introduced by Jahangir. <br>Which of the statements given above is/are correct?",
-    "options": [
-      "1 and 2",
-      "2 and 3",
-      "1 and 3",
-      "1, 2 and 3"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "9. Match List-I with List-II: <br><br>List-I (Art/Tradition) <br>A) Gandhara art <br>B) Mathura art <br>C) Sarnath school <br>D) Odissi dance <br><br>List-II (Feature/Source) <br>1. Mahari tradition <br>2. Red sandstone and indigenous elements <br>3. High polish and spiritual expression <br>4. Greco-Roman influence <br><br>Choose the correct answer:",
-    "options": [
-      "A-4, B-2, C-3, D-1",
-      "A-2, B-4, C-3, D-1",
-      "A-4, B-3, C-2, D-1",
-      "A-3, B-2, C-4, D-1"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "10. With reference to Nagara style temples, consider the following statements: <br>1. The shikhara (spire) above the sanctum is curvilinear. <br>2. Amalaka and kalasha crown the shikhara. <br>3. Gopuram forms the tallest structure of the temple. <br>Which of the above statements are correct?",
-    "options": [
-      "1 and 2",
-      "2 and 3",
-      "1 and 3",
-      "1, 2 and 3"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "11. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): Gandhara art depicted Buddha in a realistic style. <br>Reason (R): Gandhara region had Greco-Roman cultural contacts. <br>Select the correct answer using the codes given below:",
-    "options": [
-      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
-      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
-      "(A) is correct but (R) is incorrect.",
-      "(A) is incorrect but (R) is correct."
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "12. With reference to Rajput painting, consider the following statements: <br>1. It was based on devotional themes. <br>2. Bright colours were commonly used. <br>3. Persian influence dominated this style. <br>Which of the above statements are correct?",
-    "options": [
-      "1 and 2",
-      "2 and 3",
-      "1 and 3",
-      "1, 2 and 3"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "13. With reference to Indian Classical dances, consider the following statements: <br>1. Bharatanatyam was developed from the Devadasi tradition. <br>2. Kathak developed only within temple traditions. <br>Which of the above statements are correct?",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "1 and 2 Both",
-      "Neither 1 nor 2"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "14. Consider the following statements: <br>1. All India Trade Union Congress was established in Lucknow in 1920 AD. <br>2. The first split in this organization took place in 1929 AD, when its session was held in Nagpur under the chairmanship of Jawaharlal Nehru. <br>Which of the above statement(s) is/are correct?",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "1 and 2 Both",
-      "Neither 1 nor 2"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "15. Which of the following statements are correct? <br>1. Veda Samaj was founded by Shri Dharalu Naidu. <br>2. Prarthana Samaj was founded by Atmaram Pandurang. <br>3. Sharda Sadan was established by Pandita Ramabai. <br>4. Radha Swami movement was established by Shivdayal Khatri. <br>Code:",
-    "options": [
-      "1, 2 and 3",
-      "2, 3 and 4",
-      "1, 3 and 4",
-      "1, 2, 3 and 4"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "16. Consider the following statements: <br>1. Quwwat-ul-Islam Mosque is the first building built in Indo-Islamic style. <br>2. It was built by Qutubuddin Aibak to commemorate his victory over Prithviraj Chauhan. <br>Which of the above statement(s) is/are correct?",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "1 and 2 Both",
-      "Neither 1 nor 2"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "17. Which of the following statements is not correct?",
-    "options": [
-      "In the buildings of Tughlaq period, special emphasis was given on simplicity and seriousness instead of ornamentation and grandeur.",
-      "The main feature of Tughlaq architecture was the sloping walls.",
-      "The tomb of Ghiyasuddin Tughlaq is octagonal.",
-      "Double dome has been used in the tomb of Sikandar Lodi."
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "18. Which of the following statements regarding Puranas is/are correct? <br>1. Maharishi Lomaharsha and his son Ugrashrava are considered to be the compilers of the Puranas. <br>2. The number of Puranas is considered to be 18. <br>3. Matsya Purana is the oldest Purana. <br>4. There is description of ancient dynasties in the Puranas. <br>Code:",
-    "options": [
-      "1, 2 and 3",
-      "2, 3 and 4",
-      "1, 3 and 4",
-      "1, 2, 3 and 4"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "19. Which of the following statements regarding Jain Tirthankara Parshvanath are not correct? <br>1. He was the 23rd Tirthankaras of Jainism. <br>2. He has been called Purushadaniyam in Jain texts. <br>3. He taught Pancharayam. <br>Code:",
-    "options": [
-      "1 and 2",
-      "2 and 3",
-      "3 Only",
-      "1 and 3"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "20. In which of the following texts, Chandragupta Maurya has been described as the son of Dhananand, the ruler of the Nanda dynasty?",
-    "options": [
-      "Brihatkatha Manjari",
-      "Kathasaritsagara",
-      "Indica",
-      "Mudrarakshasa"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "21. Which of the following provisions was not included in the Government of India Act 1919?",
-    "options": [
-      "This Act introduced the Bicameral System in the country for the first time.",
-      "By this the Direct Election System was started for the first time.",
-      "This Act created the office of the High Commissioner of India in London.",
-      "Now five members of the Viceroy's Executive Council could be Indians."
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "22. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Inscriptions) <br>A) Indore Copper Plate <br>B) Bhitari Pillar Inscription <br>C) Kahaum Pillar Inscription <br>D) Gadhwa Inscription <br><br>List-II (Place) <br>1. Ghazipur <br>2. Bulandshahr <br>3. Prayagraj <br>4. Gorakhpur <br><br>Code:",
-    "options": [
-      "2, 4, 1, 3",
-      "3, 1, 4, 2",
-      "2, 1, 4, 3",
-      "3, 4, 1, 2"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "23. Which one of the following pairs is/are not correctly matched? <br><br>Stupa - Place",
-    "options": [
-      "Dhamekh Stupa - Prayagraj",
-      "Chaukhandi Stupa - Varanasi",
-      "Ramabhar Stupa - Kushinagar",
-      "Piprahwa Stupa - Siddharth Nagar"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "24. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): Charles Metcalfe is called as Liberator of Press. <br>Reason (R): Metcalfe had implemented Liberation of the Indian Press Act. <br>Select the correct answer using the codes given below:",
-    "options": [
-      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
-      "Both (A) and (R) are correct (R) is not the correct explanation of (A).",
-      "(A) is correct, (R) is wrong.",
-      "(A) is wrong (R) is correct."
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "25. Consider the following statements: <br>1. In a Dravidian-style temple, there is an enclosed courtyard covered with a square roof; this is called the \"pradakshina-patha\" (circumambulatory path). <br>2. The temples of Odisha represent the pure Nagara style. <br>Of the above statements-",
-    "options": [
-      "Only statement-1 is correct",
-      "Only statement-2 is correct",
-      "Both statements 1 and 2 are correct",
-      "Neither statement-1 nor statement-2 is correct"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "26. During the Mauryan period, 'Karmantika' was associated with:",
-    "options": [
-      "Head of industries and factories",
-      "Chief officer of the city",
-      "Chairman of the council",
-      "Minister of the war department"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "27. With reference to the Permanent Settlement system, consider the following statements: <br>1. The British administration aimed to ensure a fixed and predictable source of revenue. <br>2. Zamindars were given full freedom to enhance rent from peasants without any legal restraint. <br>3. Default in revenue payment could result in auction of zamindari rights. <br>4. The system was implemented uniformly in all British-controlled territories. <br>Which of the above statements are correct?",
-    "options": [
-      "1, 3 and 4",
-      "1, 2 and 3",
-      "2, 3 and 4",
-      "1, 2 and 4"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "28. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): The Indigo Revolt marked a qualitative shift in colonial-era peasant resistance. <br>Reason (R): Peasants adopted collective non-cooperation by refusing indigo cultivation. <br>Select the correct answer using the codes given below:",
-    "options": [
-      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
-      "Both (A) and (R) are correct (R) is not the correct explanation of (A).",
-      "(A) is correct, (R) is wrong.",
-      "(A) is wrong (R) is correct."
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "29. In the context of the Kushan dynasty, which of the following statements is correct? <br>1. The rulers of the Kushan dynasty addressed themselves with the title of Devputra. <br>2. The rulers of the Kushan dynasty introduced the Kshatrap system in state governance. <br>3. Kanishka, the chief ruler of the Kushan dynasty, patronized the Hinayana branch of Buddhism. <br>Code:",
-    "options": [
-      "1 and 2",
-      "2 and 3",
-      "1 and 3",
-      "All of the above"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "30. Which one of the following pairs is not correctly matched? <br><br>Medieval Currencies - Metal",
-    "options": [
-      "Mohur - Gold Coin",
-      "Rupiya - Silver Coin",
-      "Jital - Copper Coin",
-      "Ilahi - Silver Coin"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "31. Consider the following statements: <br>1. 'Ishopanishad' is the last part of Yajurveda. <br>2. Indian Music has been born from Samaveda. <br>3. Gayatri Mantra is mentioned in the third chapter of Rigveda. <br>Choose the correct statement(s):",
-    "options": [
-      "1 and 3",
-      "1 and 2",
-      "2 and 3",
+      "Only 3",
       "1, 2 and 3"
     ],
     "answer": 3,
     "explanation": "explanation not available"
   },
   {
-    "q": "32. Consider the following: <br>1. Central Legislative Assembly Bomb Case (1929) <br>2. Establishment of Hindustan Socialist Republican Association (1928) <br>3. Murder of Saunders (1928 - Dec) <br>4. Chittagong Armoury Raid (1930) <br>Arrange the aboves according to their chronology and choose the correct option with the help of given codes:",
+    "q": "21. As per Article 22, which of the following rights is not available to a person detained under punitive detention?",
     "options": [
-      "3, 2, 4, 1",
-      "4, 3, 2, 1",
-      "3, 2, 1, 4",
-      "2, 3, 1, 4"
+      "He should be allowed to consult and to be defended by a legal practitioner of his choice.",
+      "He should be informed, as soon as may be, of the grounds for his arrest.",
+      "He can be retained in detention beyond three months without the Advisory Board approves it.",
+      "He should be produced before the nearest magistrate within a period of 24 hours of such an arrest."
     ],
-    "answer": 3,
+    "answer": 2,
     "explanation": "explanation not available"
   },
   {
-    "q": "33. Choose the wrong pairs from the following: <br>1. Portuguese East India Company - 1498 AD <br>2. Dutch East India Company - 1616 AD <br>3. French East India Company - 1664 AD <br>4. Swedish East India Company - 1731 AD <br>Code:",
-    "options": [
-      "2 and 3",
-      "2 Only",
-      "1 and 3",
-      "3 Only"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "34. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): A direct sea route between Europe and India was discovered by the Portuguese. <br>Reason (R): Economic and religious reasons were active behind it. <br>Select the correct answer using the codes given below:",
+    "q": "22. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): The Satavahana kingdom established in the Deccan had an administrative structure similar to the Mauryan. <br>Reason (R): The Provincial governor of the Satavahanas had a considerable degree of autonomy. <br>Select the correct answer using the codes given below:",
     "options": [
       "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
       "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
       "(A) is correct but (R) is incorrect.",
       "(A) is incorrect but (R) is correct."
     ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "35. In the context of the second session of Congress which statement is not correct?",
-    "options": [
-      "This session took place in Kolkata, which was presided over by Dadabhai Naoroji.",
-      "In this session the National Conference was merged with the National Congress.",
-      "Governor General Dufferin gave a garden party to the delegates attending the conference.",
-      "This was the first time when an appeal was made to the general public to join the Congress."
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "36. Which of the following statements regarding the Indigo Rebellion are correct? <br>1. Indigo rebellion was started from Nadia district of Bengal. <br>2. This rebellion was led by Digambar Vishwas and Vishnu Vishwas. <br>3. This rebellion took place in 1859-60. <br>4. Deenbandhu Mitra has described it in his play 'Neel Darpan'. <br>Code:",
-    "options": [
-      "1, 2, 3",
-      "2, 3, 4",
-      "1, 3, 4",
-      "1, 2, 3, 4"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "37. Consider the following statements: <br>1. There is mention of dialogue between Yajnavalkya and Gargi in Kathopanishad. <br>2. The dialogue between Yama and Nachiketa is found in Brihadaranyaka Upanishad. <br>Which of the above statement(s) is/are correct?",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "1 and 2 Both",
-      "Neither 1 nor 2"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "38. A statue of a mother goddess made of bone has been found from which of the following archaeological sites in Uttar Pradesh?",
-    "options": [
-      "Chopani Mando",
-      "Lohanda Nala",
-      "Hulas",
-      "Bada Gaon"
-    ],
     "answer": 1,
     "explanation": "explanation not available"
   },
   {
-    "q": "39. Which one of the following rivers flows southwards from its origin?",
+    "q": "23. Which of the following commissions recommended the implementation of the \"One Nation One Election\" (ONOE) system in India?",
     "options": [
-      "Lena",
-      "Ob",
-      "Amur",
-      "Salween"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "40. In the context of First cabinet of Independent India (1947), Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Members) <br>A) Dr. B.R. Ambedkar <br>B) Sardar Baldev Singh <br>C) C.H. Bhabha <br>D) Dr. Shyamaprasad Mukherjee <br><br>List-II (Department) <br>1. Defence <br>2. Law <br>3. Industry and Supply <br>4. Commerce <br><br>Code:",
-    "options": [
-      "2, 1, 4, 3",
-      "2, 3, 4, 1",
-      "3, 1, 4, 2",
-      "3, 2, 4, 1"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "41. Who presented the proposal for partition in the All India Congress Committee meeting held in New Delhi in 1947?",
-    "options": [
-      "J.B. Kripalani",
-      "Govind Vallabh Pant",
-      "Abul Kalam Azad",
-      "Jawaharlal Nehru"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "42. In which chronological order the following events were occurred? <br>(i) Amritsar session of the Indian National Congress (1919) <br>(ii) Chaurichaura incident (1922) <br>(iii) Home Rule Movement (1916) <br>(iv) Communal Award (1932) <br>Code:",
-    "options": [
-      "(iii), (i), (ii), (iv)",
-      "(ii), (i), (iv), (iii)",
-      "(i), (iii), (ii), (iv)",
-      "(i), (ii), (iii), (iv)"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "43. Which of the following statements regarding Social Reforms of Akbar is/are incorrect? <br>1. He tried to stop child marriage and encouraged inter-caste marriage. <br>2. He appointed an officer 'Turbeg' to examine the legality of marriages. <br>Code:",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "1 and 2 Both",
-      "Neither 1 nor 2"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "44. Which of the following statements regarding the Neolithic archaeological site Burzahom is/are correct? <br>1. Gartavas (house with pits) is the main feature here. <br>2. Along with the human skeleton, the skeleton of a dog has also been recovered from the burial here. <br>Choose the correct statement(s):",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "1 and 2 Both",
-      "Neither 1 nor 2"
+      "Sarkaria Commission",
+      "Punchhi Commission",
+      "Law Commission",
+      "Election Commission of India"
     ],
     "answer": 2,
     "explanation": "explanation not available"
   },
   {
-    "q": "45. Which one of the following statements regarding 'Mahajanapadas' is incorrect?",
+    "q": "24. The titles of 'Rayagajakesari' and 'Dayagajakesari' were associated with which one of the following dynasties?",
     "options": [
-      "A list of 16 Mahajanapadas is found in the Jain text Bhagwati Sutra.",
-      "There is mention of 16 Mahajanapadas in the Buddhist text 'Anguttara Nikaya'.",
-      "8 out of 16 Mahajanapadas are situated in present Uttar Pradesh.",
-      "Out of the 16 Mahajanapadas, Ashmaka was situated at the banks of river Kalpi."
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "46. Which of the following temples has its vertex/top in dravid style-",
-    "options": [
-      "Bhitargaon Temple",
-      "Teli temple of Gwalior",
-      "Kandariya Temple",
-      "Osiya Temple"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "47. Consider the following statements regarding Pitt's India Act of 1784: <br>1. Through this Act, the area under the Company in India was called 'Territory of British Possessions' for the first time. <br>2. Through this Act, the British Government was given complete control over the company's operations and its administration in India. <br>Which of the above statement(s) is/are correct?",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "Both 1 and 2",
-      "Neither 1 nor 2"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "48. Lord Dalhousie adopted various policies and annexed many states into the British Empire. Arrange the following states in the correct order of being annexed into the British state and choose the correct answer using the code: <br>1. Sikkim (1850) <br>2. Satara (1848) <br>3. Lower Burma (1852) <br>4. Barad (Berar) (1853) <br>5. Jaitpur (1849) <br>Code:",
-    "options": [
-      "1, 2, 3, 4, 5",
-      "2, 5, 1, 3, 4",
-      "2, 5, 3, 4, 1",
-      "2, 4, 5, 1, 3"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "49. Consider the following statements: <br>1. Vallabhacharya had established the Brahma Sampradaya. <br>2. Nimbarkacharya had established the Sukhi Sampradaya. <br>Which of the above statement(s) is/are correct?",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "Both 1 and 2",
-      "Neither 1 nor 2"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "50. Which of the following statements regarding Golconda State is not correct?",
-    "options": [
-      "The Muslim state of Golconda was established on the ruins of the old Hindu state of Warangal.",
-      "Quli Ibrahim Shah was the founder of the Qutubshahi dynasty of Golconda.",
-      "Golconda was a world famous diamond market.",
-      "Abul Hasan was the last ruler of the Qutubshahi dynasty of Golconda."
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "51. Using the code, arrange the following treaties between the British and the Marathas in the correct order: <br>1. Treaty of Salbai (1782) <br>2. Treaty of Purandar (1776) <br>3. Treaty of Bargaon (1779) <br>4. Treaty of Surat (1775) <br>Code:",
-    "options": [
-      "4, 2, 3, 1",
-      "4, 3, 2, 1",
-      "4, 1, 2, 3",
-      "2, 3, 4, 1"
+      "Kakatiya",
+      "Vijayanagara",
+      "Gajapati",
+      "Rashtrakuta"
     ],
     "answer": 0,
     "explanation": "explanation not available"
   },
   {
-    "q": "52. Which of the following informations is not received by the 'Rummindei Inscriptions' of Maurya Ruler Ashoka?",
+    "q": "25. Consider the following with reference to Balgangadhar Tilak: <br>1. Poona Sarvajanik Sabha <br>2. The Age of Consent Acts <br>3. Gaurakshini Sabha <br>4. Atmiya Sabha <br>Balgangadhar Tilak was associated with which of the above?",
     "options": [
-      "Shakyamuni Buddha was born in Lumbini.",
-      "Ashoka came here after 20 years of his Coronation.",
-      "The 'Mahaparinirvan Place' of Lord Buddha is Kushinagar.",
-      "Declaration of granting rebate in tax to Lumbini."
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "53. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Ruler) <br>A) Ajatashatru <br>B) Kanishka <br>C) Ashoka <br>D) Kalashoka <br><br>List-II (Dynasty) <br>1. Kushana <br>2. Haryanka <br>3. Maurya <br>4. Shishunaga <br><br>Code:",
-    "options": [
-      "2, 1, 3, 4",
-      "1, 2, 3, 4",
-      "4, 2, 3, 1",
-      "2, 4, 3, 1"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "54. Consider the following: <br>1. Maulana Mohammad Ali <br>2. Shaukat Ali <br>3. Hasarat Mohani <br>4. M.A. Jinnah <br>Who among the aboves were the main companion of Gandhiji in 'Khilafat movement'?",
-    "options": [
-      "2, 3 and 4",
-      "1, 2 and 3",
-      "1, 3 and 4",
-      "All of the above"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "55. Sarai Nahar Rai and Mahadaha are related to:",
-    "options": [
-      "Mesolithic culture of the Vindhyas",
-      "Neolithic culture of the Vindhyas",
-      "Neolithic culture of the Ganga Valley",
-      "Mesolithic culture of the Ganga Valley"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "56. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Ancient Composition) <br>A) Ashtadhyayi <br>B) Mahabhasya <br>C) Prabandh Chintamani <br>D) Parishista Parva <br><br>List-II (Composer) <br>1. Hemchandra <br>2. Merutunga <br>3. Panini <br>4. Patanjali <br><br>Code:",
-    "options": [
-      "3, 4, 2, 1",
-      "3, 2, 1, 4",
-      "3, 1, 2, 4",
-      "3, 4, 1, 2"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "57. Consider the following statements: <br>1. The names of the Satavahana kings are matriarchal but the son was the heir to the throne. <br>2. The first sign of feudalism is visible from the Satavahana period. <br>Choose the incorrect statements:",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "Both 1 and 2",
-      "Neither 1 nor 2"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "58. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): In the Second Civil Disobedience Movement held in 1932-34 AD, the participation of labourers was relatively less. <br>Reason (R): Between 1930-1936 AD, the labour movement was weakened. <br>Code:",
-    "options": [
-      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
-      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
-      "(A) is correct but (R) is incorrect.",
-      "(A) is incorrect but (R) is correct."
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "59. Which of the following statements regarding Mughal Land Revenue System is/are correct: <br>1. Revenue of one-third of agricultural products was fixed for the State. <br>2. Dahsala arrangements was based on average yield and average price. <br>Code:",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "Both 1 and 2",
-      "Neither 1 nor 2"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "60. Which of the following pairs is not correctly matched? <br><br>British Commission - Governor General/Viceroy",
-    "options": [
-      "Irrigation Comm. - Lord Curzon",
-      "Aitchison Comm. - Lord Dufferin",
-      "Famine Comm. - Lord Lytton",
-      "Fraser Commission - Lord Harding"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "61. Which one of the following was the main objective of 'Satyashodhak Samaj'?",
-    "options": [
-      "Upliftment of Tribes in Bihar.",
-      "Running movement for the entry in the temples in Gujarat.",
-      "To run anti-caste movement in Maharashtra",
-      "To run a Peasant Movement in Punjab"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "62. By which of the following Acts the 'Principle of Constitutional Autocracy' has been enforced?",
-    "options": [
-      "Indian Councils Act, 1909",
-      "Government of India Act, 1919",
-      "Government of India Act, 1935",
-      "Indian Independence Act, 1947"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "63. On death of whom among the following, the British Resident of Poona, Palmer said that \"with his death all the slyness and restraint of the Maratha government has gone\"?",
-    "options": [
-      "Nana Fadnavis",
-      "Raghunath Rao",
-      "Madhav Narayan Rao",
-      "Bajirao-I"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "64. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): The Vijayanagara rulers adopted a policy of religious tolerance. <br>Reason (R): They Patronised Hindu temples while also employing Muslims in high administrative and military positions. <br>Select the correct answer using the codes given below:",
-    "options": [
-      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
-      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
-      "(A) is correct but (R) is incorrect.",
-      "(A) is incorrect but (R) is correct."
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "65. With reference to the history of newspapers in India, consider the following statements: <br>1. The first newspaper published in India was started by a European, not an Indian. <br>2. Early Indian-owned newspapers played an important role in social and religious reform movements. <br>3. Charles Metcalfe is called the 'Liberator' of newspapers. <br>4. Nationalist newspapers helped in spreading political consciousness among the masses during the freedom struggle. <br>Which of the statements given above are correct?",
-    "options": [
+      "1 and 2",
       "1, 2 and 4",
-      "1 and 3",
-      "2 and 3",
-      "1, 2, 3 and 4"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "66. Which one of the following pairs is not correctly matched?",
-    "options": [
-      "Treaty of Madras - 1769 AD",
-      "Treaty of Mangalore - 1790 AD",
-      "Treaty of Banaras - 1773 AD",
-      "Treaty of Alinagar - 1757 AD"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "67. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Political Organization) <br>A) British Indian Association <br>B) Bombay Association <br>C) Indian League <br>D) Calcutta Students Association <br><br>List-II (Founder) <br>1. Shishir Kumar Ghosh <br>2. Raja Radhakant Deb <br>3. Anand Mohan Bose <br>4. Dadabhai Naoroji <br><br>Code:",
-    "options": [
-      "2, 3, 1, 4",
-      "1, 4, 2, 3",
-      "2, 4, 1, 3",
-      "2, 1, 4, 3"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "68. Consider the following statements: <br>1. 'Kuka Movement' was started in 1850 AD. <br>2. 'Indigo Revolt' was started in Nadia district in Bengal. <br>3. 'Eka Movement' was a movement of farmers of Awadh. <br>4. The main leaders of 'Pabna Uprising' were Isan Chandra Rai and Shambhu Pal. <br>Choose the correct statement(s):",
-    "options": [
       "3 and 4",
-      "1, 2 and 4",
-      "2, 3 and 4",
-      "All of the above"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "69. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Commission/Committee) <br>A) Amini Committee <br>B) Nicholson Committee <br>C) Linlithgow Commission <br>D) Holland Committee <br><br>List-II (Year of Establishment) <br>1. 1928 AD <br>2. 1778 AD <br>3. 1892 AD <br>4. 1916 AD <br><br>Code:",
-    "options": [
-      "2, 4, 1, 3",
-      "2, 3, 1, 4",
-      "4, 2, 1, 3",
-      "1, 4, 3, 2"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "70. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Dynasty) <br>A) Sangam <br>B) Saluva <br>C) Tuluva <br>D) Araveedu <br><br>List-II (Founder) <br>1. Tirumala <br>2. Narasimha Saluva <br>3. Vir Narasingh <br>4. Harihar and Bukka <br><br>Code:",
-    "options": [
-      "4, 2, 3, 1",
-      "3, 2, 1, 4",
-      "4, 1, 2, 3",
-      "4, 2, 1, 3"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "71. Arrange the following events in their chronological order: <br>1. Treaty of Purandar (1665) <br>2. Battle of Dharmat (1658) <br>3. Aurangzeb captured Bijapur (1686) <br>4. Battle of Devra (Deorai) (1659) <br>Code:",
-    "options": [
-      "2, 4, 1, 3",
-      "1, 2, 3, 4",
-      "4, 2, 1, 3",
-      "2, 1, 4, 3"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "72. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Composition) <br>A) Raga Vibodha <br>B) Chandayan <br>C) Chitravali <br>D) Rasik Priya <br><br>List-II (Composed by) <br>1. Somnath <br>2. Mulla Daud <br>3. Usman <br>4. Keshavdas <br><br>Code:",
-    "options": [
-      "1, 2, 3, 4",
-      "2, 1, 4, 3",
-      "3, 4, 1, 2",
-      "1, 2, 4, 3"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "73. In the context of third Anglo-Maratha War, identify the incorrect statements: <br>1. During this period Lord Hastings was the British Governor General. <br>2. As an outcome of its Peshwa was abolished. <br>The correct statement(s) is/are:",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "Both 1 and 2",
-      "Neither 1 nor 2"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "74. Which of the following statements regarding Amir Khusro is/are correct? <br>1. He had seen the period of seven sultans in the Delhi Sultanate. <br>2. He was a disciple of Khwaja Muinuddin Chishti. <br>3. He was the father of 'Sabak-e-Hindi' Persian poetry style. <br>Code:",
-    "options": [
-      "1 and 2",
-      "2 and 3",
-      "1 and 3",
-      "All of the above"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "75. Whom among the following were not included in the official negotiators of Congress with Cripps Mission? <br>1. Sardar Patel <br>2. Jawahar Lal Nehru <br>3. Rafi Ahmad Kidwai <br>4. Maulana Azad <br>Code:",
-    "options": [
-      "2 and 4",
-      "1 and 3",
-      "2 and 3",
-      "1 and 2"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "76. Consider the following events: <br>1. Afghan expedition (Second Afghan War 1878–80) <br>2. Vernacular Press Act (1878) <br>3. Inland Emigration Act (1882) <br>4. Ilbert Bill (1883) <br>Which of the above events happened before the formation of congress?",
-    "options": [
-      "1 and 3",
-      "2 and 3",
-      "2 and 4",
-      "All of the above"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "77. During the Mughal Period which of the following books was translated in Persian by 'Abd-ul-Qadir Bada'uni'?",
-    "options": [
-      "Meghadutam",
-      "Bhagwadgita",
-      "Rajtarangini",
-      "Ramayan"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "78. What is the essence of Mahatma Gandhi's 'Hind Swaraj'?",
-    "options": [
-      "A critique of western modernity",
-      "Outline of his philosophy of Satyagrah",
-      "Calling upon Indians to free themselves from the British",
-      "An outline of Village Swaraj"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "79. In the context of 'Rahnumai Mazdayasnan Sabha', which of the following statements is/are correct? <br>1. It was founded in 1851 by Naoroji Ferdunji, Dadabhai Naoroji, and S.S. Bengali. <br>2. This society published a magazine named 'Raft Goftar' (Satyavadi). <br>Select the correct answer using the code given below:",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "Both 1 and 2",
-      "Neither 1 nor 2"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "80. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Major Labour Organisations) <br>A) Indian Federation of Labour <br>B) Madras Labour Union <br>C) Social Service League <br>D) United Trade Union Congress <br><br>List-II (Founder) <br>1. M.N. Roy <br>2. B.P. Wadia (V.P. Wadia) <br>3. Prof. K.T. Shah <br>4. N.M. Joshi <br><br>Code:",
-    "options": [
-      "1, 2, 4, 3",
-      "1, 2, 3, 4",
-      "1, 3, 2, 4",
-      "4, 3, 2, 1"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "81. Consider the following statements: <br>1. Rashtrakuta chief Dantidurga defeated his Chalukya master and laid the foundation of the Rashtrakuta empire. <br>2. Kadamba Mayurasharman was a Brahmin who established his kingdom in Karnataka. <br>3. Gurjar Pratihara Harichandra or Harishchandra was a Rajput who established his kingdom in Rajasthan. <br>Which of the above statement(s) is/are correct?",
-    "options": [
-      "1, 2 and 3",
-      "1 and 2",
-      "2 and 3",
-      "1 and 3"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "82. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): The Civil Disobedience Movement differed fundamentally from the Non-Cooperation Movement. <br>Reason (R): The Civil Disobedience Movement involved the deliberate violation of colonial laws. <br>Select the correct answer using the codes given below:",
-    "options": [
-      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
-      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
-      "(A) is correct but (R) is incorrect.",
-      "(A) is incorrect but (R) is correct."
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "83. With reference to the Revolt of 1857, consider the following statements: <br>1. It was triggered solely by the greased cartridge issue. <br>2. It involved both military and civilian participation. <br>3. It led to the end of the East India Company's rule. <br>4. It resulted in the immediate establishment of a democratic government. <br>The correct statements are:",
-    "options": [
-      "2 and 3",
-      "1 and 3",
-      "2 and 4",
-      "1, 2, 3 and 4"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "84. Why is the Government of India Act, 1858 regarded as a major administrative shift?",
-    "options": [
-      "It introduced provincial autonomy",
-      "It transferred power from the Company to the British Crown",
-      "It granted self-government to Indians",
-      "It established a federal system"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "85. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Reformer/Movement) <br>A) Brahmo Samaj <br>B) Arya Samaj <br>C) Aligarh Movement <br>D) Ramakrishna Mission <br><br>List-II (Primary Focus) <br>1. Monotheism and social reform <br>2. Return to Vedic values <br>3. Modern education for Muslims <br>4. Spiritual humanism <br><br>Code:",
-    "options": [
-      "1, 2, 3, 4",
-      "2, 1, 4, 3",
-      "3, 2, 1, 4",
-      "4, 3, 2, 1"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "86. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Vedic Word) <br>A) Aritra <br>B) Kusid <br>C) Taksha <br>D) Krishna Ayas <br><br>List-II (Meaning) <br>1. Iron <br>2. Loan <br>3. Carpenter <br>4. Rudder <br><br>Code:",
-    "options": [
-      "1, 2, 3, 4",
-      "4, 2, 3, 1",
-      "3, 4, 1, 2",
-      "4, 3, 2, 1"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "87. Which region among the following Chalcolithic archaeological sites comes under 'Jorve culture'?",
-    "options": [
-      "South-eastern Rajasthan",
-      "Western Madhya Pradesh",
-      "Western Maharashtra",
-      "Eastern India"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "88. Which of the following pairs is not correctly matched? <br><br>Literature - Litterateur",
-    "options": [
-      "Nirukta - Yaska",
-      "Kadambari - Harsh Vardhan",
-      "Prabandh Chintamani - Merutunga",
-      "Katantra - Sarvavarman"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "89. Who among the following Satavahana rulers is called the protector of the varna system?",
-    "options": [
-      "Satakarni-I",
-      "Hala",
-      "Gautamiputra Satakarni",
-      "Yagya Shri Satakarni"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "90. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Congress Session) <br>A) Allahabad (1892) <br>B) Surat (1907) <br>C) Madras (1914) <br>D) Haripura (1938) <br><br>List-II (Presided by) <br>1. Subhash Chandra Bose <br>2. Bhupendra Nath Bose <br>3. Rash Bihari Ghosh <br>4. Womesh Chandra Banerjee <br><br>Code:",
-    "options": [
-      "4, 2, 3, 1",
-      "2, 4, 3, 1",
-      "4, 3, 2, 1",
-      "1, 2, 3, 4"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "91. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): Subhash Chandra Bose and Pandit Jawaharlal Nehru founded the 'All India Independence League' in 1928 AD. <br>Reason (R): These people were in favour of complete independence from the British as opposed to colonial rule. <br>Select the correct answer using the codes given below:",
-    "options": [
-      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
-      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
-      "(A) is correct but (R) is incorrect.",
-      "(A) is incorrect but (R) is correct."
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "92. Which of the following statements regarding Darashikoh is not correct?",
-    "options": [
-      "He was a follower of the Naqshbandi Silsila of Sufis.",
-      "Mian Mir was his initial guru.",
-      "Aurangzeb gave the simile of 'Rais-ul-Mulahid' to Dara Shikoh.",
-      "He wrote a book 'Majma-ul-Bahrain'."
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "93. Which one of the following was the outcome of 'Battle of Sirhind'?",
-    "options": [
-      "Humayun was defeated by Sher Shah.",
-      "Once again Humayun has regained his lost state.",
-      "Sher Khan has accepted the subjection of Humayun.",
-      "None of these."
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "94. Arrange the following incidents according to their chronology: <br>1. Acceptance to 'Total Independence' in the goals of Congress (1929) <br>2. Bardoli Peasant Movement (1928) <br>3. Second Round Table Conference (1931 - Sept) <br>4. Gandhi-Irwin Pact (1931 - March) <br>Code:",
-    "options": [
-      "1, 2, 3, 4",
-      "2, 1, 3, 4",
-      "3, 2, 1, 4",
-      "2, 1, 4, 3"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "95. Which of the following were the main reasons for the failure of the Revolt of 1857? <br>1. Apathy of the Educated class <br>2. Lack of qualified leadership <br>3. Neglect of the farming class <br>4. Limited aspect of rebellion <br>Choose the correct code:",
-    "options": [
-      "1, 2 and 4",
-      "1, 2 and 3",
-      "2, 3 and 4",
-      "All of the above"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "96. With reference to the Mauryan administrative system, consider the following statements: <br>1. The Mauryan state followed a centralized system of administration. <br>2. Provincial governors enjoyed complete autonomy from the centre. <br>3. Revenue officials were appointed and supervised by the central authority. <br>4. Espionage formed an important part of state administration. <br>Which of the statements given above are correct?",
-    "options": [
-      "1, 3 and 4",
-      "1 and 3",
-      "2 and 4",
-      "1, 2, 3 and 4"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "97. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): The Iqta system strengthened the authority of the Delhi Sultans. <br>Reason (R): Iqtas were transferable and were linked with military and administrative service. <br>Select the correct answer using the codes given below:",
-    "options": [
-      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
-      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
-      "(A) is correct but (R) is incorrect.",
-      "(A) is incorrect but (R) is correct."
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "98. Consider the following statements regarding Mughal Emperor Bahadur Shah-I and choose the correct statement using the code: <br>1. He defeated Kambaksh in the battle of Bijapur. <br>2. A Dutch representative delegation came to his court under the leadership of Joshua Ketelaar. <br>3. He was the oldest person to become the Mughal emperor. <br>4. He gave the title of 'Mirza Raja' to the ruler of Amer, Ajit Singh. <br>Code:",
-    "options": [
-      "1, 3 and 4",
-      "1 and 3",
-      "2, 3 and 4",
-      "1, 2 and 3"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "99. Which one is not a feature of Ain-e-Dahsala System?",
-    "options": [
-      "It was a Ryotwari system in which there was no existence of middlemen.",
-      "The highest official of the Ain-e-Dahsala system was Diwan-i-Ala.",
-      "This system was mainly an improved form of the confiscation system.",
-      "This was a permanent arrangement for 10 years."
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "100. In the context of Jat Rebellion which statement is not correct?",
-    "options": [
-      "The Jat rebellion against the Mughals was started by Gokul, the landlord of Tilpat, in 1669 AD.",
-      "Badan Singh laid the foundation of Bharatpur State, an independent state of Jats in 1700 AD.",
-      "Jat king Badan Singh was given the title of king by Ahmed Shah Abdali.",
-      "Surajmal, the ruler of the Jats, is called Aflatoon of the Jats."
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "101. Which of the following statements regarding Raja Rammohan Roy are not correct? <br>1. John Digby had appointed him as his Diwan. <br>2. He founded the Vedanta Society in 1814 AD. <br>3. He gained knowledge of Buddhist philosophy in Nepal. <br>4. He had not accepted the theory of immortality of the individual soul in the Upanishads. <br>Code:",
-    "options": [
-      "1, 2 and 3",
-      "3 and 4",
-      "1, 3 and 4",
       "2 and 4"
     ],
-    "answer": 3,
+    "answer": 0,
     "explanation": "explanation not available"
   },
   {
-    "q": "102. Which statements regarding 11-Point Demands of Gandhiji are not correct? <br>1. Gandhiji presented his 11-point demands on 31 January 1930. <br>2. He presented this demand through his letter New India. <br>3. These demands included a demand for 70% reduction in land revenue. <br>4. A demand was made to cut the salaries of civil services by 50%. <br>Code:",
+    "q": "26. In which of the following texts, the change of capital by Sultan Muhammad bin Tughlaq has been mentioned? <br>1. Tarikh-i Firoz Shahi <br>2. Tabaqat-i-Nasiri <br>3. Tahzibul Akhlaq <br>4. Futuh-us-Salatin <br>Code:",
     "options": [
-      "1, 2 and 3",
-      "2, 3 and 4",
+      "1 and 2",
       "2 and 3",
+      "1 and 4",
       "3 and 4"
     ],
     "answer": 2,
     "explanation": "explanation not available"
   },
   {
-    "q": "103. Consider the following statements in the context of the Pre-Paleolithic Age: <br>1. Chopper- Chopping Pebbles culture instruments were first found from Athirampakkam near Madras. <br>2. Tools of Hand-Axe Culture were first obtained from the Sohan River valley. <br>Which of the above statement(s) is/are correct?",
+    "q": "27. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): The High Court for the Union Territory of Delhi has been established by the Parliament in the year 1966. <br>Reason (R): Article 241 has given the power to the Parliament to establish a High Court for any Union State. <br>Select the correct answer using the codes given below:",
+    "options": [
+      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
+      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+      "(A) is correct but (R) is incorrect.",
+      "(A) is incorrect but (R) is correct."
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "28. What do you understand by 'Heritiera Fomes'?",
+    "options": [
+      "It is a valuable timber found in the mangrove forests of Sundarbans.",
+      "It is a highly aromatic vegetative root found in the eastern part of the Western Ghats.",
+      "It is a flexible wood found in moist deciduous forests.",
+      "It is the bark of a medicinal tree found in the Himalayan forests."
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "29. Consider the following statements regarding Coal Tar: <br>1. In industries, coal tar is obtained by processing coal. <br>2. It is a thick liquid with unpleasant smell which contains a mixture of about 200 substances. <br>3. Naphthalene tablets used to repel household pests like silver fish and moths are obtained from coal tar. <br>Which of the above statements is/are correct?",
+    "options": [
+      "1, 2 and 3",
+      "1 and 2",
+      "2 and 3",
+      "1 and 3"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "30. What kind of role do bacteria play in the carbon cycle?",
+    "options": [
+      "In the fixation of CO2 by photosynthesis",
+      "In the fixation of CO2 by decomposition of all dead organic substances",
+      "In the fixation of CO2 in chemical synthesis",
+      "In all of the above"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "31. Consider the following statements regarding the Women's Hockey Asia Cup 2025, which was organized in September 2025: <br>1. It was held in Hangzhou, China. <br>2. Sri Lanka defeated the Indian women's hockey team in the final. <br>Choose the correct statement(s):",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "Both 1 and 2",
+      "Neither 1 nor 2"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "32. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Conference/Event) <br>A) World Tourism Summit-2025 <br>B) Global Sanskrit Conference-2025 <br>C) Peace Summit-2025 <br>D) World Robot Summit-2025 <br><br>List-II (City) <br>1. Bali <br>2. Melaka <br>3. Sharm-el-Sheikh <br>4. Beijing <br><br>Code: <br>A B C D",
+    "options": [
+      "2 3 4 1",
+      "2 4 3 1",
+      "4 2 3 1",
+      "4 2 1 3"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "33. Which one of the following statements regarding the Governor is not correct?",
+    "options": [
+      "The Governor cannot be removed from office before the completion of five years.",
+      "The Governor's salary and allowances are charged on the Consolidated Fund of the State.",
+      "The Governor of a State is appointed by the President by a warrant bearing his signature and seal.",
+      "All the statements are correct."
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "34. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): Biocidal chemicals are called creeping deaths. <br>Reason (R): These chemicals enter the food chain as toxic residues and pass into humans and animals through food. <br>Select the correct answer using the codes given below:",
+    "options": [
+      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
+      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+      "(A) is correct but (R) is incorrect.",
+      "(A) is incorrect but (R) is correct."
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "35. Consider the following statements: <br>1. Bromine is a non-metallic element which remains in liquid state at room temperature. <br>2. Lithium is the lightest metal. <br>Which of the above statements is/are correct?",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "Both 1 and 2",
+      "Neither 1 nor 2"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "36. Which one of the following countries is not a member of the Five Eyes Intelligence Alliance?",
+    "options": [
+      "United States",
+      "Canada",
+      "New Zealand",
+      "India"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "37. In the 12th year of Mahavir Swami attaining enlightenment, a difference of opinion arose in Jainism and Jamali left the Sangh. Due to which principle this difference of opinion had arisen?",
+    "options": [
+      "Doctrine of Bahuratvaad",
+      "Doctrine of Kriyamankrit",
+      "Doctrine of Anekantavada",
+      "Doctrine of Saptabhanginaya"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "38. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): The gig economy contributes significantly to the Indian gross domestic product (GDP). <br>Reason (R): Gig workers in India are involved in various sectors, including transportation, delivery, and freelancing. <br>Select the correct answer using the codes given below:",
+    "options": [
+      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
+      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+      "(A) is correct but (R) is incorrect.",
+      "(A) is incorrect but (R) is correct."
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "39. Which of the pairs following is not correctly matched?",
+    "options": [
+      "National Institute of Nutrition - Hyderabad",
+      "Centre for Ecological Sciences - Pune",
+      "CAZRI - Jodhpur",
+      "Indian Institute of Ecology and Environment - New Delhi"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "40. Consider the following statements: <br>1. Increase in the prices of food and beverages. <br>2. Increase in the prices of petrol and diesel. <br>3. Increase in the prices of fuel and light categories, such as LPG, kerosene, electricity etc. <br>Which of the above can lead to an increase in the CPI-Core Inflation in the Indian economy?",
+    "options": [
+      "1 and 2",
+      "2 only",
+      "1 and 3",
+      "1, 2 and 3"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "41. The States Reorganisation Commission/ Fazl Ali Commission identified four major factors for any state reorganisation plan. Which of the following was not included in those factors?",
+    "options": [
+      "Maintenance and protection of the unity and security of the country.",
+      "Adoption of the principle of one state one language.",
+      "Linguistic and cultural uniformity.",
+      "Financial, economic and administrative logics."
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "42. Consider the following statements: <br>1. Tuvalu became the newest member country of IUCN in October 2025. <br>2. It became the 90th member country of IUCN. <br>Which of the above statements is/are correct?",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "Both 1 and 2",
+      "Neither 1 nor 2"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "43. Which of the following statements regarding 'LEAPS-2025' Initiative is/are correct? <br>1. This initiative aims to bring India's logistics sector at par with international standards. <br>2. LEAPS-2025 has been designed by the Department for Promotion of Industry and Internal Trade (DPIIT), Ministry of Commerce and Industry. <br>Select the correct answer using code:",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "Both 1 and 2",
+      "Neither 1 nor 2"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "44. Which of the following statements regarding 'Water Gas' is/are correct? <br>1. It is useful in the industrial production of ammonia. <br>2. Methyl alcohol is also made from it. <br>Choose the correct answer using code:",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "Both 1 and 2",
+      "Neither 1 nor 2"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "45. In the context of Republic situated in Uttar Pradesh in ancient India, Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Republic) <br>A) Kolip of Ramgram <br>B) Mallas of Pava <br>C) Shakyas of Kapilvastu <br>D) Kalamas of Kesaputta <br><br>List-II (Present Region) <br>1. Fazil Nagar region <br>2. Ganga-Yamuna Doab <br>3. Gorakhpur district <br>4. Siddharthnagar <br><br>Code: <br>A B C D",
+    "options": [
+      "2 1 4 3",
+      "4 2 1 3",
+      "3 2 4 1",
+      "1 3 4 2"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "46. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): Lord Cornwallis finalised his judicial reforms by 1793 and presented them in the form of 'Cornwallis Code'. <br>Reason (R): This reform was based on the famous principle of 'Separation of Powers'. <br>Select the correct answer using the codes given below:",
+    "options": [
+      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
+      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+      "(A) is correct but (R) is incorrect.",
+      "(A) is incorrect but (R) is correct."
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "47. The correct chronology of starting of the following schemes of financial inclusion is: <br>1. Laghu Udhyami Credit Card (LUCC) <br>2. Kisan Credit Card Scheme (KCC) <br>3. Swarojgar Credit Card Scheme (SCC) <br>Code:",
+    "options": [
+      "1, 2, 3",
+      "2, 1, 3",
+      "2, 3, 1",
+      "3, 1, 2"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "48. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Newspaper/Magazine) <br>A) The Leader <br>B) Kavivachan Sudha <br>C) Gyan Pradata <br>D) Bombay Darpan <br><br>List-II (Editor/Publisher) <br>1. Madan Mohan Malviya <br>2. Naveen Chandra Rai <br>3. Balshastri <br>4. Bharatendu Harishchandra <br><br>Code: <br>A B C D",
+    "options": [
+      "1 3 2 4",
+      "1 2 3 4",
+      "1 2 4 3",
+      "2 4 1 3"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "49. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Congress Session) <br>A) Lahore, 1929 <br>B) Karachi, 1931 <br>C) Faizpur, 1937 <br>D) Ramgarh, 1940 <br><br>List-II (Passed Prog.) <br>1. Basic Agricultural Land Programme <br>2. National Unity <br>3. Fundamental Rights <br>4. Poorna Swaraj <br><br>Code: <br>A B C D",
+    "options": [
+      "3 1 4 2",
+      "4 1 2 3",
+      "4 1 3 2",
+      "1 2 4 3"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "50. \"Also known as the Architect of Indian Planning, he established the Indian Statistical Institute in Calcutta and started a journal called Sankhya.\" Who among the given personalities is referred to in the above statement?",
+    "options": [
+      "Dhananjay Ramchandra Gadgil",
+      "Jawahar Lal Nehru",
+      "Prasanta Chandra Mahalanobis",
+      "Kakkadan Nandanath Rajan"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "51. Choose the incorrect statement from the following:",
+    "options": [
+      "The oldest archaeological evidence related to Bhagwat religion is considered to be the Garuda Pillar of Besnagar.",
+      "The description of Krishna, son of Devaki, is first found in Chhandogya Upanishad.",
+      "Alwar saints were related to Vaishnava religion.",
+      "None of the above."
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "52. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): When we move suddenly from darkness to light, we feel dazzled and cannot see clearly. <br>Reason (R): Cones become functional only when Rhodopsin (bright pigment) is completely destroyed. <br>Select the correct answer using the codes given below:",
+    "options": [
+      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
+      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+      "(A) is correct but (R) is incorrect.",
+      "(A) is incorrect but (R) is correct."
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "53. In which of the following inscriptions, there is mention of the construction of an irrigation dam by 'Pushyagupta', the provincial governor of Chandragupta Maurya in Saurashtra Pradesh (Gujarat)?",
+    "options": [
+      "Second pillar inscription of Ashoka",
+      "Sopara rock edict of Ashoka",
+      "Kalinga rock edicts",
+      "Junagadh rock edicts of Rudradaman"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "54. With reference to the Gandhi-Irwin Pact of 1931, which of the following best describes the underlying political significance of the agreement?",
+    "options": [
+      "It marked the formal end of the Civil Disobedience Movement.",
+      "It acknowledged the Indian National Congress as a legitimate political entity to negotiate with the British government.",
+      "It was a temporary truce between revolutionaries and the British government.",
+      "It ensured complete independence for India through constitutional means."
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "55. Which one of the following pairs is correctly matched?",
+    "options": [
+      "Sarthvaha - Leader of a group of traders",
+      "Eran Inscription - The first documentary evidence of the Sati practice",
+      "Bhukti - Gupta period province",
+      "All are correctly matched."
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "56. Which of the following are the compulsory provisions under the 73rd amendment? <br>1. Three-tier system <br>2. Formation of Gram Sabha <br>3. Reservation of seats for women <br>4. Granting financial powers to the panchayats <br>5. Representation of MPs in local bodies <br>Select the correct answer using the code given below:",
+    "options": [
+      "1, 2 and 3",
+      "1, 2, 3 and 4",
+      "1, 3, 4 and 5",
+      "2, 4 and 5"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "57. Choose the incorrect statement regarding Sufi saints?",
+    "options": [
+      "Sheikh Nizamuddin Auliya was a disciple of Fariduddin Ganj-e-Shakar (Baba Farid).",
+      "Khwaja Moinuddin Chishti is considered to be the originator of the Chishti sect of Sufis in India.",
+      "Amir Khusro has been called 'Saadi of India'.",
+      "Sheikh Nasiruddin Mahmud had received the title of Chirag-i-Delhi."
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "58. Which of the following Lymphoid Tissue is strategically located to intercept pathogens at points of entry in the human body and constitutes about 50 per cent of the lymphoid tissue in the human body?",
+    "options": [
+      "Peyer's patches",
+      "Spleen",
+      "Bone marrow",
+      "Mucosa-Associated Lymphoid Tissue"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "59. Which of the following statements regarding Akbar are correct? <br>1. Akbar abolished slavery in 1562 AD. <br>2. Akbar abolished the pilgrimage tax in 1563 AD. <br>3. Akbar abolished Jizya tax in 1564 AD. <br>4. Akbar abolished the practice of branding horses (Dagh) in 1565 AD. <br>Code:",
+    "options": [
+      "1 and 2",
+      "1 and 3",
+      "1, 2 and 3",
+      "1, 2, 3 and 4"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "60. Which of the following best describes the term \"Psychic income\"?",
+    "options": [
+      "The monetary value of goods and services consumed.",
+      "The satisfaction derived from the consumption of goods and services.",
+      "The income earned from employment or investments.",
+      "The intangible benefits of material possessions."
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "61. Which one of the following is also known as 'Growth Inhibiting Hormone'?",
+    "options": [
+      "Cytokinin",
+      "Abscisic acid",
+      "Ethylene",
+      "Gibberellins"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "62. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Polymer) <br>A) Terylene <br>B) Polypropylene <br>C) Polystyrene <br>D) Polyvinyl chloride <br><br>List-II (Uses) <br>1. in making television cabinets <br>2. in making cables <br>3. in making tubes <br>4. in the textile industry <br><br>Code: <br>A B C D",
+    "options": [
+      "4 1 2 3",
+      "4 3 2 1",
+      "3 1 4 2",
+      "3 2 1 4"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "63. Which one of the following statements is not correct?",
+    "options": [
+      "Aravipuram movement was started by Narayana Guru in 1888 AD.",
+      "Self-respect movement was started by E.V. Ramaswamy Naykar.",
+      "Dr. Bhimrao Ambedkar had founded the Bahishkrit Hitkarini Sabha in 1920 AD.",
+      "Guruvayur Satyagraha was launched by K. Kelappan in 1931 AD."
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "64. Consider the following statements related to Defection: <br>1. Questions related to disqualification arising from defection are decided by the Speaker of the House. <br>2. Decision taken by the Speaker is final and cannot be challenged in any court. <br>Which of the above statement(s) is/are correct?",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "1 and 2 Both",
+      "Neither 1 nor 2"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "65. Which of the following statements is not correct?",
+    "options": [
+      "India's membership in the Commonwealth was verified in May 1949 AD.",
+      "The national flag was adopted on 22 July 1947.",
+      "The national anthem was adopted on 24 January 1950.",
+      "On 26 January 1950, Dr. Rajendra Prasad was elected as the first President of India."
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "66. Which of the group of different countries of the African continent are the coastal nations of the Indian Ocean, choose the correct answer:",
+    "options": [
+      "South Africa, Mozambique, Tanzania, Kenya",
+      "South Africa, Zimbabwe, Tanzania, Kenya",
+      "South Africa, Somalia, Mozambique, Ethiopia",
+      "South Africa, Tanzania, Malawi, Somalia"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "67. Consider the following statements regarding Kala-Azar: <br>1. This disease is spread by a protozoa Leishmania. <br>2. This disease is spread by Culex mosquitoes. <br>Choose the correct statement(s):",
+    "options": [
+      "Both 1 and 2",
+      "1 Only",
+      "Neither 1 nor 2",
+      "2 Only"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "68. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): Lord Lansdowne adopted a 'Forward Policy'. <br>Reason (R): The objective of adopting this policy was to protect the interests of British imperialism. <br>Select the correct answer using the codes given below:",
+    "options": [
+      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
+      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+      "(A) is correct but (R) is incorrect.",
+      "(A) is incorrect but (R) is correct."
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "69. Which of the following pairs is not correctly matched? <br><br>Movement - Year",
+    "options": [
+      "Faraizi Movement - 1804",
+      "Ahmadiyya Movement - 1889",
+      "Aligarh Movement - 1870",
+      "Dar-ul-Uloom Deoband - 1866"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "70. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): In realty, the beginning of British power in India starts with the Battle of Buxar. <br>Reason (R): This battle completely established the Company's rule over Bengal. <br>Select the correct answer using the codes given below:",
+    "options": [
+      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
+      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+      "(A) is correct but (R) is incorrect.",
+      "(A) is incorrect but (R) is correct."
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "71. Consider the following: <br>1. Kanpur Conspiracy Case <br>2. Meerut Conspiracy Case <br>3. Peshawar Conspiracy Case <br>Arrange the above in the correct chronological order:",
+    "options": [
+      "3, 1, 2",
+      "1, 2, 3",
+      "2, 1, 3",
+      "1, 3, 2"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "72. Dharasana was a main centre point during the Civil Disobedience Movement. American journalist Webb Miller, describing the protest there, said, \"I have never seen a scene as horrifying as Dharasana in my life.\" Dharasana was situated in:",
+    "options": [
+      "Vadodara (Gujarat)",
+      "Bombay (Maharashtra)",
+      "Kochi (Kerala)",
+      "Tanjore (Tamil Nadu)"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "73. Article 358 and Article 359 of the Constitution are related to which one of the following?",
+    "options": [
+      "Power of the President to give instructions to the states during emergency.",
+      "Process of implementation of the Constitution",
+      "Effect on fundamental rights in national emergency",
+      "Rules and procedures related to governance of Union Territories"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "74. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (War) <br>A) Battle of Jajau <br>B) Battle of Karnal <br>C) Battle of Ambur <br>D) Battle of Chamkaur <br><br>List-II (Year) <br>1. 1705 AD <br>2. 1707 AD <br>3. 1749 AD <br>4. 1739 AD <br><br>Code: <br>A B C D",
+    "options": [
+      "2 4 3 1",
+      "2 3 4 1",
+      "4 3 2 1",
+      "3 2 4 1"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "75. According to Census-2011, the rural and urban sex ratio in India is respectively approximately:",
+    "options": [
+      "947 and 929",
+      "929 and 947",
+      "943 and 933",
+      "929 and 943"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "76. Consider the following statements regarding The Climate Groups: <br>1. The Climate Group is an international for-profit organization established in the year 2003. <br>2. The purpose of this organization is to intensify climate action as well as measure and report energy efficiency improvements. <br>Which of the above statements is/are correct?",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "Both 1 and 2",
+      "Neither 1 nor 2"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "77. The executive of the Union has been described in Part 5 of the Constitution. Who among the following are included in the executive of the Union? <br>1. President <br>2. Vice President <br>3. Prime Minister <br>4. Attorney General <br>Code:",
+    "options": [
+      "1, 2, 3",
+      "1, 3",
+      "2, 3, 4",
+      "1, 2, 3, 4"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "78. The Preamble of the Indian Constitution includes three different forms of justice - social, economic and political. Consider the following statements regarding them: <br>1. They are protected through various provisions of fundamental rights and directive principles of state policy. <br>2. These elements of social, economic and political justice have been taken from the French Revolution. <br>Which of the above statements is/are correct?",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "1 and 2 Both",
+      "Neither 1 nor 2"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "79. In which of the following states, seats are not reserved in the Lok Sabha for Scheduled Tribes? <br>Choose the correct answer using the code: <br>1. Kerala <br>2. Haryana <br>3. Arunachal Pradesh <br>4. Sikkim <br>Code:",
+    "options": [
+      "1, 2, 3 and 4",
+      "1, 2 and 3",
+      "2, 3 and 4",
+      "1, 3 and 4"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "80. The Third Schedule of the Indian Constitution deals with the format of oath or affirmation. Oath of whom among the followings is mentioned in this schedule? Choose the correct answer using the code: <br>1. Union Minister <br>2. High Court Judge <br>3. Comptroller & Auditor General of India <br>4. President of India <br>Code:",
+    "options": [
+      "1, 2, 3 and 4",
+      "1, 2 and 3",
+      "1, 2 and 4",
+      "2, 3 and 4"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "81. Regarding Maurya administration, there is mention of 18 Tirthas in the Arthashastra, in which each Tirtha handled the responsibility of a different department. Which of the following is not matched? <br><br>Tirtha - Department",
+    "options": [
+      "Samaharta - State Treasurer",
+      "Prashasta - Principal officer who keeps the government documents safe",
+      "Karmantik - Chief Inspector of Industries",
+      "Dandpala - The chief officer who arranges the material of the army."
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "82. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I <br>A) Nausadar <br>B) Nitrolim <br>C) Chile Saltpeter <br>D) Saltpeter <br><br>List-II <br>1. Potassium Nitrate <br>2. Sodium Nitrate <br>3. Ammonium Chloride <br>4. Calcium Cyanide <br><br>Code: <br>A B C D",
+    "options": [
+      "1 2 3 4",
+      "3 2 1 4",
+      "2 3 4 1",
+      "4 2 1 3"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "83. Consider the following statements. <br>1. Kozhikode city of Kerala has been included in the Global Network for Age-Friendly Cities and Communities (GNAFCC) of World Health Organization (WHO) in May 2025. <br>2. It became the first Indian city to be included in this list. <br>Choose the correct statement(s):",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "1 and 2 Both",
+      "Neither 1 nor 2"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "84. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Commission) <br>A) Raleigh Commission <br>B) Sadler Commission <br>C) Inchcape Commission <br>D) Lindsay Commission <br><br>List-II (Governor General) <br>1. Lord Curzon <br>2. Lord Reading <br>3. Lord Irwin <br>4. Lord Chelmsford <br><br>Code: <br>A B C D",
+    "options": [
+      "1 3 2 4",
+      "1 4 2 3",
+      "4 2 3 1",
+      "1 2 3 4"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "85. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): In order to conserve species in their natural habitat, it is necessary to have adequate knowledge of their specific niche. <br>Reason (R): The functional role of an organism is fulfilled only in its niche. <br>Select the correct answer using the codes given below:",
+    "options": [
+      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
+      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+      "(A) is correct but (R) is incorrect.",
+      "(A) is incorrect but (R) is correct."
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "86. Which of the following statements is/are correct? <br>1. Violet light has the longest wavelength, so its deviation and scattering is the least. <br>2. Red light has the shortest wavelength, so its deviation and scattering is the most. <br>Code:",
     "options": [
       "1 Only",
       "2 Only",
@@ -44979,436 +44792,689 @@
     "explanation": "explanation not available"
   },
   {
-    "q": "104. In the context of Kharavela, the Chedi dynasty ruler of Kalinga which statement is not correct?",
+    "q": "87. The correct east to west order of following districts of Uttar Pradesh is:",
     "options": [
-      "Its Hathi Gumpha inscription is the first archival evidence giving information about canals.",
-      "In the Hathi Gumpha inscription, there is mention of donation of villages to Buddhist monks.",
-      "He used the donkey to plough the fields of Pandya rulers.",
-      "None of these."
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "105. Who among the following contributed in translating Mahabharata into Telugu language? Choose the correct answer using the code: <br>1. Nannayya <br>2. Tikkanna <br>3. Yerrapragada <br>4. Veerbhadra <br>Code:",
-    "options": [
-      "1, 2 and 3",
-      "1, 2 and 4",
-      "1 and 2",
-      "1, 3 and 4"
+      "Maharajganj, Siddharthnagar, Shrawasti, Pilibhit",
+      "Siddharthnagar, Maharajganj, Shrawasti, Pilibhit",
+      "Maharajganj, Shrawasti, Siddharthnagar, Pilibhit",
+      "Shrawasti, Siddharthnagar, Pilibhit, Maharajganj"
     ],
     "answer": 0,
     "explanation": "explanation not available"
   },
   {
-    "q": "106. Which of the following are the major centres of Jainism in Uttar Pradesh? <br>1. Ayodhya <br>2. Mathura <br>3. Mahoba <br>4. Kashi <br>5. Raunahi <br>6. Shravasti <br>Code:",
+    "q": "88. Which of the following statements is/are correct? <br>1. The level of maturation of the fetal organs is completed by the end of pregnancy. <br>2. The structure of the fetal organs becomes functional only in the fourth trimester of pregnancy. <br>Code:",
     "options": [
-      "2 and 4",
-      "1, 2 and 6",
-      "1, 2 and 5",
+      "1 Only",
+      "2 Only",
+      "1 and 2 Both",
+      "Neither 1 nor 2"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "89. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Book) <br>A) Mother Mary Comes to Me <br>B) A Different Kind of Power <br>C) Heart Lamp <br>D) Source Code: My Beginnings <br><br>List-II (Author) <br>1. A.P.J. Abdul Kalam <br>2. Stephen Hawking <br>3. Albert Einstein <br>4. Linus Pauling <br><br>Code: <br>A B C D",
+    "options": [
+      "2 3 4 1",
+      "2 4 3 1",
+      "4 2 3 1",
+      "3 2 4 1"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "90. Consider the following statements: <br>1. According to the Census-2011, the number of urban agglomerations/cities in India with population more than 40 lakh is 9. <br>2. 21.8% of the total urban population of the country resides in these 9 metros. <br>Choose the correct statement(s):",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "1 and 2 Both",
+      "Neither 1 nor 2"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "91. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): Epithelial tissue helps in healing wounds by reproducing rapidly on injured tissues. <br>Reason (R): Epithelial cells have great capacity for regeneration due to their cell division ability. <br>Select the correct answer using the codes given below:",
+    "options": [
+      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
+      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+      "(A) is correct but (R) is incorrect.",
+      "(A) is incorrect but (R) is correct."
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "92. Arrange the following metals in the order of their reactivity (from most to least): <br>1. Magnesium <br>2. Calcium <br>3. Potassium <br>4. Sodium <br>Code:",
+    "options": [
+      "3, 4, 2, 1",
+      "3, 4, 1, 2",
+      "4, 3, 2, 1",
+      "1, 2, 3, 4"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "93. Arrange the following rebellions against the British in their correct chronological order: <br>1. Khasi Uprising <br>2. Chuar Rebellion <br>3. Rampa Rebellion <br>4. Kol Uprising <br>Code:",
+    "options": [
+      "2, 1, 3, 4",
+      "1, 3, 4, 2",
+      "1, 2, 3, 4",
+      "2, 1, 4, 3"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "94. Which one of the following pairs is not correctly matched? <br><br>Wildlife/Bird Sanctuary - State",
+    "options": [
+      "Karikili - Tamil Nadu",
+      "Chinnar - Kerala",
+      "Sathyamangalam - Tamil Nadu",
+      "Papikonda - Kerala"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "95. Former ISRO Chairman K Kasturirangan passed away in April 2025. Consider the following statements in this regard- <br>1. He was the chairman of the drafting committee of the National Education Policy (NEP) 2020. <br>2. He has been a member of the Planning Commission. <br>Choose the correct statement(s):",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "1 and 2 Both",
+      "Neither 1 nor 2"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "96. Consider the following statements regarding Ganga Expressway and choose the correct statement using the code: <br>1. It is the longest expressway in Uttar Pradesh. <br>2. It will pass through 11 districts of Uttar Pradesh. <br>3. Its maximum length will fall in Badaun district. <br>4. Five industrial corridors will be built on this expressway. <br>Code:",
+    "options": [
+      "1, 2, 3 and 4",
+      "1, 2 and 3",
+      "1, 3 and 4",
+      "2, 3 and 4"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "97. Arrange the following rivers of U.P. in the decreasing order of their length:",
+    "options": [
+      "Gomti, Rapti, Ramganga, Ghaghara",
+      "Ghaghara, Gomti, Ramganga, Rapti",
+      "Rapti, Gomti, Ghaghara, Ramganga",
+      "Ghaghara, Gomti, Rapti, Ramganga"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "98. Which one of the following pairs is not correctly matched? <br><br>Industrial Region - Country",
+    "options": [
+      "Alabama - U.S.A.",
+      "Ruhr - Germany",
+      "Canton - Japan",
+      "South Transvaal - South Africa"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "99. Consider the following statements: <br>1. Neurons are the main units of the nervous system. <br>2. Kidneys help in removing toxins from the body. <br>3. The pH of blood is about 6.4. <br>How many of the above statements are correct?",
+    "options": [
+      "Only one",
+      "Only two",
+      "All the three",
+      "None"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "100. According to Census-2011, what percent of total urban population of India reside in the First Class Clusters?",
+    "options": [
+      "60%",
+      "70.2%",
+      "42.6%",
+      "65.7%"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "101. In June 2025, three states and one union territory of India were declared fully functional literate states. Which of the following states/union territories is/are not included in it? <br>1. Tripura <br>2. Meghalaya <br>3. Mizoram <br>4. Delhi <br>5. Ladakh <br>6. Goa <br>Choose the correct answer using code:",
+    "options": [
+      "4 and 6",
+      "2, 4 and 6",
+      "2, 4 and 5",
+      "2 and 4"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "102. Which one of the following is not related to 'Babur'?",
+    "options": [
+      "Issuing a silver coin named 'Shahrukh'",
+      "Compilation of a poetry collection 'Diwan' in Turkish language",
+      "Fighting the Battle of Machhiwara",
+      "Attaining the title of 'Kalandar'"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "103. Choose the incorrect pair(s) from the following: <br><br>Secretory Gland - Hormone <br>1. Pineal gland - Melatonin <br>2. Thyroid gland - Thyroxine <br>3. Pancreas - Galanin <br>4. Genital gland - Progesterone <br>Code:",
+    "options": [
+      "3 Only",
+      "1 Only",
+      "4 Only",
+      "2 Only"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "104. Which of the following is correctly matched?",
+    "options": [
+      "Provision of service tax : 88th Amend.",
+      "Formation of Scheduled Caste Commission : 61st Amend.",
+      "Formation of state of Meghalaya : 28th Amend.",
+      "Establishment of Municipal Corporation and Municipality : 73rd Amend."
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "105. In October 2025, the Swedish Academy announced the 2025 Nobel Prize in Literature. <br>Consider the following statements regarding it: <br>1. This year, the award will be given to Laszlo Krasznahorkai. <br>2. He is a resident of Germany. <br>Choose the correct statement(s) using the code:",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "1 and 2 Both",
+      "Neither 1 nor 2"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "106. Consider the following statements regarding the rocks of Dharwar sequence: <br>1. These are layered rocks formed by erosion and deposition of primary rocks of the Archaean sequence. <br>2. Fossils are not found in these rocks. <br>Which of the above statement(s) is/are correct?",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "1 and 2 Both",
+      "Neither 1 nor 2"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "107. Which of the following pairs is not correctly matched? <br><br>Peak - Location",
+    "options": [
+      "Saddle Peak - North Andaman",
+      "Mount Harriet - Middle Andaman",
+      "Mount Koyob - South Andaman",
+      "Mount Thullier - Great Nicobar"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "108. From the following, select those rivers whose mouth is in the Pacific Ocean- <br>1. Columbia River <br>2. Sacramento River <br>3. San Joaquin River <br>4. Colorado River <br>Code:",
+    "options": [
+      "1, 2, 3 and 4",
+      "2, 3 and 4",
+      "1, 2 and 3",
+      "1 and 3"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "109. What is Insider Trading?",
+    "options": [
+      "Devaluation of the currency for increasing export.",
+      "Issue of Bonds for the fulfilment of Share Scam.",
+      "Purchase & sale of securities by someone having access to important non-public information regarding securities.",
+      "None of these."
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "110. Consider the following statements regarding photosynthesis: <br>1. The rate of photosynthesis is max. at a temperature of about 30–35°C. <br>2. In the process of photosynthesis, carbon dioxide is oxidized and reduction of water takes place. <br>Which of the above statement(s) is/are correct?",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "1 and 2 Both",
+      "Neither 1 nor 2"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "111. Consider the following statements regarding the first M. S. Swaminathan Award conferred in August 2025: <br>1. The first award for Food and Peace was awarded to Dr. Adenle. <br>2. He was awarded the award for his efforts to fight hunger in Nigeria. <br>Choose the correct statement(s):",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "1 and 2 Both",
+      "Neither 1 nor 2"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "112. Which of the following provisions was not included in the Government of India Act 1935?",
+    "options": [
+      "By this, the diarchy system of government was started at the Centre.",
+      "By this, bicameral system was started in 5 out of 11 states.",
+      "This Act made provision for the appointment of the Auditor General.",
+      "It provided for the establishment of a Federal Railway Authority for the administration of the Railways."
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "113. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): Some rivers originating from the Vindhyachal Mountains flow towards north and join Yamuna and Ganga. <br>Reason (R): These rivers flow through the rift valley. <br>Select the correct answer using the codes given below:",
+    "options": [
+      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
+      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+      "(A) is correct but (R) is incorrect.",
+      "(A) is incorrect but (R) is correct."
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "114. Who among the following national leaders said that \"Political freedom is the life breath of a nation. It is the height of foolishness to think of social and educational reform, industrial expansion, moral progress of a caste etc. without political freedom?\"",
+    "options": [
+      "Bipin Chandra Pal",
+      "Aurobindo Ghosh",
+      "Mahatma Gandhi",
+      "Lala Lajpat Rai"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "115. In which of the following cases, the Supreme Court ruled that freedom of speech and expression under Article 19(1)(a) includes freedom to propagate ideas?",
+    "options": [
+      "Romesh Thapar Case, 1950",
+      "A.K. Gopalan Case, 1950",
+      "Champakam Dorairajan Case, 1951",
+      "Shankari Prasad Case, 1951"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "116. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): In the presence of air, heavier objects will reach the earth first while lighter objects will reach the earth later. <br>Reason (R): In the presence of air, acceleration of objects varies due to buoyancy effect and viscous drag. <br>Select the correct answer using the codes given below:",
+    "options": [
+      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
+      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+      "(A) is correct but (R) is incorrect.",
+      "(A) is incorrect but (R) is correct."
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "117. Consider the following statements: <br>1. In November 2025, UNESCO gave India's Kanchenjunga National Park a 'Good' rating in its latest global review of natural World Heritage sites. <br>2. Kanchenjunga is India's first 'mixed' UNESCO World Heritage Site. <br>Choose the correct statement(s):",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "1 and 2 Both",
+      "Neither 1 nor 2"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "118. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): Smt. Annie Besant supported the granting of Swaraj to India and started the Home Rule League movement. <br>Reason (R): Her aim behind this was to strengthen Anglo-Indian relations. <br>Select the correct answer using the codes given below:",
+    "options": [
+      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
+      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+      "(A) is correct but (R) is incorrect.",
+      "(A) is incorrect but (R) is correct."
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "119. Consider the following statements: <br>1. In 1926 AD, young men like Bhagat Singh, Chhabil Das and Yashpal together founded the Naujawan Bharat Sabha. <br>2. Its objective was to establish a state of fully independent workers and farmers in the whole of India. <br>Which of the above statement(s) is/are correct?",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "Both 1 and 2",
+      "Neither 1 nor 2"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "120. Which one of the following statement regarding the Red Soil found in India is not correct?",
+    "options": [
+      "It is the second largest soil class in the country.",
+      "It is found in maximum extent in Tamil Nadu.",
+      "This soil is alkaline in nature.",
+      "Its red colour is due to the presence of iron oxide."
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "121. Consider the following statements: <br>1. Cambodia shares its border with Thailand, Laos and Vietnam. <br>2. Cambodia's capital Phnom Penh is situated at the confluence of Mekong River and Tonle Sap River. <br>Which of the above statement(s) is/are correct?",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "Both 1 and 2",
+      "Neither 1 nor 2"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "122. In May 2025, 'Project Kusha' was launched by the Defence Research and Development Organisation (DRDO). It is related to:",
+    "options": [
+      "State-of-the-art air defence system",
+      "Building long-range ballistic missiles",
+      "Development of unmanned helicopters",
+      "Manufacturing of manned drones"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "123. Consider the following statements and choose the correct answer using code: <br>1. According to the country's first 'River Dolphin Survey Report' released in March 2025, a total of 6,327 river dolphins have been found in India. <br>2. In this survey, the highest number of dolphins, 2397, were recorded in U.P. <br>Code:",
+    "options": [
+      "Only 1 is correct",
+      "Only 2 is correct",
+      "1 and 2 Both are correct",
+      "1 and 2 Both are incorrect"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "124. Consider the following statements <br>1. In April 2025, the Andhra Pradesh government announced to set up the country's first quantum computing village in Amaravati. <br>2. The year 2025 has been declared as the 'International Year of Quantum Science and Technology' by the United Nations. <br>Choose the correct statement(s):",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "1 and 2 Both",
+      "Neither 1 nor 2"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "125. Which of the following pairs is not correctly matched? <br><br>Festival - District",
+    "options": [
+      "Sulahkul - Agra",
+      "Kampil - Farrukhabad",
+      "Sardhana - Meerut",
+      "Kajali - Chitrakoot"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "126. Consider the following statements regarding 104th Constitutional Amendment Act 2019: <br>1. By this Amendment Act, reservation of seats for SCs and STs in Lok Sabha and State Legislative Assemblies was extended for a period of 10 years i.e. till 2030. <br>2. Special representation of Anglo-Indian community through nomination in Lok Sabha and State Legislative Assemblies was also increased. <br>Which of the above statements is/are correct?",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "Both 1 and 2",
+      "Neither 1 nor 2"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "127. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): A truck loaded with grain remains balanced, but a truck loaded with straw soon becomes unbalanced. <br>Reason (R): The centre of gravity of a truck loaded with straw is nearer to the base than the centre of gravity of a truck loaded with grain. <br>Select the correct answer using the codes given below:",
+    "options": [
+      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
+      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+      "(A) is correct but (R) is incorrect.",
+      "(A) is incorrect but (R) is correct."
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "128. Which of the following is/are the elements included under demographic dividend? <br>1. Increasing Youth and Working Population in the population structure. <br>2. Increasing Dependency Ratio <br>3. Decreasing Dependency Ratio <br>4. Inverted Population Pyramid <br>Code:",
+    "options": [
+      "1 and 3",
+      "1, 2 and 4",
+      "1, 3 and 4",
+      "1, 2, 3 and 4"
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "129. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): Yashoda AI Abhiyan was launched in May-2025 at Mahatma Jyotiba Phule Rohilkhand University Bareilly. <br>Reason (R): It aims to provide necessary skills in AI security and digital security to women in rural and semi-urban areas. <br>Select the correct answer using the codes given below:",
+    "options": [
+      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
+      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
+      "(A) is correct but (R) is incorrect.",
+      "(A) is incorrect but (R) is correct."
+    ],
+    "answer": 0,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "130. Consider the following statements regarding 'Axiom Mission-4', launched in June-2025: <br>1. In Axiom Mission-4, the 'SpaceX Dragon' spacecraft was launched with the 'Falcon-9' rocket. <br>2. With this mission, Shubhanshu Shukla became the first Indian astronaut to visit the International Space Station. <br>Choose the correct statement(s):",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "1 and 2 Both",
+      "Neither 1 nor 2"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "131. Robert Francis Prevost was elected the new Pope in May 2025. Consider the following statements in this regard- <br>1. His new name is 'Pope Leo XIV'. <br>2. He is originally a citizen of the USA. <br>3. He is the first Pope to be born in North America. <br>Choose the correct statement(s):",
+    "options": [
+      "2 and 3",
+      "1 and 3",
+      "1 and 2",
+      "1, 2 and 3"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "132. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Book) <br>A) The World as I See It <br>B) How to Live Longer and Feel Better <br>C) The Theory of Everything <br>D) Indomitable Spirit <br><br>List-II (Author) <br>1. A.P.J. Abdul Kalam <br>2. Stephen Hawking <br>3. Albert Einstein <br>4. Linus Pauling <br><br>Code: <br>A B C D",
+    "options": [
+      "2 3 4 1",
+      "2 4 3 1",
+      "4 2 3 1",
+      "3 2 4 1"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "133. Consider the following: <br>1. Marginal Standing Facility Rate <br>2. Change in margin requirement <br>3. Operations of Open Market <br>4. Rationing of Credit <br>5. Direct Action and Ethical Pressure <br>Which of the above is/are under the Qualitative Type of Credit Control?",
+    "options": [
+      "1, 2, 4, 5",
+      "2, 4, 5",
+      "2, 3, 4, 5",
+      "All of the above"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "134. Consider the following statements regarding 'Vikram-3201': <br>1. This is India's first indigenous 32-bit chip. <br>2. It is developed by DRDO. <br>Choose the correct statement(s):",
+    "options": [
+      "1 Only",
+      "2 Only",
+      "1 and 2 Both",
+      "Neither 1 nor 2"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "135. Consider the following statements regarding 'Global Peace Index-2025': <br>1. It is prepared by the Economist Intelligence Unit. <br>2. Singapore was declared the safest city in Asia. <br>3. India ranked 115th in this index of 2025. <br>Choose the correct statement(s):",
+    "options": [
+      "1 and 2",
+      "2 and 3",
+      "1 and 3",
+      "1, 2 and 3"
+    ],
+    "answer": 2,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "136. Which one of the following pairs is mismatched? <br><br>Conference - Venue",
+    "options": [
+      "SCO Summit 2025 - Tianjin, China",
+      "17th BRICS Summit-2025 - Rio de Janeiro, Brazil",
+      "NATO Summit 2025 - The Hague, Netherlands",
+      "G-7 Summit 2025 - Munich, Germany"
+    ],
+    "answer": 1,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "137. In the Padma Vibhushan awards announced by the Central Government in January 2025, who among of the following person(s) was/were declared to be awarded this honor posthumously? <br>1. Duvvur Nageswar Reddy <br>2. M.T. Vasudevan Nair <br>3. Osamu Suzuki <br>4. Sharda Sinha <br>Select the correct answer using the code:",
+    "options": [
+      "1, 3 and 4",
+      "2, 3 and 4",
+      "1, 2 and 3",
       "All of the above"
     ],
     "answer": 3,
     "explanation": "explanation not available"
   },
   {
-    "q": "107. Which one of the following administrative departments of the Sultanate period was not related to 'Firoz Shah Tughlaq'?",
+    "q": "138. Biological Equilibrium is established by:",
     "options": [
-      "Diwan-i-Bandgan",
-      "Dar-ul-Shafa",
-      "Diwan-i-Kohi",
-      "Diwan-i-Ishtiaq"
+      "Producer and decomposer",
+      "Consumer and decomposer",
+      "Producer, consumer and decomposer",
+      "Producer and consumer"
     ],
     "answer": 2,
     "explanation": "explanation not available"
   },
   {
-    "q": "108. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Site) <br>A) Mahadaha <br>B) Koldihwa <br>C) Sarai Nahar Rai <br>D) Lahuradev <br><br>List-II (Evidence) <br>1. The oldest site of agriculture <br>2. Couple's Graves <br>3. Raw brick houses <br>4. Hut Floor <br><br>Code:",
+    "q": "139. Which of the following was not a reason for the Green Revolution not spreading adequately in Eastern India?",
     "options": [
-      "2, 4, 3, 1",
-      "2, 1, 4, 3",
-      "4, 3, 1, 2",
-      "1, 2, 3, 4"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "109. In the context of various Newspaper Acts, Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Act) <br>A) Vernacular Press Act <br>B) Press Act (Newspaper Incitement Act) <br>C) Indian News Paper Act (Press Act) <br>D) Registration Act <br><br>List-II (Year) <br>1. 1878 AD <br>2. 1867 AD <br>3. 1910 AD <br>4. 1908 AD <br><br>Code:",
-    "options": [
-      "1, 3, 2, 4",
-      "1, 4, 3, 2",
-      "2, 4, 3, 1",
-      "4, 3, 2, 1"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "110. Which of the following texts was composed by Akbar to instill a feeling of brotherhood and respect for Islam among Hindus?",
-    "options": [
-      "Allopanishad",
-      "Razmnama",
-      "Tajik and Tuzuk",
-      "Mujam-al-Buldan"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "111. After which of the following conquests, Alauddin Khilji named that place Khizrabad after his son Khizr Khan?",
-    "options": [
-      "Devagiri",
-      "Malwa",
-      "Chittor",
-      "Telangana"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "112. Indian Independence Act 1947 has abolished the post of Secretary of State of India and its works had been transferred to:",
-    "options": [
-      "Prime Minister of Britain",
-      "Secretary of State of Commonwealth Affairs",
-      "Governor General of India",
-      "First Cabinet of Independent India"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "113. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): The main leaders of the Self-Respect Movement were T.M. Nair and P. Thyagaraja. <br>Reason (R): The aim of this movement was to transform the contemporary Hindu social system into a rational society without caste, religion and divine belief. <br>Select the correct answer using the codes given below:",
-    "options": [
-      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
-      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
-      "(A) is correct but (R) is incorrect.",
-      "(A) is incorrect but (R) is correct."
+      "Small size of land holding",
+      "Lack of capital",
+      "Incomplete development of irrigation system",
+      "Structural & institutional development"
     ],
     "answer": 3,
     "explanation": "explanation not available"
   },
   {
-    "q": "114. Consider the following statements: <br>1. In 1819, 'Samachar Darpan' was the first weekly newspaper published in the English language. <br>2. 'Samachar Darpan' was published during the period of Governor General Lord Warren Hastings. <br>The correct statement(s) from the above is/are:",
-    "options": [
-      "Neither 1 nor 2",
-      "2 Only",
-      "Both 1 and 2",
-      "1 Only"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "115. Famous statement about the 'Third Anglo-Mysore War'- \"We have effectively crippled our enemy without making our friends too formidable\", Who said it?",
-    "options": [
-      "Lord Wellesley",
-      "Tipu Sultan",
-      "Warren Hastings",
-      "Cornwallis"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "116. Arrange the following works done by Akbar in chronological order: <br>1. Establishment of Fatehpur Sikri (1571) <br>2. Abolition of Pilgrimage Tax (1563) <br>3. Mazhar Proclamation (1579) <br>4. Abolition of Jizya tax (1564) <br>Code:",
-    "options": [
-      "2, 4, 1, 3",
-      "4, 2, 1, 3",
-      "1, 2, 3, 4",
-      "2, 1, 4, 3"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "117. Who among the following Sultanate officials was responsible for maintaining the etiquette and splendor of the royal court?",
-    "options": [
-      "Amir-i-Majlis",
-      "Amir-i-Hajib",
-      "Mir-i-Imarat",
-      "Shahna-i-Pil"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "118. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): Muslim League rejected the Cripps proposal. <br>Reason (R): In this, India had the right to voluntarily separate from the Commonwealth. <br>Select the correct answer using the codes given below:",
-    "options": [
-      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
-      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
-      "(A) is correct but (R) is incorrect.",
-      "(A) is incorrect but (R) is correct."
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "119. In the Vijayanagara Empire, such land which was directly under the control of the state and the farmers of these villages had to pay taxes to the state, was called -",
-    "options": [
-      "Bhandarvad Gram",
-      "Umbli Gram",
-      "Kuttaggi",
-      "Mathapur Land"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "120. Consider the following statements regarding Indus Valley Civilization: <br>1. Harappan sites Surkotada and Dholavira are situated in the Gulf of Khambhat. <br>2. Harappan sites Lothal and Rangpur are situated in the Gulf of Kutch. <br>Which of the above statement(s) is/are correct?",
+    "q": "140. Choose the incorrect statements regarding 'Sustainable Development': <br>1. This concept was first presented by Brundtland in 1987. <br>2. This term was first used by IUCN in its report 'World Conservation Strategy'. <br>Code:",
     "options": [
       "1 Only",
       "2 Only",
-      "1 and 2 Both",
+      "Both 1 and 2",
       "Neither 1 nor 2"
     ],
     "answer": 3,
     "explanation": "explanation not available"
   },
   {
-    "q": "121. Many sects came into existence in India in the Sixth Century BC. Which one of the following pairs is not correctly matched? <br><br>Sect - Founder",
+    "q": "141. By merging which of the following banks, the Imperial Bank of India was formed on 27 January 1921? <br>1. Bank of Bengal <br>2. Bank of Bombay <br>3. Bank of Oudh <br>4. Bank of Madras <br>Code:",
     "options": [
-      "Extreme Amoralism - Ajit Kesakamblin",
-      "Indecisive - Sanjay Velattioputta",
-      "Materialist - Pakudhkachayana",
-      "Ajivika - Makkhali Putta Goshal"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "122. Which of the following gives information about Ashoka's personal life?",
-    "options": [
-      "Pillar Inscription",
-      "Large Inscriptions",
-      "Minor Inscriptions",
-      "Cave Inscription"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "123. Which one is not a feature of Ain-e-Dahsala System?",
-    "options": [
-      "It was a Ryotwari system in which there was no existence of middlemen.",
-      "The highest official of the Ain-e-Dahsala system was Diwan-i-Ala.",
-      "This system was mainly an improved form of the confiscation system.",
-      "This was a permanent arrangement for 10 years."
+      "1, 2, 3 and 4",
+      "1, 2 and 3",
+      "2, 3 and 4",
+      "1, 2 and 4"
     ],
     "answer": 3,
     "explanation": "explanation not available"
   },
   {
-    "q": "124. Which one of the following pairs is not correctly matched? <br><br>Text - Author",
+    "q": "142. Which of the following pairs is not correctly matched?",
     "options": [
-      "Mahabhashya - Patanjali",
-      "Mrichchakatikam - Shudraka",
-      "Buddhacharita - Bhasa",
-      "Natyashastra - Bharata Muni"
+      "Directorate of Soybean Research - Indore",
+      "Directorate of Mushroom Research - Solan",
+      "Directorate of Cashew Research - Sangli",
+      "Directorate of Groundnut Research - Junagadh"
     ],
     "answer": 2,
     "explanation": "explanation not available"
   },
   {
-    "q": "125. In the context of Inscriptions of Skandagupta, Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Inscription) <br>A) Kahaum Pillar Inscription <br>B) Gadhwa Inscription <br>C) Bhitari Inscription <br>D) Indore Copper Plate <br><br>List-II (Location) <br>1. Ghazipur <br>2. Bulandshahr <br>3. Gorakhpur <br>4. Prayagraj <br><br>Code:",
+    "q": "143. Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Committee/Commission) <br>A) Aparajita Sarangi Committee <br>B) Justice Asha Menon Committee <br>C) Dr. K. Radhakrishnan Committee <br>D) Justice Harsh Kumar Committee <br><br>List-II (Objectives) <br>1. Protection of the rights of transgenders <br>2. Facilitating the implementation of the Indian Higher Education Commission <br>3. Investigation of the Mahakumbh tragedy <br>4. Examining the 130th Constitutional Amendment Bill <br><br>Code: <br>A B C D",
     "options": [
-      "3, 1, 4, 2",
-      "3, 4, 1, 2",
-      "4, 3, 2, 1",
-      "1, 2, 3, 4"
+      "4 2 3 1",
+      "4 2 1 3",
+      "3 1 2 4",
+      "3 2 1 4"
     ],
-    "answer": 1,
+    "answer": 3,
     "explanation": "explanation not available"
   },
   {
-    "q": "126. Given below are two statements, one is labelled as Assertion (A) and other as Reason (R): <br>Assertion (A): The Marathas did not get any help from other rulers in the third battle of Panipat in the year 1761. <br>Reason (R): Because of empire expansion campaigns of the Marathas, other rulers were against them. <br>Select the correct answer using the codes given below:",
+    "q": "144. In February 2025, US President Donald Trump imposed sanctions on the International Criminal Court. The main reason for this was:",
     "options": [
-      "Both (A) and (R) are correct, (R) is the correct explanation of (A).",
-      "Both (A) and (R) are correct but (R) is not the correct explanation of (A).",
-      "(A) is correct but (R) is incorrect.",
-      "(A) is incorrect but (R) is correct."
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "127. What was meant by the concept of 'Wahdat-al-Wujud' endorsed by Akbar?",
-    "options": [
-      "Unity of Existence",
-      "Encouragement to Widow Marriage",
-      "War against the Infidels",
-      "Islamic Purity"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "128. Which of the following pairs regarding Gupta Period is/are correct? <br>1. Bhaga - King's share in Land Revenue <br>2. Shreni - Head of Merchant Class <br>3. Bhukti - Administrative Deptt. <br>Code:",
-    "options": [
-      "1 and 3",
-      "1 and 2",
-      "1, 2 and 3",
-      "2 and 3"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "129. Succession dispute between Hyderabad and Karnataka was the root cause of:",
-    "options": [
-      "First Carnatic War",
-      "Second Carnatic War",
-      "Third Carnatic War",
+      "Accusations of illegal and baseless actions against Israel",
+      "Making Cuba a member of the ICC",
+      "Misuse of funds",
       "None of the above"
     ],
-    "answer": 1,
+    "answer": 0,
     "explanation": "explanation not available"
   },
   {
-    "q": "130. In the context of Rigvedic rivers, Match List-I with List-II and choose the correct answer with the help of given codes: <br><br>List-I (Ancient Name) <br>A) Vitasta <br>B) Shutudri <br>C) Sushoma <br>D) Parushni <br><br>List-II (Modern Name) <br>1. Jhelum <br>2. Sohan <br>3. Sutlej <br>4. Ravi <br><br>Code:",
-    "options": [
-      "1, 2, 3, 4",
-      "1, 3, 2, 4",
-      "2, 1, 3, 4",
-      "2, 3, 1, 4"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "131. Consider the following statements and choose the correct statements using the code given: <br>1. In April 2025, Telangana became the first state in the country to implement Scheduled Caste sub-categorization. <br>2. In April 2025, Madhya Pradesh became the first state in the country to launch an AI-based real-time Forest Alert System. <br>Code:",
+    "q": "145. Consider the following statements regarding the Purchasing Power Parity Theory: <br>1. This theory was propounded by G.R. Cassel. <br>2. This method was firstly used by the International Monetary Fund in 1993. <br>Correct statements is/are:",
     "options": [
       "1 Only",
       "2 Only",
-      "1 and 2 Both",
-      "Neither 1 nor 2"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "132. Which of the following statements is/are correct regarding the 'Global Network Readiness Index-2025', released in April 2025? <br>1. This report is published by UNCTAD. <br>2. India was ranked 36th in this index. <br>Code:",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "1 and 2 Both",
-      "Neither 1 nor 2"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "133. In April 2025, during his visit to which country Prime Minister Narendra Modi signed a Memorandum of Understanding to develop the Trincomalee Port situated there into an energy hub?",
-    "options": [
-      "Bahrain",
-      "Sri Lanka",
-      "Saudi Arabia",
-      "Mauritius"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "134. Consider the following statements: <br>1. The Pradhan Mantri Mudra Yojana (PMMY) completed 10 years in April 2025. <br>2. Jammu and Kashmir was top ranked among Union Territories in loan disbursement under the PMMY. <br>Choose the correct statement(s):",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "1 and 2 Both",
-      "Neither 1 nor 2"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "135. Consider the following statements regarding the 6th BIMSTEC summit: <br>1. It was held in Thailand (Bangkok) in April 2025. <br>2. The theme of this summit was 'BIMSTEC: Prosperous, Resilient, and Open'. <br>Choose the incorrect statement(s):",
-    "options": [
-      "1 and 2 Both",
-      "Neither 1 nor 2",
-      "2 Only",
-      "1 Only"
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "136. Consider the following statements regarding Exercise INDRA-2025: <br>1. This exercise was organized between the air forces of India and Russia in April 2025. <br>2. It was held in Jorhat, Assam. <br>Choose the correct statement(s):",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "1 and 2 Both",
-      "Neither 1 nor 2"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "137. In April 2025, 'Asia University Rankings-2025' was released by UK magazine 'Times Higher Education'. Consider the following statements in this regard: <br>1. Peking University of China got the first place in this. <br>2. Indian Institute of Science, Bangalore is the only Indian institute included in the list of top 100 universities. <br>Choose the correct statement(s):",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "1 and 2 Both",
-      "Neither 1 nor 2"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "138. Consider the following statements: <br>1. The Indian Athlete Passport Management Unit was inaugurated at the National Dope Testing Laboratory in April 2025. <br>2. India became the 17th country in the world to establish an Athlete Passport Management Unit (APMU). <br>Choose the correct statement(s):",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "1 and 2 Both",
-      "Neither 1 nor 2"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "139. Consider the following statements regarding 23rd Law Commission: <br>1. Former Supreme Court judge Dinesh Maheshwari was appointed its chairman in April 2025. <br>2. M.C. Setalvad was the chairman of the first Indian Law Commission. <br>Choose the correct statement(s):",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "1 and 2 Both",
-      "Neither 1 nor 2"
-    ],
-    "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "140. Consider the following statements: <br>1. INS Varsha is India's first dedicated nuclear submarine base. <br>2. It is situated in Vijayawada (Andhra Pradesh). <br>Choose the correct statement(s):",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "1 and 2 Both",
+      "Both 1 and 2",
       "Neither 1 nor 2"
     ],
     "answer": 0,
     "explanation": "explanation not available"
   },
   {
-    "q": "141. In April 2025, the Defence Research and Development Organisation (DRDO) successfully tested an indigenously developed glide bomb. Its name is:",
+    "q": "146. The wrong match of the names of Shifting Cultivation in different parts of India is:",
     "options": [
-      "Raghav",
-      "Gaurav",
-      "Rudra",
-      "Nag"
+      "Jhum - North Eastern India",
+      "Deepa - Jharkhand",
+      "Podu - Andhra Pradesh",
+      "Dhavi - Odisha"
     ],
-    "answer": 1,
+    "answer": 3,
     "explanation": "explanation not available"
   },
   {
-    "q": "142. In April 2025, Prime Minister Narendra Modi inaugurated the new Pamban Bridge in Tamil Nadu. Consider the following statements regarding it: <br>1. It is India's first vertical lift sea bridge. <br>2. It was constructed by Rail Vikas Nigam Limited (RVNL). <br>Choose the correct statement(s):",
+    "q": "147. The long/high tide will be experienced on-",
+    "options": [
+      "Saptami of Krishna Paksha",
+      "Ashtami of Shukla Paksha",
+      "Ekadashi of Krishna Paksha",
+      "Full Moon"
+    ],
+    "answer": 3,
+    "explanation": "explanation not available"
+  },
+  {
+    "q": "148. Consider the following statements regarding ASHA: <br>1. ASHA is a trained female health assistant who works as a facilitator between the community and health services. <br>2. 'ASHA' is a woman from the concerned village. <br>Incorrect statement(s) is/are",
     "options": [
       "1 Only",
       "2 Only",
-      "1 and 2 Both",
+      "Both 1 and 2",
       "Neither 1 nor 2"
     ],
-    "answer": 2,
+    "answer": 0,
     "explanation": "explanation not available"
   },
   {
-    "q": "143. The renowned film actor Manoj Kumar passed away in April 2025. <br>Consider the following statements regarding him: <br>1. His real name was Harikishan Goswami. <br>2. He was awarded the Dadasaheb Phalke Award in 2015. <br>Choose the correct statement(s):",
+    "q": "149. Consider the following statements: <br>1. Chambal river meets Yamuna near Etawah. <br>2. Sharda river determines the border of Pilibhit and Nepal. <br>Choose the correct statements:",
     "options": [
       "1 Only",
       "2 Only",
@@ -45419,80 +45485,14 @@
     "explanation": "explanation not available"
   },
   {
-    "q": "144. \"AIKEYME-2025\" is related to which one of the following?",
+    "q": "150. Consider the following statements <br>1. In July 2025, Trinidad and Tobago became the first country in the Caribbean region to officially adopt BHIM-UPI. <br>2. It is the eighth country in the world to have accepted BHIM-UPI. <br>From the above statements:",
     "options": [
-      "Africa-India Multinational Maritime Exercise-2025",
-      "UAE-India Defence Expo",
-      "Defence Expo, Sharjah-2025",
-      "India-Taiwan Air Force Exercise"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "145. Former ISRO Chairman Dr. K. Kasturirangan passed away in April 2025. He was not honoured with which one of the following?",
-    "options": [
-      "Padma Shri",
-      "Padma Bhushan",
-      "Padma Vibhushan",
-      "Bharat Ratna"
-    ],
-    "answer": 3,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "146. In April 2025, UNESCO announced designate of 16 new global geoparks in 11 countries. Consider the following statements in this regard: <br>1. North Korea and Saudi Arabia joined the Global Geopark Network for the first time in the year 2025. <br>2. Two UNESCO Geoparks were declared in India in the year 2025. <br>Choose the correct statement(s):",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "1 and 2 Both",
-      "Neither 1 nor 2"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "147. Pradhan Mantri Mudra Yojana (PMMY) completed 10 years in April 2025, which are the top three states in loan disbursal under this scheme?",
-    "options": [
-      "Tamil Nadu, U.P., Karnataka",
-      "Karnataka, U.P., Tamil Nadu",
-      "Gujarat, Kerala, Maharashtra",
-      "Maharashtra, U.P., Gujarat"
-    ],
-    "answer": 0,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "148. Consider the following statements: <br>1. In April 2025, Similipal Park was declared as a national park by the Odisha government by official notification. <br>2. Similipal is the 107th national park of India. <br>Choose the correct statement(s):",
-    "options": [
-      "1 Only",
-      "2 Only",
-      "1 and 2 Both",
-      "Neither 1 nor 2"
+      "Only statement-1 is correct",
+      "Only statement-2 is correct",
+      "Statements 1 & 2 both are correct",
+      "Statements 1 & 2 both are incorrect"
     ],
     "answer": 2,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "149. What is the objective of 'Project Bharat' started in April 2025?",
-    "options": [
-      "Rejuvenation of primary schools.",
-      "Empowering entrepreneurs of rural India.",
-      "Monitoring national environmental programmes.",
-      "Connecting rural India with roads."
-    ],
-    "answer": 1,
-    "explanation": "explanation not available"
-  },
-  {
-    "q": "150. Which of the following days was not celebrated in April-2025?",
-    "options": [
-      "National Maritime Day",
-      "World Migratory Bird Day",
-      "World Intellectual Property Day",
-      "World Heritage Day"
-    ],
-    "answer": 1,
     "explanation": "explanation not available"
   }
 ],
