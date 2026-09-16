@@ -126,9 +126,19 @@ function renderTestHistory() {
     const isMockResult = String(result.subjectKey || "").toLowerCase() === "mock"
         || String(result.quizId || "").toLowerCase().startsWith("mock::");
     const historyEntries = isMockResult && !isHistoricalReview
-        ? (Array.isArray(attemptHistory[result.quizId]) ? attemptHistory[result.quizId].slice().reverse().map((item) => ({ quizId: result.quizId, item })) : [])
+        ? Object.entries(attemptHistory)
+            .filter(([quizId, attempts]) => quizId.toLowerCase().startsWith("mock::") && Array.isArray(attempts) && attempts.length)
+            .map(([quizId, attempts]) => ({
+                quizId,
+                item: attempts.slice().sort((left, right) => {
+                    const rightTime = new Date(right.completedAt || 0).getTime();
+                    const leftTime = new Date(left.completedAt || 0).getTime();
+                    return (rightTime - leftTime) || (Number(right.attempt) - Number(left.attempt));
+                })[0]
+            }))
+            .filter((entry) => entry.item)
         : (Array.isArray(attemptHistory[result.quizId]) ? attemptHistory[result.quizId].slice().reverse().map((item) => ({ quizId: result.quizId, item })) : []);
-    if (historyCount) historyCount.innerText = isMockResult && !isHistoricalReview ? `${historyEntries.length} Mock Test attempts` : `${historyEntries.length} of 5 attempts`;
+    if (historyCount) historyCount.innerText = isMockResult && !isHistoricalReview ? `${historyEntries.length} Mock Test sets` : `${historyEntries.length} of 5 attempts`;
     testHistory.innerHTML = historyEntries.length ? historyEntries.map(({ quizId, item }) => `
         <article class="test-history-item${isHistoricalReview && quizId === historicalQuizId && item.attempt === historicalAttemptNumber ? " current-history-item" : ""}">
             <div>
@@ -140,9 +150,37 @@ function renderTestHistory() {
                 <strong>Score: ${item.finalScore ?? item.score ?? 0} / ${item.total || 0}</strong>
                 <span>Percentage: ${item.percentage ?? item.accuracy ?? 0}%</span>
                 ${isHistoricalReview && quizId === historicalQuizId && item.attempt === historicalAttemptNumber ? "<span class=\"history-readonly-label\">Read-only review</span>" : `<a class="btn btn-secondary btn-small" href="result-review.html?historical=1&quizId=${encodeURIComponent(quizId)}&attempt=${item.attempt}">View Attempt</a>`}
+                <button type="button" class="btn btn-secondary btn-small delete-history-btn" data-quiz-id="${escapeHtml(quizId)}" data-attempt="${item.attempt}">Delete</button>
             </div>
         </article>
     `).join("") : "<p class=\"history-empty\">No submitted attempts yet.</p>";
+}
+
+if (testHistory) {
+    testHistory.addEventListener("click", async (event) => {
+        const deleteButton = event.target.closest(".delete-history-btn");
+        if (!deleteButton) return;
+        event.preventDefault();
+        event.stopPropagation();
+
+        const quizId = deleteButton.dataset.quizId;
+        const attemptNumber = Number(deleteButton.dataset.attempt);
+        if (!quizId || !Number.isFinite(attemptNumber)) return;
+        if (!window.confirm("Delete this submitted attempt?")) return;
+
+        deleteButton.disabled = true;
+        try {
+            if (!window.quizAttemptHistoryStore?.deleteAttempt) {
+                throw new Error("Attempt history storage is unavailable.");
+            }
+            await window.quizAttemptHistoryStore.deleteAttempt(quizId, attemptNumber);
+            attemptHistory = await window.quizAttemptHistoryStore.getHistory();
+            renderTestHistory();
+        } catch (error) {
+            deleteButton.disabled = false;
+            window.alert(`Unable to delete this attempt: ${error.message}`);
+        }
+    });
 }
 
 function startReattempt() {

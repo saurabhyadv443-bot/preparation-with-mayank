@@ -169,6 +169,37 @@
         }
     }
 
+    async function deleteAttempt(quizId, attemptNumber) {
+        await ready;
+        const attemptId = `${quizId}::${attemptNumber}`;
+        if (window.indexedDB) {
+            const database = await openDatabase();
+            const existingRecord = await requestAsPromise(database.transaction(STORE_NAME, "readonly").objectStore(STORE_NAME).get(attemptId));
+            if (!existingRecord) {
+                throw new Error("Attempt was not found.");
+            }
+            const transaction = database.transaction(STORE_NAME, "readwrite");
+            const completed = transactionComplete(transaction);
+            transaction.objectStore(STORE_NAME).delete(attemptId);
+            await completed;
+            cachedHistory = recordsToHistory(await requestAsPromise(database.transaction(STORE_NAME, "readonly").objectStore(STORE_NAME).getAll()));
+            return;
+        }
+
+        const records = Array.isArray(cachedHistory[quizId]) ? cachedHistory[quizId] : [];
+        const remainingRecords = records.filter((item) => item.attempt !== attemptNumber);
+        if (remainingRecords.length === records.length) {
+            throw new Error("Attempt was not found.");
+        }
+        const history = { ...cachedHistory, [quizId]: remainingRecords };
+        const serialized = JSON.stringify(history);
+        if (serialized.length > 3500000) {
+            throw new Error("Unable to save attempt history.");
+        }
+        localStorage.setItem(HISTORY_KEY, serialized);
+        cachedHistory = history;
+    }
+
     async function getResult(key) {
         if (Object.prototype.hasOwnProperty.call(cachedResults, key)) return cachedResults[key];
         const localValue = (() => {
@@ -211,5 +242,5 @@
         if (serialized.length <= 3500000) localStorage.setItem(key, serialized);
     }
 
-    window.quizAttemptHistoryStore = { ready, getHistory, getHistorySync: () => cachedHistory, putAttempt, updateAttempt, getResult, putResult };
+    window.quizAttemptHistoryStore = { ready, getHistory, getHistorySync: () => cachedHistory, putAttempt, updateAttempt, deleteAttempt, getResult, putResult };
 }());
