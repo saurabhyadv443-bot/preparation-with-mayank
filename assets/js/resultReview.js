@@ -921,6 +921,30 @@ function getSavedQuestions() {
     }
 }
 
+function isSavedReviewSubjectKey(subjectKey) {
+    return ["modern", "geography", "ancient", "medieval", "polity", "economy"].includes(String(subjectKey || "").trim().toLowerCase());
+}
+
+function getCurrentResultSavedReviewIndexes() {
+    if (!result || !Array.isArray(result.questions)) {
+        return [];
+    }
+    const sourceSaved = Array.isArray(result.saved) ? result.saved : [];
+    const reviewState = Array.isArray(result.markedForReview) ? result.markedForReview : [];
+    if (!isSavedReviewSubjectKey(result.subjectKey || result.subject || "")) {
+        return sourceSaved.filter((value) => Number.isInteger(Number(value)));
+    }
+    const indexes = new Set(
+        sourceSaved
+            .map((value) => Number(value))
+            .filter((value) => Number.isInteger(value) && value >= 0)
+    );
+    reviewState.forEach((value, index) => {
+        if (Boolean(value)) indexes.add(index);
+    });
+    return Array.from(indexes).sort((left, right) => left - right);
+}
+
 const CLASSIFICATION_LABELS = {
     H: "History",
     G: "Geography",
@@ -1078,8 +1102,13 @@ function isSavedQuestion(index) {
     const question = result.questions[index];
     const source = getReviewQuestionSource(question, savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex);
     const pendingSource = quizPendingQuestionSource(question, result.subjectKey, result.chapter, savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex);
-    if (getQuizPendingQuestionChanges(pendingSource).some((change) => change.operationType === "saved-question")) {
+    const pendingSavedChanges = getQuizPendingQuestionChanges(pendingSource).filter((change) => change.operationType === "saved-question");
+    if (pendingSavedChanges.length) {
         return isQuizPendingActive(pendingSource, "saved-question", "");
+    }
+    const currentSavedReviewIndexes = getCurrentResultSavedReviewIndexes();
+    if (isSavedReviewSubjectKey(result.subjectKey || result.subject || "") && currentSavedReviewIndexes.includes(index)) {
+        return true;
     }
     return savedQuestions.some((item) => savedQuestionIdentity(item) === savedQuestionIdentity(source));
 }
@@ -1094,7 +1123,10 @@ async function toggleSavedQuestion(index, event) {
     const savedQuestionIndex = savedQuestions.findIndex((item) => savedQuestionIdentity(item) === savedQuestionIdentity(source));
     const pendingSource = quizPendingQuestionSource(question, result.subjectKey, result.chapter, questionIndex);
     const pendingSavedChanges = getQuizPendingQuestionChanges(pendingSource).filter((change) => change.operationType === "saved-question");
-    const currentlySaved = pendingSavedChanges.length ? pendingSavedChanges[pendingSavedChanges.length - 1].active !== false : savedQuestionIndex >= 0;
+    const resultSavedQuestion = isSavedReviewSubjectKey(subjectKey) && getCurrentResultSavedReviewIndexes().includes(questionIndex);
+    const currentlySaved = pendingSavedChanges.length
+        ? pendingSavedChanges[pendingSavedChanges.length - 1].active !== false
+        : savedQuestionIndex >= 0 || resultSavedQuestion;
     queueQuizPendingChange({ operationType: "saved-question", ...pendingSource, active: !currentlySaved });
 
     if (savedQuestionsLoaded) {
@@ -1187,6 +1219,7 @@ function renderQuickNavigation() {
         correct: "Correct",
         incorrect: "Incorrect",
         skipped: "Skipped",
+        saved: "Saved",
     };
     const visibleIndexes = getVisibleQuestionIndexes();
     quickNavigationLabel.innerText = `${labels[activeFilter] || "All"}:`;
@@ -1247,11 +1280,15 @@ function getFilterCounts() {
         correct: 0,
         incorrect: 0,
         skipped: 0,
+        saved: 0,
     };
 
     result.questions.forEach((question, index) => {
         const status = getQuestionStatus(index);
         counts[status] += 1;
+        if (isSavedQuestion(index)) {
+            counts.saved += 1;
+        }
     });
 
     return counts;
@@ -1260,6 +1297,9 @@ function getFilterCounts() {
 function isQuestionVisible(index) {
     if (activeFilter === "all") {
         return true;
+    }
+    if (activeFilter === "saved") {
+        return isSavedQuestion(index);
     }
 
     return getQuestionStatus(index) === activeFilter;
@@ -1426,6 +1466,9 @@ function updateFilterButtons() {
         btn.classList.toggle("active", filter === activeFilter);
         btn.innerHTML = `${label} <span class="filter-count">(${counts[filter] || 0})</span>`;
     });
+    if (savedQuestionsToggle) {
+        savedQuestionsToggle.classList.toggle("active", activeFilter === "saved");
+    }
 }
 
 function updateQuestionVisibility() {
@@ -1536,8 +1579,18 @@ if (!result && !isHistoricalReview && !window.quizAttemptHistoryStore) {
 if (savedQuestionsToggle) {
     savedQuestionsToggle.onclick = () => {
         const isOpen = savedQuestionsToggle.getAttribute("aria-expanded") === "true";
+        activeFilter = "saved";
+        renderQuestions();
+        updateFilterButtons();
+        renderPalette();
+        renderQuickNavigation();
+        updateActiveQuestion();
+        updateResultCount();
+        savedQuestionsToggle.classList.toggle("active", true);
         savedQuestionsToggle.setAttribute("aria-expanded", String(!isOpen));
-        savedQuestionsPanel.hidden = isOpen;
+        if (savedQuestionsPanel) {
+            savedQuestionsPanel.hidden = isOpen;
+        }
     };
 }
 

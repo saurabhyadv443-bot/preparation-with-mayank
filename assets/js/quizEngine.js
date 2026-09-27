@@ -104,6 +104,36 @@ function getProgressKey() {
 function getResultKey() {
     return isStudyMode() ? "quizResult_study" : "quizResult";
 }
+
+const SAVED_REVIEW_SUBJECT_KEYS = new Set(["modern", "geography", "ancient", "medieval", "polity", "economy"]);
+
+function isSavedReviewSubject(subjectKey) {
+    return SAVED_REVIEW_SUBJECT_KEYS.has(String(subjectKey || "").trim().toLowerCase());
+}
+
+function collectSavedReviewIndexes(markedForReviewState, subjectKey) {
+    if (!isSavedReviewSubject(subjectKey) || !Array.isArray(markedForReviewState)) {
+        return [];
+    }
+    return markedForReviewState
+        .map((isMarked, index) => (Boolean(isMarked) ? index : null))
+        .filter((index) => index !== null);
+}
+
+function mergeSavedReviewIndexes(existingSavedIndexes, markedForReviewState, subjectKey) {
+    const merged = new Set(
+        Array.isArray(existingSavedIndexes)
+            ? existingSavedIndexes
+                .map((value) => Number(value))
+                .filter((value) => Number.isInteger(value) && value >= 0)
+            : []
+    );
+    if (isSavedReviewSubject(subjectKey)) {
+        collectSavedReviewIndexes(markedForReviewState, subjectKey).forEach((index) => merged.add(index));
+    }
+    return Array.from(merged).sort((left, right) => left - right);
+}
+
 function getQuizId() {
     return [subject, currentChapter || "all", getQuizMode()].join("::");
 }
@@ -115,14 +145,15 @@ async function saveAttempt(result) {
     const completedAt = result.completedAt;
     const completedDate = new Date(completedAt);
     const savedQuestions = getSavedQuestions();
-    const isSaved = (index) => savedQuestions.some((item) =>
-        item.subjectKey === result.subjectKey && item.chapter === result.chapter && item.questionIndex === index
-    );
+    const existingSavedIndexes = savedQuestions
+        .filter((item) => item.subjectKey === result.subjectKey && item.chapter === result.chapter)
+        .map((item) => Number(item.questionIndex))
+        .filter((value) => Number.isInteger(value) && value >= 0);
     const questionIds = {};
     const answers = {};
     const questionStatus = {};
     const correctAnswers = {};
-    const saved = [];
+    const saved = mergeSavedReviewIndexes(existingSavedIndexes, result.markedForReview, result.subjectKey || result.subject);
     result.questions.forEach((question, index) => {
         const questionId = question.id ?? question.qid ?? question.questionId ?? index;
         const key = String(questionId);
@@ -131,7 +162,6 @@ async function saveAttempt(result) {
         answers[key] = selected == null ? null : selected;
         correctAnswers[key] = question.answer;
         questionStatus[key] = selected == null ? "unanswered" : selected === question.answer ? "correct" : "incorrect";
-        if (isSaved(index)) saved.push(index);
     });
     const attempt = {
         date: completedDate.toLocaleDateString(),
@@ -1479,6 +1509,11 @@ async function finishQuiz(timeout = false) {
     const positiveMarks = getQuizMode() === "mock" ? correct - wrong / 3 : correct;
     const negativeMarks = getQuizMode() === "mock" ? wrong / 3 : 0;
     const finalScore = getQuizMode() === "mock" ? correct - wrong / 3 : correct;
+    const existingSavedIndexes = getSavedQuestions()
+        .filter((item) => item.subjectKey === subject && item.chapter === currentChapter)
+        .map((item) => Number(item.questionIndex))
+        .filter((value) => Number.isInteger(value) && value >= 0);
+    const savedReviewIndexes = mergeSavedReviewIndexes(existingSavedIndexes, markedForReview, subject);
     const normalizedQuestions = questions.map((question) => {
         const explanationSource = question.explanation || "";
         const explanationDocument = explanationSource
@@ -1513,6 +1548,7 @@ async function finishQuiz(timeout = false) {
         questions: normalizedQuestions,
         userAnswers,
         markedForReview,
+        saved: savedReviewIndexes,
         markedReview,
         timeTaken,
         percentage: accuracy,
