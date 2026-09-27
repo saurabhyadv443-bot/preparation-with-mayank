@@ -1,5 +1,6 @@
 const params = new URLSearchParams(window.location.search);
 const subject = params.get("subject") || "ancient";
+const source = params.get("source") || "";
 const selectedChapterFromQuery = params.get("chapter") || "";
 let selectedMode = params.get("mode") || "";
 
@@ -25,6 +26,10 @@ async function loadSubjectManifest() {
 }
 
 function resolveSubjectDataFile(subjectKey) {
+    const normalizedSource = String(source || "").trim().toLowerCase();
+    if (subjectKey === "mock" && normalizedSource === "sectional") {
+        return "sectional.json";
+    }
     if (SUBJECT_MANIFEST && SUBJECT_MANIFEST[subjectKey]) return SUBJECT_MANIFEST[subjectKey].file;
     return `${subjectKey}.json`;
 }
@@ -97,11 +102,17 @@ function isStudyMode() {
     return getQuizMode() === "study";
 }
 
+function isSectionalMockQuiz() {
+    return subject === "mock" && String(source || "").trim().toLowerCase() === "sectional";
+}
+
 function getProgressKey() {
+    if (isSectionalMockQuiz() && !isStudyMode()) return "quizProgress_sectional";
     return isStudyMode() ? "quizProgress_study" : "quizProgress";
 }
 
 function getResultKey() {
+    if (isSectionalMockQuiz() && !isStudyMode()) return "quizResult_sectional";
     return isStudyMode() ? "quizResult_study" : "quizResult";
 }
 
@@ -135,7 +146,13 @@ function mergeSavedReviewIndexes(existingSavedIndexes, markedForReviewState, sub
 }
 
 function getQuizId() {
-    return [subject, currentChapter || "all", getQuizMode()].join("::");
+    const parts = [subject];
+    if (isSectionalMockQuiz()) {
+        parts.push("sectional");
+    }
+    parts.push(currentChapter || "all");
+    parts.push(getQuizMode());
+    return parts.join("::");
 }
 async function saveAttempt(result) {
     const attemptHistoryStore = window.quizAttemptHistoryStore;
@@ -1445,6 +1462,7 @@ function saveProgress() {
         subject,
         subjectKey: currentSubjectKey,
         chapter: currentChapter,
+        source: isSectionalMockQuiz() ? "sectional" : "",
         currentQuestion,
         userAnswers,
         markedForReview,
@@ -1529,6 +1547,7 @@ async function finishQuiz(timeout = false) {
         subject: quizData.subject,
         subjectKey: subject,
         chapter: currentChapter,
+        source: isSectionalMockQuiz() ? "sectional" : "",
         quizId: getQuizId(),
         duration: getQuizMode() === "practice" ? Number(quizData.secondsPerQuestion) || 40 : getQuizDuration(),
         quizUrl: `quiz.html${window.location.search}`,
@@ -1562,7 +1581,14 @@ async function finishQuiz(timeout = false) {
     }
     await saveAttempt(result);
     localStorage.removeItem(getProgressKey());
-    const resultUrl = isStudyMode() ? "result-review.html?mode=study" : "result-review.html";
+    const resultParams = new URLSearchParams();
+    if (isStudyMode()) {
+        resultParams.set("mode", "study");
+    }
+    if (isSectionalMockQuiz()) {
+        resultParams.set("source", "sectional");
+    }
+    const resultUrl = `result-review.html${resultParams.size ? `?${resultParams.toString()}` : ""}`;
     window.location.href = resultUrl;
 }
 

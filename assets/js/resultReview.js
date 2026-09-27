@@ -1,6 +1,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const reviewMode = urlParams.get("mode") || "";
-const resultKey = reviewMode === "study" ? "quizResult_study" : "quizResult";
+const reviewSource = (urlParams.get("source") || "").trim().toLowerCase();
+const resultKey = reviewMode === "study" ? "quizResult_study" : (reviewSource === "sectional" ? "quizResult_sectional" : "quizResult");
 const historicalAttemptNumber = Number(urlParams.get("attempt"));
 const historicalQuizId = urlParams.get("quizId");
 const isHistoricalReview = Boolean(historicalQuizId && historicalAttemptNumber);

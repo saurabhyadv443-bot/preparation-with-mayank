@@ -1,5 +1,6 @@
 const params = new URLSearchParams(window.location.search);
 const subject = params.get("subject") || "ancient";
+const source = params.get("source") || "";
 const chapterList = document.getElementById("chapterList");
 const subjectReviewBtn = document.getElementById("subjectReviewBtn");
 const reviewSubjects = new Set(["ancient", "medieval", "modern", "geography", "polity", "economy", "mock"]);
@@ -35,21 +36,35 @@ function safeParseStoredValue(key, fallback = []) {
     }
 }
 
-function getResumeProgressForTarget(targetName) {
-    const progress = safeParseStoredValue("quizProgress", null);
+function getMockHistoryQuizId(targetName, mockSource = "") {
+    const normalizedSource = String(mockSource || "").trim().toLowerCase();
+    return normalizedSource === "sectional"
+        ? [subject, "sectional", targetName, "mock"].join("::")
+        : [subject, targetName, "mock"].join("::");
+}
+
+function getResumeProgressForTarget(targetName, mockSource = "") {
+    const progressKey = mockSource === "sectional" ? "quizProgress_sectional" : "quizProgress";
+    const progress = safeParseStoredValue(progressKey, null);
     if (!progress || progress.subject !== subject || progress.chapter !== targetName) {
+        return null;
+    }
+    if (mockSource === "sectional" && progress.source !== "sectional") {
+        return null;
+    }
+    if (!mockSource && progress.source === "sectional") {
         return null;
     }
     return progress;
 }
 
-function hasCompletedMockAttempt(targetName) {
+function hasCompletedMockAttempt(targetName, mockSource = "") {
     if (subject !== "mock") {
         return false;
     }
 
     const history = window.quizAttemptHistoryStore?.getHistorySync() || safeParseStoredValue("quiz_attempt_history", {});
-    const quizId = [subject, targetName, "mock"].join("::");
+    const quizId = getMockHistoryQuizId(targetName, mockSource);
     return Array.isArray(history[quizId]) && history[quizId].length > 0;
 }
 
@@ -279,13 +294,13 @@ function openImportantQuestionsQuiz(title, questions, subjectKey, questionIndex)
     window.location.href = "collection-quiz.html";
 }
 
-function renderSubjectCardButton(targetName, targetType) {
+function renderSubjectCardButton(targetName, targetType, mockSource = "") {
     const button = document.createElement("button");
     button.type = "button";
     button.className = targetType === "mock" ? "chapterBtn subject-set-btn" : "chapterBtn subject-chapter-btn";
 
-    const progress = getResumeProgressForTarget(targetName);
-    if (targetType === "mock" && (progress || hasCompletedMockAttempt(targetName))) {
+    const progress = getResumeProgressForTarget(targetName, mockSource);
+    if (targetType === "mock" && (progress || hasCompletedMockAttempt(targetName, mockSource))) {
         button.classList.add("mock-attempted");
     }
     const actionText = targetType === "mock"
@@ -305,6 +320,9 @@ function renderSubjectCardButton(targetName, targetType) {
             return;
         }
         const query = new URLSearchParams({ subject, chapter: targetName });
+        if (targetType === "mock" && mockSource === "sectional") {
+            query.set("source", "sectional");
+        }
         window.location.href = `quiz.html?${query.toString()}`;
     };
     return button;
@@ -431,7 +449,14 @@ async function loadSubjectContent() {
 
         if (subject === "mock") {
             const setNames = collectMockSetNames(data);
-            renderMockSets(setNames);
+            let sectionalSetNames = [];
+            try {
+                const sectionalData = await loadJson("data/sectional.json");
+                sectionalSetNames = collectMockSetNames(sectionalData);
+            } catch (error) {
+                sectionalSetNames = [];
+            }
+            renderMockSets(setNames, sectionalSetNames);
             return;
         }
 
@@ -481,21 +506,60 @@ function renderChapters(chapters) {
     });
 }
 
-function renderMockSets(setNames) {
+function renderMockSets(setNames, sectionalSetNames = []) {
     if (!chapterList) {
         return;
     }
     chapterList.innerHTML = "";
     chapterList.classList.add("subject-card-grid");
 
+    const fullLengthWrapper = document.createElement("div");
+    fullLengthWrapper.className = "mock-section-group";
+    const fullLengthHeader = document.createElement("h3");
+    fullLengthHeader.textContent = "Full Length Test";
+    fullLengthHeader.className = "mock-section-header";
+    fullLengthWrapper.appendChild(fullLengthHeader);
+
+    const fullLengthGrid = document.createElement("div");
+    fullLengthGrid.className = "subject-card-grid";
+
     if (!setNames.length) {
-        chapterList.innerHTML = '<p class="empty-state">Mock Test sets are currently unavailable.</p>';
-        return;
+        const empty = document.createElement("p");
+        empty.className = "empty-state";
+        empty.textContent = "Mock Test sets are currently unavailable.";
+        fullLengthGrid.appendChild(empty);
+    } else {
+        setNames.forEach((setName) => {
+            fullLengthGrid.appendChild(renderSubjectCardButton(setName, "mock"));
+        });
     }
 
-    setNames.forEach((setName) => {
-        chapterList.appendChild(renderSubjectCardButton(setName, "mock"));
-    });
+    fullLengthWrapper.appendChild(fullLengthGrid);
+    chapterList.appendChild(fullLengthWrapper);
+
+    const sectionalWrapper = document.createElement("div");
+    sectionalWrapper.className = "mock-section-group";
+    const sectionalHeader = document.createElement("h3");
+    sectionalHeader.textContent = "Sectional Test";
+    sectionalHeader.className = "mock-section-header";
+    sectionalWrapper.appendChild(sectionalHeader);
+
+    const sectionalGrid = document.createElement("div");
+    sectionalGrid.className = "subject-card-grid";
+
+    if (!sectionalSetNames.length) {
+        const sectionalEmpty = document.createElement("p");
+        sectionalEmpty.className = "empty-state";
+        sectionalEmpty.textContent = "No sectional tests available yet.";
+        sectionalGrid.appendChild(sectionalEmpty);
+    } else {
+        sectionalSetNames.forEach((setName) => {
+            sectionalGrid.appendChild(renderSubjectCardButton(setName, "mock", "sectional"));
+        });
+    }
+
+    sectionalWrapper.appendChild(sectionalGrid);
+    chapterList.appendChild(sectionalWrapper);
 }
 
 (async function initSubjectPage(){
