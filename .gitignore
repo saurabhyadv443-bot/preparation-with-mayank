@@ -56,3 +56,12 @@ __pycache__/
 
 # System files
 *.swp
+
+# Temporary backups & diff artifacts
+data_backup_*/
+quiz-sync-backup-*/
+*.diff
+*.txt
+quiz_pending_changes.json
+tatus --short
+
