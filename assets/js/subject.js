@@ -159,48 +159,130 @@ async function loadOriginalCurrentAffairsQuestions() {
     }
 }
 
+const SUBJECT_KEY_ALIASES = Object.freeze({
+    modern_history: "modern",
+    ancient_history: "ancient",
+    medieval_history: "medieval",
+    polity_governance: "polity",
+    "modern history": "modern",
+    "ancient history": "ancient",
+    "medieval history": "medieval",
+    "polity governance": "polity"
+});
+
 function normalizeSubjectKey(value) {
-    return String(value ?? "").trim().toLowerCase();
+    const normalized = String(value ?? "").trim().toLowerCase().replace(/[\s-]+/g, "_");
+    return SUBJECT_KEY_ALIASES[normalized] || SUBJECT_KEY_ALIASES[normalized.replace(/_/g, " ")] || normalized;
+}
+
+function isReviewHistoryRecord(value) {
+    return Boolean(value && typeof value === "object" && !Array.isArray(value)
+        && (value.chapter || value.subjectKey || value.subject || value.completedAt || value.total !== undefined));
+}
+
+function collectReviewHistoryRecords(history) {
+    const records = [];
+    const visit = (value, storageKey = "", index = 0) => {
+        if (Array.isArray(value)) {
+            value.forEach((item, itemIndex) => {
+                if (isReviewHistoryRecord(item)) {
+                    records.push({ item, storageKey, index: itemIndex });
+                } else {
+                    visit(item, storageKey, itemIndex);
+                }
+            });
+            return;
+        }
+        if (!value || typeof value !== "object") return;
+        if (isReviewHistoryRecord(value)) {
+            records.push({ item: value, storageKey, index });
+            return;
+        }
+        Object.entries(value).forEach(([key, child]) => {
+            visit(child, storageKey ? `${storageKey}::${key}` : key);
+        });
+    };
+    visit(history);
+    return records;
+}
+
+function reviewHistoryRecordMatchesSubject(record, normalizedSubject) {
+    const metadataKeys = [record.item.subjectKey, record.item.subject, record.item.subject_key, record.item.subjectId, record.item.subject_id];
+    if (metadataKeys.some((key) => key && normalizeSubjectKey(key) === normalizedSubject)) return true;
+
+    const compositeKeys = [record.storageKey, record.item.quizId, record.item.quiz_id];
+    return compositeKeys.some((key) => String(key || "").split("::").some((segment) => normalizeSubjectKey(segment) === normalizedSubject));
+}
+
+function getReviewHistoryRecords() {
+    const sources = [
+        window.quizAttemptHistoryStore?.getHistorySync(),
+        safeParseStoredValue("quiz_attempt_history", {}),
+        safeParseStoredValue("test_results", []),
+        safeParseStoredValue("quizResults", []),
+        safeParseStoredValue("quiz_results", [])
+    ];
+    const records = [];
+    const seen = new Set();
+    sources.forEach((source) => {
+        collectReviewHistoryRecords(source).forEach((record) => {
+            const item = record.item;
+            const identity = [
+                item.quizId || item.quiz_id || record.storageKey,
+                item.attempt || item.attemptNumber || record.index,
+                item.completedAt || "",
+                item.chapter || "",
+                item.finalScore ?? item.score ?? ""
+            ].join("::");
+            if (seen.has(identity)) return;
+            seen.add(identity);
+            records.push(record);
+        });
+    });
+    return records;
 }
 
 function getAttemptedReviewSections() {
     const normalizedSubject = normalizeSubjectKey(subject);
     if (!reviewSubjects.has(normalizedSubject)) return [];
 
-    const history = window.quizAttemptHistoryStore?.getHistorySync() || safeParseStoredValue("quiz_attempt_history", {});
     const grouped = new Map();
-    Object.entries(history || {}).forEach(([historyQuizId, records]) => {
-        if (!Array.isArray(records)) return;
-        records.forEach((attempt, index) => {
-            const attemptSubjectKey = normalizeSubjectKey(attempt?.subjectKey || attempt?.subject || subject);
-            if (!attempt || attemptSubjectKey !== normalizedSubject || !attempt.chapter || Number(attempt.total) <= 0) return;
-            const completedAt = new Date(attempt.completedAt || 0).getTime();
-            if (!Number.isFinite(completedAt)) return;
-            const reviewGroup = normalizedSubject === "mock"
-                ? (String(historyQuizId).trim().toLowerCase().startsWith("mock::sectional::") ? "sectional" : "fullLength")
-                : "";
-            const key = reviewGroup
-                ? `${normalizedSubject}::${reviewGroup}::${attempt.chapter}`
-                : `${normalizedSubject}::${attempt.chapter}`;
-            const attemptWithNumber = {
-                ...attempt,
-                quizId: historyQuizId,
-                attempt: Number(attempt.attempt) || index + 1
-            };
-            const current = grouped.get(key);
-            const marks = Number(attemptWithNumber.finalScore ?? attemptWithNumber.score ?? 0);
-            const currentMarks = current ? Number(current.best.finalScore ?? current.best.score ?? 0) : 0;
-            if (!current || marks > currentMarks || (marks === currentMarks && completedAt > current.completedAt)) {
-                grouped.set(key, { chapter: attempt.chapter, best: attemptWithNumber, completedAt, reviewGroup });
-            }
-        });
+    getReviewHistoryRecords().forEach((record) => {
+        const attempt = record.item;
+        if (!reviewHistoryRecordMatchesSubject(record, normalizedSubject) || !attempt.chapter || Number(attempt.total) <= 0) return;
+        const completedAt = new Date(attempt.completedAt || 0).getTime();
+        if (!Number.isFinite(completedAt)) return;
+        const historyQuizId = attempt.quizId || attempt.quiz_id || record.storageKey;
+        const isSectional = String(historyQuizId || "").trim().toLowerCase().startsWith("mock::sectional::")
+            || normalizeSubjectKey(attempt.source) === "sectional";
+        const reviewGroup = normalizedSubject === "mock" ? (isSectional ? "sectional" : "fullLength") : "";
+        const key = reviewGroup
+            ? `${normalizedSubject}::${reviewGroup}::${attempt.chapter}`
+            : `${normalizedSubject}::${attempt.chapter}`;
+        const attemptWithNumber = {
+            ...attempt,
+            quizId: historyQuizId,
+            attempt: Number(attempt.attempt ?? attempt.attemptNumber) || record.index + 1
+        };
+        const current = grouped.get(key);
+        const marks = Number(attemptWithNumber.finalScore ?? attemptWithNumber.score ?? 0);
+        const currentMarks = current ? Number(current.best.finalScore ?? current.best.score ?? 0) : 0;
+        if (!current || marks > currentMarks || (marks === currentMarks && completedAt > current.completedAt)) {
+            grouped.set(key, { chapter: attempt.chapter, best: attemptWithNumber, completedAt, reviewGroup });
+        }
     });
 
     return [...grouped.values()].sort((a, b) => b.completedAt - a.completedAt);
 }
 
-function renderAttemptedReviewSections() {
+async function renderAttemptedReviewSections() {
     if (!chapterList) return;
+    if (window.quizAttemptHistoryStore?.getHistory) {
+        try {
+            await window.quizAttemptHistoryStore.getHistory();
+        } catch (error) {
+        }
+    }
     const sections = getAttemptedReviewSections();
     chapterList.innerHTML = "";
     chapterList.classList.add("subject-card-grid", "review-section-list");
@@ -476,7 +558,7 @@ async function loadSubjectContent() {
     const selectedChapter = new URLSearchParams(window.location.search).get("chapter");
 
     if (!selectedChapter && new URLSearchParams(window.location.search).get("review") === "1") {
-        renderAttemptedReviewSections();
+        await renderAttemptedReviewSections();
         return;
     }
 
