@@ -30,6 +30,54 @@
         return cleanText(value).replace(leadingNumber, "").trim();
     }
 
+    function normalizeEmbeddedLineBreaks(value) {
+        const text = String(value ?? "");
+        if (!text) return text;
+        const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+        if (lines.length < 2) return text;
+
+        const structuralPrefixes = [
+            "List-I",
+            "List-II",
+            "Assertion",
+            "Reason",
+            "Statement",
+            "Conclusion",
+            "Code",
+            "Select",
+            "Choose",
+            "Which",
+            "What",
+            "How",
+            "Identify",
+            "Arrange",
+            "According",
+            "Given below are",
+            "Consider the following",
+            "Match List-I with List-II"
+        ];
+
+        const isStructuralLine = (line) => {
+            if (structuralPrefixes.some((prefix) => line.toLowerCase().startsWith(prefix.toLowerCase()))) {
+                return true;
+            }
+            return /^(?:[A-D][.)]|[1-9]\d*[.)]|[IVX]+[.)]|\([A-D]\)|\([IVX]+\))/i.test(line);
+        };
+
+        const normalizedLines = [lines[0]];
+        for (let index = 1; index < lines.length; index += 1) {
+            const line = lines[index];
+            if (isStructuralLine(line)) {
+                normalizedLines.push(line);
+                continue;
+            }
+            const previousLine = normalizedLines[normalizedLines.length - 1];
+            normalizedLines[normalizedLines.length - 1] = `${previousLine} ${line}`;
+        }
+
+        return normalizedLines.join("\n");
+    }
+
     function formatEmbeddedOptions(value, options) {
         const text = cleanText(value);
         if (!text || /\b(?:list|column|match|matching|assertion|reason)\b/i.test(text)
@@ -238,12 +286,19 @@
         const formattedPrompt = parsedMatchList || parsedStatement
             ? { text: parsedMatchList?.prompt || cleanText(normalizedQuestion.q || ""), formatted: false }
             : formatEmbeddedOptions(normalizedQuestion.q, normalizedQuestion.options);
-        const prompt = formattedPrompt.text;
+        const prompt = normalizeEmbeddedLineBreaks(formattedPrompt.text);
         const promptHtml = formattedPrompt.formatted
             ? escapeHtml(prompt).replace(/\r?\n/g, "<br>")
             : escapeHtml(prompt);
+        const normalizedStatementStem = parsedStatement ? normalizeEmbeddedLineBreaks(parsedStatement.stem) : "";
+        const normalizedStatementItems = parsedStatement ? parsedStatement.statements.map((item) => ({
+            ...item,
+            text: normalizeEmbeddedLineBreaks(item.text),
+            marker: normalizeEmbeddedLineBreaks(item.marker)
+        })) : [];
+        const normalizedStatementInstruction = parsedStatement ? normalizeEmbeddedLineBreaks(parsedStatement.finalInstruction || "") : "";
         const questionContent = parsedStatement
-            ? `<div class="question-statement statement-question"><p>${escapeHtml(parsedStatement.stem)}</p>${parsedStatement.statements.map((item) => `<p class="statement-item">${escapeHtml(item.marker)} ${escapeHtml(item.text)}</p>`).join("")}${parsedStatement.finalInstruction ? `<p class="statement-instruction">${escapeHtml(parsedStatement.finalInstruction)}</p>` : ""}</div>`
+            ? `<div class="question-statement statement-question"><p>${escapeHtml(normalizedStatementStem)}</p>${normalizedStatementItems.map((item) => `<p class="statement-item">${escapeHtml(item.marker)} ${escapeHtml(item.text)}</p>`).join("")}${normalizedStatementInstruction ? `<p class="statement-instruction">${escapeHtml(normalizedStatementInstruction)}</p>` : ""}</div>`
             : `<div class="question-statement"><p>${promptHtml}</p></div>`;
         const table = parsedMatchList ? `<div class="match-list-table" role="table" aria-label="${escapeHtml(parsedMatchList.listOneHeader)} and ${escapeHtml(parsedMatchList.listTwoHeader)}"><div class="match-list-header match-list-left" role="columnheader">${escapeHtml(parsedMatchList.listOneHeader)}</div><div class="match-list-header match-list-right" role="columnheader">${escapeHtml(parsedMatchList.listTwoHeader)}</div>${parsedMatchList.rows.map((row) => `<div class="match-list-row" role="row"><div class="match-list-cell match-list-left" role="cell">${escapeHtml(row.left)}</div><div class="match-list-cell match-list-right" role="cell">${escapeHtml(row.right)}</div></div>`).join("")}</div>` : "";
         const selectedIndex = settings.selectedIndex;

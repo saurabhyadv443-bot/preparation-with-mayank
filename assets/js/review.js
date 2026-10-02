@@ -1,4 +1,5 @@
-const result = JSON.parse(localStorage.getItem("quizResult") || "null");
+let result = JSON.parse(localStorage.getItem("quizResult") || "null");
+
 const reviewMeta = document.getElementById("reviewMeta");
 const reviewList = document.getElementById("reviewList");
 
@@ -16,9 +17,11 @@ const explanationRenderer = window.ExplanationRenderer || {
     renderExplanationDocument: (value, fallbackText) => `<p>${escapeHtml(fallbackText || "")}</p>`
 };
 
-if (!result) {
-    window.location.href = "index.html";
-} else {
+function renderReview() {
+    if (!result) {
+        window.location.href = "index.html";
+        return;
+    }
     const chapterLabel = result.chapter && result.chapter.trim() ? result.chapter : "Full Length Test";
     reviewMeta.innerHTML = `${escapeHtml(result.subject)} • ${escapeHtml(chapterLabel)} • Accuracy: ${result.accuracy}%`;
 
@@ -47,4 +50,13 @@ if (!result) {
         reviewList.appendChild(card);
     });
     window.ReviewHighlighter?.refresh();
+}
+
+if (window.quizAttemptHistoryStore) {
+    window.quizAttemptHistoryStore.getResult("quizResult").then((storedResult) => {
+        if (storedResult) result = storedResult;
+        renderReview();
+    });
+} else {
+    renderReview();
 }

@@ -156,7 +156,7 @@ function buildCurrentAffairsSubjectCollection() {
 
 function readCompletedAttempts() {
     try {
-        const history = JSON.parse(localStorage.getItem("quiz_attempt_history") || "{}");
+        const history = window.quizAttemptHistoryStore?.getHistorySync() || JSON.parse(localStorage.getItem("quiz_attempt_history") || "{}");
         const attempts = Object.values(history || {})
             .filter((records) => Array.isArray(records))
             .flat()

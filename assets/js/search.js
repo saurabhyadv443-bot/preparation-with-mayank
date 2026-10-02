@@ -80,7 +80,7 @@
     function openInReview(item){
         // create quizResult for review page
         const result = { subject: item.subject, subjectKey: item.subjectKey, chapter: item.chapter, total:1, correct:0, wrong:0, skipped:0, attempted:0, accuracy:0, questions:[ item.raw ], completedAt: new Date().toISOString() };
-        localStorage.setItem('quizResult', JSON.stringify(result));
+        window.quizAttemptHistoryStore.putResult('quizResult', result);
         window.location.href = 'review.html';
     }
 
