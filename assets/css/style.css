@@ -2443,6 +2443,145 @@ body.text-selection-locked.highlighter-selection-active .saved-question-item > d
     color: #166534;
 }
 
+.mock-section-group {
+    grid-column: 1 / -1;
+    min-width: 0;
+}
+
+.mock-section-header {
+    margin: 0;
+}
+
+.mock-section-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.mock-section-toggle:focus-visible {
+    outline: 2px solid #5b8def;
+    outline-offset: 3px;
+}
+
+.mock-section-chevron {
+    display: inline-block;
+    transition: transform 0.18s ease;
+}
+
+.mock-section-toggle[aria-expanded="false"] .mock-section-chevron {
+    transform: rotate(-90deg);
+}
+
+.mock-set-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.mock-set-grid[hidden] {
+    display: none;
+}
+
+.mock-set-grid > .subject-set-btn {
+    min-height: 64px;
+    padding: 10px 12px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.mock-set-grid .subject-card-content {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    justify-content: center;
+    gap: 0;
+}
+
+.mock-set-grid .subject-card-title {
+    font-size: 0.95rem;
+    line-height: 1.2;
+}
+
+.mock-set-grid .subject-set-btn small {
+    align-self: center;
+    padding: 4px 8px;
+    font-size: 0.72rem;
+    white-space: nowrap;
+}
+
+.review-accordion-group {
+    grid-column: 1 / -1;
+    min-width: 0;
+}
+
+.review-accordion-heading {
+    margin: 0;
+}
+
+.review-section-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.review-section-toggle:focus-visible {
+    outline: 2px solid #5b8def;
+    outline-offset: 3px;
+}
+
+.review-section-chevron {
+    display: inline-block;
+    transition: transform 0.18s ease;
+}
+
+.review-section-toggle[aria-expanded="false"] .review-section-chevron {
+    transform: rotate(-90deg);
+}
+
+.review-accordion-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.review-accordion-grid[hidden] {
+    display: none;
+}
+
+.subject-chapter-btn.review-section-btn {
+    min-height: 64px;
+    padding: 10px 12px;
+    justify-content: center;
+}
+
+.review-section-btn .subject-card-title {
+    font-size: 0.95rem;
+    line-height: 1.2;
+}
+
+.review-section-btn .subject-card-content {
+    min-height: 0;
+    gap: 0;
+}
+
 .chapter-link {
     display: inline-flex;
     align-items: center;

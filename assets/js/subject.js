@@ -159,18 +159,29 @@ async function loadOriginalCurrentAffairsQuestions() {
     }
 }
 
+function normalizeSubjectKey(value) {
+    return String(value ?? "").trim().toLowerCase();
+}
+
 function getAttemptedReviewSections() {
-    if (!reviewSubjects.has(subject)) return [];
+    const normalizedSubject = normalizeSubjectKey(subject);
+    if (!reviewSubjects.has(normalizedSubject)) return [];
 
     const history = window.quizAttemptHistoryStore?.getHistorySync() || safeParseStoredValue("quiz_attempt_history", {});
     const grouped = new Map();
     Object.entries(history || {}).forEach(([historyQuizId, records]) => {
         if (!Array.isArray(records)) return;
         records.forEach((attempt, index) => {
-            if (!attempt || (attempt.subjectKey || subject) !== subject || !attempt.chapter || Number(attempt.total) <= 0) return;
+            const attemptSubjectKey = normalizeSubjectKey(attempt?.subjectKey || attempt?.subject || subject);
+            if (!attempt || attemptSubjectKey !== normalizedSubject || !attempt.chapter || Number(attempt.total) <= 0) return;
             const completedAt = new Date(attempt.completedAt || 0).getTime();
             if (!Number.isFinite(completedAt)) return;
-            const key = `${subject}::${attempt.chapter}`;
+            const reviewGroup = normalizedSubject === "mock"
+                ? (String(historyQuizId).trim().toLowerCase().startsWith("mock::sectional::") ? "sectional" : "fullLength")
+                : "";
+            const key = reviewGroup
+                ? `${normalizedSubject}::${reviewGroup}::${attempt.chapter}`
+                : `${normalizedSubject}::${attempt.chapter}`;
             const attemptWithNumber = {
                 ...attempt,
                 quizId: historyQuizId,
@@ -180,7 +191,7 @@ function getAttemptedReviewSections() {
             const marks = Number(attemptWithNumber.finalScore ?? attemptWithNumber.score ?? 0);
             const currentMarks = current ? Number(current.best.finalScore ?? current.best.score ?? 0) : 0;
             if (!current || marks > currentMarks || (marks === currentMarks && completedAt > current.completedAt)) {
-                grouped.set(key, { chapter: attempt.chapter, best: attemptWithNumber, completedAt });
+                grouped.set(key, { chapter: attempt.chapter, best: attemptWithNumber, completedAt, reviewGroup });
             }
         });
     });
@@ -198,7 +209,7 @@ function renderAttemptedReviewSections() {
         return;
     }
 
-    sections.forEach(({ chapter, best }) => {
+    const appendReviewCards = (container, reviewSections) => reviewSections.forEach(({ chapter, best }) => {
         const button = document.createElement("button");
         button.type = "button";
         button.className = "chapterBtn subject-chapter-btn review-section-btn";
@@ -212,8 +223,74 @@ function renderAttemptedReviewSections() {
             });
             window.location.href = `result-review.html?${query.toString()}`;
         };
-        chapterList.appendChild(button);
+        container.appendChild(button);
     });
+
+    if (normalizeSubjectKey(subject) === "mock") {
+        const storageKey = `reviewAccordionState:${normalizeSubjectKey(subject)}`;
+        let accordionState = {};
+        try {
+            accordionState = JSON.parse(localStorage.getItem(storageKey) || "{}") || {};
+        } catch (error) {
+            accordionState = {};
+        }
+
+        const appendMockReviewGroup = (groupKey, title) => {
+            const group = document.createElement("section");
+            group.className = "review-accordion-group";
+            const heading = document.createElement("h3");
+            heading.className = "review-accordion-heading";
+            const toggle = document.createElement("button");
+            toggle.type = "button";
+            toggle.className = "review-section-toggle";
+            const toggleLabel = document.createElement("span");
+            toggleLabel.textContent = title;
+            const chevron = document.createElement("span");
+            chevron.className = "review-section-chevron";
+            chevron.setAttribute("aria-hidden", "true");
+            chevron.textContent = "▾";
+            toggle.append(toggleLabel, chevron);
+
+            const grid = document.createElement("div");
+            grid.className = "subject-card-grid review-accordion-grid";
+            grid.id = `review-${groupKey}-grid`;
+            toggle.setAttribute("aria-controls", grid.id);
+            const hasSavedState = Object.prototype.hasOwnProperty.call(accordionState, groupKey);
+            const isExpanded = hasSavedState ? Boolean(accordionState[groupKey]) : groupKey === "fullLength";
+            toggle.setAttribute("aria-expanded", String(isExpanded));
+            grid.hidden = !isExpanded;
+            toggle.addEventListener("click", () => {
+                const expanded = toggle.getAttribute("aria-expanded") === "true";
+                accordionState[groupKey] = !expanded;
+                toggle.setAttribute("aria-expanded", String(!expanded));
+                grid.hidden = expanded;
+                try {
+                    localStorage.setItem(storageKey, JSON.stringify(accordionState));
+                } catch (error) {
+                }
+            });
+
+            const groupSections = sections.filter((section) => section.reviewGroup === groupKey);
+            if (groupSections.length) {
+                appendReviewCards(grid, groupSections);
+            } else {
+                const empty = document.createElement("p");
+                empty.className = "empty-state";
+                empty.textContent = "No attempts in this section yet.";
+                grid.appendChild(empty);
+            }
+
+            heading.appendChild(toggle);
+            group.append(heading, grid);
+            chapterList.appendChild(group);
+        };
+
+        appendMockReviewGroup("fullLength", "Full Length Test");
+        appendMockReviewGroup("sectional", "Sectional Test");
+        return;
+    }
+
+    appendReviewCards(chapterList, sections);
 }
 
 function escapeHtmlReviewText(value) {
@@ -513,15 +590,32 @@ function renderMockSets(setNames, sectionalSetNames = []) {
     chapterList.innerHTML = "";
     chapterList.classList.add("subject-card-grid");
 
+    function createSectionHeader(title, grid) {
+        const header = document.createElement("h3");
+        header.className = "mock-section-header";
+
+        const toggle = document.createElement("button");
+        toggle.type = "button";
+        toggle.className = "mock-section-toggle";
+        toggle.setAttribute("aria-expanded", "true");
+        toggle.setAttribute("aria-controls", grid.id);
+        toggle.innerHTML = `<span>${title}</span><span class="mock-section-chevron" aria-hidden="true">▾</span>`;
+        toggle.addEventListener("click", () => {
+            const expanded = toggle.getAttribute("aria-expanded") === "true";
+            toggle.setAttribute("aria-expanded", String(!expanded));
+            grid.hidden = expanded;
+        });
+        header.appendChild(toggle);
+        return header;
+    }
+
     const fullLengthWrapper = document.createElement("div");
     fullLengthWrapper.className = "mock-section-group";
-    const fullLengthHeader = document.createElement("h3");
-    fullLengthHeader.textContent = "Full Length Test";
-    fullLengthHeader.className = "mock-section-header";
-    fullLengthWrapper.appendChild(fullLengthHeader);
 
     const fullLengthGrid = document.createElement("div");
-    fullLengthGrid.className = "subject-card-grid";
+    fullLengthGrid.className = "subject-card-grid mock-set-grid";
+    fullLengthGrid.id = "mockFullLengthGrid";
+    fullLengthWrapper.appendChild(createSectionHeader("Full Length Test", fullLengthGrid));
 
     if (!setNames.length) {
         const empty = document.createElement("p");
@@ -539,13 +633,11 @@ function renderMockSets(setNames, sectionalSetNames = []) {
 
     const sectionalWrapper = document.createElement("div");
     sectionalWrapper.className = "mock-section-group";
-    const sectionalHeader = document.createElement("h3");
-    sectionalHeader.textContent = "Sectional Test";
-    sectionalHeader.className = "mock-section-header";
-    sectionalWrapper.appendChild(sectionalHeader);
 
     const sectionalGrid = document.createElement("div");
-    sectionalGrid.className = "subject-card-grid";
+    sectionalGrid.className = "subject-card-grid mock-set-grid";
+    sectionalGrid.id = "mockSectionalGrid";
+    sectionalWrapper.appendChild(createSectionHeader("Sectional Test", sectionalGrid));
 
     if (!sectionalSetNames.length) {
         const sectionalEmpty = document.createElement("p");
