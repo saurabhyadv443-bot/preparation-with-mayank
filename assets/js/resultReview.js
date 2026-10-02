@@ -4,12 +4,16 @@ const reviewSource = (urlParams.get("source") || "").trim().toLowerCase();
 const resultKey = reviewMode === "study" ? "quizResult_study" : (reviewSource === "sectional" ? "quizResult_sectional" : "quizResult");
 const historicalAttemptNumber = Number(urlParams.get("attempt"));
 const historicalQuizId = urlParams.get("quizId");
+const normalizedHistoricalQuizId = String(historicalQuizId ?? "").trim().toLowerCase();
 const isHistoricalReview = Boolean(historicalQuizId && historicalAttemptNumber);
 let attemptHistory = (() => {
     try { return JSON.parse(localStorage.getItem("quiz_attempt_history") || "{}"); } catch (error) { return {}; }
 })();
 let historicalAttempt = isHistoricalReview
-    ? (attemptHistory[historicalQuizId] || []).find((item) => item.attempt === historicalAttemptNumber)
+    ? (() => {
+        const matchingHistoryBucket = Object.entries(attemptHistory || {}).find(([quizId]) => String(quizId).trim().toLowerCase() === normalizedHistoricalQuizId);
+        return (matchingHistoryBucket ? matchingHistoryBucket[1] : []).find((item) => Number(item.attempt) === historicalAttemptNumber) || null;
+    })()
     : null;
 let rawResult = localStorage.getItem(resultKey) || localStorage.getItem("quizResult");
 let savedReviewFocus = null;
@@ -115,6 +119,12 @@ function persistentClassificationIdentity(question, index) {
     return `${source.sourceSubjectKey}::${source.chapter}::${source.questionId || ""}::${source.questionIndex ?? index}`;
 }
 
+function formatDisplayNumber(value) {
+    const numericValue = Number(value ?? 0);
+    if (!Number.isFinite(numericValue)) return String(value ?? 0);
+    return numericValue.toFixed(2).replace(/\.?0+$/, "");
+}
+
 async function loadPersistentSubjectClassifications() {
     persistentSubjectClassificationsLoaded = true;
 }
@@ -124,33 +134,24 @@ async function loadSavedQuestionsFromServer() {
 
 function renderTestHistory() {
     if (!testHistory || !result || !result.quizId) return;
-    const isMockResult = String(result.subjectKey || "").toLowerCase() === "mock"
-        || String(result.quizId || "").toLowerCase().startsWith("mock::");
-    const historyEntries = isMockResult && !isHistoricalReview
-        ? Object.entries(attemptHistory)
-            .filter(([quizId, attempts]) => quizId.toLowerCase().startsWith("mock::") && Array.isArray(attempts) && attempts.length)
-            .map(([quizId, attempts]) => ({
-                quizId,
-                item: attempts.slice().sort((left, right) => {
-                    const rightTime = new Date(right.completedAt || 0).getTime();
-                    const leftTime = new Date(left.completedAt || 0).getTime();
-                    return (rightTime - leftTime) || (Number(right.attempt) - Number(left.attempt));
-                })[0]
-            }))
-            .filter((entry) => entry.item)
-        : (Array.isArray(attemptHistory[result.quizId]) ? attemptHistory[result.quizId].slice().reverse().map((item) => ({ quizId: result.quizId, item })) : []);
-    if (historyCount) historyCount.innerText = isMockResult && !isHistoricalReview ? `${historyEntries.length} Mock Test sets` : `${historyEntries.length} of 5 attempts`;
+    const isMockResult = String(result.subjectKey || "").trim().toLowerCase() === "mock"
+        || String(result.quizId || "").trim().toLowerCase().startsWith("mock::");
+    const historyEntries = Array.isArray(attemptHistory[result.quizId])
+        ? attemptHistory[result.quizId].slice().reverse().map((item) => ({ quizId: result.quizId, item }))
+        : [];
+    const historyLabel = isMockResult ? `${String(result.chapter || "").trim() || "Mock Test"} · ` : "";
+    if (historyCount) historyCount.innerText = `${historyLabel}${historyEntries.length} of 5 attempts`;
     testHistory.innerHTML = historyEntries.length ? historyEntries.map(({ quizId, item }) => `
-        <article class="test-history-item${isHistoricalReview && quizId === historicalQuizId && item.attempt === historicalAttemptNumber ? " current-history-item" : ""}">
+        <article class="test-history-item${isHistoricalReview && String(quizId).trim().toLowerCase() === normalizedHistoricalQuizId && Number(item.attempt) === historicalAttemptNumber ? " current-history-item" : ""}">
             <div>
-                <strong>${isMockResult && !isHistoricalReview ? escapeHtml(item.chapter || quizId.replace(/^mock::/, "")) : `Attempt ${item.attempt}`}</strong>
+                <strong>Attempt ${item.attempt}</strong>
                 <span>${escapeHtml(item.date || new Date(item.completedAt).toLocaleDateString())} • ${escapeHtml(item.time || new Date(item.completedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }))}</span>
                 <span>${item.correct || 0} Correct | ${item.wrong || item.incorrect || 0} Incorrect | ${item.skipped || item.unanswered || 0} Unanswered</span>
             </div>
             <div class="test-history-score">
-                <strong>Score: ${item.finalScore ?? item.score ?? 0} / ${item.total || 0}</strong>
-                <span>Percentage: ${item.percentage ?? item.accuracy ?? 0}%</span>
-                ${isHistoricalReview && quizId === historicalQuizId && item.attempt === historicalAttemptNumber ? "<span class=\"history-readonly-label\">Read-only review</span>" : `<a class="btn btn-secondary btn-small" href="result-review.html?historical=1&quizId=${encodeURIComponent(quizId)}&attempt=${item.attempt}">View Attempt</a>`}
+                <strong>Score: ${formatDisplayNumber(item.finalScore ?? item.score ?? 0)} / ${item.total || 0}</strong>
+                <span>Percentage: ${formatDisplayNumber(item.percentage ?? item.accuracy ?? 0)}%</span>
+                ${isHistoricalReview && String(quizId).trim().toLowerCase() === normalizedHistoricalQuizId && Number(item.attempt) === historicalAttemptNumber ? "<span class=\"history-readonly-label\">Read-only review</span>" : `<a class="btn btn-secondary btn-small" href="result-review.html?historical=1&quizId=${encodeURIComponent(quizId)}&attempt=${item.attempt}">View Attempt</a>`}
                 <button type="button" class="btn btn-secondary btn-small delete-history-btn" data-quiz-id="${escapeHtml(quizId)}" data-attempt="${item.attempt}">Delete</button>
             </div>
         </article>
@@ -878,7 +879,7 @@ async function saveEditedAnswer(questionIndex) {
         editingAnswerIndex = null;
         if (reviewSubtitle) {
             const chapterLabel = result.chapter && result.chapter.trim() ? result.chapter : "Full Length Test";
-            reviewSubtitle.innerText = `${chapterLabel} • Accuracy ${result.accuracy}%`;
+            reviewSubtitle.innerText = `${chapterLabel} • Accuracy ${formatDisplayNumber(result.accuracy)}%`;
         }
         renderSummary();
         renderTestHistory();
@@ -901,8 +902,8 @@ function renderSummary() {
         { label: "Skipped", value: result.skipped },
         { label: "Correct", value: result.correct },
         { label: "Incorrect", value: result.wrong },
-        { label: "Score", value: scoreValue },
-        { label: "Accuracy", value: `${result.accuracy}%` },
+        { label: "Score", value: formatDisplayNumber(scoreValue) },
+        { label: "Accuracy", value: `${formatDisplayNumber(result.accuracy)}%` },
         { label: "Time Taken", value: formatTime(result.timeTaken || 0) }
     ];
 
@@ -1542,7 +1543,10 @@ if (!result && !isHistoricalReview && !window.quizAttemptHistoryStore) {
             }
             attemptHistory = history;
             historicalAttempt = isHistoricalReview
-                ? (attemptHistory[historicalQuizId] || []).find((item) => item.attempt === historicalAttemptNumber)
+                ? (() => {
+                    const matchingHistoryBucket = Object.entries(attemptHistory || {}).find(([quizId]) => String(quizId).trim().toLowerCase() === normalizedHistoricalQuizId);
+                    return (matchingHistoryBucket ? matchingHistoryBucket[1] : []).find((item) => Number(item.attempt) === historicalAttemptNumber) || null;
+                })()
                 : null;
             if (isHistoricalReview) result = historicalAttempt;
         }
@@ -1562,7 +1566,7 @@ if (!result && !isHistoricalReview && !window.quizAttemptHistoryStore) {
         }
         reviewSubject.innerText = result.subject || "Quiz Review";
         const chapterLabel = result.chapter && result.chapter.trim() ? result.chapter : "Full Length Test";
-        reviewSubtitle.innerText = `${chapterLabel} • Accuracy ${result.accuracy}%`;
+        reviewSubtitle.innerText = `${chapterLabel} • Accuracy ${formatDisplayNumber(result.accuracy)}%`;
         renderTestHistory();
         renderSummary();
         renderPalette();
