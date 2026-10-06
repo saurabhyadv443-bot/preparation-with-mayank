@@ -116,18 +116,56 @@ let sectionalReviewClassifications = {};
 window.reviewResultQuestions = result && Array.isArray(result.questions) ? result.questions : [];
 
 function isSectionalMockReview() {
-    return Boolean(result
-        && String(result.subjectKey || "").trim().toLowerCase() === "mock"
-        && (String(result.source || "").trim().toLowerCase() === "sectional"
-            || String(result.quizId || "").trim().toLowerCase().startsWith("mock::sectional::")));
+    return Boolean(result && (
+        reviewSource === "sectional"
+        || (String(result.subjectKey || "").trim().toLowerCase() === "mock"
+            && (String(result.source || "").trim().toLowerCase() === "sectional"
+                || String(result.quizId || "").trim().toLowerCase().startsWith("mock::sectional::")))
+    ));
 }
 
 function getReviewSelectedAnswer(index) {
     const question = result?.questions?.[index];
-    if (isSectionalMockReview() && question && Object.prototype.hasOwnProperty.call(question, "selectedAnswer")) {
+    if (isSectionalMockReview() && question && question.selectedAnswer != null) {
         return question.selectedAnswer;
     }
     return result?.userAnswers?.[index] ?? null;
+}
+
+function getReviewAnswerText(question, answer) {
+    const options = Array.isArray(question?.options) ? question.options : [];
+    if (answer == null) return "";
+
+    if (typeof answer === "number" && Number.isInteger(answer) && options[answer] != null) {
+        return String(options[answer]);
+    }
+
+    const answerText = String(answer).trim();
+    if (!answerText) return "";
+
+    const letterIndex = answerText.match(/^([a-z])$/i);
+    if (letterIndex) {
+        const index = letterIndex[1].toUpperCase().charCodeAt(0) - 65;
+        if (index >= 0 && index < options.length) return String(options[index]);
+    }
+
+    const matchingOption = options.find((option) => String(option ?? "").trim().toLowerCase() === answerText.toLowerCase());
+    if (matchingOption != null) return String(matchingOption);
+
+    if (/^\d+$/.test(answerText)) {
+        const index = Number(answerText);
+        if (index >= 0 && index < options.length) return String(options[index]);
+    }
+
+    return answerText;
+}
+
+function isReviewAnswerCorrect(question, userAnswer) {
+    if (userAnswer == null) return false;
+    const userAnswerText = getReviewAnswerText(question, userAnswer);
+    const correctAnswerText = getReviewAnswerText(question, question?.answer);
+    const isMatch = String(userAnswerText || "").trim().toLowerCase() === String(correctAnswerText || "").trim().toLowerCase();
+    return isMatch;
 }
 
 function persistentClassificationIdentity(question, index) {
@@ -721,7 +759,7 @@ function replaceAnswerView(questionIndex) {
     if (!question || !editor) return;
     const view = document.createElement("div");
     view.className = "correct-answer-box";
-    view.innerHTML = `<strong>Correct Answer:</strong> ${highlightText(question.options[question.answer], activeSearchQuery)} <button type="button" class="btn-edit-answer" onclick="startEditingAnswer(${questionIndex})" aria-label="Edit correct answer" title="Edit correct answer">✎</button>`;
+    view.innerHTML = `<strong>Correct Answer:</strong> ${highlightText(getReviewAnswerText(question, question.answer), activeSearchQuery)} <button type="button" class="btn-edit-answer" onclick="startEditingAnswer(${questionIndex})" aria-label="Edit correct answer" title="Edit correct answer">✎</button>`;
     editor.replaceWith(view);
     card.querySelectorAll(".review-option").forEach((option, optionIndex) => {
         option.classList.toggle("correct-option", optionIndex === question.answer);
@@ -785,7 +823,7 @@ function recalculateReviewResult() {
         const selected = getReviewSelectedAnswer(index);
         if (selected == null) {
             skipped += 1;
-        } else if (selected === question.answer) {
+        } else if (isReviewAnswerCorrect(question, selected)) {
             correct += 1;
         } else {
             wrong += 1;
@@ -838,7 +876,7 @@ async function persistRecalculatedAttempt() {
         const selected = getReviewSelectedAnswer(index);
         answers[key] = selected == null ? null : selected;
         correctAnswers[key] = question.answer;
-        questionStatus[key] = selected == null ? "unanswered" : selected === question.answer ? "correct" : "incorrect";
+        questionStatus[key] = selected == null ? "unanswered" : isReviewAnswerCorrect(question, selected) ? "correct" : "incorrect";
     });
     Object.assign(record, {
         total: result.total,
@@ -1145,6 +1183,9 @@ function isSavedQuestion(index) {
     if (pendingSavedChanges.length) {
         return isQuizPendingActive(pendingSource, "saved-question", "");
     }
+    if (isSectionalMockReview()) {
+        return question?.starred === true || savedQuestions.some((item) => savedQuestionIdentity(item) === savedQuestionIdentity(source));
+    }
     const currentSavedReviewIndexes = getCurrentResultSavedReviewIndexes();
     if (isSavedReviewSubjectKey(result.subjectKey || result.subject || "") && currentSavedReviewIndexes.includes(index)) {
         return true;
@@ -1165,7 +1206,7 @@ async function toggleSavedQuestion(index, event) {
     const resultSavedQuestion = isSavedReviewSubjectKey(subjectKey) && getCurrentResultSavedReviewIndexes().includes(questionIndex);
     const currentlySaved = pendingSavedChanges.length
         ? pendingSavedChanges[pendingSavedChanges.length - 1].active !== false
-        : savedQuestionIndex >= 0 || resultSavedQuestion;
+        : savedQuestionIndex >= 0 || resultSavedQuestion || (isSectionalMockReview() && question?.starred === true);
     queueQuizPendingChange({ operationType: "saved-question", ...pendingSource, active: !currentlySaved });
 
     if (savedQuestionsLoaded) {
@@ -1220,24 +1261,7 @@ function getQuestionStatus(index) {
     if (selected == null) {
         return "skipped";
     }
-    if (isSectionalMockReview()) {
-        const options = question.options;
-        const selectedIndex = Number(selected);
-        const correctIndex = Number(question.answer);
-        const isValidIndex = (value, index) => (typeof value === "number" || (typeof value === "string" && value.trim() !== ""))
-            && Array.isArray(options)
-            && Number.isInteger(index)
-            && index >= 0
-            && index < options.length;
-        if (isValidIndex(selected, selectedIndex) && isValidIndex(question.answer, correctIndex)) {
-            const normalizeOptionText = (text) => String(text ?? "").replace(/\s+/g, " ").trim();
-            return normalizeOptionText(options[selectedIndex]) === normalizeOptionText(options[correctIndex])
-                ? "correct"
-                : "incorrect";
-        }
-        return Number(selected) === Number(question.answer) ? "correct" : "incorrect";
-    }
-    const isCorrect = selected === question.answer;
+    const isCorrect = isReviewAnswerCorrect(question, selected);
     return isCorrect ? "correct" : "incorrect";
 }
 
@@ -1389,8 +1413,8 @@ function renderQuestions() {
     questionReviewList.innerHTML = result.questions.map((question, index) => {
         const visible = visibleIndexes.includes(index);
         const selected = getReviewSelectedAnswer(index);
-        const selectedAnswerText = selected == null ? "Not Attempted" : highlightText(question.options[selected], activeSearchQuery);
-        const correctAnswerText = highlightText(question.options[question.answer], activeSearchQuery);
+        const selectedAnswerText = selected == null ? "Not Attempted" : highlightText(getReviewAnswerText(question, selected), activeSearchQuery);
+        const correctAnswerText = highlightText(getReviewAnswerText(question, question.answer), activeSearchQuery);
         const status = getQuestionStatus(index);
         const explanationDocument = question.explanationDocument || question.explanation || "";
         const explanationHtml = window.ExplanationRenderer
