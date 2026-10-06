@@ -1532,13 +1532,14 @@ async function finishQuiz(timeout = false) {
         .map((item) => Number(item.questionIndex))
         .filter((value) => Number.isInteger(value) && value >= 0);
     const savedReviewIndexes = mergeSavedReviewIndexes(existingSavedIndexes, markedForReview, subject);
-    const normalizedQuestions = questions.map((question) => {
+    const normalizedQuestions = questions.map((question, index) => {
         const explanationSource = question.explanation || "";
         const explanationDocument = explanationSource
             ? (window.ExplanationRenderer ? window.ExplanationRenderer.normalizeExplanationDocument(explanationSource) : { type: "document", blocks: [{ type: "paragraph", content: explanationSource }] })
             : { type: "document", blocks: [] };
         return {
             ...question,
+            ...(isSectionalMockQuiz() ? { selectedAnswer: userAnswers[index] } : {}),
             explanationDocument,
             explanation: explanationSource
         };

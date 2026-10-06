@@ -37,7 +37,13 @@
         const cardKey = card?.dataset.questionIndex || card?.dataset.highlightScope || card?.id || Array.from(document.querySelectorAll(".review-item, .saved-question-item")).indexOf(card);
         const explanationIndex = getExplanationContainers().indexOf(container);
         const targetType = container.matches(".explanation-box, .collection-quiz-explanation") ? "explanation" : "question";
-        return `review-${targetType}:${window.location.pathname}:${cardKey ?? explanationIndex}`;
+        const params = new URLSearchParams(window.location.search);
+        const quizId = String(params.get("quizId") || "").trim().toLowerCase();
+        const isSectionalReview = String(params.get("source") || "").trim().toLowerCase() === "sectional"
+            || quizId.startsWith("mock::sectional::");
+        if (isSectionalReview && !window.reviewHighlightScope) return null;
+        const scope = isSectionalReview ? `:${window.reviewHighlightScope}` : "";
+        return `review-${targetType}:${window.location.pathname}${scope}:${cardKey ?? explanationIndex}`;
     }
 
     function getTextNodes(container) {
@@ -108,7 +114,9 @@
 
     function restoreContainer(container) {
         if (container.querySelector(".review-highlight")) return;
-        const records = readHighlights()[getExplanationKey(container)] || [];
+        const key = getExplanationKey(container);
+        if (!key) return;
+        const records = readHighlights()[key] || [];
         records
             .slice()
             .sort((left, right) => right.start - left.start)
@@ -145,6 +153,7 @@
         if (offsets.end <= offsets.start) return;
         const highlights = readHighlights();
         const key = getExplanationKey(container);
+        if (!key) return;
         highlights[key] = highlights[key] || [];
         if (!highlights[key].some((record) => record.start === offsets.start && record.end === offsets.end)) {
             highlights[key].push({ start: offsets.start, end: offsets.end });
@@ -170,6 +179,7 @@
         const offsets = getRangeOffsets(container, range);
         const highlights = readHighlights();
         const key = getExplanationKey(container);
+        if (!key) return;
         highlights[key] = (highlights[key] || []).filter((record) => !(record.start === offsets.start && record.end === offsets.end));
         writeHighlights(highlights);
         mark.replaceWith(document.createTextNode(mark.textContent || ""));

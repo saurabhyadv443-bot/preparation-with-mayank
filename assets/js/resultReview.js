@@ -112,7 +112,23 @@ let serverClassificationStore = {};
 let savedQuestionsCache = [];
 let savedQuestionsLoaded = false;
 let classificationStoreCache = null;
+let sectionalReviewClassifications = {};
 window.reviewResultQuestions = result && Array.isArray(result.questions) ? result.questions : [];
+
+function isSectionalMockReview() {
+    return Boolean(result
+        && String(result.subjectKey || "").trim().toLowerCase() === "mock"
+        && (String(result.source || "").trim().toLowerCase() === "sectional"
+            || String(result.quizId || "").trim().toLowerCase().startsWith("mock::sectional::")));
+}
+
+function getReviewSelectedAnswer(index) {
+    const question = result?.questions?.[index];
+    if (isSectionalMockReview() && question && Object.prototype.hasOwnProperty.call(question, "selectedAnswer")) {
+        return question.selectedAnswer;
+    }
+    return result?.userAnswers?.[index] ?? null;
+}
 
 function persistentClassificationIdentity(question, index) {
     const source = getReviewQuestionSource(question, index);
@@ -239,13 +255,19 @@ function saveReadingHighlights(highlights) {
 }
 
 function getQuestionHighlights(questionIndex) {
+    const highlightKey = isSectionalMockReview()
+        ? `${result.quizId}::${result.completedAt || historicalAttemptNumber || "current"}::${questionIndex}`
+        : questionIndex;
     const allHighlights = getReadingHighlights();
-    return allHighlights[questionIndex] || [];
+    return allHighlights[highlightKey] || [];
 }
 
 function saveQuestionHighlights(questionIndex, highlights) {
     const allHighlights = getReadingHighlights();
-    allHighlights[questionIndex] = highlights;
+    const highlightKey = isSectionalMockReview()
+        ? `${result.quizId}::${result.completedAt || historicalAttemptNumber || "current"}::${questionIndex}`
+        : questionIndex;
+    allHighlights[highlightKey] = highlights;
     saveReadingHighlights(allHighlights);
 }
 
@@ -669,6 +691,9 @@ function getReviewQuestionSource(question, index) {
 
 async function requestReviewQuestion(questionIndex, field, value) {
     const question = result.questions[questionIndex];
+    if (isSectionalMockReview()) {
+        return { ...question, [field]: value };
+    }
     const pendingSource = quizPendingQuestionSource(question, result.subjectKey, result.chapter, questionIndex);
     queueQuizPendingChange({ operationType: "edit-question", ...pendingSource, field, value });
     return { ...question, [field]: value };
@@ -713,6 +738,7 @@ function replaceAnswerView(questionIndex) {
 }
 
 async function loadPersistedReviewQuestions() {
+    if (isSectionalMockReview()) return;
     result.questions.forEach((question, index) => {
         const source = quizPendingQuestionSource(question, result.subjectKey, result.chapter, index);
         const pendingChanges = applyQuizPendingChanges(question, source);
@@ -751,13 +777,12 @@ async function saveEditedExplanation(questionIndex) {
 
 function recalculateReviewResult() {
     const questions = Array.isArray(result.questions) ? result.questions : [];
-    const userAnswers = Array.isArray(result.userAnswers) ? result.userAnswers : [];
     let correct = 0;
     let wrong = 0;
     let skipped = 0;
 
     questions.forEach((question, index) => {
-        const selected = userAnswers[index];
+        const selected = getReviewSelectedAnswer(index);
         if (selected == null) {
             skipped += 1;
         } else if (selected === question.answer) {
@@ -810,7 +835,7 @@ async function persistRecalculatedAttempt() {
     result.questions.forEach((question, index) => {
         const questionId = question.id ?? question.qid ?? question.questionId ?? index;
         const key = String(questionId);
-        const selected = result.userAnswers[index];
+        const selected = getReviewSelectedAnswer(index);
         answers[key] = selected == null ? null : selected;
         correctAnswers[key] = question.answer;
         questionStatus[key] = selected == null ? "unanswered" : selected === question.answer ? "correct" : "incorrect";
@@ -1004,6 +1029,9 @@ function getQuestionClassificationKey(index) {
 }
 
 function getQuestionClassifications(index) {
+    if (isSectionalMockReview()) {
+        return { ...(sectionalReviewClassifications[index] || {}) };
+    }
     const store = getClassificationStore();
     const key = getQuestionClassificationKey(index);
     const question = result && Array.isArray(result.questions) ? result.questions[index] : null;
@@ -1035,6 +1063,15 @@ function getApplicableClassificationTags() {
 
 async function toggleQuestionClassification(index, tag, event) {
     event?.preventDefault();
+    if (isSectionalMockReview()) {
+        const classifications = { ...(sectionalReviewClassifications[index] || {}) };
+        if (classifications[tag]) delete classifications[tag];
+        else classifications[tag] = true;
+        sectionalReviewClassifications[index] = classifications;
+        const button = questionReviewList.querySelector(`[data-question-index="${index}"] [data-tag="${tag}"]`);
+        if (button) button.classList.toggle("active", Boolean(classifications[tag]));
+        return;
+    }
     const store = getClassificationStore();
     const question = result && Array.isArray(result.questions) ? result.questions[index] : null;
     const source = getReviewQuestionSource(question, index);
@@ -1179,7 +1216,7 @@ function renderSavedQuestions() {
 
 function getQuestionStatus(index) {
     const question = result.questions[index];
-    const selected = result.userAnswers[index];
+    const selected = getReviewSelectedAnswer(index);
     if (selected == null) {
         return "skipped";
     }
@@ -1333,7 +1370,7 @@ function renderQuestions() {
 
     questionReviewList.innerHTML = result.questions.map((question, index) => {
         const visible = visibleIndexes.includes(index);
-        const selected = result.userAnswers[index];
+        const selected = getReviewSelectedAnswer(index);
         const selectedAnswerText = selected == null ? "Not Attempted" : highlightText(question.options[selected], activeSearchQuery);
         const correctAnswerText = highlightText(question.options[question.answer], activeSearchQuery);
         const status = getQuestionStatus(index);
@@ -1555,6 +1592,9 @@ if (!result && !isHistoricalReview && !window.quizAttemptHistoryStore) {
             window.location.href = "index.html";
             return;
         }
+        window.reviewHighlightScope = isSectionalMockReview()
+            ? `${result.quizId}::${result.completedAt || historicalAttemptNumber || "current"}`
+            : "";
         await Promise.all([
             loadPersistedReviewQuestions(),
             loadPersistentSubjectClassifications(),
@@ -1572,6 +1612,7 @@ if (!result && !isHistoricalReview && !window.quizAttemptHistoryStore) {
         renderPalette();
         renderQuestions();
         applyHighlightsToAllQuestions();
+        window.ReviewHighlighter?.refresh();
         updateFilterButtons();
         renderSavedQuestions();
         updateActiveQuestion();
