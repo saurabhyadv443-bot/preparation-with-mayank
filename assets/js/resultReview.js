@@ -1220,9 +1220,24 @@ function getQuestionStatus(index) {
     if (selected == null) {
         return "skipped";
     }
-    const isCorrect = isSectionalMockReview()
-        ? Number(selected) === Number(question.answer)
-        : selected === question.answer;
+    if (isSectionalMockReview()) {
+        const options = question.options;
+        const selectedIndex = Number(selected);
+        const correctIndex = Number(question.answer);
+        const isValidIndex = (value, index) => (typeof value === "number" || (typeof value === "string" && value.trim() !== ""))
+            && Array.isArray(options)
+            && Number.isInteger(index)
+            && index >= 0
+            && index < options.length;
+        if (isValidIndex(selected, selectedIndex) && isValidIndex(question.answer, correctIndex)) {
+            const normalizeOptionText = (text) => String(text ?? "").replace(/\s+/g, " ").trim();
+            return normalizeOptionText(options[selectedIndex]) === normalizeOptionText(options[correctIndex])
+                ? "correct"
+                : "incorrect";
+        }
+        return Number(selected) === Number(question.answer) ? "correct" : "incorrect";
+    }
+    const isCorrect = selected === question.answer;
     return isCorrect ? "correct" : "incorrect";
 }
 
