@@ -1220,7 +1220,10 @@ function getQuestionStatus(index) {
     if (selected == null) {
         return "skipped";
     }
-    return selected === question.answer ? "correct" : "incorrect";
+    const isCorrect = isSectionalMockReview()
+        ? Number(selected) === Number(question.answer)
+        : selected === question.answer;
+    return isCorrect ? "correct" : "incorrect";
 }
 
 function renderPalette() {
