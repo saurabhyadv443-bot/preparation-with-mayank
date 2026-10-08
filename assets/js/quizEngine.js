@@ -928,7 +928,8 @@ function showQuestion() {
     const isMarkedReview = Boolean(markedForReview[currentQuestion]);
     questionBox.innerHTML = window.QuestionRenderer.renderQuestion(q, currentQuestion + 1, {
         interactive: true,
-        selectedIndex: userAnswers[currentQuestion]
+        selectedIndex: userAnswers[currentQuestion],
+        sectionalMatching: isSectionalMockQuiz()
     });
 
     const hasAnswer = userAnswers[currentQuestion] != null;
@@ -1214,11 +1215,15 @@ function saveCurrentAnswer() {
 }
 
 function renderLiveAnswerEditor(question) {
+    const options = window.QuestionRenderer.getQuestionOptions(question, {
+        sectionalMatching: isSectionalMockQuiz(),
+        questionNumber: currentQuestion + 1
+    });
     return `
         <div class="answer-editor-section">
             <strong>Edit Correct Answer</strong>
             <div class="answer-editor-options">
-                ${question.options.map((option, optionIndex) => `
+                ${options.map((option, optionIndex) => `
                     <label>
                         <input type="radio" name="liveCorrectAnswer-${currentQuestion}" value="${optionIndex}"${optionIndex === question.answer ? " checked" : ""}>
                         ${String.fromCharCode(65 + optionIndex)}. ${escapeHtml(option)}
@@ -1374,10 +1379,14 @@ function renderStudyFeedback(question) {
     if (selected == null) {
         return "";
     }
+    const options = window.QuestionRenderer.getQuestionOptions(question, {
+        sectionalMatching: isSectionalMockQuiz(),
+        questionNumber: currentQuestion + 1
+    });
     const isCorrect = selected === question.answer;
     const status = isCorrect ? "Correct" : "Incorrect";
-    const selectedText = escapeHtml(question.options[selected] || "");
-    const correctAnswerText = escapeHtml(question.options[question.answer] || "");
+    const selectedText = escapeHtml(options[selected] || "");
+    const correctAnswerText = escapeHtml(options[question.answer] || "");
     const explanationDocument = question.explanationDocument || question.explanation || "";
     const explanationHtml = window.ExplanationRenderer
         ? window.ExplanationRenderer.renderExplanationDocument(explanationDocument, question.explanation || "")
@@ -1596,4 +1605,3 @@ async function finishQuiz(timeout = false) {
 function getSavedQuestions() {
     return safeParseStoredValue("bookmarks", []);
 }
-

@@ -133,7 +133,16 @@ function getReviewSelectedAnswer(index) {
 }
 
 function getReviewAnswerText(question, answer) {
-    const options = Array.isArray(question?.options) ? question.options : [];
+    const questionIndex = result?.questions?.indexOf(question) ?? -1;
+    const questionNumber = questionIndex >= 0
+        ? questionIndex + 1
+        : Number((String(question?.q || "").match(/^\s*(\d+)/) || [])[1]) || undefined;
+    const options = window.QuestionRenderer?.getQuestionOptions
+        ? window.QuestionRenderer.getQuestionOptions(question, {
+            sectionalMatching: isSectionalMockReview(),
+            questionNumber
+        })
+        : (Array.isArray(question?.options) ? question.options : []);
     if (answer == null) return "";
 
     if (typeof answer === "number" && Number.isInteger(answer) && options[answer] != null) {
@@ -1423,7 +1432,8 @@ function renderQuestions() {
         const explanationText = (window.ExplanationRenderer && window.ExplanationRenderer.getPlainTextFromExplanation(explanationDocument)) || (question.explanation ? String(question.explanation).trim() : "");
         const sharedQuestionHtml = window.QuestionRenderer.renderQuestion(question, index + 1, {
             interactive: false,
-            selectedIndex: selected
+            selectedIndex: selected,
+            sectionalMatching: isSectionalMockReview()
         });
         const saved = isSavedQuestion(index);
         const classifications = getQuestionClassifications(index);
@@ -1439,10 +1449,14 @@ function renderQuestions() {
                 >${tag}</button>
             ` : "").join("")}
         ` : "";
+        const reviewOptions = window.QuestionRenderer.getQuestionOptions(question, {
+            sectionalMatching: isSectionalMockReview(),
+            questionNumber: index + 1
+        });
         const answerSectionHtml = editingAnswerIndex === index
             ? `<div class="answer-editor-section">
                     <strong>Edit Correct Answer</strong>
-                    <div class="answer-editor-options">${question.options.map((option, optionIndex) => `
+                    <div class="answer-editor-options">${reviewOptions.map((option, optionIndex) => `
                         <label><input type="radio" name="correctAnswer-${index}" value="${optionIndex}"${optionIndex === question.answer ? " checked" : ""}> ${String.fromCharCode(65 + optionIndex)}. ${escapeHtml(option)}</label>
                     `).join("")}</div>
                     <div class="answer-editor-actions">

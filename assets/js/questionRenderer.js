@@ -20,6 +20,13 @@
             .trim();
     }
 
+    function stripMatchListCodeFooter(value) {
+        return String(value ?? "")
+            .replace(/\n[^\n]+\n\d{2,4}\nYCT(?=\nCode\b)/i, "")
+            .replace(/(?:\s|\n)+Codes?\s*[:\-–—]*\s*(?:(?:\s|\n)+(?:\(?[A-D]\)?|\(?[IVX]+\)?|\(?\d{1,2}\)?)(?:[.)])?){0,8}\s*$/i, "")
+            .trim();
+    }
+
     function normalizeQuestionText(value, questionNumber) {
         const number = Number(questionNumber);
         if (!Number.isInteger(number) || number < 1) {
@@ -188,9 +195,8 @@
 
     function parseMatchListQuestion(question) {
         if (!isMatchListQuestion(question)) return null;
-        const text = cleanText(question.q)
+        const text = stripMatchListCodeFooter(cleanText(question.q))
             .replace(/\s*\|\s*/g, "\n")
-            .replace(/(?:\s|\n)+Codes?\s*:?\s*(?:(?:\s|\n)+[A-D](?:[.)])?){2,}\s*$/i, "")
             .trim();
         const markerPattern = /(?<![A-Za-z0-9])(\(\d{1,2}\)|\d{1,2}[.):]?|\([A-Za-z]\)|[A-Za-z][.):]?|\([IVXivx]+\)|[IVXivx]+[.):]?)(?=\s|\n|$)/g;
         const headerPattern = /((?:List|Column)\s*[-–—]?\s*(?:II|I|2|1|A|B)\b(?:\s*\([^)]*\))?)/gi;
@@ -279,9 +285,323 @@
         return null;
     }
 
+    function parseMatchListFromOptions(question) {
+        const options = Array.isArray(question?.options) ? question.options : [];
+        const romanValues = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
+        const parseMarker = (marker) => {
+            const value = marker.replace(/[().]/g, "");
+            if (/^\d+$/.test(value)) return { family: "numeric", value: Number(value) };
+            const upper = value.toUpperCase();
+            const number = upper.split("").reduce((total, numeral, index, numerals) => {
+                const current = romanValues[numeral] || 0;
+                const next = romanValues[numerals[index + 1]] || 0;
+                return total + (current < next ? -current : current);
+            }, 0);
+            return { family: "roman", value: number };
+        };
+        const entries = options.map((option, index) => {
+            const text = cleanText(option);
+            const markers = Array.from(text.matchAll(/(?<![A-Za-z0-9])(\(?[ivxlcdm]+\)?\.?|\(?\d{1,2}\)?\.?)(?=\s|$)/gi));
+            if (markers.length !== 1) return null;
+            const marker = markers[0];
+            const left = text.slice(0, marker.index).replace(/[-–—,;:\s]+$/g, "").trim();
+            const right = text.slice(marker.index + marker[0].length).replace(/^\s*[,;:\-–—]+\s*/, "").replace(/\bCodes?\s*:?\s*$/i, "").trim();
+            if (!left || !right) return null;
+            return { index, marker: marker[1], ...parseMarker(marker[1]), left, right };
+        });
+
+        let bestRun = [];
+        for (let start = 0; start < entries.length; start += 1) {
+            if (!entries[start]) continue;
+            const run = [entries[start]];
+            for (let index = start + 1; index < entries.length; index += 1) {
+                const previous = run[run.length - 1];
+                const current = entries[index];
+                if (!current || current.family !== previous.family || current.value !== previous.value + 1) break;
+                run.push(current);
+            }
+            if (run.length > bestRun.length) bestRun = run;
+        }
+        if (bestRun.length < 2 || options.slice(bestRun[bestRun.length - 1].index + 1).every((option) => !cleanText(option))) {
+            return null;
+        }
+
+        const text = cleanText(question?.q || "");
+        const listOne = text.match(/\bList\s*[-–—]?\s*I\b(?:\s*\([^)]*\))?/i);
+        const listTwo = text.match(/\bList\s*[-–—]?\s*II\b(?:\s*\([^)]*\))?/i);
+        const firstListIndex = listOne ? listOne.index : -1;
+        return {
+            prompt: firstListIndex >= 0 ? text.slice(0, firstListIndex).trim() : text,
+            listOneHeader: listOne?.[0] || "List-I",
+            listTwoHeader: listTwo?.[0] || "List-II",
+            rows: bestRun.map((entry, index) => ({
+                left: `${String.fromCharCode(65 + index)}. ${entry.left}`,
+                right: `${entry.marker} ${entry.right}`
+            })),
+            optionIndexes: bestRun.map((entry) => entry.index)
+        };
+    }
+
+    function parseMatchListFromText(question) {
+        const text = stripMatchListCodeFooter(cleanText(question?.q || ""));
+        const lines = text.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+        const hasListHeaders = /\bList\s*[-–—]?\s*I\b/i.test(text) && /\bList\s*[-–—]?\s*II\b/i.test(text);
+        const rowMarkers = lines.map((line, index) => {
+            const match = line.match(/^\(?([A-D]|[1-4])\)?(?:[.)]\s*|\s+|$)(.*)$/i);
+            if (!match) return null;
+            const marker = match[1].toUpperCase();
+            const value = /^[A-D]$/.test(marker) ? marker.charCodeAt(0) - 64 : Number(marker);
+            return { index, value, text: match[2].trim() };
+        });
+        const runs = [];
+        rowMarkers.forEach((marker, index) => {
+            if (!marker || marker.value !== 1) return;
+            const run = [marker];
+            for (let next = index + 1; next < rowMarkers.length; next += 1) {
+                const candidate = rowMarkers[next];
+                if (candidate?.value === run.length + 1) {
+                    run.push(candidate);
+                } else if (candidate) {
+                    break;
+                }
+            }
+            if (run.length >= 2) runs.push(run);
+        });
+        const rows = runs.sort((left, right) => right.length - left.length)[0];
+        if (!rows) return null;
+
+        const firstRowIndex = rows[0].index;
+        const headerStart = lines.findIndex((line, index) => index < firstRowIndex
+            && /\bList\s*[-–—]?\s*I\b/i.test(line));
+        const genericHeaders = !hasListHeaders && /\bmatch(?:ing)?\s+the\s+following\b/i.test(text)
+            ? lines.slice(0, firstRowIndex).slice(-2)
+            : [];
+        if (!hasListHeaders && genericHeaders.length < 2) return null;
+
+        const parsedRows = rows.map((marker, rowIndex) => {
+            const nextRowIndex = rows[rowIndex + 1]?.index ?? lines.length;
+            const content = [
+                ...(marker.text ? [marker.text] : []),
+                ...lines.slice(marker.index + 1, nextRowIndex)
+            ].filter(Boolean);
+            const rightStart = content.findIndex((line) =>
+                /^\(?[A-Z]\)?[.)]?$|^\(?[ivxlcdm]+\)?[.)]?$|^\(?\d+\)?[.)]?$|^\(?[ivxlcdm]+\)?\.?\s+\S/i.test(line)
+            );
+            let left;
+            let right;
+            if (rightStart > 0) {
+                left = content.slice(0, rightStart).join(" ");
+                right = content.slice(rightStart).join(" ");
+            } else if (content.length === 1) {
+                const inlinePair = content[0].match(/^(.+?)\s+[–—-]\s+(.+)$/);
+                if (!inlinePair) return null;
+                left = inlinePair[1].trim();
+                right = inlinePair[2].trim();
+            } else if (content.length >= 2) {
+                left = content.slice(0, -1).join(" ");
+                right = content[content.length - 1];
+            } else {
+                return null;
+            }
+            return {
+                left: `${String.fromCharCode(64 + rowIndex + 1)}. ${left}`,
+                right
+            };
+        });
+        if (parsedRows.some((row) => !row)) return null;
+
+        const promptEnd = headerStart >= 0
+            ? headerStart
+            : Math.max(0, firstRowIndex - genericHeaders.length);
+        const listOne = text.match(/\bList\s*[-–—]?\s*I\b(?:\s*\([^)]*\))?/i);
+        const listTwo = text.match(/\bList\s*[-–—]?\s*II\b(?:\s*\([^)]*\))?/i);
+        return {
+            prompt: lines.slice(0, promptEnd).join("\n").trim(),
+            listOneHeader: listOne?.[0] || genericHeaders[0],
+            listTwoHeader: listTwo?.[0] || genericHeaders[1],
+            rows: parsedRows
+        };
+    }
+
+    function parseInterleavedMatchList(question) {
+        const text = stripMatchListCodeFooter(cleanText(question?.q || ""));
+        const listTwo = Array.from(text.matchAll(/\bList\s*[-–—]?\s*II\b(?:\s*\([^)]*\))?/gi)).pop();
+        const namedHeaders = text.match(/\b(Tribe)\s*\r?\n\s*(State)\b/i);
+        const dataStart = listTwo
+            ? listTwo.index + listTwo[0].length
+            : namedHeaders
+                ? namedHeaders.index + namedHeaders[0].length
+                : -1;
+        if (dataStart < 0) return null;
+
+        const body = text.slice(dataStart);
+        const markerPattern = /(?<![A-Za-z0-9])((?:\(?[1-4]\)?\.(?=\s|[A-Za-z])|\(?[1-4]\)?(?=\s|$))|\(?[A-D]\)?\.?(?=\s|$)|\b(?:IV|III|II|I)\b|IB(?=\s|$))/gi;
+        const tokens = Array.from(body.matchAll(markerPattern)).map((match) => {
+            const marker = match[1];
+            const value = marker.replace(/[().]/g, "");
+            if (/^\d+$/.test(value)) {
+                return { marker, family: "numeric", value: Number(value), index: match.index, end: match.index + match[0].length };
+            }
+            if (/^I{1,3}V?$/.test(value)) {
+                const romanValues = { I: 1, II: 2, III: 3, IV: 4 };
+                return { marker, family: "roman", value: romanValues[value], index: match.index, end: match.index + match[0].length };
+            }
+            const label = value === "IB" ? "B" : value;
+            return { marker: value === "IB" ? "B" : marker, family: "letter", value: label.charCodeAt(0) - 64, index: match.index, end: match.index + match[0].length };
+        });
+        const sequenceFor = (family) => {
+            const familyTokens = tokens.filter((token) => token.family === family);
+            for (const first of familyTokens) {
+                if (first.value !== 1) continue;
+                const sequence = [first];
+                for (const candidate of familyTokens) {
+                    if (candidate.index > sequence[sequence.length - 1].index
+                        && candidate.value === sequence.length + 1) {
+                        sequence.push(candidate);
+                    }
+                }
+                if (sequence.length >= 2) return sequence;
+            }
+            return [];
+        };
+        const letterSequence = sequenceFor("letter");
+        const numericSequence = sequenceFor("numeric");
+        const romanSequence = sequenceFor("roman");
+        const listOne = text.match(/\bList\s*[-–—]?\s*I\b(?:\s*\([^)]*\))?/i);
+        const makeInterleavedRows = (leftSequence, rightSequence, allowEmptyLeft = false) => {
+            if (leftSequence.length < 2 || rightSequence.length < 2) return null;
+            const rows = [];
+            for (let index = 0; index < leftSequence.length; index += 1) {
+                const leftToken = leftSequence[index];
+                const nextLeft = leftSequence[index + 1];
+                const rightToken = rightSequence.find((token) => token.index > leftToken.end
+                    && token.index < (nextLeft?.index ?? body.length));
+                if (!rightToken) return null;
+                const left = body.slice(leftToken.end, rightToken.index).trim();
+                let right = body.slice(rightToken.end, nextLeft?.index ?? body.length)
+                    .replace(/(?:^|\n)\s*[1-4]\.?\s*$/g, "")
+                    .trim();
+                if ((!left && !allowEmptyLeft) || !right) return null;
+                rows.push({
+                    left: `${leftToken.marker}${left ? ` ${left}` : ""}`.trim(),
+                    right: `${rightToken.marker} ${right}`.trim()
+                });
+            }
+            if (rows.length < 2) return null;
+            const prompt = text.slice(0, dataStart).trim();
+            return {
+                prompt: listOne ? text.slice(0, listOne.index).trim() : prompt,
+                listOneHeader: listOne?.[0] || "Tribe",
+                listTwoHeader: listTwo?.[0] || "State",
+                rows
+            };
+        };
+        const alternateRows = makeInterleavedRows(letterSequence, numericSequence)
+            || makeInterleavedRows(romanSequence, letterSequence)
+            || makeInterleavedRows(letterSequence, romanSequence, true);
+        if (alternateRows) return alternateRows;
+
+        const leftFamily = ["numeric", "roman"].find((family) => tokens.some((token) => token.family === family && token.value === 1));
+        if (!leftFamily) return null;
+        const leftTokens = tokens.filter((token) => token.family === leftFamily);
+        const rows = [];
+        for (let index = 0; index < leftTokens.length; index += 1) {
+            const leftToken = leftTokens[index];
+            if (leftToken.value !== index + 1) break;
+            const nextLeft = leftTokens[index + 1];
+            const rightToken = tokens.find((token) => token.family === "letter"
+                && token.index > leftToken.end
+                && token.index < (nextLeft?.index ?? body.length));
+            if (!rightToken) break;
+            const left = body.slice(leftToken.end, rightToken.index).trim();
+            const right = body.slice(rightToken.end, nextLeft?.index ?? body.length).trim();
+            if (!left || !right) break;
+            rows.push({
+                left: `${leftToken.marker} ${left}`,
+                right: `${rightToken.marker} ${right}`
+            });
+        }
+        if (rows.length < 2) return null;
+        const prompt = text.slice(0, dataStart).trim();
+        return {
+            prompt: listOne ? text.slice(0, listOne.index).trim() : prompt,
+            listOneHeader: listOne?.[0] || "Tribe",
+            listTwoHeader: listTwo?.[0] || "State",
+            rows
+        };
+    }
+
+    function normalizeMatchingOptions(question, parsedMatchList) {
+        const options = Array.isArray(question?.options) ? question.options : [];
+        const groups = [];
+        let group = [];
+        options.forEach((option) => {
+            const text = cleanText(option);
+            if (!text) {
+                if (group.length) groups.push(group);
+                group = [];
+            } else {
+                group.push(text);
+            }
+        });
+        if (group.length) groups.push(group);
+
+        const getCodeFragment = (value) => {
+            const match = cleanText(value).match(/^\s*[-–—]?\s*\(?([ivxlcdm]+|\d+|[a-d])\)?\s*[,.;:]?\s*$/i);
+            return match ? match[1].toLowerCase() : null;
+        };
+        const fragmentGroups = groups.map((items) => items.map(getCodeFragment));
+        const canJoinFragments = groups.length > 1
+            && groups.every((items) => items.length > 1)
+            && fragmentGroups.every((codes) => codes.every(Boolean)
+                && codes.length === fragmentGroups[0].length
+                && new Set(codes).size === codes.length
+                && codes.slice().sort().join("|") === fragmentGroups[0].slice().sort().join("|"));
+        const candidates = canJoinFragments
+            ? groups.map((items) => ({ text: items.join("\n"), indexes: [] }))
+            : options.map((option, index) => ({ text: cleanText(option), indexes: [index] }));
+        const tableOptionIndexes = new Set(parsedMatchList.optionIndexes || []);
+
+        const tableValues = parsedMatchList.rows.flatMap((row) => [row.left, row.right])
+            .map((value) => cleanText(value).replace(/^(?:[A-Z]\.|(?:\(?[ivxlcdm]+\)?|\d+)\.?)\s*/i, ""))
+            .map((value) => value.toLowerCase().replace(/[^a-z0-9]/g, ""))
+            .filter((value) => value.length >= 4);
+        return candidates.filter(({ text, indexes }) => {
+            if (indexes.some((index) => tableOptionIndexes.has(index))) return false;
+            const normalized = text.toLowerCase().replace(/[^a-z0-9]/g, "");
+            if (!normalized) return false;
+            const listValueMatches = tableValues.filter((value) => normalized.includes(value));
+            return new Set(listValueMatches).size < 2;
+        }).map(({ text }) => text);
+    }
+
+    function getSectionalMatchList(question, questionNumber) {
+        const normalizedQuestion = { ...question, q: normalizeQuestionText(question?.q, questionNumber) };
+        if (!isMatchListQuestion(normalizedQuestion)) return null;
+
+        const parsedMatchList = parseMatchListQuestion(normalizedQuestion);
+        const hasTextContent = (value) => cleanText(value)
+            .replace(/^(?:[A-D]\.|[1-9]\d*\.|(?:\(?[IVX]+\)?))\s*/i, "")
+            .trim().length > 0;
+        const completeRows = parsedMatchList?.rows.filter((row) => hasTextContent(row.left) && hasTextContent(row.right)) || [];
+        if (completeRows.length) return { ...parsedMatchList, rows: completeRows };
+        return parseMatchListFromOptions(normalizedQuestion)
+            || parseInterleavedMatchList(normalizedQuestion)
+            || parseMatchListFromText(normalizedQuestion);
+    }
+
+    function getQuestionOptions(question, settings = {}) {
+        const options = Array.isArray(question?.options) ? question.options : [];
+        if (!settings.sectionalMatching) return options;
+        const parsedMatchList = getSectionalMatchList(question, settings.questionNumber);
+        return parsedMatchList ? normalizeMatchingOptions(question, parsedMatchList) : options;
+    }
+
     function renderQuestion(question, questionNumber, settings = {}) {
         const normalizedQuestion = { ...question, q: normalizeQuestionText(question?.q, questionNumber) };
-        const parsedMatchList = parseMatchListQuestion(normalizedQuestion);
+        const parsedMatchList = settings.sectionalMatching
+            ? getSectionalMatchList(question, questionNumber)
+            : parseMatchListQuestion(normalizedQuestion);
         const parsedStatement = parsedMatchList ? null : parseStatementQuestion(normalizedQuestion);
         const formattedPrompt = parsedMatchList || parsedStatement
             ? { text: parsedMatchList?.prompt || cleanText(normalizedQuestion.q || ""), formatted: false }
@@ -302,7 +622,10 @@
             : `<div class="question-statement"><p>${promptHtml}</p></div>`;
         const table = parsedMatchList ? `<div class="match-list-table" role="table" aria-label="${escapeHtml(parsedMatchList.listOneHeader)} and ${escapeHtml(parsedMatchList.listTwoHeader)}"><div class="match-list-header match-list-left" role="columnheader">${escapeHtml(parsedMatchList.listOneHeader)}</div><div class="match-list-header match-list-right" role="columnheader">${escapeHtml(parsedMatchList.listTwoHeader)}</div>${parsedMatchList.rows.map((row) => `<div class="match-list-row" role="row"><div class="match-list-cell match-list-left" role="cell">${escapeHtml(row.left)}</div><div class="match-list-cell match-list-right" role="cell">${escapeHtml(row.right)}</div></div>`).join("")}</div>` : "";
         const selectedIndex = settings.selectedIndex;
-        const options = (question?.options || []).map((option, index) => {
+        const questionOptions = settings.sectionalMatching && parsedMatchList
+            ? normalizeMatchingOptions(question, parsedMatchList)
+            : (question?.options || []);
+        const options = questionOptions.map((option, index) => {
             const label = String.fromCharCode(65 + index);
             const selected = selectedIndex === index ? " selected-option" : "";
             const input = settings.interactive ? `<input type="radio" name="answer" value="${index}"${selectedIndex === index ? " checked" : ""} />` : "";
@@ -311,5 +634,5 @@
         return `<div class="shared-question-renderer"><div class="question-header"><h3>Question ${questionNumber}</h3></div>${parsedMatchList ? `${questionContent}${table}` : questionContent}<div class="shared-options">${options}</div></div>`;
     }
 
-    window.QuestionRenderer = { cleanText, normalizeQuestionText, formatEmbeddedOptions, isMatchListQuestion, parseMatchListQuestion, renderQuestion };
+    window.QuestionRenderer = { cleanText, normalizeQuestionText, formatEmbeddedOptions, isMatchListQuestion, parseMatchListQuestion, getQuestionOptions, renderQuestion };
 }());
