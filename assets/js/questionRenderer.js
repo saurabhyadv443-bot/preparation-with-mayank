@@ -592,31 +592,21 @@
 
     function getQuestionOptions(question, settings = {}) {
         const options = Array.isArray(question?.options) ? question.options : [];
-        if (settings.preserveSectionalSource) return options;
         if (!settings.sectionalMatching) return options;
         const parsedMatchList = getSectionalMatchList(question, settings.questionNumber);
         return parsedMatchList ? normalizeMatchingOptions(question, parsedMatchList) : options;
     }
 
     function renderQuestion(question, questionNumber, settings = {}) {
-        const preserveSectionalSource = settings.preserveSectionalSource === true;
-        const normalizedQuestion = preserveSectionalSource
-            ? question
-            : { ...question, q: normalizeQuestionText(question?.q, questionNumber) };
-        const parsedMatchList = preserveSectionalSource
-            ? null
-            : settings.sectionalMatching
+        const normalizedQuestion = { ...question, q: normalizeQuestionText(question?.q, questionNumber) };
+        const parsedMatchList = settings.sectionalMatching
             ? getSectionalMatchList(question, questionNumber)
             : parseMatchListQuestion(normalizedQuestion);
-        const parsedStatement = preserveSectionalSource || parsedMatchList
-            ? null
-            : parseStatementQuestion(normalizedQuestion);
+        const parsedStatement = parsedMatchList ? null : parseStatementQuestion(normalizedQuestion);
         const formattedPrompt = parsedMatchList || parsedStatement
             ? { text: parsedMatchList?.prompt || cleanText(normalizedQuestion.q || ""), formatted: false }
-            : preserveSectionalSource
-                ? { text: String(normalizedQuestion?.q ?? ""), formatted: false }
-                : formatEmbeddedOptions(normalizedQuestion.q, normalizedQuestion.options);
-        const prompt = preserveSectionalSource ? formattedPrompt.text : normalizeEmbeddedLineBreaks(formattedPrompt.text);
+            : formatEmbeddedOptions(normalizedQuestion.q, normalizedQuestion.options);
+        const prompt = normalizeEmbeddedLineBreaks(formattedPrompt.text);
         const promptHtml = formattedPrompt.formatted
             ? escapeHtml(prompt).replace(/\r?\n/g, "<br>")
             : escapeHtml(prompt);
@@ -632,20 +622,16 @@
             : `<div class="question-statement"><p>${promptHtml}</p></div>`;
         const table = parsedMatchList ? `<div class="match-list-table" role="table" aria-label="${escapeHtml(parsedMatchList.listOneHeader)} and ${escapeHtml(parsedMatchList.listTwoHeader)}"><div class="match-list-header match-list-left" role="columnheader">${escapeHtml(parsedMatchList.listOneHeader)}</div><div class="match-list-header match-list-right" role="columnheader">${escapeHtml(parsedMatchList.listTwoHeader)}</div>${parsedMatchList.rows.map((row) => `<div class="match-list-row" role="row"><div class="match-list-cell match-list-left" role="cell">${escapeHtml(row.left)}</div><div class="match-list-cell match-list-right" role="cell">${escapeHtml(row.right)}</div></div>`).join("")}</div>` : "";
         const selectedIndex = settings.selectedIndex;
-        const questionOptions = preserveSectionalSource
-            ? (Array.isArray(question?.options) ? question.options : [])
-            : settings.sectionalMatching && parsedMatchList
-                ? normalizeMatchingOptions(question, parsedMatchList)
-                : (question?.options || []);
+        const questionOptions = settings.sectionalMatching && parsedMatchList
+            ? normalizeMatchingOptions(question, parsedMatchList)
+            : (question?.options || []);
         const options = questionOptions.map((option, index) => {
             const label = String.fromCharCode(65 + index);
             const selected = selectedIndex === index ? " selected-option" : "";
             const input = settings.interactive ? `<input type="radio" name="answer" value="${index}"${selectedIndex === index ? " checked" : ""} />` : "";
-            const optionText = preserveSectionalSource ? option : cleanText(option);
-            return `<${settings.interactive ? "label" : "div"} class="option-wrap shared-option${selected}">${input}<span class="option-label">${label}.</span><span class="option-text">${escapeHtml(optionText)}</span></${settings.interactive ? "label" : "div"}>`;
+            return `<${settings.interactive ? "label" : "div"} class="option-wrap shared-option${selected}">${input}<span class="option-label">${label}.</span><span class="option-text">${escapeHtml(cleanText(option))}</span></${settings.interactive ? "label" : "div"}>`;
         }).join("");
-        const rendererClass = preserveSectionalSource ? "shared-question-renderer sectional-source-rendering" : "shared-question-renderer";
-        return `<div class="${rendererClass}"><div class="question-header"><h3>Question ${questionNumber}</h3></div>${parsedMatchList ? `${questionContent}${table}` : questionContent}<div class="shared-options">${options}</div></div>`;
+        return `<div class="shared-question-renderer"><div class="question-header"><h3>Question ${questionNumber}</h3></div>${parsedMatchList ? `${questionContent}${table}` : questionContent}<div class="shared-options">${options}</div></div>`;
     }
 
     window.QuestionRenderer = { cleanText, normalizeQuestionText, formatEmbeddedOptions, isMatchListQuestion, parseMatchListQuestion, getQuestionOptions, renderQuestion };
