@@ -929,7 +929,8 @@ function showQuestion() {
     questionBox.innerHTML = window.QuestionRenderer.renderQuestion(q, currentQuestion + 1, {
         interactive: true,
         selectedIndex: userAnswers[currentQuestion],
-        sectionalMatching: isSectionalMockQuiz()
+        sectionalMatching: isSectionalMockQuiz(),
+        preserveSectionalSource: isSectionalMockQuiz()
     });
 
     const hasAnswer = userAnswers[currentQuestion] != null;
@@ -1217,6 +1218,7 @@ function saveCurrentAnswer() {
 function renderLiveAnswerEditor(question) {
     const options = window.QuestionRenderer.getQuestionOptions(question, {
         sectionalMatching: isSectionalMockQuiz(),
+        preserveSectionalSource: isSectionalMockQuiz(),
         questionNumber: currentQuestion + 1
     });
     return `
@@ -1381,6 +1383,7 @@ function renderStudyFeedback(question) {
     }
     const options = window.QuestionRenderer.getQuestionOptions(question, {
         sectionalMatching: isSectionalMockQuiz(),
+        preserveSectionalSource: isSectionalMockQuiz(),
         questionNumber: currentQuestion + 1
     });
     const isCorrect = selected === question.answer;

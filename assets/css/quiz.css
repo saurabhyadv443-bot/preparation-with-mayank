@@ -321,6 +321,11 @@ body.entry-locked {
     line-height: 1.6;
 }
 
+.sectional-source-rendering .question-statement > p,
+.sectional-source-rendering .option-text {
+    white-space: pre-wrap;
+}
+
 .match-list-table {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
