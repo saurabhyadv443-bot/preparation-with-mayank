@@ -50,23 +50,26 @@ async function copyQuestionOptionsByIndex(index) {
         await copyTextToClipboard(text);
         const button = document.querySelector(`[data-copy-question-index="${index}"]`);
         if (button) {
-            const originalText = button.textContent;
-            button.textContent = "Question + options copied";
+            button.title = "Question + options copied";
+            button.setAttribute("aria-label", "Question + options copied");
             window.setTimeout(() => {
-                button.textContent = "CO";
+                button.title = "Copy Question + Options";
+                button.setAttribute("aria-label", "Copy Question + Options");
             }, 2200);
         }
     } catch (error) {
         const button = document.querySelector(`[data-copy-question-index="${index}"]`);
         if (button) {
-            button.textContent = "Copy failed";
+            button.title = "Copy failed";
+            button.setAttribute("aria-label", "Copy failed");
             window.setTimeout(() => {
-                button.textContent = "CO";
+                button.title = "Copy Question + Options";
+                button.setAttribute("aria-label", "Copy Question + Options");
             }, 2200);
         }
     }
 }
 
 function copyQuestionOptionsButtonHtml(index) {
-    return `<button type="button" class="btn btn-secondary btn-small copy-question-options-btn" title="Copy Question + Options" aria-label="Copy Question + Options" data-copy-question-index="${index}" onclick="copyQuestionOptionsByIndex(${index})">CO</button>`;
+    return `<button type="button" class="btn btn-secondary btn-small copy-question-options-btn" title="Copy Question + Options" aria-label="Copy Question + Options" data-copy-question-index="${index}" onclick="copyQuestionOptionsByIndex(${index})">C</button>`;
 }

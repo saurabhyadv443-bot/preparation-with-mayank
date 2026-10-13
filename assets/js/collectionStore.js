@@ -9,6 +9,7 @@
     const HISTORY_DATABASE_NAME = String(window.QUIZ_COLLECTIONS_HISTORY_DATABASE_NAME || "bpsc_quiz_storage");
     const PENDING_DATABASE_NAME = String(window.QUIZ_COLLECTIONS_PENDING_DATABASE_NAME || "bpscQuizPendingChanges");
     const MIGRATION_KEY = "legacy-migration-v2";
+    const AUTOMATIC_MIGRATION_TAGS = Object.freeze(["S", "H", "G", "P", "CA"]);
     const TAG_LABELS = Object.freeze({
         S: "Saved Questions",
         P: "Important Polity Questions",
@@ -1314,7 +1315,14 @@
                     "Existing collection record has a malformed or mismatched identity and was retained for recovery."
                 ));
 
-            if (migrationState?.complete === true) {
+            const completedTags = new Set(
+                Array.isArray(migrationState?.completedTags)
+                    ? migrationState.completedTags
+                    : (migrationState?.complete === true ? AUTOMATIC_MIGRATION_TAGS : [])
+            );
+            const automaticMigrationAlreadyComplete = migrationState?.complete === true
+                && AUTOMATIC_MIGRATION_TAGS.every((tag) => completedTags.has(tag));
+            if (automaticMigrationAlreadyComplete) {
                 if (invalidExisting.size) {
                     const recoveryTransaction = database.transaction(UNRESOLVED_STORE, "readwrite");
                     const recoveryComplete = transactionPromise(recoveryTransaction);
@@ -1329,7 +1337,7 @@
                 return;
             }
 
-            const collected = await collectLegacyRecords(backup, validExisting);
+            const collected = await collectLegacyRecords(backup, validExisting, { tags: AUTOMATIC_MIGRATION_TAGS });
             const combined = collected.records;
             const allUnresolved = new Map(existingUnresolved.map((item) => [item.id, item]));
             invalidExisting.forEach((item) => {
@@ -1389,6 +1397,7 @@
             metaTransaction.objectStore(META_STORE).put({
                 key: MIGRATION_KEY,
                 complete: true,
+                completedTags: [...new Set([...completedTags, ...AUTOMATIC_MIGRATION_TAGS])],
                 completedAt: report.completedAt,
                 report
             });
@@ -1418,7 +1427,7 @@
             }
             try {
                 const backup = await window.quizCollectionMigrationBackupReady;
-                const collected = await collectLegacyRecords(backup, [...records.values()]);
+                const collected = await collectLegacyRecords(backup, [...records.values()], { tags: AUTOMATIC_MIGRATION_TAGS });
                 records.clear();
                 collected.records.forEach((record) => records.set(record.id, record));
                 collected.unresolved.forEach((record) => unresolvedRecords.set(record.id, record));
