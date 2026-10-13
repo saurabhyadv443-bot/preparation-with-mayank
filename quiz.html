@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quiz Portal</title>
     <script src="assets/js/theme.js"></script>
-    <link rel="stylesheet" href="assets/css/quiz.css?v=collections-submit-stable-20261016" />
+    <link rel="stylesheet" href="assets/css/quiz.css?v=sectional-history-save-20261013" />
     <link rel="stylesheet" href="assets/css/responsive.css" />
     <script src="assets/js/collectionMigrationBackup.js?v=collection-migration-backup-v2"></script>
     <script src="assets/js/auth.js"></script>
@@ -78,6 +78,7 @@
             <div class="modal-icon">✓</div>
             <h3>Submit Test?</h3>
             <p class="modal-copy">Review your attempt before finishing.</p>
+            <p id="submissionStatus" class="submission-status" role="status" aria-live="polite"></p>
             <div class="modal-stats">
                 <div><span>Answered</span><strong id="confirmAnswered">0</strong></div>
                 <div><span>Not Answered</span><strong id="confirmNotAnswered">0</strong></div>
@@ -91,10 +92,10 @@
     </div>
 
     <script src="assets/js/questionRenderer.js?v=20261008-1"></script>
-    <script src="assets/js/attemptHistoryStore.js"></script>
+    <script src="assets/js/attemptHistoryStore.js?v=sectional-history-save-20261013"></script>
     <script src="assets/js/collectionStore.js?v=collections-reader-c-20261016"></script>
     <script src="assets/js/explanationRenderer.js"></script>
-    <script src="assets/js/quizEngine.js?v=collections-20261016"></script>
+    <script src="assets/js/quizEngine.js?v=sectional-history-save-20261013"></script>
     <script>
         (() => {
             const layout = document.querySelector(".quiz-layout");

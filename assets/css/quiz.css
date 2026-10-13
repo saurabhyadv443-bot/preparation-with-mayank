@@ -465,6 +465,17 @@ body.entry-locked {
     z-index: 10;
 }
 
+.submission-status {
+    color: #b42318;
+    font-size: 0.9rem;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+html[data-theme="dark"] .submission-status {
+    color: #fda29b;
+}
+
 .material-submit-btn {
     position: relative;
     overflow: hidden;

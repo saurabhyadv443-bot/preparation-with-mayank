@@ -115,32 +115,59 @@
             const records = await requestAsPromise(database.transaction(STORE_NAME, "readonly").objectStore(STORE_NAME).getAll());
             cachedHistory = recordsToHistory(records);
         } catch (error) {
-            return cachedHistory;
+            throw new Error(`Unable to read saved attempt history: ${error.message || "IndexedDB read failed."}`);
         }
         return cachedHistory;
     }
 
-    async function putAttempt(quizId, attempt) {
+    async function putAttempt(quizId, attempt, options = {}) {
         await ready;
+        const appendOnly = options.appendOnly === true;
         const record = { ...attempt, quizId, id: `${quizId}::${attempt.attempt}` };
         if (window.indexedDB) {
-            try {
-                const database = await openDatabase();
-                const transaction = database.transaction(STORE_NAME, "readwrite");
-                const completed = transactionComplete(transaction);
-                transaction.objectStore(STORE_NAME).put(record);
-                await completed;
-                cachedHistory = recordsToHistory(await requestAsPromise(database.transaction(STORE_NAME, "readonly").objectStore(STORE_NAME).getAll()));
-                return;
-            } catch (error) {
+            const database = await openDatabase();
+            const transaction = database.transaction(STORE_NAME, "readwrite");
+            const completed = transactionComplete(transaction);
+            const store = transaction.objectStore(STORE_NAME);
+            if (appendOnly) {
+                store.add(record);
+            } else {
+                store.put(record);
             }
+            try {
+                await completed;
+            } catch (error) {
+                throw new Error(`Unable to save attempt history: ${error.message || "IndexedDB write failed."}`);
+            }
+            const currentAttempts = Array.isArray(cachedHistory[quizId]) ? cachedHistory[quizId] : [];
+            cachedHistory = {
+                ...cachedHistory,
+                [quizId]: appendOnly
+                    ? [...currentAttempts, { ...attempt, quizId }]
+                    : [...currentAttempts.filter((item) => item.attempt !== attempt.attempt), { ...attempt, quizId }]
+            };
+            return;
         }
-        const history = { ...cachedHistory, [quizId]: [...(cachedHistory[quizId] || []).filter((item) => item.attempt !== attempt.attempt), attempt] };
+        const currentAttempts = Array.isArray(cachedHistory[quizId]) ? cachedHistory[quizId] : [];
+        if (appendOnly && currentAttempts.some((item) => item.attempt === attempt.attempt)) {
+            throw new Error("Unable to save attempt history because this attempt number already exists.");
+        }
+        const history = {
+            ...cachedHistory,
+            [quizId]: appendOnly
+                ? [...currentAttempts, attempt]
+                : [...currentAttempts.filter((item) => item.attempt !== attempt.attempt), attempt]
+        };
         const serialized = JSON.stringify(history);
-        if (serialized.length <= 3500000) {
-            localStorage.setItem(HISTORY_KEY, serialized);
-            cachedHistory = history;
+        if (serialized.length > 3500000) {
+            throw new Error("Unable to save attempt history because it exceeds the local storage limit.");
         }
+        try {
+            localStorage.setItem(HISTORY_KEY, serialized);
+        } catch (error) {
+            throw new Error(`Unable to save attempt history: ${error.message || "Local storage write failed."}`);
+        }
+        cachedHistory = history;
     }
 
     async function updateAttempt(quizId, attemptNumber, changes) {

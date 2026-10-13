@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Incorrect Questions - Quiz Portal</title>
+    <script src="assets/js/theme.js"></script>
+    <link rel="stylesheet" href="assets/css/quiz.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <link rel="stylesheet" href="assets/css/incorrect-questions.css" />
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/app.js"></script>
+</head>
+<body>
+    <header class="topbar">
+        <div>
+            <div class="topbar-kicker">Sectional Mock Review</div>
+            <h1>Incorrect Questions</h1>
+        </div>
+        <div class="top-right">
+            <button id="logoutBtn" class="btn-tertiary" type="button">Logout</button>
+        </div>
+    </header>
+
+    <main class="container incorrect-questions-shell">
+        <section class="panel panel-light">
+            <header class="incorrect-header">
+                <div>
+                    <h2 id="incorrectTitle">Incorrect Questions</h2>
+                    <p id="incorrectSubtitle">Review incorrect answers from sectional mock attempts.</p>
+                </div>
+                <a id="incorrectBack" class="btn btn-secondary" href="dashboard.html">⬅ Back</a>
+            </header>
+            <p id="incorrectStatus" class="incorrect-status" role="status" aria-live="polite"></p>
+            <div id="incorrectAttempts" class="incorrect-attempts"></div>
+        </section>
+    </main>
+
+    <script src="assets/js/attemptHistoryStore.js?v=sectional-history-save-20261013"></script>
+    <script src="assets/js/explanationRenderer.js"></script>
+    <script src="assets/js/questionRenderer.js"></script>
+    <script src="assets/js/incorrectQuestionsCore.js"></script>
+    <script src="assets/js/incorrectQuestions.js"></script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+.incorrect-questions-shell {
+    max-width: 1120px;
+}
+
+.incorrect-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #dbe3ee;
+}
+
+.incorrect-header h2 {
+    margin-bottom: 6px;
+}
+
+.incorrect-header p,
+.incorrect-attempt-date {
+    color: #64748b;
+}
+
+.incorrect-status {
+    min-height: 1.4em;
+    overflow-wrap: anywhere;
+    color: #b42318;
+}
+
+.incorrect-attempts,
+.incorrect-attempt-list {
+    display: grid;
+    gap: 14px;
+}
+
+.incorrect-set-card {
+    padding: 18px;
+    border: 1px solid #dbe3ee;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.incorrect-set-card h2 {
+    margin-bottom: 12px;
+    font-size: 1.15rem;
+}
+
+.incorrect-attempt-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border: 1px solid #dbe3ee;
+    border-radius: 10px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.incorrect-attempt-link:hover,
+.incorrect-attempt-link:focus-visible {
+    border-color: #155eef;
+    outline: 2px solid rgba(21, 94, 239, 0.2);
+}
+
+.incorrect-attempt-link > span:first-child {
+    display: grid;
+    gap: 4px;
+}
+
+.incorrect-attempt-count {
+    color: #344054;
+    font-weight: 700;
+    text-align: right;
+}
+
+.incorrect-reader-question {
+    padding: 20px 0;
+    border-bottom: 1px solid #dbe3ee;
+}
+
+.incorrect-reader-content {
+    min-width: 0;
+}
+
+.incorrect-reader-reveal {
+    display: grid;
+    gap: 10px;
+    margin-top: 14px;
+    padding: 16px;
+    border: 1px solid #98a2b3;
+    border-radius: 10px;
+    background: #f8fafc;
+}
+
+.incorrect-reader-reveal[hidden] {
+    display: none;
+}
+
+.incorrect-reader-answer-row {
+    display: grid;
+    grid-template-columns: minmax(150px, 210px) minmax(0, 1fr);
+    gap: 8px;
+}
+
+.incorrect-reader-answer-row.previous-answer {
+    color: #b42318;
+}
+
+.incorrect-reader-answer-row.current-answer {
+    color: #175cd3;
+}
+
+.incorrect-reader-answer-row.correct-answer {
+    color: #067647;
+}
+
+.incorrect-reader-explanation {
+    padding-top: 8px;
+    border-top: 1px solid #d0d5dd;
+}
+
+.incorrect-reader-explanation > strong {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.incorrect-option-label {
+    display: inline-block;
+    margin: 6px 0 0 8px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: #fff;
+    color: #344054;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.shared-question-renderer .shared-option.previous-answer-option {
+    border-color: #d92d20;
+    background: #fef3f2;
+}
+
+.shared-question-renderer .shared-option.current-selection-option {
+    outline: 2px solid #1570ef;
+    outline-offset: 1px;
+}
+
+.shared-question-renderer .shared-option.correct-answer-option {
+    border-color: #039855;
+    background: #ecfdf3;
+}
+
+.incorrect-unavailable {
+    margin: 0 0 14px;
+    padding: 12px 14px;
+    border: 1px solid #fdb022;
+    border-radius: 8px;
+    background: #fffaeb;
+    color: #7a2e0e;
+}
+
+html[data-theme="dark"] .incorrect-header {
+    border-color: #475569;
+}
+
+html[data-theme="dark"] .incorrect-header p,
+html[data-theme="dark"] .incorrect-attempt-date,
+html[data-theme="dark"] .incorrect-attempt-count {
+    color: #cbd5e1;
+}
+
+html[data-theme="dark"] .incorrect-set-card,
+html[data-theme="dark"] .incorrect-attempt-link {
+    border-color: #475569;
+    background: #202a34;
+}
+
+html[data-theme="dark"] .incorrect-reader-question {
+    border-color: #475569;
+}
+
+html[data-theme="dark"] .incorrect-reader-reveal {
+    border-color: #475569;
+    background: #25313d;
+}
+
+html[data-theme="dark"] .incorrect-reader-answer-row.previous-answer {
+    color: #fda29b;
+}
+
+html[data-theme="dark"] .incorrect-reader-answer-row.current-answer {
+    color: #84caff;
+}
+
+html[data-theme="dark"] .incorrect-reader-answer-row.correct-answer {
+    color: #6ce9a6;
+}
+
+html[data-theme="dark"] .incorrect-option-label {
+    background: #101828;
+    color: #f8fafc;
+}
+
+html[data-theme="dark"] .shared-question-renderer .shared-option.previous-answer-option {
+    background: #7a271a !important;
+    border-color: #f97066 !important;
+}
+
+html[data-theme="dark"] .shared-question-renderer .shared-option.correct-answer-option {
+    background: #054f31 !important;
+    border-color: #32d583 !important;
+}
+
+html[data-theme="dark"] .incorrect-unavailable {
+    border-color: #93370d;
+    background: #431407;
+    color: #fedf89;
+}
+
+@media (max-width: 640px) {
+    .incorrect-header,
+    .incorrect-attempt-link {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .incorrect-header .btn {
+        align-self: flex-start;
+    }
+
+    .incorrect-attempt-count {
+        text-align: left;
+    }
+
+    .incorrect-reader-answer-row {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

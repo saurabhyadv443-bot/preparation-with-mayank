@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Incorrect Questions Isolated Tests</title>
+    <link rel="stylesheet" href="../assets/css/quiz.css" />
+    <link rel="stylesheet" href="../assets/css/incorrect-questions.css" />
+</head>
+<body>
+    <main class="container incorrect-questions-shell">
+        <section class="panel panel-light">
+            <header class="incorrect-header">
+                <div>
+                    <h2 id="incorrectTitle">Incorrect Questions</h2>
+                    <p id="incorrectSubtitle"></p>
+                </div>
+                <a id="incorrectBack" class="btn btn-secondary" href="#">Back</a>
+            </header>
+            <p id="incorrectStatus" class="incorrect-status" role="status"></p>
+            <div id="incorrectAttempts" class="incorrect-attempts"></div>
+            <pre id="testResults" role="status">Running isolated fixture checks…</pre>
+        </section>
+    </main>
+    <script src="../assets/js/explanationRenderer.js"></script>
+    <script src="../assets/js/questionRenderer.js"></script>
+    <script src="../assets/js/incorrectQuestionsCore.js"></script>
+    <script>
+        (() => {
+            const quizId = "mock::sectional::Set A::mock";
+            const makeQuestion = (id) => ({
+                id,
+                q: `Fixture question ${id}`,
+                options: ["Correct answer", "Previous incorrect answer", "Another answer"],
+                answer: 0,
+                images: [{ src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E", alt: "Fixture image" }],
+                explanation: `Fixture explanation ${id}`
+            });
+            const oldAttempt = {
+                subjectKey: "mock",
+                chapter: "Set A",
+                quizId,
+                quizType: "mock",
+                total: 3,
+                incorrect: 2,
+                attempt: 1,
+                completedAt: "2025-01-10T08:30:00.000Z",
+                questions: [makeQuestion("old-1"), makeQuestion("old-2"), makeQuestion("unanswered")],
+                userAnswers: [1, 2, null]
+            };
+            const futureAttempt = {
+                subjectKey: "mock",
+                chapter: "Set A",
+                quizId,
+                quizType: "mock",
+                source: "sectional",
+                total: 1,
+                incorrect: 1,
+                attempt: 2,
+                completedAt: "2027-01-10T08:30:00.000Z",
+                questions: [makeQuestion("future-1")],
+                userAnswers: [1]
+            };
+            const fullLengthAttempt = {
+                ...oldAttempt,
+                chapter: "Full Length",
+                quizId: "mock::all::mock",
+                source: "",
+                attempt: 1
+            };
+            const ordinarySubjectAttempt = {
+                ...oldAttempt,
+                subjectKey: "economy",
+                chapter: "Economy",
+                quizId: "economy::Chapter 1::mock",
+                source: ""
+            };
+            const unansweredAttempt = {
+                ...oldAttempt,
+                chapter: "Set B",
+                quizId: "mock::sectional::Set B::mock",
+                attempt: 1,
+                incorrect: 0,
+                questions: [makeQuestion("only-unanswered")],
+                userAnswers: [null]
+            };
+            const studyAttempt = {
+                ...oldAttempt,
+                chapter: "Study Mode",
+                quizId: "mock::sectional::Study Mode::study",
+                source: "sectional",
+                attempt: 1
+            };
+            const unavailableAttempt = {
+                ...oldAttempt,
+                chapter: "Set C",
+                quizId: "mock::sectional::Set C::mock",
+                attempt: 1,
+                incorrect: 1,
+                questions: undefined,
+                userAnswers: undefined
+            };
+            const fixtureHistory = {
+                [quizId]: [oldAttempt, futureAttempt],
+                [fullLengthAttempt.quizId]: [fullLengthAttempt],
+                [ordinarySubjectAttempt.quizId]: [ordinarySubjectAttempt],
+                [unansweredAttempt.quizId]: [unansweredAttempt],
+                [studyAttempt.quizId]: [studyAttempt],
+                [unavailableAttempt.quizId]: [unavailableAttempt]
+            };
+            const originalHistory = JSON.stringify(fixtureHistory);
+            window.quizAttemptHistoryStore = {
+                ready: Promise.resolve(),
+                getHistory: async () => fixtureHistory
+            };
+
+            const assert = (condition, message) => {
+                if (!condition) throw new Error(message);
+            };
+            const results = document.getElementById("testResults");
+            const waitForRender = async () => {
+                for (let attempt = 0; attempt < 40; attempt += 1) {
+                    if (document.querySelector("#incorrectAttempts > *")) return;
+                    await new Promise((resolve) => setTimeout(resolve, 10));
+                }
+                throw new Error("Incorrect Questions view did not render.");
+            };
+            const runChecks = async () => {
+                try {
+                    await waitForRender();
+                    const params = new URLSearchParams(window.location.search);
+                    if (params.get("view") !== "reader") {
+                        const setCards = Array.from(document.querySelectorAll(".incorrect-set-card"));
+                        assert(setCards.length === 2, "Only sectional sets with incorrect or unavailable answer data should be listed.");
+                        const setA = setCards.find((card) => card.querySelector("h2")?.textContent === "Set A");
+                        assert(setA, "The sectional set should be present.");
+                        assert(setA.querySelectorAll(".incorrect-attempt-link").length === 2, "The two attempts must remain separate rows.");
+                        assert(setA.textContent.includes("2025") && setA.textContent.includes("2027"), "Each attempt should show its own date.");
+                        assert(setA.textContent.includes("2 incorrect questions") && setA.textContent.includes("1 incorrect question"), "Each attempt should show its own incorrect count.");
+                        const displayedSetNames = setCards.map((card) => card.querySelector("h2")?.textContent);
+                        assert(!displayedSetNames.includes("Full Length"), "Full-length mock attempts must be excluded.");
+                        assert(!displayedSetNames.includes("Economy"), "Ordinary subject tests must be excluded.");
+                        assert(!displayedSetNames.includes("Set B"), "An unanswered-only set must be excluded.");
+                        assert(!displayedSetNames.includes("Study Mode"), "Sectional study mode is not a completed mock test.");
+                        assert(document.getElementById("incorrectAttempts").textContent.includes("data unavailable"), "Missing historical snapshots must be visibly marked unavailable.");
+                        const oldAttemptLink = Array.from(setA.querySelectorAll(".incorrect-attempt-link"))
+                            .find((link) => link.textContent.includes("Attempt 1"));
+                        assert(oldAttemptLink, "The old sectional attempt should have a review link.");
+                        const readerParams = new URL(oldAttemptLink.href).search;
+                        window.location.href = `incorrect_questions_tests.html${readerParams}`;
+                        return;
+                    }
+
+                    assert(document.querySelectorAll(".incorrect-reader-question").length === 2, "The selected historical attempt should show its two incorrect snapshot questions.");
+                    assert(!document.querySelector(".incorrect-reader-reveal:not([hidden])"), "Answers and explanations must be hidden initially.");
+                    assert(document.querySelector(".question-media img[alt='Fixture image']"), "Question snapshot images must be rendered.");
+                    const questionCards = Array.from(document.querySelectorAll(".incorrect-reader-question"));
+                    const firstOption = questionCards[0].querySelector('[data-reader-option="2"]');
+                    firstOption.click();
+                    const firstReveal = questionCards[0].querySelector(".incorrect-reader-reveal");
+                    assert(!firstReveal.hidden, "Selecting an option should reveal that question independently.");
+                    assert(firstReveal.textContent.includes("Your Previous Answer:") && firstReveal.textContent.includes("Your Current Selection:"), "Previous and current selections must be labeled.");
+                    assert(firstReveal.textContent.includes("Correct Answer:") && firstReveal.textContent.includes("Fixture explanation old-1"), "The correct answer and original explanation must appear.");
+                    assert(firstOption.classList.contains("current-selection-option"), "Current selection should be visually marked.");
+                    assert(questionCards[1].querySelector(".incorrect-reader-reveal").hidden, "Revealing one question must not reveal another.");
+                    questionCards[1].querySelector('[data-reader-option="1"]').click();
+                    assert(!questionCards[1].querySelector(".incorrect-reader-reveal").hidden, "A second question should reveal only after its own selection.");
+                    assert(JSON.stringify(fixtureHistory) === originalHistory, "Review interactions must not mutate saved attempt history.");
+                    results.textContent = "PASS: old attempt, future attempt, multiple attempts per set, full-length, study-mode and unanswered exclusions, unavailable snapshots, independent inline answer reveal, images, explanations, and read-only history.";
+                } catch (error) {
+                    results.textContent = `FAIL: ${error.message}`;
+                    results.style.color = "#b42318";
+                }
+            };
+
+            document.addEventListener("click", (event) => {
+                const link = event.target.closest(".incorrect-attempt-link");
+                if (!link) return;
+                event.preventDefault();
+                const target = new URL(link.href);
+                window.location.href = `incorrect_questions_tests.html${target.search}`;
+            }, true);
+            window.addEventListener("DOMContentLoaded", runChecks);
+            if (document.readyState !== "loading") runChecks();
+        })();
+    </script>
+    <script src="../assets/js/incorrectQuestions.js"></script>
+</body>
+</html>

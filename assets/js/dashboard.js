@@ -44,6 +44,11 @@ const dashboardSubjects = {
         icon: "★",
         title: "Important Collections",
         description: "Saved questions and important subject collections"
+    },
+    incorrect_questions: {
+        icon: "↻",
+        title: "Incorrect Questions",
+        description: "Review incorrect answers from sectional mock attempts"
     }
 };
 
@@ -103,7 +108,11 @@ function displayDashboardSubjects(subjects, subjectMeta) {
 
     const actionCards = Array.from(subjectsContainer.querySelectorAll(".dashboard-action-card"));
     subjectsContainer.innerHTML = "";
-    actionCards.forEach((card) => subjectsContainer.appendChild(card));
+    const actionCardsBySubject = new Map();
+    actionCards.forEach((card) => {
+        card.dataset.dashboardSubject = "mock";
+        actionCardsBySubject.set("mock", card);
+    });
 
     const currentAffairsCard = {
         id: "current_affairs",
@@ -112,9 +121,28 @@ function displayDashboardSubjects(subjects, subjectMeta) {
         icon: "📰"
     };
 
-    const mergedSubjects = [...new Set([...subjects, "current_affairs", "important_collections"])];
+    const subjectOrder = [
+        "ancient",
+        "medieval",
+        "medeival",
+        "modern",
+        "geography",
+        "important_collections",
+        "polity",
+        "economy",
+        "current_affairs",
+        "mock",
+        "incorrect_questions"
+    ];
+    const availableSubjects = new Set([...subjects, "current_affairs", "important_collections", "mock", "incorrect_questions"]);
+    const mergedSubjects = subjectOrder.filter((subjectKey) => availableSubjects.delete(subjectKey));
+    mergedSubjects.push(...availableSubjects);
 
     mergedSubjects.forEach((subjectKey) => {
+        if (subjectKey === "mock" && actionCardsBySubject.has("mock")) {
+            subjectsContainer.appendChild(actionCardsBySubject.get("mock"));
+            return;
+        }
         if (subjectKey === "mock") {
             return;
         }
@@ -128,8 +156,11 @@ function displayDashboardSubjects(subjects, subjectMeta) {
 
         const card = document.createElement("article");
         card.className = "dashboard-card";
-        const cardTarget = `subject.html?subject=${encodeURIComponent(subjectKey)}`;
-        const cardLabel = subjectKey === "current_affairs" ? "Open CA Home" : "Open Subject";
+        card.dataset.dashboardSubject = subjectKey === "medeival" ? "medieval" : subjectKey;
+        const cardTarget = subjectKey === "incorrect_questions"
+            ? "incorrect-questions.html"
+            : `subject.html?subject=${encodeURIComponent(subjectKey)}`;
+        const cardLabel = subjectKey === "current_affairs" ? "Open CA Home" : (subjectKey === "incorrect_questions" ? "Review Questions" : "Open Subject");
 
         card.innerHTML = `
             <div class="card-icon">${icon}</div>

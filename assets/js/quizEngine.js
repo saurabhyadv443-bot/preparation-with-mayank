@@ -41,6 +41,7 @@ let currentQuestion = 0;
 let userAnswers = [];
 let markedForReview = [];
 let timer = null;
+let isFinishingQuiz = false;
 let remainingTime = 0;
 let paused = false;
 let currentSubjectKey = subject;
@@ -73,6 +74,7 @@ const markReviewBtn = document.getElementById("markReviewBtn");
 const submitModal = document.getElementById("submitConfirmModal");
 const cancelSubmitBtn = document.getElementById("cancelSubmitBtn");
 const confirmSubmitBtn = document.getElementById("confirmSubmitBtn");
+const submissionStatus = document.getElementById("submissionStatus");
 const topbarKicker = document.querySelector(".topbar-kicker");
 
 function safeParseStoredValue(key, fallback = []) {
@@ -159,6 +161,11 @@ async function saveAttempt(result) {
     const history = attemptHistoryStore
         ? await attemptHistoryStore.getHistory()
         : safeParseStoredValue("quiz_attempt_history", {});
+    const existingAttempts = Array.isArray(history[result.quizId]) ? history[result.quizId] : [];
+    const isSectionalAttempt = result.subjectKey === "mock" && result.source === "sectional";
+    if (isSectionalAttempt && existingAttempts.some((item) => item.completedAt === result.completedAt)) {
+        return;
+    }
     const completedAt = result.completedAt;
     const completedDate = new Date(completedAt);
     const savedQuestions = getSavedQuestions();
@@ -204,6 +211,7 @@ async function saveAttempt(result) {
         subject: result.subject,
         subjectKey: result.subjectKey,
         chapter: result.chapter,
+        source: result.source,
         quizType: result.quizType,
         quizId: result.quizId,
         duration: result.duration,
@@ -213,15 +221,26 @@ async function saveAttempt(result) {
         markedForReview: result.markedForReview,
         markedReview: result.markedReview,
         completedAt,
-        attempt: 0
+        attempt: isSectionalAttempt
+            ? existingAttempts.reduce((highest, item) => Math.max(highest, Number(item.attempt) || 0), 0) + 1
+            : 0
     };
-    const retained = Array.isArray(history[result.quizId]) ? history[result.quizId].slice(-4) : [];
-    retained.push(attempt);
-    history[result.quizId] = retained.map((item, index) => ({ ...item, attempt: index + 1 }));
     if (attemptHistoryStore) {
-        await attemptHistoryStore.putAttempt(result.quizId, history[result.quizId][history[result.quizId].length - 1]);
+        if (isSectionalAttempt) {
+            await attemptHistoryStore.putAttempt(result.quizId, attempt, { appendOnly: true });
+        } else {
+            const retained = [...existingAttempts.slice(-4), attempt]
+                .map((item, index) => ({ ...item, attempt: index + 1 }));
+            await attemptHistoryStore.putAttempt(result.quizId, retained[retained.length - 1]);
+        }
     } else {
-        localStorage.setItem("quiz_attempt_history", JSON.stringify(history));
+        const retained = isSectionalAttempt
+            ? [...existingAttempts, attempt]
+            : [...existingAttempts.slice(-4), attempt].map((item, index) => ({ ...item, attempt: index + 1 }));
+        localStorage.setItem("quiz_attempt_history", JSON.stringify({
+            ...history,
+            [result.quizId]: retained
+        }));
     }
 }
 /* Accidental Match List parser fragment removed below.
@@ -1216,9 +1235,15 @@ if (cancelSubmitBtn) {
 }
 
 if (confirmSubmitBtn) {
-    confirmSubmitBtn.onclick = function () {
-        submitModal.style.display = "none";
-        finishQuiz(false);
+    confirmSubmitBtn.onclick = async function () {
+        if (isFinishingQuiz) return;
+        confirmSubmitBtn.disabled = true;
+        confirmSubmitBtn.textContent = "Saving...";
+        await finishQuiz(false);
+        if (!isFinishingQuiz) {
+            confirmSubmitBtn.disabled = false;
+            confirmSubmitBtn.textContent = "Submit";
+        }
     };
 }
 
@@ -1544,6 +1569,9 @@ function toggleReviewMark(questionIndex) {
 }
 
 async function finishQuiz(timeout = false) {
+    if (isFinishingQuiz) return;
+    isFinishingQuiz = true;
+    if (submissionStatus) submissionStatus.textContent = "";
     clearInterval(timer);
     timer = null;
     saveCurrentAnswer();
@@ -1620,12 +1648,21 @@ async function finishQuiz(timeout = false) {
         completedAt: new Date().toISOString()
     };
 
-    if (window.quizAttemptHistoryStore) {
-        await window.quizAttemptHistoryStore.putResult(getResultKey(), result);
-    } else {
-        localStorage.setItem(getResultKey(), JSON.stringify(result));
+    try {
+        await saveAttempt(result);
+        if (window.quizAttemptHistoryStore) {
+            await window.quizAttemptHistoryStore.putResult(getResultKey(), result);
+        } else {
+            localStorage.setItem(getResultKey(), JSON.stringify(result));
+        }
+    } catch (error) {
+        isFinishingQuiz = false;
+        if (submissionStatus) {
+            submissionStatus.textContent = `Unable to save this attempt. Your progress is preserved; please retry. ${error.message || ""}`.trim();
+        }
+        if (submitModal) submitModal.style.display = "flex";
+        return;
     }
-    await saveAttempt(result);
     localStorage.removeItem(getProgressKey());
     const resultParams = new URLSearchParams();
     if (isStudyMode()) {
