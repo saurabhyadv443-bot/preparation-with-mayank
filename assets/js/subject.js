@@ -444,40 +444,33 @@ async function renderImportantCollectionChapters() {
     const tags = ["S", "H", "G", "P", "E", "CA"];
     const collectionTools = document.getElementById("collectionTools");
     const backupStatus = collectionTools?.querySelector("[data-collection-backup-status]");
+    const reportNode = document.getElementById("collectionMigrationReport");
+    const backupToggle = document.getElementById("collectionBackupToggle");
+    const openBackupTools = () => {
+        if (collectionTools) collectionTools.hidden = false;
+        if (backupToggle) backupToggle.setAttribute("aria-expanded", "true");
+    };
     if (collectionTools) {
-        collectionTools.hidden = false;
         window.quizCollections.attachBackupTools(collectionTools);
         await window.quizCollections.ready;
         const storage = window.quizCollections.status();
-        const reportNode = document.getElementById("collectionMigrationReport");
         const retryButton = document.getElementById("retryCollectionMigrationBtn");
         if (backupStatus) {
-            backupStatus.textContent = storage.durable
-                ? "Collection changes are stored in this browser. Export a backup to transfer or safeguard them."
-                : `Collection changes are temporary only: ${storage.message} Export a backup before leaving.`;
-            backupStatus.classList.toggle("is-temporary", !storage.durable);
+            backupStatus.textContent = "";
         }
-        const report = window.quizCollections.getMigrationReport();
         if (reportNode) {
-            if (report) {
-                const byType = Object.entries(report.membershipTypes || {})
-                    .map(([tag, count]) => `${tag}: ${count}`)
-                    .join(", ");
-                const bySource = Object.entries(report.sources || {})
-                    .map(([name, counts]) => `${name}: ${counts.records} records / ${counts.memberships} memberships${counts.operations ? ` / ${counts.operations} pending operations` : ""}`)
-                    .join("; ");
-                reportNode.textContent = `Migration v${report.version}: ${report.discovered.records} source records / ${report.discovered.memberships} membership occurrences (${byType}); ${report.alreadyRepresented.memberships} already represented; ${report.migrated.memberships} newly migrated; ${report.duplicates?.merged || 0} duplicate occurrences merged; ${report.pendingOperations?.operations || 0} pending operations (${report.pendingOperations?.removals || 0} removals); ${report.explicitRemovals} explicit removals respected; ${report.pendingRemovalsSuperseded || 0} older removals superseded by newer current records; ${window.quizCollections.getUnresolvedCount()} unresolved or malformed records retained; ${report.writeFailures} write failures.`;
-                const unresolvedBySource = Object.entries(report.unresolvedBySource || {})
-                    .map(([name, count]) => `${name}: ${count}`)
-                    .join("; ");
-                reportNode.title = [bySource, unresolvedBySource ? `Unresolved by source: ${unresolvedBySource}` : ""].filter(Boolean).join("\n");
-            } else {
-                reportNode.textContent = storage.migrationError
-                    ? `Migration has not completed: ${storage.migrationError} Legacy records are retained.`
-                    : "Legacy collection migration is ready.";
-                reportNode.title = "";
-            }
+            reportNode.textContent = storage.migrationError
+                ? `Collection migration failed: ${storage.migrationError} Your existing data remains available for retry or export.`
+                : "";
             reportNode.classList.toggle("is-temporary", Boolean(storage.migrationError));
+        }
+        if (!storage.durable || storage.migrationError) {
+            openBackupTools();
+            if (backupStatus && !storage.durable) {
+                backupStatus.hidden = false;
+                backupStatus.textContent = `Collection changes could not be saved: ${storage.message} Existing data is preserved.`;
+                backupStatus.classList.add("is-temporary");
+            }
         }
         if (retryButton) {
             retryButton.hidden = !storage.migrationError;
@@ -488,7 +481,9 @@ async function renderImportantCollectionChapters() {
                     await renderImportantCollectionChapters();
                 } catch (error) {
                     console.error("Unable to retry collection migration.", error);
-                    if (reportNode) reportNode.textContent = `Migration retry failed: ${error.message} Legacy records remain available for backup and retry.`;
+                    if (reportNode) {
+                        reportNode.textContent = `Migration retry failed: ${error.message} Existing data remains available for backup and retry.`;
+                    }
                 } finally {
                     retryButton.disabled = false;
                 }
@@ -502,7 +497,9 @@ async function renderImportantCollectionChapters() {
                     await window.quizCollections.downloadMigrationBackup();
                 } catch (error) {
                     console.error("Unable to download migration backup.", error);
-                    if (reportNode) reportNode.textContent = `Backup download failed: ${error.message}`;
+                    if (reportNode) {
+                        reportNode.textContent = `Backup download failed: ${error.message}`;
+                    }
                 }
             });
         }
@@ -834,7 +831,17 @@ function renderMockSets(setNames, sectionalSetNames = []) {
     }
 
     const collectionTools = document.getElementById("collectionTools");
-    if (collectionTools) collectionTools.hidden = subject !== "important_collections";
+    const collectionBackupToggle = document.getElementById("collectionBackupToggle");
+    if (collectionTools) collectionTools.hidden = true;
+    if (collectionBackupToggle) {
+        collectionBackupToggle.hidden = subject !== "important_collections";
+        collectionBackupToggle.setAttribute("aria-expanded", "false");
+        collectionBackupToggle.onclick = () => {
+            const expanded = collectionTools ? collectionTools.hidden : false;
+            if (collectionTools) collectionTools.hidden = !expanded;
+            collectionBackupToggle.setAttribute("aria-expanded", String(expanded));
+        };
+    }
 
     if (subjectReviewBtn && reviewSubjects.has(subject)) {
         subjectReviewBtn.hidden = false;

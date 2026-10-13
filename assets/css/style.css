@@ -376,6 +376,14 @@ img {
     gap: 12px;
 }
 
+.subject-heading-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    flex: 0 0 auto;
+}
+
 .subject-review-btn {
     flex: 0 0 auto;
     background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
@@ -605,8 +613,23 @@ img {
 }
 
 .collection-tools {
-    margin: 16px 0;
+    margin: 0 0 12px;
     text-align: left;
+}
+
+.collection-tools[hidden] {
+    display: none;
+}
+
+.collection-backup-panel {
+    padding: 12px;
+    border: 1px solid var(--border-color, rgba(148, 163, 184, 0.45));
+    border-radius: 12px;
+    background: var(--surface-color, rgba(148, 163, 184, 0.08));
+}
+
+.collection-storage-status:empty {
+    display: none;
 }
 
 .collection-list-collection-controls {

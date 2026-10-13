@@ -33,15 +33,14 @@
         <section class="panel subject-panel">
             <div class="section-heading compact-heading subject-heading-row">
                 <h2 id="sectionHeading">Chapter Wise Practice</h2>
-                <button id="subjectReviewBtn" class="btn btn-secondary btn-small subject-review-btn" type="button" hidden>Review</button>
+                <div class="subject-heading-actions">
+                    <button id="subjectReviewBtn" class="btn btn-secondary btn-small subject-review-btn" type="button" hidden>Review</button>
+                    <button id="collectionBackupToggle" class="btn btn-secondary btn-small" type="button" aria-expanded="false" aria-controls="collectionTools" hidden>Backup &amp; Restore</button>
+                </div>
             </div>
             <div id="classificationRemovalControls" class="classification-removal-controls" hidden></div>
-            <div id="collectionTools" class="collection-tools panel" hidden>
-                <div class="section-heading compact-heading">
-                    <div>
-                        <h3>Collection Backup</h3>
-                        <p>Export or import a backup of your question collection memberships.</p>
-                    </div>
+            <div id="collectionTools" class="collection-tools" hidden>
+                <div class="collection-backup-panel">
                     <div class="collection-backup-actions">
                         <button type="button" class="btn btn-secondary btn-small" data-collection-export-all>Export Backup</button>
                         <button type="button" class="btn btn-secondary btn-small" data-collection-import-button>Import and Merge Backup</button>
