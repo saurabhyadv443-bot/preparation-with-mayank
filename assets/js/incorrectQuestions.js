@@ -46,6 +46,18 @@
         return parts.length > 2 && parts[2] ? parts[2] : "Sectional Set";
     }
 
+    function compareSetNames(left, right) {
+        const leftMatch = left.match(/\bset\s+(\d+)\b/i);
+        const rightMatch = right.match(/\bset\s+(\d+)\b/i);
+        if (leftMatch && rightMatch) {
+            const numberDifference = Number(leftMatch[1]) - Number(rightMatch[1]);
+            if (numberDifference) return numberDifference;
+        } else if (leftMatch || rightMatch) {
+            return leftMatch ? -1 : 1;
+        }
+        return left.localeCompare(right, undefined, { numeric: true, sensitivity: "base" });
+    }
+
     function readAttemptGroups(history) {
         return core.groupIncorrectAttempts(history)
             .map((group) => ({
@@ -55,12 +67,14 @@
             .map((group) => ({
                 ...group,
                 attempts: group.attempts.sort((left, right) => {
-                    const leftTime = parseCompletionTime(left.attempt)?.getTime() || 0;
-                    const rightTime = parseCompletionTime(right.attempt)?.getTime() || 0;
-                    return rightTime - leftTime;
+                    const leftDate = parseCompletionTime(left.attempt);
+                    const rightDate = parseCompletionTime(right.attempt);
+                    const leftTime = leftDate ? leftDate.getTime() : 0;
+                    const rightTime = rightDate ? rightDate.getTime() : 0;
+                    return leftTime - rightTime || left.attemptIndex - right.attemptIndex;
                 })
             }))
-            .sort((left, right) => left.title.localeCompare(right.title));
+            .sort((left, right) => compareSetNames(left.title, right.title));
     }
 
     function attemptCountLabel(result) {

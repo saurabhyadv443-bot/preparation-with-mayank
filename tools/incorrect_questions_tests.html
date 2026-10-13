@@ -61,6 +61,17 @@
                 questions: [makeQuestion("future-1")],
                 userAnswers: [1]
             };
+            const numberedSetAttempt = (setNumber) => ({
+                ...futureAttempt,
+                chapter: `Set ${setNumber}`,
+                quizId: `mock::sectional::Set ${setNumber}::mock`,
+                attempt: 1,
+                completedAt: "2026-01-10T08:30:00.000Z",
+                questions: [makeQuestion(`set-${setNumber}`)],
+                userAnswers: [1]
+            });
+            const set2Attempt = numberedSetAttempt(2);
+            const set10Attempt = numberedSetAttempt(10);
             const fullLengthAttempt = {
                 ...oldAttempt,
                 chapter: "Full Length",
@@ -102,6 +113,8 @@
             };
             const fixtureHistory = {
                 [quizId]: [oldAttempt, futureAttempt],
+                [set10Attempt.quizId]: [set10Attempt],
+                [set2Attempt.quizId]: [set2Attempt],
                 [fullLengthAttempt.quizId]: [fullLengthAttempt],
                 [ordinarySubjectAttempt.quizId]: [ordinarySubjectAttempt],
                 [unansweredAttempt.quizId]: [unansweredAttempt],
@@ -131,21 +144,26 @@
                     const params = new URLSearchParams(window.location.search);
                     if (params.get("view") !== "reader") {
                         const setCards = Array.from(document.querySelectorAll(".incorrect-set-card"));
-                        assert(setCards.length === 2, "Only sectional sets with incorrect or unavailable answer data should be listed.");
+                        assert(setCards.length === 4, "Only sectional sets with incorrect or unavailable answer data should be listed.");
+                        const displayedSetNames = setCards.map((card) => card.querySelector("h2")?.textContent);
+                        assert(displayedSetNames.join("|") === "Set 2|Set 10|Set A|Set C", "Numbered sets should sort numerically before non-numbered labels.");
                         const setA = setCards.find((card) => card.querySelector("h2")?.textContent === "Set A");
                         assert(setA, "The sectional set should be present.");
-                        assert(setA.querySelectorAll(".incorrect-attempt-link").length === 2, "The two attempts must remain separate rows.");
-                        assert(setA.textContent.includes("2025") && setA.textContent.includes("2027"), "Each attempt should show its own date.");
+                        const setALinks = Array.from(setA.querySelectorAll(".incorrect-attempt-link"));
+                        assert(setALinks.length === 2, "The two attempts must remain separate rows.");
+                        assert(setALinks[0].textContent.includes("Attempt 1") && setALinks[0].textContent.includes("2025")
+                            && setALinks[1].textContent.includes("Attempt 2") && setALinks[1].textContent.includes("2027"),
+                            "Attempts within a set should sort oldest to newest.");
                         assert(setA.textContent.includes("2 incorrect questions") && setA.textContent.includes("1 incorrect question"), "Each attempt should show its own incorrect count.");
-                        const displayedSetNames = setCards.map((card) => card.querySelector("h2")?.textContent);
                         assert(!displayedSetNames.includes("Full Length"), "Full-length mock attempts must be excluded.");
                         assert(!displayedSetNames.includes("Economy"), "Ordinary subject tests must be excluded.");
                         assert(!displayedSetNames.includes("Set B"), "An unanswered-only set must be excluded.");
                         assert(!displayedSetNames.includes("Study Mode"), "Sectional study mode is not a completed mock test.");
                         assert(document.getElementById("incorrectAttempts").textContent.includes("data unavailable"), "Missing historical snapshots must be visibly marked unavailable.");
-                        const oldAttemptLink = Array.from(setA.querySelectorAll(".incorrect-attempt-link"))
-                            .find((link) => link.textContent.includes("Attempt 1"));
+                        const oldAttemptLink = setALinks[0];
                         assert(oldAttemptLink, "The old sectional attempt should have a review link.");
+                        assert(new URL(oldAttemptLink.href).searchParams.get("fingerprint") === window.IncorrectQuestionsCore.fingerprintAttempt(oldAttempt),
+                            "The reader URL should preserve the exact original attempt identity.");
                         const readerParams = new URL(oldAttemptLink.href).search;
                         window.location.href = `incorrect_questions_tests.html${readerParams}`;
                         return;

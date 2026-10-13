@@ -3719,13 +3719,11 @@ body {
 
 @media (min-width: 1024px) {
     .dashboard-shell #subjects.dashboard-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        grid-template-rows: minmax(230px, auto) 154px minmax(230px, auto);
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        grid-template-rows: repeat(2, minmax(230px, auto));
         grid-template-areas:
-            "ancient medieval modern geography"
-            ". important_collections important_collections ."
-            "polity economy current_affairs mock"
-            ". incorrect_questions incorrect_questions .";
+            "ancient medieval modern geography important_collections"
+            "polity economy current_affairs mock incorrect_questions";
         gap: 16px;
     }
 
@@ -3759,15 +3757,7 @@ body {
     .dashboard-shell #subjects > [data-dashboard-subject="economy"] { grid-area: economy; }
     .dashboard-shell #subjects > [data-dashboard-subject="current_affairs"] { grid-area: current_affairs; }
     .dashboard-shell #subjects > [data-dashboard-subject="mock"] { grid-area: mock; }
-    .dashboard-shell #subjects > [data-dashboard-subject="incorrect_questions"] {
-        grid-area: incorrect_questions;
-        justify-self: center;
-        width: min(100%, 420px);
-        min-height: 154px;
-        height: auto;
-        padding: 12px 20px;
-        border-color: rgba(176, 137, 53, 0.55);
-    }
+    .dashboard-shell #subjects > [data-dashboard-subject="incorrect_questions"] { grid-area: incorrect_questions; }
 }
 
 @media (min-width: 641px) and (max-width: 1023px) {
