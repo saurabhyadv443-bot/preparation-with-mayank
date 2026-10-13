@@ -432,21 +432,29 @@ function getQuizDuration() {
             const chaptersCombined = {};
             // fetch each subject file that appears in ids
             await Promise.all(Object.keys(ids).map(async (subjectKey) => {
-                const file = `${subjectKey}.json`;
+                const file = subjectKey === "medieval" ? "medeival.json" : `${subjectKey}.json`;
                 try {
                     const j = await loadJson(`data/${file}`);
                     const chapters = j.chapters || {};
                     Object.keys(ids[subjectKey] || {}).forEach((chapterName) => {
                         const indices = ids[subjectKey][chapterName] || [];
                         const sourceArray = Array.isArray(chapters[chapterName]) ? chapters[chapterName] : [];
-                        const selected = indices.map(i => sourceArray[i]).filter(Boolean);
                         if (!chaptersCombined['PYQ Practice']) chaptersCombined['PYQ Practice'] = [];
-                        // attach minimal metadata to questions so review shows source
-                        selected.forEach(q => {
+                        indices.forEach((questionIndex) => {
+                            const q = sourceArray[questionIndex];
+                            if (!q) return;
                             const copy = Object.assign({}, q);
                             copy._pyqSource = j.subject || subjectKey;
                             copy._pyqSubjectKey = subjectKey;
                             copy._pyqChapter = chapterName;
+                            copy._pyqQuestionIndex = questionIndex;
+                            copy._source = {
+                                sourceJsonFile: file,
+                                sourceSubjectKey: subjectKey,
+                                chapter: chapterName,
+                                questionIndex,
+                                questionId: q.id ?? q.qid ?? q.questionId ?? q._id ?? q.questionID ?? q.question_id ?? null
+                            };
                             chaptersCombined['PYQ Practice'].push(copy);
                         });
                     });
@@ -466,6 +474,7 @@ function getQuizDuration() {
         }
 
         quizData = data;
+        await window.quizCollections?.ready;
         selectedSubject = subject;
         console.log("Selected subject:", selectedSubject);
         document.getElementById('subjectTitle').innerText = data.subject;
@@ -553,10 +562,10 @@ function getQuizDuration() {
 
 function getChapterQuestions(chapter) {
     const chapterMap = quizData && quizData.chapters ? quizData.chapters : {};
+    let sourceQuestions = [];
     if (Object.keys(chapterMap).length > 0) {
-        return Array.isArray(chapterMap[chapter]) ? chapterMap[chapter] : [];
-    }
-    if (quizData && quizData.subject === 'Mock Test') {
+        sourceQuestions = Array.isArray(chapterMap[chapter]) ? chapterMap[chapter] : [];
+    } else if (quizData && quizData.subject === 'Mock Test') {
         const mockGroups = Object.keys(quizData).filter((key) => !['subject', 'quizType', 'totalTimeSeconds', 'secondsPerQuestion', 'duration', 'durationSeconds', 'chapters'].includes(key));
         const flattened = mockGroups.reduce((acc, key) => {
             const value = quizData[key];
@@ -569,9 +578,36 @@ function getChapterQuestions(chapter) {
             }
             return acc;
         }, {});
-        return Array.isArray(flattened[chapter]) ? flattened[chapter] : [];
+        sourceQuestions = Array.isArray(flattened[chapter]) ? flattened[chapter] : [];
     }
-    return [];
+    const defaultSourceFile = resolveSubjectDataFile(subject);
+    return sourceQuestions.map((question, questionIndex) => {
+        const source = question?._collectionSource || question?._source || {};
+        const sourceSubjectKey = source.sourceSubjectKey || question?._pyqSubjectKey || subject;
+        const sourceChapter = source.chapter || question?._pyqChapter || chapter;
+        const sourceIndex = source.questionIndex ?? question?._pyqQuestionIndex ?? questionIndex;
+        const sourceJsonFile = source.sourceJsonFile
+            || (question?._pyqSubjectKey ? (question._pyqSubjectKey === "medieval" ? "medeival.json" : `${question._pyqSubjectKey}.json`) : defaultSourceFile);
+        return {
+            ...question,
+            _source: {
+                ...source,
+                sourceJsonFile,
+                sourceSubjectKey,
+                chapter: sourceChapter,
+                questionIndex: sourceIndex,
+                questionId: source.questionId
+                    ?? question?._pyqQuestionId
+                    ?? question?.id
+                    ?? question?.qid
+                    ?? question?.questionId
+                    ?? question?._id
+                    ?? question?.questionID
+                    ?? question?.question_id
+                    ?? null
+            }
+        };
+    });
 }
 
 function loadChapters() {

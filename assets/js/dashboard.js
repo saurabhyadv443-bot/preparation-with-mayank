@@ -39,6 +39,11 @@ const dashboardSubjects = {
         icon: "📰",
         title: "Current Affairs",
         description: "Daily and monthly current affairs questions"
+    },
+    important_collections: {
+        icon: "★",
+        title: "Important Collections",
+        description: "Saved questions and important subject collections"
     }
 };
 
@@ -107,21 +112,23 @@ function displayDashboardSubjects(subjects, subjectMeta) {
         icon: "📰"
     };
 
-    const mergedSubjects = [...new Set([...subjects, "current_affairs"])];
+    const mergedSubjects = [...new Set([...subjects, "current_affairs", "important_collections"])];
 
     mergedSubjects.forEach((subjectKey) => {
         if (subjectKey === "mock") {
             return;
         }
 
-        const meta = subjectKey === "current_affairs" ? currentAffairsCard : (subjectMeta && subjectMeta[subjectKey]);
+        const meta = subjectKey === "current_affairs"
+            ? currentAffairsCard
+            : ((subjectMeta && subjectMeta[subjectKey]) || dashboardSubjects[subjectKey]);
         const title = meta ? meta.title : getSubjectTitle(subjectKey);
         const description = meta ? meta.description : getSubjectDescription(subjectKey);
         const icon = meta ? meta.icon : getSubjectIcon(subjectKey);
 
         const card = document.createElement("article");
         card.className = "dashboard-card";
-        const cardTarget = subjectKey === "current_affairs" ? `subject.html?subject=${encodeURIComponent(subjectKey)}` : `subject.html?subject=${encodeURIComponent(subjectKey)}`;
+        const cardTarget = `subject.html?subject=${encodeURIComponent(subjectKey)}`;
         const cardLabel = subjectKey === "current_affairs" ? "Open CA Home" : "Open Subject";
 
         card.innerHTML = `

@@ -148,8 +148,7 @@ body.entry-locked {
 #nextBtn:hover,
 #markReviewBtn:hover,
 .chapterBtn:hover,
-.palette-btn:hover,
-.material-submit-btn:hover {
+.palette-btn:hover {
     transform: translateY(-1px);
 }
 
@@ -2212,4 +2211,138 @@ html[data-theme="dark"] .shared-question-renderer .shared-option {
 html[data-theme="dark"] .shared-question-renderer .shared-option:hover {
     background: #30465d !important;
     color: #ffffff !important;
+}
+
+.question-collection-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin: 12px 0;
+}
+
+.question-collection-control-row {
+    display: flex;
+    min-height: 30px;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+}
+
+.question-collection-controls .classification-mini-btn {
+    box-sizing: border-box;
+    width: 30px;
+    min-width: 30px;
+    max-width: 30px;
+    height: 30px;
+    min-height: 30px;
+    border: 1px solid #cbd5e1;
+    border-radius: 999px;
+    padding: 0;
+    background: #f8fafc;
+    color: #334155;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.question-collection-controls .classification-mini-btn.active {
+    border-color: #cbd5e1;
+    color: #fff;
+}
+
+.question-collection-controls .classification-mini-btn.s.active { background: #d97706; }
+.question-collection-controls .classification-mini-btn.p.active { background: #0284c7; }
+.question-collection-controls .classification-mini-btn.g.active { background: #16a34a; }
+.question-collection-controls .classification-mini-btn.h.active { background: #ea580c; }
+.question-collection-controls .classification-mini-btn.e.active { background: #7c3aed; }
+.question-collection-controls .classification-mini-btn.ca.active { background: #e11d48; }
+
+.question-collection-controls .collection-storage-status {
+    display: block;
+    width: 260px;
+    max-width: min(60vw, 100%);
+    min-height: 1.1em;
+    color: #475569;
+    font-size: 0.75rem;
+}
+
+.question-collection-controls .collection-export-button[hidden] {
+    display: none;
+}
+
+.review-card-actions {
+    align-items: start;
+}
+
+.review-card-actions > .question-collection-controls {
+    align-self: start;
+}
+
+.review-card-actions .question-collection-controls .collection-storage-status {
+    width: 260px;
+    max-width: min(60vw, 100%);
+    overflow-wrap: anywhere;
+}
+
+.shared-option.collection-reader-option {
+    display: flex;
+    border: 1px solid var(--line);
+    font: inherit;
+}
+
+.question-collection-controls .collection-storage-status.is-temporary {
+    color: #b45309;
+}
+
+.classification-removal-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0 18px;
+}
+
+.classification-removal-controls[hidden] {
+    display: none;
+}
+
+.collection-reader-question {
+    position: relative;
+}
+
+.collection-reader-question > .classification-question-checkbox {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+}
+
+.collection-reader-question-content {
+    padding-right: 36px;
+}
+
+.classification-removal-controls .collection-storage-status {
+    flex-basis: 100%;
+    min-height: 1.2em;
+    text-align: right;
+}
+
+.question-collection-controls .collection-export-button {
+    border: 1px solid #d97706;
+    border-radius: 6px;
+    padding: 4px 8px;
+    background: #fff7e6;
+    color: #92400e;
+    cursor: pointer;
+}
+
+html[data-theme="dark"] .question-collection-controls .classification-mini-btn:not(.active) {
+    border-color: #64748b;
+    background: #252e39;
+    color: #f8fafc;
 }

@@ -597,6 +597,40 @@
         return parsedMatchList ? normalizeMatchingOptions(question, parsedMatchList) : options;
     }
 
+    function safeImageUrl(value) {
+        const url = String(value ?? "").trim();
+        if (!url || /^(?:javascript|vbscript):/i.test(url)) return "";
+        if (/^data:/i.test(url) && !/^data:image\//i.test(url)) return "";
+        try {
+            const parsed = new URL(url, window.location.href);
+            return ["http:", "https:", "data:"].includes(parsed.protocol) ? url : "";
+        } catch (error) {
+            return "";
+        }
+    }
+
+    function renderQuestionImages(question) {
+        const entries = [
+            question?.image,
+            question?.imageUrl,
+            question?.image_url,
+            question?.imagePath,
+            question?.image_path,
+            question?.diagram,
+            question?.figure,
+            ...(Array.isArray(question?.images) ? question.images : [])
+        ].filter(Boolean);
+        const seen = new Set();
+        return entries.map((entry) => {
+            const image = typeof entry === "string" ? { src: entry } : entry;
+            const src = safeImageUrl(image?.src || image?.url || image?.path || image?.href);
+            if (!src || seen.has(src)) return "";
+            seen.add(src);
+            const caption = image?.caption ? `<figcaption>${escapeHtml(image.caption)}</figcaption>` : "";
+            return `<figure class="question-media"><img src="${escapeHtml(src)}" alt="${escapeHtml(image?.alt || image?.caption || "Question image")}" loading="lazy">${caption}</figure>`;
+        }).join("");
+    }
+
     function renderQuestion(question, questionNumber, settings = {}) {
         const normalizedQuestion = { ...question, q: normalizeQuestionText(question?.q, questionNumber) };
         const parsedMatchList = settings.sectionalMatching
@@ -629,9 +663,14 @@
             const label = String.fromCharCode(65 + index);
             const selected = selectedIndex === index ? " selected-option" : "";
             const input = settings.interactive ? `<input type="radio" name="answer" value="${index}"${selectedIndex === index ? " checked" : ""} />` : "";
-            return `<${settings.interactive ? "label" : "div"} class="option-wrap shared-option${selected}">${input}<span class="option-label">${label}.</span><span class="option-text">${escapeHtml(cleanText(option))}</span></${settings.interactive ? "label" : "div"}>`;
+            const tagName = settings.collectionReader ? "button" : (settings.interactive ? "label" : "div");
+            const buttonAttributes = settings.collectionReader
+                ? ` type="button" class="option-wrap shared-option collection-reader-option" data-reader-option="${index}" aria-pressed="false"`
+                : ` class="option-wrap shared-option${selected}"`;
+            return `<${tagName}${buttonAttributes}>${input}<span class="option-label">${label}.</span><span class="option-text">${escapeHtml(cleanText(option))}</span></${tagName}>`;
         }).join("");
-        return `<div class="shared-question-renderer"><div class="question-header"><h3>Question ${questionNumber}</h3></div>${parsedMatchList ? `${questionContent}${table}` : questionContent}<div class="shared-options">${options}</div></div>`;
+        const media = settings.collectionReader ? renderQuestionImages(question) : "";
+        return `<div class="shared-question-renderer"><div class="question-header"><h3>Question ${questionNumber}</h3></div>${parsedMatchList ? `${questionContent}${table}` : questionContent}${media}<div class="shared-options">${options}</div></div>`;
     }
 
     window.QuestionRenderer = { cleanText, normalizeQuestionText, formatEmbeddedOptions, isMatchListQuestion, parseMatchListQuestion, getQuestionOptions, renderQuestion };

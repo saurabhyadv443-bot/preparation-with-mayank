@@ -145,9 +145,30 @@ function renderQuestion() {
             </div>
             <aside id="explanationBox" class="collection-quiz-explanation" style="display:none;"></aside>
         </div>
+        ${window.quizCollections?.renderControls(question, {
+            sourceSubjectKey: question?._source?.sourceSubjectKey || question?._pyqSubjectKey || collectionQuizPayload.subjectKey,
+            subject: collectionQuizPayload.subject,
+            chapter: question?._source?.chapter || question?._pyqChapter || collectionQuizPayload.chapter,
+            questionIndex: question?._source?.questionIndex ?? question?._pyqQuestionIndex ?? currentQuestionIndex,
+            sourceJsonFile: question?._source?.sourceJsonFile
+        }) || ""}
     `;
 
     questionBox.innerHTML = html;
+    questionBox.dataset.collectionQuestionIndex = String(currentQuestionIndex);
+    window.quizCollections?.attachControls(questionBox, () => {
+        const activeQuestion = collectionQuizPayload.questions[Number(questionBox.dataset.collectionQuestionIndex)];
+        const activeIndex = Number(questionBox.dataset.collectionQuestionIndex);
+        return {
+        question: activeQuestion,
+        context: {
+            sourceSubjectKey: activeQuestion?._source?.sourceSubjectKey || activeQuestion?._pyqSubjectKey || collectionQuizPayload.subjectKey,
+            subject: collectionQuizPayload.subject,
+            chapter: activeQuestion?._source?.chapter || activeQuestion?._pyqChapter || collectionQuizPayload.chapter,
+            questionIndex: activeQuestion?._source?.questionIndex ?? activeQuestion?._pyqQuestionIndex ?? activeIndex,
+            sourceJsonFile: activeQuestion?._source?.sourceJsonFile
+        }
+    }; });
 
     // Start fresh timer for this question
     startTimer();
@@ -311,7 +332,8 @@ logoutBtn.addEventListener("click", () => {
 });
 
 // Initialize on page load
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
+    await window.quizCollections?.ready;
     renderQuestion();
 });
 

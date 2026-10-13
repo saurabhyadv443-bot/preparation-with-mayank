@@ -12,6 +12,16 @@ let mockCollectionData = null;
 let subjectPageRendered = false;
 let subjectPendingStorageRefresh = false;
 
+window.addEventListener("quizCollectionsChanged", () => {
+    if (subject !== "important_collections") return;
+    chapterList?.querySelectorAll("[data-collection-count]").forEach((countNode) => {
+        const tag = countNode.dataset.collectionCount;
+        const count = window.quizCollections?.getCount(tag) || 0;
+        countNode.textContent = `${count} question${count === 1 ? "" : "s"}`;
+        countNode.closest("button")?.setAttribute("aria-label", `${window.quizCollections?.tags[tag] || tag}, ${count} question${count === 1 ? "" : "s"}`);
+    });
+});
+
 window.addEventListener("quizPendingStorageReady", () => {
     if (!subjectPageRendered) {
         subjectPendingStorageRefresh = true;
@@ -392,22 +402,26 @@ function renderClassificationRemovalControls(tag, refresh) {
         <label><input type="checkbox" class="classification-select-all"> Select All</label>
         <button type="button" class="btn btn-secondary btn-small classification-remove-selected" disabled>Remove Selected</button>
         <span class="classification-selected-count">0 selected</span>
+        <span class="collection-storage-status" role="status" aria-live="polite">${window.quizCollections?.status().durable ? "" : "Changes are temporary. Export a backup before leaving."}</span>
+        <button type="button" class="collection-export-button" ${window.quizCollections?.status().durable ? "hidden" : ""}>Export backup</button>
     `;
+    window.quizCollections?.attachBackupTools(controls);
     attachRemovalControls(controls, tag, refresh, window.__classificationQuestions || [], subject, "Important Questions");
 }
 
-function buildImportantQuestionsForSubject(subjectKey) {
-    const validTags = {
+async function buildImportantQuestionsForSubject(subjectKey) {
+    const tagBySubject = {
+        ancient: "H",
+        medieval: "H",
+        medeival: "H",
         modern: "H",
         geography: "G",
         polity: "P",
         economy: "E"
     };
-    const targetTag = validTags[String(subjectKey)] || null;
-    if (!targetTag) {
-        return [];
-    }
-    return getOriginalClassifiedQuestions(subjectData, subjectKey, targetTag);
+    const tag = tagBySubject[String(subjectKey).toLowerCase()];
+    if (!tag || !window.quizCollections) return [];
+    return (await window.quizCollections.getCollection(tag)).map((record) => record.question);
 }
 
 async function loadMockCollectionData() {
@@ -421,6 +435,98 @@ async function loadMockCollectionData() {
 
 function buildCurrentAffairsQuestions() {
     return originalCurrentAffairsQuestions;
+}
+
+async function renderImportantCollectionChapters() {
+    if (!chapterList || !window.quizCollections) return;
+    await window.quizCollections.ready;
+
+    const tags = ["S", "H", "G", "P", "E", "CA"];
+    const collectionTools = document.getElementById("collectionTools");
+    const backupStatus = collectionTools?.querySelector("[data-collection-backup-status]");
+    if (collectionTools) {
+        collectionTools.hidden = false;
+        window.quizCollections.attachBackupTools(collectionTools);
+        await window.quizCollections.ready;
+        const storage = window.quizCollections.status();
+        const reportNode = document.getElementById("collectionMigrationReport");
+        const retryButton = document.getElementById("retryCollectionMigrationBtn");
+        if (backupStatus) {
+            backupStatus.textContent = storage.durable
+                ? "Collection changes are stored in this browser. Export a backup to transfer or safeguard them."
+                : `Collection changes are temporary only: ${storage.message} Export a backup before leaving.`;
+            backupStatus.classList.toggle("is-temporary", !storage.durable);
+        }
+        const report = window.quizCollections.getMigrationReport();
+        if (reportNode) {
+            if (report) {
+                const byType = Object.entries(report.membershipTypes || {})
+                    .map(([tag, count]) => `${tag}: ${count}`)
+                    .join(", ");
+                const bySource = Object.entries(report.sources || {})
+                    .map(([name, counts]) => `${name}: ${counts.records} records / ${counts.memberships} memberships${counts.operations ? ` / ${counts.operations} pending operations` : ""}`)
+                    .join("; ");
+                reportNode.textContent = `Migration v${report.version}: ${report.discovered.records} source records / ${report.discovered.memberships} membership occurrences (${byType}); ${report.alreadyRepresented.memberships} already represented; ${report.migrated.memberships} newly migrated; ${report.duplicates?.merged || 0} duplicate occurrences merged; ${report.pendingOperations?.operations || 0} pending operations (${report.pendingOperations?.removals || 0} removals); ${report.explicitRemovals} explicit removals respected; ${report.pendingRemovalsSuperseded || 0} older removals superseded by newer current records; ${window.quizCollections.getUnresolvedCount()} unresolved or malformed records retained; ${report.writeFailures} write failures.`;
+                const unresolvedBySource = Object.entries(report.unresolvedBySource || {})
+                    .map(([name, count]) => `${name}: ${count}`)
+                    .join("; ");
+                reportNode.title = [bySource, unresolvedBySource ? `Unresolved by source: ${unresolvedBySource}` : ""].filter(Boolean).join("\n");
+            } else {
+                reportNode.textContent = storage.migrationError
+                    ? `Migration has not completed: ${storage.migrationError} Legacy records are retained.`
+                    : "Legacy collection migration is ready.";
+                reportNode.title = "";
+            }
+            reportNode.classList.toggle("is-temporary", Boolean(storage.migrationError));
+        }
+        if (retryButton) {
+            retryButton.hidden = !storage.migrationError;
+            retryButton.onclick = async () => {
+                retryButton.disabled = true;
+                try {
+                    await window.quizCollections.retryMigration();
+                    await renderImportantCollectionChapters();
+                } catch (error) {
+                    console.error("Unable to retry collection migration.", error);
+                    if (reportNode) reportNode.textContent = `Migration retry failed: ${error.message} Legacy records remain available for backup and retry.`;
+                } finally {
+                    retryButton.disabled = false;
+                }
+            };
+        }
+        const backupButton = document.getElementById("downloadMigrationBackupBtn");
+        if (backupButton && backupButton.dataset.migrationBackupBound !== "true") {
+            backupButton.dataset.migrationBackupBound = "true";
+            backupButton.addEventListener("click", async () => {
+                try {
+                    await window.quizCollections.downloadMigrationBackup();
+                } catch (error) {
+                    console.error("Unable to download migration backup.", error);
+                    if (reportNode) reportNode.textContent = `Backup download failed: ${error.message}`;
+                }
+            });
+        }
+    }
+
+    chapterList.innerHTML = "";
+    chapterList.classList.add("subject-card-grid");
+    const returnUrl = `subject.html?${new URLSearchParams({ subject: "important_collections" }).toString()}`;
+    tags.forEach((tag) => {
+        const title = window.quizCollections.tags[tag];
+        const count = window.quizCollections.getCount(tag);
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = "chapterBtn subject-chapter-btn";
+        card.setAttribute("aria-label", `${title}, ${count} question${count === 1 ? "" : "s"}`);
+        card.innerHTML = `
+            <div class="subject-card-content">
+                <span class="subject-card-title">${title}</span>
+            </div>
+            <small data-collection-count="${tag}">${count} question${count === 1 ? "" : "s"}</small>
+        `;
+        card.addEventListener("click", () => window.quizCollections.openCollection(tag, title, returnUrl));
+        chapterList.appendChild(card);
+    });
 }
 
 function openCollectionListSession(title, questions, subjectKey = subject, returnChapter = title, classificationTag = null) {
@@ -438,19 +544,17 @@ function openCollectionListSession(title, questions, subjectKey = subject, retur
     window.location.href = "collection-list.html";
 }
 
-function openImportantQuestionsQuiz(title, questions, subjectKey, questionIndex) {
-    const returnUrl = `subject.html?${new URLSearchParams({ subject: subjectKey, chapter: "Important Questions" }).toString()}`;
-    const payload = {
-        title,
-        subject: title,
-        subjectKey,
-        chapter: "Important Questions",
-        questions,
-        startingQuestionIndex: questionIndex,
-        returnUrl
-    };
-    sessionStorage.setItem("collectionQuizPayload", JSON.stringify(payload));
-    window.location.href = "collection-quiz.html";
+function openImportantQuestionsQuiz(title, questions, subjectKey) {
+    const classificationTag = ({
+        ancient: "H",
+        medieval: "H",
+        medeival: "H",
+        modern: "H",
+        geography: "G",
+        polity: "P",
+        economy: "E"
+    })[String(subjectKey).toLowerCase()];
+    openCollectionListSession(title, questions, subjectKey, "Important Questions", classificationTag);
 }
 
 function renderSubjectCardButton(targetName, targetType, mockSource = "") {
@@ -473,11 +577,6 @@ function renderSubjectCardButton(targetName, targetType, mockSource = "") {
         <small>${actionText}</small>
     `;
     button.onclick = function () {
-        if (targetName === "Important Questions") {
-            const query = new URLSearchParams({ subject, chapter: targetName });
-            window.location.href = `subject.html?${query.toString()}`;
-            return;
-        }
         const query = new URLSearchParams({ subject, chapter: targetName });
         if (targetType === "mock" && mockSource === "sectional") {
             query.set("source", "sectional");
@@ -506,6 +605,9 @@ function renderClassifiedCollection(title, questions, subjectKey) {
     chapterList.classList.add("subject-card-grid");
 
     const tagBySubject = { modern: "H", geography: "G", polity: "P", economy: "E", current_affairs: "CA" };
+    tagBySubject.ancient = "H";
+    tagBySubject.medieval = "H";
+    tagBySubject.medeival = "H";
     const classificationTag = tagBySubject[subjectKey];
 
     if (!questions.length) {
@@ -526,7 +628,15 @@ function renderClassifiedCollection(title, questions, subjectKey) {
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.className = "classification-question-checkbox";
-        checkbox.dataset.classificationKey = classificationTag ? getClassificationKeyForRemoval(question, classificationTag) : "";
+        checkbox.dataset.classificationKey = classificationTag
+            ? getClassificationKeyForRemoval(question, classificationTag, {
+                sourceSubjectKey: subjectKey,
+                subject: title,
+                chapter: question?._source?.chapter || question?._pyqChapter || title,
+                questionIndex: question?._source?.questionIndex ?? question?._pyqQuestionIndex ?? index,
+                sourceJsonFile: question?._source?.sourceJsonFile
+            })
+            : "";
         checkbox.setAttribute("aria-label", `Select question ${index + 1}`);
         const card = document.createElement("button");
         card.type = "button";
@@ -539,7 +649,7 @@ function renderClassifiedCollection(title, questions, subjectKey) {
             <small>${String(question.q || question.question || question.questionText || question.prompt || "Question").slice(0, 58)}</small>
         `;
         card.onclick = function () {
-            if (["modern", "geography", "polity", "economy"].includes(subjectKey)) {
+            if (["ancient", "medieval", "medeival", "modern", "geography", "polity", "economy"].includes(subjectKey)) {
                 openImportantQuestionsQuiz(title, questions, subjectKey, index);
                 return;
             }
@@ -555,7 +665,18 @@ function renderClassifiedCollection(title, questions, subjectKey) {
 }
 
 async function loadSubjectContent() {
+    await window.quizCollections?.ready;
     const selectedChapter = new URLSearchParams(window.location.search).get("chapter");
+
+    if (subject === "important_collections") {
+        await renderImportantCollectionChapters();
+        return;
+    }
+
+    if (selectedChapter === "Important Questions") {
+        window.location.replace("subject.html?subject=important_collections");
+        return;
+    }
 
     if (!selectedChapter && new URLSearchParams(window.location.search).get("review") === "1") {
         await renderAttemptedReviewSections();
@@ -563,34 +684,14 @@ async function loadSubjectContent() {
     }
 
     if (subject === "current_affairs") {
-        await loadOriginalCurrentAffairsQuestions();
-        const questions = buildCurrentAffairsQuestions();
-        if (selectedChapter === "Current Affairs" || selectedChapter === "Important Questions") {
-            renderClassifiedCollection("Current Affairs", questions, "current_affairs");
-            return;
-        }
-
         if (!chapterList) return;
         chapterList.innerHTML = "";
         chapterList.classList.add("subject-card-grid");
-        if (!questions.length) {
-            chapterList.innerHTML = '<p class="empty-state">No Current Affairs questions saved yet.</p>';
-            return;
-        }
-
-        const card = document.createElement("button");
-        card.type = "button";
-        card.className = "chapterBtn subject-chapter-btn";
-        card.innerHTML = `
-            <div class="subject-card-content">
-                <span class="subject-card-title">Current Affairs</span>
-            </div>
-            <small>${questions.length} saved</small>
+        chapterList.innerHTML = `
+            <p class="empty-state">Important Current Affairs Questions are available in
+                <a href="subject.html?subject=important_collections">Important Collections</a>.
+            </p>
         `;
-        card.onclick = function () {
-            openCollectionListSession("Current Affairs", questions, "current_affairs", "Current Affairs", "CA");
-        };
-        chapterList.appendChild(card);
         return;
     }
 
@@ -600,12 +701,6 @@ async function loadSubjectContent() {
     try {
         const data = await loadJson(`data/${fileName}`);
         subjectData = data;
-        if (selectedChapter === "Important Questions") {
-            await loadMockCollectionData();
-            renderClassifiedCollection("Important Questions", buildImportantQuestionsForSubject(subject), subject);
-            return;
-        }
-
         if (subject === "mock") {
             const setNames = collectMockSetNames(data);
             let sectionalSetNames = [];
@@ -620,16 +715,11 @@ async function loadSubjectContent() {
         }
 
         const chapters = data && data.chapters ? Object.keys(data.chapters) : [];
-        if (["modern", "geography", "polity", "economy"].includes(subject)) {
-            chapters.push("Important Questions");
-        }
-        renderChapters(chapters);
+        await renderChapters(chapters);
     } catch (error) {
         if (chapterList) {
             if (subject === "mock") {
                 chapterList.innerHTML = '<p class="empty-state">Mock Test sets are currently unavailable.</p>';
-            } else if (["modern", "geography", "polity", "economy"].includes(subject)) {
-                renderChapters(["Important Questions"]);
             } else {
                 chapterList.innerHTML = '<p class="empty-state">No chapters are available for this subject.</p>';
             }
@@ -637,7 +727,7 @@ async function loadSubjectContent() {
     }
 }
 
-function renderChapters(chapters) {
+async function renderChapters(chapters) {
     if (!chapterList) {
         return;
     }
@@ -650,19 +740,10 @@ function renderChapters(chapters) {
     }
 
     const uniqueChapters = [...new Set(chapters.filter(Boolean))];
-    uniqueChapters.forEach((chapterName) => {
+    for (const chapterName of uniqueChapters) {
         const button = renderSubjectCardButton(chapterName, "chapter");
-        if (chapterName === "Important Questions") {
-            const questionCount = buildImportantQuestionsForSubject(subject).length;
-            button.innerHTML = `
-                <div class="subject-card-content">
-                    <span class="subject-card-title">Important Questions</span>
-                </div>
-                <small>${questionCount ? `${questionCount} saved` : "No Important Questions saved yet"}</small>
-            `;
-        }
         chapterList.appendChild(button);
-    });
+    }
 }
 
 function renderMockSets(setNames, sectionalSetNames = []) {
@@ -742,13 +823,18 @@ function renderMockSets(setNames, sectionalSetNames = []) {
     const title = (meta && meta[subject] && meta[subject].title) || (subject === "current_affairs" ? "Current Affairs" : subject);
     const subjectTitle = document.getElementById("subjectTitle");
     if (subjectTitle) {
-        subjectTitle.innerText = title;
+        subjectTitle.innerText = subject === "important_collections" ? "Important Collections" : title;
     }
 
     const heading = document.getElementById("sectionHeading");
     if (heading) {
-        heading.textContent = subject === "mock" ? "Mock Test Sets" : (subject === "current_affairs" ? "Current Affairs" : "Chapter Wise Practice");
+        heading.textContent = subject === "important_collections"
+            ? "Important Collections"
+            : (subject === "mock" ? "Mock Test Sets" : (subject === "current_affairs" ? "Current Affairs" : "Chapter Wise Practice"));
     }
+
+    const collectionTools = document.getElementById("collectionTools");
+    if (collectionTools) collectionTools.hidden = subject !== "important_collections";
 
     if (subjectReviewBtn && reviewSubjects.has(subject)) {
         subjectReviewBtn.hidden = false;
@@ -763,7 +849,7 @@ function renderMockSets(setNames, sectionalSetNames = []) {
     if (subject === "mock" && isReviewView && window.quizAttemptHistoryStore) {
         await window.quizAttemptHistoryStore.getHistory();
     }
-    if (selectedChapter === "Important Questions" || subject === "current_affairs") await storagePromise;
+    if (subject === "current_affairs" || subject === "important_collections") await storagePromise;
     await loadSubjectContent();
     subjectPageRendered = true;
     if (subjectPendingStorageRefresh) await loadSubjectContent();

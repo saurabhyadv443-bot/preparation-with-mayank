@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Isolated Legacy Backup Import Test</title>
+    <style>
+        body { font: 16px/1.5 system-ui, sans-serif; margin: 2rem auto; max-width: 900px; padding: 0 1rem; }
+        button, input { font: inherit; }
+        #summary { font-weight: 700; }
+        pre { overflow: auto; padding: 1rem; background: #f3f4f6; }
+    </style>
+</head>
+<body>
+    <h1>Isolated Real Backup Import Test</h1>
+    <p>This page reads the selected backup file and imports into a new, uniquely named IndexedDB test database on this origin. It does not write to the deployed website's browser storage.</p>
+    <label for="backupFile">Select the supplied bpsc-real-legacy-backup.json file:</label>
+    <input id="backupFile" type="file" accept="application/json,.json">
+    <button id="runTest" type="button" disabled>Run Isolated Import Test</button>
+    <p id="summary" role="status">Select the actual backup file to begin.</p>
+    <pre id="report" aria-live="polite"></pre>
+    <script>
+        const fileInput = document.getElementById("backupFile");
+        const runButton = document.getElementById("runTest");
+        const summary = document.getElementById("summary");
+        const reportNode = document.getElementById("report");
+        let payload = null;
+
+        fileInput.addEventListener("change", async () => {
+            try {
+                payload = JSON.parse(await fileInput.files[0].text());
+                if (payload.format !== "bpsc-real-legacy-backup" || payload.version !== 1) {
+                    throw new Error("Selected file must use bpsc-real-legacy-backup version 1.");
+                }
+                summary.textContent = `Loaded backup from ${payload.origin || "unknown origin"} created ${payload.createdAt || "without timestamp"}. Ready for isolated import.`;
+                runButton.disabled = false;
+            } catch (error) {
+                payload = null;
+                runButton.disabled = true;
+                summary.textContent = `Backup could not be loaded: ${error.message}`;
+            }
+        });
+
+        function loadScript(path) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement("script");
+                script.src = path;
+                let scriptRuntimeError = null;
+                const expectedUrl = new URL(path, document.baseURI);
+                const onRuntimeError = (event) => {
+                    if (!event.filename) return;
+                    try {
+                        if (new URL(event.filename, document.baseURI).pathname === expectedUrl.pathname) {
+                            scriptRuntimeError = new Error(event.message || `An initialization error occurred in ${path}.`);
+                        }
+                    } catch (error) {
+                        scriptRuntimeError = new Error(`An initialization error occurred in ${path}: ${event.message || error.message}`);
+                    }
+                };
+                const cleanup = () => window.removeEventListener("error", onRuntimeError);
+                window.addEventListener("error", onRuntimeError);
+                script.onload = () => {
+                    cleanup();
+                    if (scriptRuntimeError) {
+                        reject(new Error(`The script loaded, but failed during initialization: ${scriptRuntimeError.message}`));
+                        return;
+                    }
+                    resolve();
+                };
+                script.onerror = () => {
+                    cleanup();
+                    reject(new Error(`Unable to load ${expectedUrl.href}. Check that the test page is served from the repository root and the script URL is reachable.`));
+                };
+                document.head.appendChild(script);
+            });
+        }
+
+        async function loadCollectionStore(path) {
+            await loadScript(path);
+            const store = window.quizCollections;
+            if (!store || !store.ready || typeof store.ready.then !== "function"
+                || typeof store.status !== "function"
+                || typeof store.importLegacyBackup !== "function") {
+                throw new Error(`The collection-store script loaded from ${new URL(path, document.baseURI).href}, but window.quizCollections was not initialized. Check the first script error in the browser console.`);
+            }
+            try {
+                await store.ready;
+            } catch (error) {
+                throw new Error(`Collection-store initialization failed: ${error.message}`);
+            }
+            const status = store.status();
+            if (!status.durable || status.migrationError) {
+                throw new Error(`Collection-store initialization did not complete successfully: ${status.message || status.migrationError || "durable storage is unavailable"}`);
+            }
+            return store;
+        }
+
+        function countInput() {
+            const bookmarks = JSON.parse(payload.localStorage.bookmarks || "[]");
+            const classifications = JSON.parse(payload.localStorage.questionClassifications || "{}");
+            const pendingDb = payload.indexedDB.find((item) => item.name === "bpscQuizPendingChanges");
+            const state = pendingDb?.stores?.state?.records?.find((record) => record.key === "pending")?.value;
+            return {
+                bookmarks: Array.isArray(bookmarks) ? bookmarks.length : 0,
+                classifications: classifications && typeof classifications === "object" ? Object.keys(classifications).length : 0,
+                pendingChanges: state?.changes?.length || 0,
+                pendingBatches: state?.batches?.length || 0,
+                batchStatuses: (state?.batches || []).reduce((counts, batch) => {
+                    counts[batch.status] = (counts[batch.status] || 0) + 1;
+                    return counts;
+                }, {})
+            };
+        }
+
+        async function inspectImportMarker(key) {
+            const database = await new Promise((resolve, reject) => {
+                const request = indexedDB.open(window.QUIZ_COLLECTIONS_DATABASE_NAME);
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error || new Error("Unable to inspect isolated test database."));
+            });
+            try {
+                return await new Promise((resolve, reject) => {
+                    const request = database.transaction("metadata", "readonly").objectStore("metadata").get(key);
+                    request.onsuccess = () => resolve(request.result);
+                    request.onerror = () => reject(request.error || new Error("Unable to inspect import completion marker."));
+                });
+            } finally {
+                database.close();
+            }
+        }
+
+        runButton.addEventListener("click", async () => {
+            runButton.disabled = true;
+            try {
+                const originalLocalStorage = JSON.stringify(Object.fromEntries(
+                    Array.from({ length: localStorage.length }, (_, index) => {
+                        const key = localStorage.key(index);
+                        return [key, localStorage.getItem(key)];
+                    })
+                ));
+                const testId = crypto.randomUUID().replace(/-/g, "");
+                window.QUIZ_COLLECTIONS_DATABASE_NAME = `bpscLegacyImportTest_${testId}`;
+                window.QUIZ_COLLECTIONS_HISTORY_DATABASE_NAME = "bpsc_quiz_storage";
+                window.QUIZ_COLLECTIONS_PENDING_DATABASE_NAME = "bpscQuizPendingChanges";
+                window.QUIZ_COLLECTIONS_LEGACY_DATA_FILES = [];
+                window.QUIZ_COLLECTIONS_IMPORT_DATA_FILES = [
+                    "ancient.json",
+                    "medeival.json",
+                    "modern.json",
+                    "geography.json",
+                    "polity.json",
+                    "economy.json",
+                    "mock.json",
+                    "sectional.json",
+                    "current_affairs.json"
+                ];
+                window.QUIZ_COLLECTIONS_BACKUP_BASE_PATH = "../";
+                window.quizCollectionMigrationBackupReady = Promise.resolve({
+                    format: "isolated-test-backup",
+                    version: 1,
+                    createdAt: new Date().toISOString(),
+                    localStorage: {},
+                    indexedDB: [],
+                    legacyFiles: {}
+                });
+                window.loadJson = (url) => {
+                    const path = String(url).replace(/^\/+/, "").replace(/^data\//, "../data/");
+                    return fetch(path).then((response) => {
+                        if (!response.ok) throw new Error(`Unable to load source dataset ${path} (HTTP ${response.status}).`);
+                        return response.json();
+                    });
+                };
+
+                const collectionStore = await loadCollectionStore("../assets/js/collectionStore.js?isolated-real-backup-test");
+                const before = countInput();
+                if (before.bookmarks !== 87 || before.classifications !== 432
+                    || before.pendingChanges !== 1129 || before.pendingBatches !== 5
+                    || Object.keys(before.batchStatuses).some((status) => status !== "downloaded")) {
+                    throw new Error(`Input count/status check failed: ${JSON.stringify(before)}`);
+                }
+
+                const seedBookmark = JSON.parse(payload.localStorage.bookmarks)[0];
+                const seedContext = {
+                    subjectKey: seedBookmark.subjectKey,
+                    subject: seedBookmark.subject,
+                    sourceSubjectKey: seedBookmark.subjectKey,
+                    sourceJsonFile: "mock.json",
+                    chapter: seedBookmark.chapter,
+                    questionIndex: seedBookmark.questionIndex
+                };
+                const seeded = await collectionStore.toggle(seedBookmark.question, seedContext, "E");
+                if (!seeded.durable || !seeded.tags.includes("E")) throw new Error("Unable to seed an existing Economy membership in the isolated database.");
+                const seededEconomyRecord = collectionStore.getAllRecords().find((record) => record.id === seeded.id);
+                const previousEconomyCount = collectionStore.getAllRecords().filter((record) => record.tags.includes("E")).length;
+
+                const outcome = await collectionStore.importLegacyBackup(payload);
+                if (!outcome.durable || outcome.alreadyImported) throw new Error("First import was not durably reconciled in the isolated database.");
+                const second = await collectionStore.importLegacyBackup(payload);
+                if (!second.durable || !second.alreadyImported) throw new Error("Repeated import was not safely recognized.");
+                const preservedEconomyRecord = collectionStore.getAllRecords().find((record) => record.id === seeded.id);
+                const currentEconomyCount = collectionStore.getAllRecords().filter((record) => record.tags.includes("E")).length;
+                if (!preservedEconomyRecord?.tags.includes("E") || !preservedEconomyRecord.tags.includes("S")
+                    || previousEconomyCount !== currentEconomyCount
+                    || JSON.stringify(preservedEconomyRecord.source) !== JSON.stringify(seededEconomyRecord.source)
+                    || JSON.stringify(preservedEconomyRecord.question) !== JSON.stringify(seededEconomyRecord.question)
+                    || preservedEconomyRecord.updatedAt !== seededEconomyRecord.updatedAt) {
+                    throw new Error("The existing Economy membership changed, was removed, or failed to merge with the incoming S membership.");
+                }
+                const completion = await inspectImportMarker(`legacy-backup-import-${(() => {
+                    const identity = JSON.stringify({
+                        origin: payload.origin || "",
+                        createdAt: payload.createdAt || "",
+                        format: payload.format,
+                        version: payload.version,
+                        tags: ["S", "H", "G", "P", "CA"].sort()
+                    });
+                    let hash = 2166136261;
+                    for (let index = 0; index < identity.length; index += 1) {
+                        hash ^= identity.charCodeAt(index);
+                        hash = Math.imul(hash, 16777619);
+                    }
+                    return (hash >>> 0).toString(16);
+                })()}`);
+                if (!completion?.complete) throw new Error("No verified import-completion marker was written.");
+                if (JSON.stringify(completion.report.excludedTags) !== JSON.stringify(["E"])) {
+                    throw new Error("The import marker does not identify the excluded Economy tag.");
+                }
+                const afterLocalStorage = JSON.stringify(Object.fromEntries(
+                    Array.from({ length: localStorage.length }, (_, index) => {
+                        const key = localStorage.key(index);
+                        return [key, localStorage.getItem(key)];
+                    })
+                ));
+                if (originalLocalStorage !== afterLocalStorage) throw new Error("The isolated test changed localStorage.");
+
+                const result = {
+                    origin: payload.origin,
+                    createdAt: payload.createdAt,
+                    input: before,
+                    migrated: outcome.report.migrated,
+                    alreadyRepresented: outcome.report.alreadyRepresented,
+                    duplicates: outcome.report.duplicates,
+                    explicitRemovals: outcome.report.explicitRemovals,
+                    pendingRemovalsSuperseded: outcome.report.pendingRemovalsSuperseded,
+                    pending: outcome.report.pendingOperations,
+                    finalUniqueQuestionCounts: outcome.report.collectionMembershipCounts,
+                    unresolved: outcome.report.unresolved,
+                    unresolvedBySource: outcome.report.unresolvedBySource,
+                    writeFailures: outcome.report.writeFailures,
+                    repeatedImportSkipped: second.alreadyImported,
+                    economyExcluded: outcome.report.excludedTags.includes("E"),
+                    preexistingEconomyMembershipPreserved: true,
+                    originalBrowserStorageChanged: false,
+                    testDatabase: window.QUIZ_COLLECTIONS_DATABASE_NAME
+                };
+                reportNode.textContent = JSON.stringify(result, null, 2);
+                summary.textContent = `PASS: isolated real-backup import reconciled; ${result.unresolved} unresolved items were retained; repeat import was skipped.`;
+            } catch (error) {
+                console.error(error);
+                summary.textContent = `FAIL: ${error.message}`;
+                reportNode.textContent = error.stack || String(error);
+            } finally {
+                runButton.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

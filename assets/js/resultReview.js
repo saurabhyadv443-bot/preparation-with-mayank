@@ -94,6 +94,39 @@ const historyCount = document.getElementById("historyCount");
 const reattemptTestBtn = document.getElementById("reattemptTestBtn");
 const returnUrl = urlParams.get("returnUrl");
 
+function getReviewCollectionContext(question, index) {
+    const source = question?._collectionSource || question?._source || question?.source || {};
+    const sourceSubjectKey = source.sourceSubjectKey || question?._pyqSubjectKey || result?.subjectKey || result?.subject || "";
+    const sourceChapter = source.chapter || question?._pyqChapter || result?.chapter || "";
+    const sourceIndex = source.questionIndex ?? question?._pyqQuestionIndex ?? index;
+    const quizParams = new URLSearchParams(String(result?.quizUrl || "").split("?")[1] || "");
+    const sourceMode = String(source.source || result?.source || reviewSource || quizParams.get("source") || "").trim().toLowerCase();
+    const sourceJsonFile = source.sourceJsonFile
+        || (String(sourceSubjectKey).toLowerCase() === "mock" && sourceMode === "sectional"
+            ? "sectional.json"
+            : ({
+                ancient: "ancient.json",
+                medieval: "medeival.json",
+                medeival: "medeival.json",
+                modern: "modern.json",
+                geography: "geography.json",
+                polity: "polity.json",
+                economy: "economy.json",
+                current_affairs: "current_affairs.json",
+                mock: "mock.json"
+            }[String(sourceSubjectKey).toLowerCase()] || ""));
+    return {
+        ...source,
+        sourceSubjectKey,
+        chapter: sourceChapter,
+        questionIndex: sourceIndex,
+        sourceJsonFile,
+        source: sourceMode,
+        subject: result?.subject || sourceSubjectKey,
+        subjectKey: result?.subjectKey || sourceSubjectKey
+    };
+}
+
 if (returnUrl) {
     const backButton = document.querySelector(".back-button");
     if (backButton) backButton.href = returnUrl;
@@ -114,6 +147,12 @@ let savedQuestionsLoaded = false;
 let classificationStoreCache = null;
 let sectionalReviewClassifications = {};
 window.reviewResultQuestions = result && Array.isArray(result.questions) ? result.questions : [];
+window.quizCollections?.attachControls(questionReviewList, (button) => {
+    const card = button.closest("[data-question-index]");
+    const index = Number(card?.dataset.questionIndex);
+    const question = result?.questions?.[index];
+    return question ? { question, context: getReviewCollectionContext(question, index) } : null;
+});
 
 function isSectionalMockReview() {
     return Boolean(result && (
@@ -1076,18 +1115,9 @@ function getQuestionClassificationKey(index) {
 }
 
 function getQuestionClassifications(index) {
-    if (isSectionalMockReview()) {
-        return { ...(sectionalReviewClassifications[index] || {}) };
-    }
-    const store = getClassificationStore();
-    const key = getQuestionClassificationKey(index);
     const question = result && Array.isArray(result.questions) ? result.questions[index] : null;
-    const persistent = persistentSubjectClassifications[persistentClassificationIdentity(question, index)] || {};
-    const currentAffairs = persistentCurrentAffairsClassifications[persistentClassificationIdentity(question, index)] || {};
-    const pending = getQuizPendingQuestionChanges(quizPendingQuestionSource(question, result.subjectKey, result.chapter, index))
-        .filter((change) => change.operationType === "classification")
-        .reduce((tags, change) => ({ ...tags, [change.tag]: change.active !== false }), {});
-    return { ...(persistentSubjectClassificationsLoaded ? persistent : (store[key] || {})), ...currentAffairs, ...pending };
+    if (!question || !window.quizCollections) return {};
+    return Object.fromEntries(window.quizCollections.getTags(question, getReviewCollectionContext(question, index)).map((tag) => [tag, true]));
 }
 
 function isMockReviewContext() {
@@ -1104,78 +1134,38 @@ function isMockReviewContext() {
 }
 
 function getApplicableClassificationTags() {
-    if (isMockReviewContext()) return Object.keys(CLASSIFICATION_LABELS);
-    return [];
+    return ["S", ...Object.keys(CLASSIFICATION_LABELS)];
 }
 
 async function toggleQuestionClassification(index, tag, event) {
     event?.preventDefault();
-    if (isSectionalMockReview()) {
-        const classifications = { ...(sectionalReviewClassifications[index] || {}) };
-        if (classifications[tag]) delete classifications[tag];
-        else classifications[tag] = true;
-        sectionalReviewClassifications[index] = classifications;
-        const button = questionReviewList.querySelector(`[data-question-index="${index}"] [data-tag="${tag}"]`);
-        if (button) button.classList.toggle("active", Boolean(classifications[tag]));
-        return;
-    }
-    const store = getClassificationStore();
-    const question = result && Array.isArray(result.questions) ? result.questions[index] : null;
-    const source = getReviewQuestionSource(question, index);
-    const { subjectKey, chapter, questionId } = getQuestionReference(question, index);
-    const key = `${String(subjectKey)}::${String(chapter)}::${String(questionId)}`;
-    const entry = store[key] || {
-        subjectKey,
-        subject: result.subject,
-        chapter,
-        questionIndex: index,
-        questionId,
-        question,
-        originalSubjectKey: subjectKey,
-        originalSubject: result.subject,
-        originalChapter: chapter
-    };
+    await toggleReviewCollectionMembership(index, tag);
+}
 
-    entry.subjectKey = subjectKey;
-    entry.subject = result.subject;
-    entry.chapter = chapter;
-    entry.questionIndex = index;
-    entry.questionId = questionId;
-    entry.question = question;
-    entry.originalSubjectKey = subjectKey;
-    entry.originalSubject = result.subject;
-    entry.originalChapter = chapter;
-
-    const target = getCollectionTarget(tag);
-    if (target) {
-        entry.collectionTarget = target.subjectKey;
-        entry.collectionTargetSubject = target.subject;
-        entry.collectionTargetChapter = target.chapter;
-    }
-
-    const button = questionReviewList.querySelector(`[data-question-index="${index}"] [data-tag="${tag}"]`);
-    const active = Boolean(button?.classList.contains("active"));
-    queueQuizPendingChange({ operationType: "classification", ...quizPendingQuestionSource(question, subjectKey, chapter, index), tag, active: !active });
-    if (active) {
-        delete entry[tag];
-        if (serverClassificationStore[key]) delete serverClassificationStore[key][tag];
-        const identity = persistentClassificationIdentity(question, index);
-        delete persistentSubjectClassifications[identity]?.[tag];
-        delete persistentCurrentAffairsClassifications[identity]?.[tag];
-    } else {
-        entry[tag] = true;
-        serverClassificationStore[key] = { ...(serverClassificationStore[key] || {}), [tag]: true };
-        const identity = persistentClassificationIdentity(question, index);
-        if (tag === "CA") {
-            persistentCurrentAffairsClassifications[identity] = { ...(persistentCurrentAffairsClassifications[identity] || {}), CA: true };
-        } else {
-            persistentSubjectClassifications[identity] = { ...(persistentSubjectClassifications[identity] || {}), [tag]: true };
+async function toggleReviewCollectionMembership(index, tag) {
+    const question = result?.questions?.[index];
+    if (!question || !window.quizCollections) return;
+    try {
+        const updated = await window.quizCollections.toggle(question, getReviewCollectionContext(question, index), tag);
+        const button = questionReviewList.querySelector(`[data-question-index="${index}"] [data-collection-tag="${tag}"]`);
+        const active = updated.tags.includes(tag);
+        if (button) {
+            button.classList.toggle("active", active);
+            button.setAttribute("aria-pressed", String(active));
+            button.setAttribute("aria-label", `${active ? "Remove from" : "Add to"} ${window.quizCollections.tags[tag]}`);
         }
+        const status = questionReviewList.querySelector(`[data-question-index="${index}"] .collection-storage-status`);
+        if (status) {
+            status.textContent = updated.durable
+                ? `${window.quizCollections.tags[tag]} ${active ? "saved." : "removed."}`
+                : `Not saved permanently. Export a backup before leaving. ${window.quizCollections.status().message}`;
+            status.classList.toggle("is-temporary", !updated.durable);
+        }
+        window.dispatchEvent(new CustomEvent("quizCollectionsChanged", { detail: { id: updated.id, tags: updated.tags } }));
+    } catch (error) {
+        console.error("Unable to update review collection membership.", error);
+        window.alert(`Unable to update this collection: ${error.message}`);
     }
-    if (Object.keys(CLASSIFICATION_LABELS).some((label) => Boolean(entry[label]))) store[key] = entry;
-    else delete store[key];
-    saveClassificationStore(store);
-    if (button) button.classList.toggle("active", !active);
 }
 
 function savedQuestionIdentity(item) {
@@ -1184,57 +1174,18 @@ function savedQuestionIdentity(item) {
 }
 
 function isSavedQuestion(index) {
-    const savedQuestions = getSavedQuestions();
     const question = result.questions[index];
+    if (window.quizCollections && question) {
+        return window.quizCollections.getTags(question, getReviewCollectionContext(question, index)).includes("S");
+    }
+    const savedQuestions = getSavedQuestions();
     const source = getReviewQuestionSource(question, savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex);
-    const pendingSource = quizPendingQuestionSource(question, result.subjectKey, result.chapter, savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex);
-    const pendingSavedChanges = getQuizPendingQuestionChanges(pendingSource).filter((change) => change.operationType === "saved-question");
-    if (pendingSavedChanges.length) {
-        return isQuizPendingActive(pendingSource, "saved-question", "");
-    }
-    if (isSectionalMockReview()) {
-        return question?.starred === true || savedQuestions.some((item) => savedQuestionIdentity(item) === savedQuestionIdentity(source));
-    }
-    const currentSavedReviewIndexes = getCurrentResultSavedReviewIndexes();
-    if (isSavedReviewSubjectKey(result.subjectKey || result.subject || "") && currentSavedReviewIndexes.includes(index)) {
-        return true;
-    }
     return savedQuestions.some((item) => savedQuestionIdentity(item) === savedQuestionIdentity(source));
 }
 
 async function toggleSavedQuestion(index, event) {
     event?.preventDefault();
-    const savedQuestions = getSavedQuestions();
-    const subjectKey = result.subjectKey || result.subject;
-    const questionIndex = savedReviewQuestionIndex === null ? index : savedReviewQuestionIndex;
-    const question = result.questions[index];
-    const source = getReviewQuestionSource(question, questionIndex);
-    const savedQuestionIndex = savedQuestions.findIndex((item) => savedQuestionIdentity(item) === savedQuestionIdentity(source));
-    const pendingSource = quizPendingQuestionSource(question, result.subjectKey, result.chapter, questionIndex);
-    const pendingSavedChanges = getQuizPendingQuestionChanges(pendingSource).filter((change) => change.operationType === "saved-question");
-    const resultSavedQuestion = isSavedReviewSubjectKey(subjectKey) && getCurrentResultSavedReviewIndexes().includes(questionIndex);
-    const currentlySaved = pendingSavedChanges.length
-        ? pendingSavedChanges[pendingSavedChanges.length - 1].active !== false
-        : savedQuestionIndex >= 0 || resultSavedQuestion || (isSectionalMockReview() && question?.starred === true);
-    queueQuizPendingChange({ operationType: "saved-question", ...pendingSource, active: !currentlySaved });
-
-    if (savedQuestionsLoaded) {
-        if (currentlySaved && savedQuestionIndex >= 0) savedQuestions.splice(savedQuestionIndex, 1);
-        else savedQuestions.push({ subjectKey, subject: result.subject, chapter: result.chapter, questionIndex, source, question });
-    } else if (currentlySaved && savedQuestionIndex >= 0) {
-        savedQuestions.splice(savedQuestionIndex, 1);
-    } else {
-        savedQuestions.push({ subjectKey, subject: result.subject, chapter: result.chapter, questionIndex, question });
-    }
-
-    if (!savedQuestionsLoaded) localStorage.setItem("bookmarks", JSON.stringify(savedQuestions));
-    renderQuestions();
-    renderPalette();
-    renderQuickNavigation();
-    updateFilterButtons();
-    renderSavedQuestions();
-    updateResultCount();
-    updateActiveQuestion();
+    await toggleReviewCollectionMembership(index, "S");
 }
 
 function renderSavedQuestions() {
@@ -1435,20 +1386,9 @@ function renderQuestions() {
             selectedIndex: selected,
             sectionalMatching: isSectionalMockReview()
         });
-        const saved = isSavedQuestion(index);
-        const classifications = getQuestionClassifications(index);
-        const applicableClassificationTags = getApplicableClassificationTags();
-        const classificationButtonsHtml = applicableClassificationTags.length ? `
-            ${Object.entries(CLASSIFICATION_LABELS).map(([tag, label]) => applicableClassificationTags.includes(tag) ? `
-                <button
-                    type="button"
-                    class="classification-mini-btn ${classifications[tag] ? "active" : ""} ${tag === "CA" ? "ca" : tag.toLowerCase()}"
-                    data-tag="${tag}"
-                    title="${label}"
-                    onclick="toggleQuestionClassification(${index}, '${tag}', event)"
-                >${tag}</button>
-            ` : "").join("")}
-        ` : "";
+        const collectionControlsHtml = window.quizCollections
+            ? window.quizCollections.renderControls(question, getReviewCollectionContext(question, index))
+            : "";
         const reviewOptions = window.QuestionRenderer.getQuestionOptions(question, {
             sectionalMatching: isSectionalMockReview(),
             questionNumber: index + 1
@@ -1506,9 +1446,10 @@ function renderQuestions() {
             <div class="review-item question-card${visible ? "" : " hidden-question"}" data-question-index="${index}">
                 <div class="review-card-header">
                     <div class="review-card-actions">
-                        ${isMockReviewContext() ? `<button type="button" class="save-question-btn${saved ? " saved" : ""}" onclick="toggleSavedQuestion(${index}, event)">${saved ? "★" : "S"}</button>` : ""}
-                        ${classificationButtonsHtml}
-                        ${typeof copyQuestionOptionsButtonHtml === "function" ? copyQuestionOptionsButtonHtml(index) : ""}
+                        <div class="review-card-action-buttons">
+                            ${collectionControlsHtml}
+                            ${typeof copyQuestionOptionsButtonHtml === "function" ? copyQuestionOptionsButtonHtml(index) : ""}
+                        </div>
                         <span class="review-status-pill ${status}">${status === "correct" ? "Correct" : status === "incorrect" ? "Incorrect" : "Not Attempted"}</span>
                     </div>
                 </div>
@@ -1622,6 +1563,7 @@ if (!result && !isHistoricalReview && !window.quizAttemptHistoryStore) {
     window.location.href = "index.html";
 } else {
     (async () => {
+        await window.quizCollections?.ready;
         if (window.quizAttemptHistoryStore) {
             const [storedResult, history] = await Promise.all([
                 window.quizAttemptHistoryStore.getResult(resultKey),
@@ -1693,6 +1635,17 @@ if (savedQuestionsToggle) {
         if (savedQuestionsPanel) {
             savedQuestionsPanel.hidden = isOpen;
         }
+
+        window.addEventListener("quizCollectionsChanged", () => {
+            if (!result || !reviewPageRendered) return;
+            updateQuestionVisibility();
+            updateFilterButtons();
+            renderPalette();
+            renderQuickNavigation();
+            renderSavedQuestions();
+            updateActiveQuestion();
+            updateResultCount();
+        });
     };
 }
 

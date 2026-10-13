@@ -20,28 +20,42 @@
         await loadSavedQuestionsFromServer();
         renderSavedLibrary();
     });
+    window.addEventListener("quizCollectionsChanged", async () => {
+        if (!revisionPageRendered) return;
+        await loadSavedQuestionsFromServer();
+        renderSavedLibrary();
+    });
 
     async function loadSavedQuestionsFromServer() {
-        try {
-                const data = await loadJson('data/mock.json');
-            const groups = data['TEST NUMBER'] || {};
-            savedQuestions = Object.entries(groups).flatMap(([chapter, questions]) => Array.isArray(questions)
-                ? questions.map((question, questionIndex) => {
-                    const source = quizPendingQuestionSource(question, 'mock', chapter, questionIndex);
-                    const copy = { ...question };
-                    applyQuizPendingChanges(copy, source);
-                    applyQuizPendingMetadata(copy, source);
-                    return copy.quizMeta?.saved === true
-                        ? { subjectKey: 'mock', subject: data.subject || 'Mock Test', chapter, questionIndex, question: copy, source }
-                        : null;
-                }).filter(Boolean)
-                : []);
-        } catch (error) {
+        if (!window.quizCollections) {
             savedQuestions = [];
+            return;
         }
+        await window.quizCollections.ready;
+        savedQuestions = (await window.quizCollections.getCollection("S")).map((record) => ({
+            collectionId: record.id,
+            subjectKey: record.source.sourceSubjectKey,
+            subject: record.subject || record.source.sourceSubjectKey,
+            chapter: record.source.chapter,
+            questionIndex: record.source.questionIndex,
+            question: record.question,
+            source: record.source,
+            topic: record.question?.topic || record.question?.category || ""
+        }));
     }
 
     await loadSavedQuestionsFromServer();
+
+    const collectionBackupTools = document.getElementById("savedCollectionBackupTools");
+    window.quizCollections?.attachBackupTools(collectionBackupTools);
+    const collectionBackupStatus = collectionBackupTools?.querySelector("[data-collection-backup-status]");
+    if (collectionBackupStatus && window.quizCollections) {
+        const status = window.quizCollections.status();
+        collectionBackupStatus.textContent = status.durable
+            ? "Collection changes are stored in this browser."
+            : `Collection changes are temporary only: ${status.message} Export a backup before leaving.`;
+        collectionBackupStatus.classList.toggle("is-temporary", !status.durable);
+    }
 
     const manifest = await readManifest();
     const subjectMap = {};
@@ -126,28 +140,27 @@
     }
 
     function savedQuestionKey(item) {
-        return `${item.subjectKey || savedSubject(item)}::${item.chapter || savedChapter(item)}::${Number(item.questionIndex || 0)}`;
+        return item.collectionId || `${item.subjectKey || savedSubject(item)}::${item.chapter || savedChapter(item)}::${Number(item.questionIndex || 0)}`;
     }
 
     function openSavedQuestion(item, collectionItems){
-        const questions = collectionItems.map((savedItem) => savedItem.question || {}).filter((question) => Object.keys(question).length);
-        const startingQuestionIndex = Math.max(0, collectionItems.indexOf(item));
+        const questions = collectionItems.map((savedItem) => {
+            const question = savedItem.question || {};
+            return Object.keys(question).length
+                ? { ...question, _collectionSource: { ...(savedItem.source || {}) } }
+                : null;
+        }).filter(Boolean);
         const payload = {
             title: 'Saved Questions',
             subject: savedSubject(item),
-            subjectKey: item.subjectKey || savedSubject(item),
+            subjectKey: 'collections',
             chapter: savedChapter(item),
             questions,
-            startingQuestionIndex,
+            collectionTag: 'S',
             returnUrl: 'revision.html',
-            collectionListPayload: {
-                title: 'Saved Questions',
-                questions,
-                returnUrl: 'revision.html'
-            }
         };
-        sessionStorage.setItem('collectionQuizPayload', JSON.stringify(payload));
-        window.location.href = 'collection-quiz.html';
+        sessionStorage.setItem('collectionListPayload', JSON.stringify(payload));
+        window.location.href = 'collection-list.html';
     }
 
     // Visible Saved Questions rows are rendered here into #savedLibraryContent.
@@ -162,7 +175,7 @@
                 <article class="saved-question-item">
                     <input type="checkbox" class="classification-question-checkbox" data-saved-question-key="${escapeHtml(savedQuestionKey(item))}" aria-label="Select saved question ${Number(item.questionIndex || 0) + 1}">
                     <div><strong>Q${Number(item.questionIndex || 0) + 1}</strong><p>${escapeHtml(savedQuestionText(item))}</p></div>
-                    <button type="button" class="btn btn-primary btn-small saved-open-button" data-saved-index="${savedQuestions.indexOf(item)}">Open Quiz</button>
+                    <button type="button" class="btn btn-primary btn-small saved-open-button" data-saved-index="${savedQuestions.indexOf(item)}">Open Reader</button>
                 </article>
             `).join('')}
         ` : '<p class="saved-library-empty">No saved questions match this view.</p>';
@@ -187,24 +200,24 @@
                 checkboxes.forEach((checkbox) => { checkbox.checked = selectAll.checked; });
                 updateSavedSelection();
             });
-            removeButton.addEventListener('click', () => {
+            removeButton.addEventListener('click', async () => {
                 const selectedKeys = checkboxes.filter((checkbox) => checkbox.checked).map((checkbox) => checkbox.dataset.savedQuestionKey);
                 if (!selectedKeys.length || !window.confirm(`Remove ${selectedKeys.length} selected saved question${selectedKeys.length === 1 ? '' : 's'}?`)) return;
-                console.debug('Removing saved question entries', { selectedKeys, savedEntries: savedQuestions });
                 const selectedSet = new Set(selectedKeys);
-                savedQuestions.filter((item) => selectedSet.has(savedQuestionKey(item))).forEach((item) => {
-                    if (typeof queueQuizPendingChange === 'function') {
-                        queueQuizPendingChange({
-                            operationType: 'saved-question',
-                            ...quizPendingQuestionSource(item.question || {}, item.subjectKey || item.source?.sourceSubjectKey, item.chapter || item.source?.chapter, item.questionIndex ?? item.source?.questionIndex),
-                            active: false
-                        });
+                const selectedItems = savedQuestions.filter((item) => selectedSet.has(savedQuestionKey(item)));
+                if (window.quizCollections) {
+                    const outcomes = await Promise.all(selectedItems.map((item) => window.quizCollections.removeMembership(item.collectionId, "S")));
+                    const storageMessage = savedLibraryContent.querySelector(".collection-storage-status");
+                    if (outcomes.some((outcome) => !outcome.durable) && storageMessage) {
+                        storageMessage.textContent = "Removals are temporary because durable storage is unavailable. Export a backup before leaving.";
+                        storageMessage.classList.add("is-temporary");
                     }
-                });
-                const retained = savedQuestions.filter((item) => !selectedSet.has(savedQuestionKey(item)));
-                savedQuestions.splice(0, savedQuestions.length, ...retained);
-                localStorage.setItem('bookmarks', JSON.stringify(savedQuestions));
-                console.debug('Saved question entries after removal', savedQuestions);
+                    await loadSavedQuestionsFromServer();
+                } else {
+                    const retained = savedQuestions.filter((item) => !selectedSet.has(savedQuestionKey(item)));
+                    savedQuestions.splice(0, savedQuestions.length, ...retained);
+                    localStorage.setItem('bookmarks', JSON.stringify(savedQuestions));
+                }
                 renderSavedLibrary();
             });
             updateSavedSelection();

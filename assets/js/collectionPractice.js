@@ -85,6 +85,29 @@ function renderQuestion() {
     }
 
     questionBox.innerHTML = `<div class="question-text">${escapeHtml(question.q || question.question || "Question")}</div>`;
+    if (window.quizCollections) {
+        questionBox.insertAdjacentHTML("beforeend", window.quizCollections.renderControls(question, {
+            sourceSubjectKey: question?._source?.sourceSubjectKey || question?._pyqSubjectKey || collectionPracticePayload.subjectKey,
+            subject: collectionPracticePayload.subject,
+            chapter: question?._source?.chapter || question?._pyqChapter || collectionPracticePayload.chapter,
+            questionIndex: question?._source?.questionIndex ?? question?._pyqQuestionIndex ?? currentQuestionIndex,
+            sourceJsonFile: question?._source?.sourceJsonFile
+        }));
+        questionBox.dataset.collectionQuestionIndex = String(currentQuestionIndex);
+        window.quizCollections.attachControls(questionBox, () => {
+            const activeIndex = Number(questionBox.dataset.collectionQuestionIndex);
+            const activeQuestion = collectionPracticePayload.questions[activeIndex];
+            return {
+            question: activeQuestion,
+            context: {
+                sourceSubjectKey: activeQuestion?._source?.sourceSubjectKey || activeQuestion?._pyqSubjectKey || collectionPracticePayload.subjectKey,
+                subject: collectionPracticePayload.subject,
+                chapter: activeQuestion?._source?.chapter || activeQuestion?._pyqChapter || collectionPracticePayload.chapter,
+                questionIndex: activeQuestion?._source?.questionIndex ?? activeQuestion?._pyqQuestionIndex ?? activeIndex,
+                sourceJsonFile: activeQuestion?._source?.sourceJsonFile
+            }
+        }; });
+    }
     
     optionsBox.innerHTML = (question.options || []).map((option, index) => `
         <button
@@ -200,7 +223,8 @@ logoutBtn.addEventListener("click", () => {
     window.location.href = "index.html";
 });
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
+    await window.quizCollections?.ready;
     renderQuestion();
 });
 

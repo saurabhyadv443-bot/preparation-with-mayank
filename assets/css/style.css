@@ -501,13 +501,67 @@ img {
     margin-right: 8px;
 }
 
+.question-collection-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    max-width: 100%;
+}
+
+.question-collection-control-row {
+    display: flex;
+    min-height: 30px;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+}
+
+.question-collection-controls .collection-storage-status {
+    display: block;
+    width: 260px;
+    max-width: min(60vw, 100%);
+    min-height: 1.1em;
+    color: #475569;
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+.collection-storage-status.is-temporary {
+    color: #b45309;
+}
+
+.question-collection-controls .collection-export-button[hidden] {
+    display: none;
+}
+
+.question-collection-controls .collection-export-button {
+    border: 1px solid #d97706;
+    border-radius: 6px;
+    padding: 3px 7px;
+    background: #fff7e6;
+    color: #92400e;
+    font-size: 0.72rem;
+    cursor: pointer;
+}
+
+.classification-mini-btn.s,
+.classification-mini-btn.s.active {
+    background: #d97706;
+    color: #fff;
+}
+
 .classification-mini-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 26px;
-    height: 26px;
-    padding: 2px 7px;
+    box-sizing: border-box;
+    width: 30px;
+    min-width: 30px;
+    max-width: 30px;
+    height: 30px;
+    min-height: 30px;
+    padding: 0;
     border: 1px solid #dbe3ee;
     border-radius: 999px;
     background: #f8fafc;
@@ -516,7 +570,47 @@ img {
     font-weight: 800;
     letter-spacing: 0.02em;
     cursor: pointer;
-    transition: all 0.18s ease;
+    transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.collection-dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 12px;
+}
+
+.collection-dashboard-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.collection-dashboard-card .collection-card-title {
+    font-weight: 700;
+}
+
+.collection-dashboard-card > strong {
+    min-width: 2rem;
+    text-align: right;
+}
+
+.collection-backup-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.collection-tools {
+    margin: 16px 0;
+    text-align: left;
+}
+
+.collection-list-collection-controls {
+    padding: 8px 0;
 }
 
 .classification-mini-btn:hover {
@@ -526,7 +620,7 @@ img {
 
 .classification-mini-btn.active {
     color: white;
-    border-color: transparent;
+    border-color: #dbe3ee;
     box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.04);
 }
 
@@ -658,6 +752,8 @@ select:focus-visible {
 .copy-question-options-btn {
     min-width: 2.75rem;
     width: 2.75rem;
+    max-width: 2.75rem;
+    white-space: nowrap;
     padding: 8px 4px;
     text-align: center;
 }
@@ -852,13 +948,50 @@ select:focus-visible {
 }
 
 .review-card-actions {
-    display: grid;
-    grid-template-columns: repeat(4, auto);
-    grid-auto-rows: minmax(26px, auto);
-    align-items: center;
-    justify-content: end;
-    gap: 6px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 8px;
+    width: 100%;
     flex-shrink: 0;
+}
+
+.review-card-action-buttons {
+    position: relative;
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 0;
+    padding-bottom: 1.2em;
+}
+
+.review-card-action-buttons > .classification-mini-btn,
+.review-card-action-buttons > .copy-question-options-btn {
+    flex: 0 0 auto;
+    margin: 0;
+}
+
+.review-card-action-buttons > .question-collection-controls {
+    display: contents;
+    margin: 0;
+}
+
+.review-card-action-buttons .question-collection-control-row {
+    display: contents;
+}
+
+.review-card-action-buttons .question-collection-controls .collection-storage-status {
+    position: absolute;
+    top: calc(100% - 1.2em);
+    left: 0;
+    width: 260px;
+    max-width: min(60vw, 100%);
+    min-height: 1.2em;
+    overflow-wrap: anywhere;
+}
+
+.review-card-actions .review-status-pill {
+    flex: 0 0 auto;
+    margin-left: auto;
 }
 
 .save-question-btn {
@@ -1949,7 +2082,8 @@ body.text-selection-locked.highlighter-selection-active .saved-question-item > d
         width: 100%;
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: flex-start;
+        gap: 8px;
     }
 }
 

@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Revision Center - Quiz Portal</title>
   <script src="assets/js/theme.js"></script>
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/style.css?v=collections-20261016" />
   <link rel="stylesheet" href="assets/css/responsive.css" />
+  <script src="assets/js/collectionMigrationBackup.js?v=collection-migration-backup-v2"></script>
   <script src="assets/js/auth.js"></script>
   <script src="assets/js/app.js"></script>
 </head>
@@ -30,6 +31,12 @@
 
   <main class="dashboard-shell">
     <section class="panel saved-library-panel">
+      <div id="savedCollectionBackupTools" class="collection-backup-actions">
+        <button type="button" class="btn btn-secondary btn-small" data-collection-export-all>Export Backup</button>
+        <button type="button" class="btn btn-secondary btn-small" data-collection-import-button>Import and Merge Backup</button>
+        <input type="file" accept="application/json,.json" data-collection-import-file hidden aria-label="Choose a collection backup file">
+        <span data-collection-backup-status class="collection-storage-status" role="status" aria-live="polite"></span>
+      </div>
       <div class="saved-library-header">
         <div>
           <h2>Saved for Revision</h2>
@@ -50,6 +57,7 @@
 
   <footer class="footer">© 2026 Quiz Portal — Designed & Developed by Mayank</footer>
   <script src="assets/js/reviewHighlighter.js"></script>
-  <script src="assets/js/revision.js?v=restored-revision-20260903"></script>
+  <script src="assets/js/collectionStore.js?v=collections-reader-c-20261016"></script>
+  <script src="assets/js/revision.js?v=collections-20261016"></script>
 </body>
 </html>

@@ -102,7 +102,10 @@
         existingResults.forEach((record) => localStorage.removeItem(record.key));
     }
 
-    const ready = openDatabase().then(migrate).catch(() => null);
+    const ready = Promise.resolve(window.quizCollectionMigrationBackupReady)
+        .then(() => openDatabase())
+        .then(migrate)
+        .catch(() => null);
 
     async function getHistory() {
         await ready;

@@ -339,6 +339,15 @@ function quizPendingRemoveLegacyStorage(state) {
 }
 
 async function quizPendingInitializeStorage() {
+    try {
+        await (window.quizCollectionMigrationBackupReady || Promise.resolve());
+    } catch (error) {
+        quizPendingStorageReady = false;
+        quizPendingStateCache = quizPendingReadLegacyState();
+        console.error("Pending changes remain in legacy storage because the required migration backup failed.", error);
+        window.dispatchEvent(new CustomEvent("quizPendingStorageReady"));
+        return quizPendingStateCache;
+    }
     const legacyState = quizPendingCompactState(quizPendingAddMissingUnsyncedChanges(quizPendingReadLegacyState()));
     const startingRevision = quizPendingStateRevision;
     let database;
@@ -572,4 +581,3 @@ function getQuizPendingBatches() {
 }
 
 if (!quizPendingStoragePromise) quizPendingStoragePromise = quizPendingInitializeStorage();
-

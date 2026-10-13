@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Collection Store Tests</title>
+    <style>
+        body { font: 16px/1.5 system-ui, sans-serif; margin: 2rem auto; max-width: 900px; padding: 0 1rem; }
+        li.pass { color: #166534; }
+        li.fail { color: #b91c1c; }
+        #summary { font-weight: 700; }
+    </style>
+</head>
+<body>
+    <h1>Question Collection Store Tests</h1>
+    <p>Run this page on a fresh local test origin. It writes only test-origin localStorage and isolated test fixture databases.</p>
+    <p id="summary" role="status">Running…</p>
+    <ol id="results"></ol>
+    <script>
+        window.QUIZ_COLLECTIONS_DATABASE_NAME = "bpscQuizCollectionStoreTests";
+        window.QUIZ_COLLECTIONS_HISTORY_DATABASE_NAME = "bpscQuizHistoryMigrationTests";
+        window.QUIZ_COLLECTIONS_PENDING_DATABASE_NAME = "bpscQuizPendingMigrationTests";
+        window.QUIZ_COLLECTIONS_BACKUP_BASE_PATH = "../";
+        window.QUIZ_COLLECTIONS_BACKUP_DATABASE_NAMES = [
+            window.QUIZ_COLLECTIONS_DATABASE_NAME,
+            window.QUIZ_COLLECTIONS_HISTORY_DATABASE_NAME,
+            window.QUIZ_COLLECTIONS_PENDING_DATABASE_NAME
+        ];
+        window.QUIZ_COLLECTIONS_LEGACY_DATA_FILES = ["ancient.json", "modern.json"];
+
+        const results = document.getElementById("results");
+        const summary = document.getElementById("summary");
+        let passed = 0;
+        let failed = 0;
+
+        function assert(condition, message) {
+            if (!condition) throw new Error(message);
+        }
+
+        function report(name, error) {
+            const item = document.createElement("li");
+            item.className = error ? "fail" : "pass";
+            item.textContent = error ? `${name}: ${error.message}` : `${name}: passed`;
+            results.appendChild(item);
+            if (error) failed += 1;
+            else passed += 1;
+        }
+
+        function deleteTestDatabase() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.deleteDatabase(window.QUIZ_COLLECTIONS_DATABASE_NAME);
+                request.onsuccess = resolve;
+                request.onerror = () => reject(request.error || new Error("Unable to clear the isolated test database."));
+                request.onblocked = () => reject(new Error("The isolated test database is still open."));
+            });
+        }
+
+        function loadCollectionStore() {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement("script");
+                script.src = `../assets/js/collectionStore.js?test=${Date.now()}-${Math.random()}`;
+                script.onload = resolve;
+                script.onerror = () => reject(new Error("Unable to load collectionStore.js."));
+                document.head.appendChild(script);
+            });
+        }
+
+        function loadMigrationBackup() {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement("script");
+                script.src = `../assets/js/collectionMigrationBackup.js?test=${Date.now()}-${Math.random()}`;
+                script.onload = resolve;
+                script.onerror = () => reject(new Error("Unable to load collectionMigrationBackup.js."));
+                document.head.appendChild(script);
+            });
+        }
+
+        function questionFingerprint(question) {
+            const content = JSON.stringify({
+                q: question?.q ?? question?.question ?? question?.questionText ?? question?.prompt ?? "",
+                options: Array.isArray(question?.options) ? question.options : [],
+                answer: question?.answer ?? null,
+                image: question?.image ?? question?.imageUrl ?? question?.image_url ?? null
+            });
+            let hash = 2166136261;
+            for (let index = 0; index < content.length; index += 1) {
+                hash ^= content.charCodeAt(index);
+                hash = Math.imul(hash, 16777619);
+            }
+            return (hash >>> 0).toString(16);
+        }
+
+        function openFixtureDatabase(name, version, stores) {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(name, version);
+                request.onupgradeneeded = () => {
+                    Object.entries(stores).forEach(([storeName, options]) => {
+                        if (!request.result.objectStoreNames.contains(storeName)) {
+                            request.result.createObjectStore(storeName, options);
+                        }
+                    });
+                };
+                request.onerror = () => reject(request.error || new Error(`Unable to open fixture database ${name}.`));
+                request.onsuccess = () => resolve(request.result);
+            });
+        }
+
+        async function seedHistoryAndCurrentMembership(dataset, chapter) {
+            const questions = Object.values(dataset.chapters).find((entries) => Array.isArray(entries) && entries.length >= 3);
+            const sourceQuestion = questions[2];
+            const questionId = sourceQuestion.id ?? sourceQuestion.qid ?? sourceQuestion.questionId ?? sourceQuestion._id ?? sourceQuestion.questionID ?? sourceQuestion.question_id ?? null;
+            const fingerprint = questionFingerprint(sourceQuestion);
+            sourceQuestion._source = {
+                sourceJsonFile: "ancient.json",
+                sourceSubjectKey: "ancient",
+                chapter,
+                questionIndex: 2,
+                questionId
+            };
+            const identity = JSON.stringify([
+                "ancient.json",
+                "ancient",
+                chapter,
+                questionId !== null ? `id:${String(questionId)}` : "index:2",
+                questionId !== null ? "index:2" : "",
+                fingerprint
+            ]);
+            const currentRecord = {
+                id: identity,
+                source: {
+                    sourceJsonFile: "ancient.json",
+                    sourceSubjectKey: "ancient",
+                    chapter,
+                    questionIndex: 2,
+                    questionId: questionId === null ? null : String(questionId),
+                    questionFingerprint: fingerprint
+                },
+                tags: ["P", "E"],
+                subject: "ancient",
+                updatedAt: new Date().toISOString()
+            };
+            const collections = await openFixtureDatabase(window.QUIZ_COLLECTIONS_DATABASE_NAME, 1, {
+                memberships: { keyPath: "id" },
+                metadata: { keyPath: "key" }
+            });
+            await new Promise((resolve, reject) => {
+                const transaction = collections.transaction("memberships", "readwrite");
+                transaction.objectStore("memberships").put(currentRecord);
+                transaction.objectStore("memberships").put({
+                    id: "malformed-migration-fixture",
+                    source: { sourceJsonFile: "../unknown.json" },
+                    tags: ["S"],
+                    payload: { retain: "complete malformed record" }
+                });
+                transaction.oncomplete = resolve;
+                transaction.onerror = () => reject(transaction.error || new Error("Unable to seed the current membership fixture."));
+            });
+            collections.close();
+
+            const history = await openFixtureDatabase(window.QUIZ_COLLECTIONS_HISTORY_DATABASE_NAME, 1, {
+                quiz_attempt_history: { keyPath: "id" },
+                quiz_results: { keyPath: "id" }
+            });
+            const attemptQuestion = {
+                ...sourceQuestion,
+                quizMeta: { saved: true },
+                _source: { ...sourceQuestion._source }
+            };
+            await new Promise((resolve, reject) => {
+                const transaction = history.transaction("quiz_attempt_history", "readwrite");
+                transaction.objectStore("quiz_attempt_history").put({
+                    id: "migration-fixture-attempt",
+                    subjectKey: "ancient",
+                    chapter,
+                    sourceJsonFile: "ancient.json",
+                    saved: [1],
+                    markedForReview: [0],
+                    questions: [sourceQuestion, sourceQuestion, attemptQuestion]
+                });
+                transaction.oncomplete = resolve;
+                transaction.onerror = () => reject(transaction.error || new Error("Unable to seed the history fixture."));
+            });
+            history.close();
+
+            const pending = await openFixtureDatabase(window.QUIZ_COLLECTIONS_PENDING_DATABASE_NAME, 1, {
+                state: {}
+            });
+            await new Promise((resolve, reject) => {
+                const transaction = pending.transaction("state", "readwrite");
+                transaction.objectStore("state").put({
+                    changes: [{
+                        pendingChangeId: "migration-fixture-add-h",
+                        operationType: "classification",
+                        tag: "H",
+                        active: true,
+                        timestamp: new Date(Date.now() + 120000).toISOString(),
+                        sourceSubjectKey: "ancient",
+                        sourceJsonFile: "ancient.json",
+                        chapter,
+                        questionIndex: 0
+                    }]
+                }, "pending");
+                transaction.oncomplete = resolve;
+                transaction.onerror = () => reject(transaction.error || new Error("Unable to seed the pending-change fixture."));
+            });
+            pending.close();
+            return sourceQuestion;
+        }
+
+        window.loadJson = (url) => {
+            const relativeUrl = String(url).replace(/^\/+/, "").replace(/^data\//, "../data/");
+            return fetch(relativeUrl).then((response) => {
+                if (!response.ok) throw new Error(`Unable to load test fixture ${relativeUrl}.`);
+                return response.json();
+            });
+        };
+
+        async function run() {
+            try {
+                await deleteTestDatabase();
+                const dataset = await fetch("../data/ancient.json").then((response) => response.json());
+                const [chapter, questions] = Object.entries(dataset.chapters).find(([, entries]) => Array.isArray(entries) && entries.length);
+                const question = questions[0];
+                question.quizMeta = { ...(question.quizMeta || {}), classifications: { ...(question.quizMeta?.classifications || {}), H: true } };
+                questions[1].quizMeta = { ...(questions[1].quizMeta || {}), classifications: { ...(questions[1].quizMeta?.classifications || {}), G: true } };
+                const progressQuestion = questions.find((item, index) => index >= 3 && !item.quizMeta?.saved && !Object.values(item.quizMeta?.classifications || {}).some(Boolean));
+                progressQuestion._source = {
+                    sourceJsonFile: "ancient.json",
+                    sourceSubjectKey: "ancient",
+                    chapter,
+                    questionIndex: questions.indexOf(progressQuestion)
+                };
+                const historyQuestion = await seedHistoryAndCurrentMembership(dataset, chapter);
+                const originalLoadJson = window.loadJson;
+                const overlapQuestion = { id: "overlap-fixture-id", q: "Overlapping ID fixture", options: ["A", "B"], answer: 0 };
+                const sectionalOnlyQuestion = { id: "sectional-only-fixture-id", q: "Sectional-only fixture", options: ["A", "B"], answer: 1 };
+                window.loadJson = (url) => {
+                    if (String(url).includes("ancient.json")) return Promise.resolve(dataset);
+                    if (String(url).includes("modern.json")) {
+                        const legacyCopy = { ...question };
+                        delete legacyCopy.quizMeta;
+                        legacyCopy._source = {
+                            sourceJsonFile: "ancient.json",
+                            sourceSubjectKey: "ancient",
+                            chapter,
+                            questionIndex: 0,
+                            questionId
+                        };
+                        legacyCopy._pyqSubjectKey = "ancient";
+                        legacyCopy._pyqChapter = chapter;
+                        legacyCopy._pyqQuestionIndex = 0;
+                        return Promise.resolve({ subject: "Modern", chapters: { "Important Questions": [legacyCopy] } });
+                    }
+                    if (String(url).includes("mock.json") || String(url).includes("sectional.json")) {
+                        return originalLoadJson(url).then((sourceDataset) => {
+                            const groups = sourceDataset["TEST NUMBER"] || sourceDataset.chapters;
+                            groups["Identity Fixture"] = String(url).includes("mock.json")
+                                ? [overlapQuestion]
+                                : [overlapQuestion, sectionalOnlyQuestion];
+                            if (String(url).includes("sectional.json")) {
+                                groups["Sectional-only Fixture"] = [sectionalOnlyQuestion];
+                            }
+                            return sourceDataset;
+                        });
+                    }
+                    return originalLoadJson(url);
+                };
+                const questionId = question.id ?? question.qid ?? question.questionId ?? question._id ?? question.questionID ?? question.question_id ?? null;
+                const source = {
+                    sourceJsonFile: "ancient.json",
+                    sourceSubjectKey: "ancient",
+                    chapter,
+                    questionIndex: 0,
+                    questionId
+                };
+                localStorage.setItem("bookmarks", JSON.stringify([{
+                    subjectKey: "ancient",
+                    subject: dataset.subject,
+                    chapter,
+                    questionIndex: 0,
+                    source,
+                    question
+                }, {
+                    subjectKey: "mock",
+                    chapter: "Identity Fixture",
+                    questionIndex: 0,
+                    questionId: overlapQuestion.id,
+                    question: overlapQuestion
+                }, {
+                    subjectKey: "mock",
+                    chapter: "Sectional-only Fixture",
+                    questionIndex: 0,
+                    questionId: sectionalOnlyQuestion.id,
+                    question: sectionalOnlyQuestion
+                }]));
+                localStorage.setItem("questionClassifications", JSON.stringify({
+                    "legacy-entry": {
+                        subjectKey: "ancient",
+                        subject: dataset.subject,
+                        chapter,
+                        questionIndex: 0,
+                        questionId,
+                        sourceJsonFile: "ancient.json",
+                        question,
+                        H: true
+                    }
+                    ,
+                    "unresolved-entry": {
+                        subjectKey: "unknown-subject",
+                        chapter: "Missing Chapter",
+                        questionIndex: 2,
+                        question: { q: "Keep this unresolved snapshot", options: ["A"], answer: 0 },
+                        G: true
+                    }
+                }));
+                localStorage.setItem("quizPendingChanges", JSON.stringify([{
+                    operationType: "classification",
+                    tag: "G",
+                    active: false,
+                    timestamp: new Date(Date.now() + 60000).toISOString(),
+                    sourceSubjectKey: "ancient",
+                    sourceJsonFile: "ancient.json",
+                    chapter,
+                    questionIndex: 1
+                }, {
+                    operationType: "classification",
+                    tag: "P",
+                    active: false,
+                    timestamp: new Date(Date.now() + 60000).toISOString(),
+                    sourceSubjectKey: "ancient",
+                    sourceJsonFile: "ancient.json",
+                    chapter,
+                    questionIndex: 2
+                }]));
+                localStorage.setItem("quizPendingChangeBatches", JSON.stringify({
+                    version: 1,
+                    batches: [{
+                        batchId: "migration-fixture-old-batch",
+                        status: "pending",
+                        changes: [{
+                            operationType: "classification",
+                            tag: "G",
+                            active: true,
+                            timestamp: new Date(Date.now() - 120000).toISOString(),
+                            sourceSubjectKey: "ancient",
+                            sourceJsonFile: "ancient.json",
+                            chapter,
+                            questionIndex: 1
+                        }]
+                    }]
+                }));
+                localStorage.setItem("quizProgress", JSON.stringify({
+                    subject: "ancient",
+                    subjectKey: "ancient",
+                    chapter,
+                    sourceJsonFile: "ancient.json",
+                    questions: [progressQuestion],
+                    saved: [0],
+                    markedForReview: [0]
+                }));
+                localStorage.setItem("quizResults", "{malformed");
+
+                await loadMigrationBackup();
+                await window.quizCollectionMigrationBackupReady;
+                const migrationBackup = window.quizCollectionMigrationBackup.getPayload();
+                assert(migrationBackup.localStorage.bookmarks, "The backup should preserve the exact bookmarks storage value.");
+                assert(migrationBackup.localStorage.quizPendingChanges, "The backup should include pending membership removals.");
+                assert(migrationBackup.localStorage.quizPendingChangeBatches, "The backup should include legacy pending batches.");
+                assert(migrationBackup.localStorage.quizProgress, "The backup should include saved progress records for safe inspection.");
+                assert(migrationBackup.localStorage.quizResults === "{malformed", "The backup should preserve malformed legacy values verbatim.");
+                assert(typeof migrationBackup.legacyFiles["data/saved_questions.json"] === "string", "The backup should include the legacy server saved-question file verbatim.");
+                assert(typeof migrationBackup.legacyFiles["data/current_affairs.json"] === "string", "The backup should include the legacy current-affairs collection file verbatim.");
+                assert(Array.isArray(migrationBackup.indexedDB), "The backup should contain the existing relevant IndexedDB databases.");
+                assert(migrationBackup.indexedDB.some((database) => database.name === window.QUIZ_COLLECTIONS_HISTORY_DATABASE_NAME && database.stores.quiz_attempt_history.length === 1), "The migration backup should include existing attempt-history records.");
+                assert(migrationBackup.indexedDB.some((database) => database.name === window.QUIZ_COLLECTIONS_DATABASE_NAME && database.stores.memberships.length === 2), "The migration backup should include existing and malformed collection memberships.");
+                assert(migrationBackup.indexedDB.some((database) => database.name === window.QUIZ_COLLECTIONS_PENDING_DATABASE_NAME && database.stores.state.length === 1), "The migration backup should include pending-change IndexedDB records.");
+                const databaseProbe = await openFixtureDatabase(window.QUIZ_COLLECTIONS_DATABASE_NAME, 1, {});
+                const databasePrototype = Object.getPrototypeOf(databaseProbe);
+                const transactionDescriptor = Object.getOwnPropertyDescriptor(databasePrototype, "transaction");
+                databasePrototype.transaction = function (stores, mode, options) {
+                    if (mode === "readwrite") throw new DOMException("Simulated interrupted migration write.", "QuotaExceededError");
+                    return transactionDescriptor.value.call(this, stores, mode, options);
+                };
+                databaseProbe.close();
+                await loadCollectionStore();
+                await window.quizCollections.ready;
+                assert(!window.quizCollections.status().durable && !window.quizCollections.status().migrationComplete, "A failed initial write must not mark the migration complete.");
+                assert(window.quizCollections.getCount("S") >= 2, "Legacy memberships should remain usable in temporary recovery state after a failed write.");
+                assert(localStorage.getItem("bookmarks") !== null, "Migration failure must leave original legacy records untouched.");
+                databasePrototype.transaction = transactionDescriptor.value;
+                await window.quizCollections.retryMigration();
+                assert(window.quizCollections.status().durable, "IndexedDB should be available for the test origin.");
+                assert(window.quizCollections.status().migrationComplete, "A successful retry should mark the migration complete only after reconciliation.");
+                assert(window.quizCollections.getCount("S") >= 2, "Bookmark and explicit history metadata should migrate as Saved memberships.");
+                assert(window.quizCollections.getCount("H") === 1, "Legacy H classification should migrate.");
+                assert(window.quizCollections.getCount("P") === 0, "A newer explicit pending removal should suppress the matching current P membership.");
+                assert(window.quizCollections.getCount("E") === 1, "Pending removal of P must preserve the current E membership.");
+                assert(window.quizCollections.getCount("G") === 0, "An explicit pending removal must prevent stale source metadata from resurrecting G.");
+                assert(window.quizCollections.getUnresolvedCount() >= 4, "Malformed and unresolvable records should remain in recovery storage.");
+                const initialReport = window.quizCollections.getMigrationReport();
+                assert(initialReport.explicitRemovals === 2, "The migration report should count both respected explicit removals.");
+                assert(initialReport.pendingOperations.operations === 3 && initialReport.pendingOperations.additions === 1 && initialReport.pendingOperations.removals === 2, "Pending localStorage, batch, and IndexedDB changes should be ordered and counted by operation.");
+                assert(initialReport.duplicates.merged >= 1, "Duplicate source/bookmark/classification memberships should be counted.");
+                assert(initialReport.unresolved >= 4 && initialReport.unresolved === window.quizCollections.getUnresolvedCount(), "The migration report should count every unresolved and malformed record.");
+                assert(window.quizCollections.getUnresolvedRecords().some((record) => record.sourceName.includes("indexedDB") && record.raw?.id === "malformed-migration-fixture"), "Malformed existing collection rows should be retained in migration recovery.");
+                assert(initialReport.sources["legacy-chapter-collection:modern.json"].memberships === 1, "The legacy Important Questions chapter should migrate to its collection membership.");
+                assert(initialReport.sources["legacy-file:data/saved_questions.json"].memberships >= 1, "The saved-question JSON store should be included in the migration report.");
+                assert(initialReport.sources["legacy-file:data/current_affairs.json"].memberships > 0, "The current-affairs collection file should migrate its explicit CA entries.");
+                const legacySavedData = JSON.parse(migrationBackup.legacyFiles["data/saved_questions.json"]);
+                const expectedLegacySavedIds = new Set(Object.values(legacySavedData.groups || {}).flat()
+                    .filter((item) => item && item.source && item.question)
+                    .map((item) => {
+                        const identityFile = String(item.sourceIdentity || "").split("::").find((part) => /^[A-Za-z0-9_-]+\.json$/i.test(part));
+                        return window.quizCollections.normalizeSource({
+                            ...item.question,
+                            _source: {
+                                ...item.source,
+                                sourceJsonFile: item.source.sourceJsonFile || identityFile || "mock.json"
+                            }
+                        }).id;
+                    }));
+                assert(window.quizCollections.getAllRecords().some((record) => expectedLegacySavedIds.has(record.id) && record.tags.includes("S")), "At least one legacy saved-question JSON membership should resolve to its exact source identity.");
+                assert(window.quizCollections.getAllRecords().some((record) => record.source.sourceJsonFile === "sectional.json" && record.source.chapter === "Sectional-only Fixture" && record.tags.includes("S")), "A question unique to the sectional source should retain its sectional identity.");
+                assert(window.quizCollections.getUnresolvedRecords().some((record) => record.reason.includes("source mode is ambiguous")), "Overlapping normal/sectional identities should remain unresolved instead of being substituted.");
+                assert(window.quizCollections.getCount("CA") > 0, "Current-affairs collection memberships should be visible in the shared store.");
+                assert(!window.quizCollections.getTags(progressQuestion, {
+                    sourceSubjectKey: "ancient",
+                    sourceJsonFile: "ancient.json",
+                    chapter,
+                    questionIndex: questions.indexOf(progressQuestion)
+                }).includes("S"), "Attempt saved/mark-for-review indexes must not be mistaken for collection memberships.");
+                assert(window.quizCollections.getAllRecords().length >= 2, "Overlapping legacy sources should merge while retaining existing memberships.");
+                report("Legacy bookmark/classification migration merges and verifies", null);
+                const beforeRerun = window.quizCollections.getAllRecords().length;
+                await window.quizCollections.retryMigration();
+                assert(window.quizCollections.getAllRecords().length === beforeRerun, "A migration rerun must not duplicate collection records.");
+                report("Interrupted migration recovery and idempotent rerun", null);
+
+                const saved = await window.quizCollections.getCollection("S");
+                assert(saved.length >= 2 && saved.some((item) => item.question.q === question.q) && saved.some((item) => item.question.q === historyQuestion.q), "Saved membership should reopen exact source questions from bookmarks and history metadata.");
+                report("Source reference resolves original question content", null);
+
+                const stableQuestion = { ...question, _source: source };
+                const stableIdentity = window.quizCollections.normalizeSource(stableQuestion, { sourceSubjectKey: "ancient", chapter, questionIndex: 0, sourceJsonFile: "ancient.json" }).id;
+                const shuffledIdentity = window.quizCollections.normalizeSource(stableQuestion, { sourceSubjectKey: "ancient", chapter, questionIndex: 93, sourceJsonFile: "ancient.json" }).id;
+                assert(stableIdentity === shuffledIdentity, "Source identity should survive a shuffled/display index.");
+                const sectionalQuestion = {
+                    ...question,
+                    _source: {
+                        ...source,
+                        sourceJsonFile: "sectional.json",
+                        sourceSubjectKey: "mock",
+                        chapter: "Set 1"
+                    }
+                };
+                const overlappingIdentity = window.quizCollections.normalizeSource(sectionalQuestion, {
+                    sourceSubjectKey: "mock", chapter: "Set 1", questionIndex: 0, sourceJsonFile: "sectional.json", source: "sectional"
+                }).id;
+                assert(stableIdentity !== overlappingIdentity, "The same question ID in another dataset must remain a distinct record.");
+                report("Stable shuffled identity and cross-dataset isolation", null);
+
+                for (const historySubject of ["ancient", "medieval", "modern"]) {
+                    assert(window.quizCollections.getVisibleTags({
+                        ...question,
+                        _source: { sourceSubjectKey: historySubject, sourceJsonFile: `${historySubject}.json` }
+                    }).join(",") === "H", `${historySubject} should expose History only.`);
+                }
+                assert(window.quizCollections.getVisibleTags({ ...question, _source: { sourceSubjectKey: "geography", sourceJsonFile: "geography.json" } }).join(",") === "G",
+                    "Geography sources should expose Geography only.");
+                assert(window.quizCollections.getVisibleTags({ ...question, _source: { sourceSubjectKey: "polity", sourceJsonFile: "polity.json" } }).join(",") === "P",
+                    "Polity sources should expose Polity only.");
+                assert(window.quizCollections.getVisibleTags({ ...question, _source: { sourceSubjectKey: "economy", sourceJsonFile: "economy.json" } }).join(",") === "E",
+                    "Economy sources should expose Economy only.");
+                assert(window.quizCollections.getVisibleTags({ ...question, _source: { sourceSubjectKey: "mock", sourceJsonFile: "mock.json" } }).join(",") === "S,H,G,P,E,CA",
+                    "Full-length mock sources should expose all mock classification controls.");
+                assert(window.quizCollections.getVisibleTags(sectionalQuestion).join(",") === "S,H,G,P,E,CA",
+                    "Sectional mock sources should expose all mock classification controls.");
+                assert(window.quizCollections.getVisibleTags({ ...question, _source: { sourceSubjectKey: "current_affairs", sourceJsonFile: "current_affairs.json" } }).join(",") === "CA",
+                    "Current-affairs sources should expose CA only.");
+                assert(!window.quizCollections.renderControls(stableQuestion, source).includes('data-collection-tag="S"'),
+                    "Ordinary subject readers must not render the Saved control.");
+                assert(window.quizCollections.getTags(stableQuestion, source).includes("S"),
+                    "Hiding the Saved control must retain the existing Saved membership.");
+                report("Source-specific collection control visibility", null);
+
+                for (const tag of ["S", "P", "G", "H", "E", "CA"]) {
+                    const before = window.quizCollections.getTags(stableQuestion, source).includes(tag);
+                    const added = await window.quizCollections.toggle(stableQuestion, source, tag);
+                    assert(added.tags.includes(tag) !== before, `${tag} should toggle to its opposite state.`);
+                    const removed = await window.quizCollections.toggle(stableQuestion, source, tag);
+                    assert(removed.tags.includes(tag) === before, `${tag} should toggle back independently.`);
+                }
+                report("Every collection tag adds and removes independently", null);
+
+                await Promise.all([
+                    window.quizCollections.toggle(stableQuestion, source, "P"),
+                    window.quizCollections.toggle(stableQuestion, source, "G")
+                ]);
+                assert(window.quizCollections.getTags(stableQuestion, source).includes("P"), "P membership should be present.");
+                assert(window.quizCollections.getTags(stableQuestion, source).includes("G"), "G membership should coexist with P.");
+                await window.quizCollections.toggle(stableQuestion, source, "P");
+                assert(!window.quizCollections.getTags(stableQuestion, source).includes("P")
+                    && window.quizCollections.getTags(stableQuestion, source).includes("G"), "Removing P must not remove G.");
+                const stableRecordId = window.quizCollections.normalizeSource(stableQuestion, source).id;
+                await window.quizCollections.toggle(stableQuestion, source, "P");
+                const removedPolity = await window.quizCollections.removeMembership(stableRecordId, "P");
+                assert(removedPolity.durable && removedPolity.removed, "A durable bulk removal should report success.");
+                assert(!window.quizCollections.getTags(stableQuestion, source).includes("P")
+                    && window.quizCollections.getTags(stableQuestion, source).includes("G"), "Bulk removal must preserve other collection memberships.");
+                report("Concurrent multi-tag updates and isolated removal", null);
+
+                const backup = window.quizCollections.createBackup();
+                assert(backup.unresolvedMigration.length === window.quizCollections.getUnresolvedCount(), "Collection export should include every unresolved migration record.");
+                const roundTrip = await window.quizCollections.importBackup(backup);
+                assert(roundTrip.durable, "A valid backup should merge durably.");
+                assert(roundTrip.unresolved === backup.unresolvedMigration.length, "Backup import should merge recovery records without losing them.");
+                let invalidRejected = false;
+                try {
+                    await window.quizCollections.importBackup({ format: "bpsc-quiz-collections", version: 1, collections: [{ id: "forged", tags: ["P"] }] });
+                } catch (error) {
+                    invalidRejected = true;
+                }
+                assert(invalidRejected, "Malformed backup records must be rejected.");
+                report("Backup export/import validation and non-destructive merge", null);
+
+                await loadCollectionStore();
+                await window.quizCollections.ready;
+                assert(window.quizCollections.status().durable, "The store should reopen after a simulated page reload.");
+                assert(window.quizCollections.getCount("S") >= saved.length && window.quizCollections.getCount("CA") > 0, "Migrated collection memberships should survive store reinitialization.");
+                assert(window.quizCollections.getTags(stableQuestion, source).includes("G"), "Membership should survive store reinitialization.");
+                assert(!window.quizCollections.getTags(stableQuestion, source).includes("P"),
+                    "A durably removed membership should remain removed after store reinitialization.");
+                report("Membership survives storage reinitialization", null);
+
+                const opened = await new Promise((resolve, reject) => {
+                    const request = indexedDB.open(window.QUIZ_COLLECTIONS_DATABASE_NAME);
+                    request.onsuccess = () => resolve(request.result);
+                    request.onerror = () => reject(request.error || new Error("Unable to inspect the test database."));
+                });
+                const quotaDatabasePrototype = Object.getPrototypeOf(opened);
+                const quotaTransactionDescriptor = Object.getOwnPropertyDescriptor(quotaDatabasePrototype, "transaction");
+                quotaDatabasePrototype.transaction = function (stores, mode, options) {
+                    if (mode === "readwrite") throw new DOMException("Simulated quota exhaustion.", "QuotaExceededError");
+                    return quotaTransactionDescriptor.value.call(this, stores, mode, options);
+                };
+                try {
+                    const failedRemoval = await window.quizCollections.removeMembership(stableIdentity, "H");
+                    assert(!failedRemoval.durable && !failedRemoval.removed, "Failed durable removals must not report success.");
+                    assert(window.quizCollections.getTags(stableQuestion, source).includes("H"), "Failed durable removals must retain the membership in memory.");
+                    assert(window.quizCollections.getTags(stableQuestion, source).includes("G"), "Failed removal must preserve other memberships.");
+                    const temporary = await window.quizCollections.toggle(stableQuestion, source, "E");
+                    assert(!temporary.durable && !window.quizCollections.status().durable, "A quota failure should be reported as temporary.");
+                    assert(window.quizCollections.getTags(stableQuestion, source).includes("E"), "The page should remain usable with temporary state.");
+                    assert(window.quizCollections.createBackup().collections.some((record) => record.tags.includes("E")), "Temporary updates should be exportable.");
+                    report("Quota failure keeps usable, clearly temporary, exportable state", null);
+                } finally {
+                    quotaDatabasePrototype.transaction = quotaTransactionDescriptor.value;
+                    opened.close();
+                }
+
+                const factoryPrototype = Object.getPrototypeOf(indexedDB);
+                const openDescriptor = Object.getOwnPropertyDescriptor(factoryPrototype, "open");
+                factoryPrototype.open = function () {
+                    const request = {};
+                    queueMicrotask(() => request.onblocked?.());
+                    return request;
+                };
+                try {
+                    await loadCollectionStore();
+                    await window.quizCollections.ready;
+                    assert(!window.quizCollections.status().durable, "A blocked database open should enter temporary mode.");
+                    assert(window.quizCollections.getCount("S") >= 1, "Legacy data should remain available in memory after a blocked open.");
+                    report("Blocked IndexedDB open retains usable in-memory state", null);
+                } finally {
+                    Object.defineProperty(factoryPrototype, "open", openDescriptor);
+                }
+
+                const originalClassificationText = localStorage.getItem("questionClassifications");
+                localStorage.setItem("questionClassifications", "{malformed");
+                await loadCollectionStore();
+                await window.quizCollections.ready;
+                assert(localStorage.getItem("questionClassifications") === "{malformed", "Malformed legacy data must not be overwritten or removed.");
+                localStorage.setItem("questionClassifications", originalClassificationText);
+                report("Malformed legacy data is retained without breaking initialization", null);
+            } catch (error) {
+                report("Test suite", error);
+                console.error(error);
+            } finally {
+                summary.textContent = `${passed} passed, ${failed} failed`;
+                summary.dataset.result = failed ? "failed" : "passed";
+            }
+        }
+
+        run();
+    </script>
+</body>
+</html>

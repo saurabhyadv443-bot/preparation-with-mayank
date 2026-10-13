@@ -10,7 +10,10 @@ function saveClassificationStoreForRemoval(store) {
     localStorage.setItem("questionClassifications", JSON.stringify(store));
 }
 
-function getClassificationKeyForRemoval(question, tag) {
+function getClassificationKeyForRemoval(question, tag, context = {}) {
+    if (window.quizCollections) {
+        return window.quizCollections.normalizeSource(question, context).id;
+    }
     const stableId = String(question?.id ?? question?.qid ?? question?.questionId ?? question?._id ?? question?.questionID ?? question?.question_id ?? "");
     const store = getClassificationStoreForRemoval();
     const match = Object.entries(store).find(([, entry]) => {
@@ -76,12 +79,33 @@ function attachRemovalControls(container, tag, onRemoved, questions = [], source
         checkboxes.forEach((checkbox) => { checkbox.checked = selectAll.checked; });
         updateRemovalControls(container);
     });
-    removeButton?.addEventListener("click", () => {
+    removeButton?.addEventListener("click", async () => {
         const selectedKeys = Array.from(root.querySelectorAll(".classification-question-checkbox:checked"))
             .map((checkbox) => checkbox.dataset.classificationKey)
             .filter(Boolean);
         if (!selectedKeys.length) return;
         if (!window.confirm(`Remove ${selectedKeys.length} selected question${selectedKeys.length === 1 ? "" : "s"} from this collection?`)) return;
+        if (window.quizCollections) {
+            removeButton.disabled = true;
+            try {
+                const outcomes = await Promise.all(selectedKeys.map((key) => window.quizCollections.removeMembership(key, tag)));
+                const durableRemovedKeys = selectedKeys.filter((key, index) => outcomes[index].durable && outcomes[index].removed);
+                if (outcomes.some((outcome) => !outcome.durable || !outcome.removed)) {
+                    const status = container.querySelector(".collection-storage-status") || document.createElement("span");
+                    status.className = "collection-storage-status is-temporary";
+                    status.setAttribute("role", "status");
+                    status.textContent = "Some selected memberships could not be removed permanently; those questions remain selected. Export a backup and try again.";
+                    if (!status.parentElement) container.appendChild(status);
+                }
+                if (durableRemovedKeys.length) onRemoved(durableRemovedKeys, outcomes);
+                else updateRemovalControls(container);
+            } catch (error) {
+                console.error("Unable to remove question collection memberships.", error);
+                window.alert(`Unable to remove selected questions: ${error.message}`);
+                updateRemovalControls(container);
+            }
+            return;
+        }
         removeClassificationEntries(selectedKeys, tag);
         selectedKeys.forEach((key) => {
             const index = Array.from(root.querySelectorAll(".classification-question-checkbox"))
